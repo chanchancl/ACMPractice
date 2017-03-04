@@ -3,36 +3,500 @@
 #include "stdafx.h"
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include <algorithm>
-#include <queue>
-#include <stack>
 using namespace std;
 
-#define MAX 105
-// map : + 表示已建
-//       - 表示未建，绝对值为成本
-int map[MAX][MAX];
 
+#define MAX 505
 
-int main()
+struct line
 {
-	int i,n, k;
-	cin >> n;
-	k = n*(n - 1) / 2;
-	for (i = 0; i < k; ++i)
-	{
-		int a, b, c, d;
-		cin >> a >> b >> c >> d;
-		if (d)
-			map[a][b] = map[b][a] = c;
-		else
-			map[a][b] = map[b][a] = -c;
-	}
+	int mubiao;
+	int dis, cost;
+};
+
+vector<line> e[MAX];
+int visited[MAX];
+
+
+int n, m;
+
+line findmin(int s, int d)
+{
+	line ans;
+
 
 
 
 }
 
+int main()
+{
+	int s, d, i;
+	cin >> n >> m >> s >> d;
+	for (i = 0; i <m; ++i)
+	{
+		int	q, w, r, t;
+		cin >> q >> w >> r >> t;
+		line l;
+		l.mubiao = w;
+		l.dis = r;
+		l.cost = t;
+		e[q].push_back(l);
+		l.mubiao = q;
+		e[w].push_back(l);
+	}
+
+	line ans = findmin(s, d);
+
+	cout << mindis << ' ' << mincost << endl;
+
+	return 0;
+}
+
+
+/*
+#define MAX 100
+int map[MAX][MAX];
+int visited[MAX];
+int n, e;
+
+void dfs()
+{
+	int i, j;
+	int current, find;
+	for (i = 0; i <n; ++i)
+	{
+		vector<int> shunxu;
+		stack<int>  fangwen;
+		if (visited[i])
+			continue;
+		visited[i] = 1;
+		fangwen.push(i);
+		shunxu.push_back(i);
+		current = i;
+
+		while (!fangwen.empty())
+		{
+			find = 0;
+			for (j = 0; j < n; ++j)
+			{
+				if (!visited[j] && map[current][j])
+				{
+					visited[j] = 1;
+					current = j;
+					shunxu.push_back(j);
+					fangwen.push(j);
+					find = 1;
+					break;
+				}
+			}
+			if (!find)
+			{
+				fangwen.pop();
+				if (!fangwen.empty())
+					current = fangwen.top();
+			}
+		}
+
+		if (!shunxu.empty())
+		{
+			cout << "{ " << shunxu[0];
+			for (j = 1; j< shunxu.size(); ++j)
+				cout << ' ' << shunxu[j];
+			cout << " }" << endl;
+		}
+	}
+}
+
+void bfs()
+{
+	int i, j;
+	int current;
+	for (i = 0; i <n; ++i)
+	{
+		queue<int> fangwen;
+		vector<int> shunxu;
+		if (visited[i])
+			continue;
+
+		visited[i] = 1;
+		shunxu.push_back(i);
+		fangwen.push(i);
+		current = i;
+
+		while (!fangwen.empty())
+		{
+			for (j = 0; j <n; ++j)
+			{
+				if (!visited[j] && map[current][j])
+				{
+					fangwen.push(j);
+					shunxu.push_back(j);
+					visited[j] = 1;
+				}
+			}
+			fangwen.pop();
+			if (!fangwen.empty())
+				current = fangwen.front();
+		}
+		if (!shunxu.empty())
+		{
+			cout << "{ " << shunxu[0];
+			for (j = 1; j< shunxu.size(); ++j)
+				cout << ' ' << shunxu[j];
+			cout << " }" << endl;
+		}
+
+	}
+}
+
+int main()
+{
+	int i;
+	cin >> n >> e;
+	for (i = 0; i <e; ++i)
+	{
+		int a, b;
+		cin >> a >> b;
+		map[a][b] = map[b][a] = 1;
+	}
+	memset(visited, 0, MAX * sizeof(int));
+	dfs();
+	memset(visited, 0, MAX * sizeof(int));
+	bfs();
+
+	return 0;
+}
+*/
+
+/*
+vector<int> e[10005];
+int visited[10005];
+int kk;
+
+void bfs(int start)
+{
+	memset(visited, 0, sizeof(visited));
+	queue<int> q;
+	q.push(start);
+	visited[start] = 1;
+
+	while (!q.empty())
+	{
+		int now = q.front();
+		q.pop();
+
+		for (int i = 0; i < e[now].size(); ++i)
+		{
+			int v = e[now][i];
+			if (visited[v])
+				continue;
+			visited[v] = 1;
+			cout << "Visit From " << now << " to " << v << endl;
+			q.push(v);
+		}
+	}
+}
+
+void dfs(int start)
+{
+	stack<int> s;
+	s.push(start);
+	visited[start] = 1;
+	kk++;
+	while (!s.empty())
+	{
+		int now = s.top();
+		s.pop();
+
+		for (int i = 0; i < e[now].size(); ++i)
+		{
+			int v = e[now][i];
+			if (visited[v])
+				continue;
+			cout << "Visit From " << now << " to " << v << endl;
+			dfs(v);
+			s.push(v);
+			break;
+		}
+	}
+}
+
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+
+	for (int i = 0; i < k; ++i)
+	{
+		int a, b;
+		cin >> a >> b;
+		e[a].push_back(b);
+		e[b].push_back(a);
+	}
+	memset(visited, 0, sizeof(visited));
+	cout << "*******bfs**********" << endl;
+	bfs(2);
+	memset(visited, 0, sizeof(visited));
+	kk = 0;
+	cout << "*******dfs**********" << endl;
+	dfs(2);
+	cout << kk << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+// 喊山，不完全
+
+int map[10005][10005];
+
+const int INF = 20000;
+int n;
+int find_min(int t)
+{
+	int max = -INF, i, number;
+	for (i = 1; i <= n; ++i)
+	{
+		if (map[t][i] != INF)
+		{
+			if (map[t][i] > max)
+			{
+				max = map[t][i];
+				number = i;
+			}
+			else if (map[t][i] == max && i < number)
+				number = i;
+		}
+	}
+	if (max == -INF)
+		number = 0;
+	return number;
+}
+
+int main()
+{
+	int i, j, k, m, d;
+	while (cin >> n >> m >> d)
+	{
+
+		for (i = 1; i <= n; ++i)
+			for (j = 1; j <= n; ++j)
+				map[i][j] = map[j][i] = INF;
+
+		for (i = 0; i < m; ++i)
+		{
+			cin >> j >> k;
+			map[j][k] = map[k][j] = 1;
+		}
+
+		// 这里注意循环嵌套的顺序
+		for (k = 1; k <= n; ++k)
+			for (i = 1; i <= n; ++i)
+				for (j = 1; j <= n; ++j)
+					if (map[i][k] != INF && map[k][j] != INF && map[i][k] + map[k][j] < map[i][j] && i != j && j != k )
+						map[i][j] = map[i][k] + map[k][j];
+
+		for (i = 0; i < d; ++i)
+		{
+			int t;
+			cin >> t;
+			cout << find_min(t) << endl;
+		}
+
+	}
+	return 0;
+}
+*/
+
+/*
+set<int> xue[1005];
+int solve[1005] = { 0 };
+
+int main()
+{
+	int n, m, i, j;
+	vector<int> shunxu;
+	cin >> n >> m;
+	for (i = 0; i < m; ++i)
+	{
+		int a, b;
+		cin >> a >> b;
+		xue[b].insert(a);
+	}
+
+	set<int> solved;
+	for (i = 0; i < n; ++i)
+		if (xue[i].empty())
+		{
+			shunxu.push_back(i);
+			solved.insert(i);
+			solve[i] = true;
+		}
+
+	int current;
+	do 
+	{
+		current = solved.size();
+		for (i = 0; i < n; ++i)
+		{
+			if (!solve[i])
+			{
+				set<int>::iterator it = xue[i].begin();
+				for (; it != xue[i].end();)
+				{
+					if (solved.find(*it) != solved.end())
+					{
+						it = xue[i].erase(it);
+					}
+					else
+						++it;
+				}
+				if (xue[i].empty())
+				{
+					shunxu.push_back(i);
+					solved.insert(i);
+					solve[i] = 1;
+				}
+			}
+		}
+
+	} while (current != solved.size());
+
+	if (solved.size() == n)
+	{
+		cout << "YES" << endl;
+		cout << shunxu[0];
+		for (i = 1; i < shunxu.size(); ++i)
+			cout << ' ' << shunxu[i];
+	} 
+	else
+	{
+		cout << "NO" << endl;
+		cout << n - solved.size();
+	}
+
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct stu
+{
+	int total;
+	int number;
+};
+
+int main()
+{
+	int line[5], i, j, n;
+	string number[301];
+	vector<stu> v;
+
+	int a[301], b[301], c[301], d[301], l[301];
+	for (i = 0; i < 5; i++)
+		cin >> line[i];
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> number[i] >> a[i] >> b[i] >> c[i] >> d[i];
+		l[i] = (a[i] + b[i] + c[i] + d[i]);
+	}
+
+	for (i = 0; i < n; ++i)
+	{
+		if (a[i] >= line[0] && b[i] >= line[1] && c[i] >= line[2] && d[i] >= line[3] && l[i] >= line[4])
+		{
+			stu tmp;
+			tmp.number = i;
+			tmp.total = l[i];
+			v.push_back(tmp);
+		}
+	}
+	cout << v.size() << endl;
+	sort(v.begin(), v.end(), [](const stu s1, const stu s2) {
+		return s1.total > s2.total;
+	});
+	for (i = 0; i < v.size(); ++i)
+	{
+		if (i < v.size() - 1 && v[i].total == v[i + 1].total)
+		{
+			vector<stu> v2;
+			v2.push_back(v[i]);
+			for (j = 1; i + j < v.size(); ++j)
+			{
+				if (v[i].total == v[i + j].total)
+					v2.push_back(v[i+j]);
+			}
+			sort(v2.begin(), v2.end(), [&](const stu s1, const stu s2) {
+				return number[s1.number] < number[s2.number];
+			});
+			for(j=0; j < v2.size();++j)
+				cout << number[v2[j].number] << ' ' << v2[j].total << endl;
+			i += v2.size() - 1;
+		}
+		else
+			cout << number[v[i].number] << ' ' << v[i].total << endl;
+	}
+	return 0;
+}
+*/
+/*
+#include <iostream>
+#include <cmath>
+using namespace std;
+#define MAX 105
+// map : + 表示已建
+//       - 表示未建，绝对值为成本
+int map[MAX][MAX] = { 0 };
+int visited[MAX] = { 0 };
+int visit;
+int prim(int n)
+{
+	int lowcost[MAX];
+	int i, j, min, minid, sum = 0;
+	
+	// 把已连接的边加进来
+
+	return sum;
+}
+
+int main()
+{
+	int i, n, k, sum;
+	cin >> n;
+	k = n*(n - 1) / 2;
+	sum = 0;
+	visit = 0;
+	for (i = 0; i < k; ++i)
+	{
+		int a, b, c, d;
+		cin >> a >> b >> c >> d;
+		map[a][b] = map[b][a] = d ? c : -c;
+		if (d)
+		{
+			visited[a] = visited[b] = 1;
+			visit++;
+		}
+	}
+	
+	sum = prim(n);
+	cout << sum << endl;
+
+	return 0;
+}
+*/
 
 
 /*
@@ -175,13 +639,6 @@ int main()
 }
 */
 
-#include <iostream>
-#include <algorithm>
-#include <queue>
-#include <stack>
-#include <string>
-using namespace std;
-
 /*
 int main()
 {
@@ -250,7 +707,6 @@ int main()
 		cin >> t;
 		b.push_back(t);
 	}
-	
 	c.resize(a.size() + b.size());
 	merge(a.begin(), a.end(), b.begin(), b.end(), c.begin());
 	
@@ -258,6 +714,7 @@ int main()
 	cout << (c[t - 1] + c[t]) / 2 << endl;
 	return 0;
 }
+
 */
 /*
 #include <iostream>

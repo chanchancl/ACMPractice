@@ -3,18 +3,236 @@
 #include "stdafx.h"
 
 #include <iostream>
-#include <string>
-#include <vector>
+#include <queue>
+using namespace std;
+int m, n, l, t;
+int g[62][1300][130] = { 0 };
+
+struct point
+{
+	int i, j, k;
+	point(int ii, int jj, int kk) : i(ii), j(jj), k(kk) {}
+};
+
+int bfs(int i, int j, int k)
+{
+	int ret = 0;
+	if (!g[i][j][k])
+		return 0;
+
+	queue<point> q;
+	q.push(point(i, j, k));
+	while (!q.empty())
+	{
+		point now = q.front(); q.pop();
+		if (!g[now.i][now.j][now.k])
+			continue;
+		g[now.i][now.j][now.k] = 0;
+		ret += 1;
+		if (now.i != 0)
+			q.push(point(now.i - 1, now.j, now.k));
+		if (now.i != l - 1)
+			q.push(point(now.i + 1, now.j, now.k));
+		if (now.j != 0)
+			q.push(point(now.i, now.j - 1, now.k));
+		if (now.j != m - 1)
+			q.push(point(now.i, now.j + 1, now.k));
+		if (now.k != 0)
+			q.push(point(now.i, now.j, now.k - 1));
+		if (now.k != n - 1)
+			q.push(point(now.i, now.j, now.k + 1));
+	}
+
+	return ret;
+}
+
+int get()
+{
+	int i, j, k, ans;
+	ans = 0;
+	for (i = 0; i < l; ++i)
+	{
+		for (j = 0; j < m; ++j)
+		{
+			for (k = 0; k < n; ++k)
+			{
+				int tmp = bfs(i, j, k);
+				if (tmp >= t)
+					ans += tmp;
+			}
+		}
+	}
+	return ans;
+}
+
+int main()
+{
+	int i, j, k;
+	cin >> m >> n >> l >> t;
+	for (i = 0; i < l; ++i)
+	{
+		for (j = 0; j < m; ++j)
+		{
+			for (k = 0; k < n; ++k)
+			{
+				cin >> g[i][j][k];
+			}
+		}
+	}
+	cout << get() << endl;
+	return 0;
+}
+
+
+/*
+#include <iostream>
 #include <algorithm>
+#include <vector>
+#include <queue>
 using namespace std;
 
+int n, m, k;
 
+vector<int> e[505];
+int visited[505];
+
+int bfs()
+{
+	int i, j, ans = 0;
+	fill(visited, visited + 505, 0);
+
+	for (i = 0; i < n; ++i)
+	{
+		if (!visited[i])
+		{
+			ans++;
+			queue<int> q;
+			q.push(i);
+			visited[i] = 1;
+			while (!q.empty())
+			{
+				int now = q.front(); q.pop();
+
+				for (j = 0; j < e[now].size(); ++j)
+				{
+					int v = e[now][j];
+					if (visited[v])
+						continue;
+					visited[v] = 1;
+					q.push(v);
+				}
+			}
+		}
+	}
+	return ans;
+}
+
+
+int main()
+{
+	int i;
+	cin >> n >> m;
+	for (i = 0; i < m; ++i)
+	{
+		int a, b;
+		cin >> a >> b;
+		e[a].push_back(b);
+		e[b].push_back(a);
+	}
+	int now = bfs();
+
+	cin >> k;
+	for (i = 0; i < k; ++i)
+	{
+		int t;
+		cin >> t;
+		e[t].clear();
+		for (int j = 0; j < n; ++j)
+		{
+			vector<int>::iterator it;
+			if ((it = find(e[j].begin(), e[j].end(), t)) != e[j].end())
+				e[j].erase(it);
+		}
+		int after = bfs();
+		if (now == after || now == after - 1)
+			cout << "City " << t << " is lost." << endl;
+		else
+			cout << "Red Alert: City " << t << " is lost!" << endl;
+		now = after;
+	}
+	if (k == n)
+		cout << "Game Over." << endl;
+}
+*/
+
+/*
+int n;
+int map[105][105] = { 0 };
+int visited[105];
+const int INF = 0x7f7f7f7f;
+int prim()
+{
+	int ans = 0;
+	int cost[105] = { 0 };
+	fill(cost, cost + 105, INF);
+	cost[1] = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		int min = INF, id = -1;
+		for (int j = 1; j <= n; ++j)
+		{
+			if ( !visited[j] && min > cost[j])
+			{
+				id = j;
+				min = cost[j];
+			}
+		}
+		if (id == -1)
+			continue;
+		ans += min;
+		visited[id] = 1;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (!visited[j] && map[id][j] < cost[j] && map[id][j] != INF)
+			{
+				cost[j] = map[id][j];
+			}
+		}
+	}
+	return ans;
+}
+
+int main()
+{
+	int i,k;
+	cin >> n;
+	k = n*(n - 1)/2;
+	for (i = 0; i < k; ++i)
+	{
+		int a, b, c, d;
+		cin >> a >> b >> c >> d;
+
+		if (d == 0)
+		{
+			map[a][b] = c;
+			map[b][a] = c;
+		}
+	}
+	cout << prim() << endl;
+
+	return 0;
+}
+*/
+
+/*
 #define MAX 505
-
+#define INF 0x7f7f7f7f
 struct line
 {
-	int mubiao;
+	int v;
 	int dis, cost;
+	line() {}
+	line(int vv, int d, int c): v(vv), dis(d), cost(c) {}
 };
 
 vector<line> e[MAX];
@@ -25,11 +243,36 @@ int n, m;
 
 line findmin(int s, int d)
 {
-	line ans;
+	line ans( 0, INF, INF);
+	queue<line> q;
+	q.push(line( s, 0, 0));
+	visited[s] = 1;
 
+	while (!q.empty())
+	{
+		line now = q.front(); q.pop();
 
+		if (now.v == d)
+		{
+			if (now.dis < ans.dis)
+				ans.dis = now.dis, ans.cost = now.cost;
+			if (now.dis == ans.dis)
+				ans.cost = min(ans.cost, now.cost);
+		}
 
+		for (int i = 0; i < e[now.v].size(); ++i)
+		{
+			line vline = e[now.v][i];
+			int v = vline.v;
+			if (visited[v])
+				continue;
+			visited[v] = 1;
+			
+			q.push(line(v, now.dis + vline.dis, now.cost + vline.cost));
+		}
+	}
 
+	return ans;
 }
 
 int main()
@@ -41,21 +284,21 @@ int main()
 		int	q, w, r, t;
 		cin >> q >> w >> r >> t;
 		line l;
-		l.mubiao = w;
+		l.v = w;
 		l.dis = r;
 		l.cost = t;
 		e[q].push_back(l);
-		l.mubiao = q;
+		l.v = q;
 		e[w].push_back(l);
 	}
 
 	line ans = findmin(s, d);
 
-	cout << mindis << ' ' << mincost << endl;
+	cout << ans.dis << ' ' << ans.cost << endl;
 
 	return 0;
 }
-
+*/
 
 /*
 #define MAX 100

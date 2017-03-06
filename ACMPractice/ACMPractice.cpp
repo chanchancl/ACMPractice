@@ -3,8 +3,401 @@
 #include "stdafx.h"
 
 #include <iostream>
-#include <queue>
+#include <string>
 using namespace std;
+
+int main()
+{
+	int n, u, d;
+	cin >> n >> u >> d;
+
+	int high, time;
+	high = time = 0;
+
+	while (high < n)
+	{
+		time++;
+		high += u;
+		if (high >= n)
+			break;
+		high -= d;
+		time++;
+	}
+	cout << time << endl;
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int a, b, n, ahe,bhe, dao;
+	cin >> a >> b >> n;
+
+	ahe = bhe = dao = 0;
+
+	while (n--)
+	{
+		int jiahan, jiahua, yihan, yihua;
+		cin >> jiahan >> jiahua >> yihan >> yihua;
+		
+		int han = jiahan + yihan;
+		if (jiahua == han && yihua == han)
+			continue;
+		if (yihua == han)
+		{
+			b--;
+			bhe++;
+			if (b < 0)
+			{
+				dao = 2;
+				break;
+			}
+		}
+		if (jiahua == han)
+		{
+			a--;
+			ahe++;
+			if (a < 0)
+			{
+				dao = 1;
+				break;
+			}
+		}
+	}
+
+	if (dao == 1)
+	{
+		cout << 'A' << endl;
+		cout << bhe << endl;
+	}
+	else
+	{
+		cout << 'B' << endl;
+		cout << ahe << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int i, j, k, n,c;
+	
+	bool flag = true;
+	cin >> n;
+	c = 0;
+	for(i = 1; i <= 100 && flag; i++)
+		for(j=1; j <=100 && flag; ++j)
+			for (k = 1; k <= 100 && flag; ++k)
+			{
+				if (c == n)
+					flag = false;
+				if (i + j + k == 100 && i * 5 + j * 2 + k == 150)
+				{
+					cout << i << ' ' << j << ' ' << k << endl;
+					++c;
+				}
+			}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int tuzi, wugui;
+	int sleep;
+	int current, t;
+
+	cin >> t;
+	current = tuzi = wugui = sleep = 0;
+
+	while (current < t)
+	{
+		current++;
+		wugui += 3;
+		if (sleep == 0)
+		{
+			tuzi += 9;
+			if (current % 10 == 0 && tuzi > wugui)
+				sleep = 30;
+		}
+		else
+		{
+			sleep--;
+		}
+	}
+
+	if (wugui > tuzi)
+		cout << "@_@ " << wugui << endl;
+	else if (wugui < tuzi)
+		cout << "^_^ " << tuzi << endl;
+	else
+		cout << "-_- " << tuzi << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	char c;
+	int h, w;
+	cin >> c >> h;
+	w = h;
+
+	for (int i = 0; i < h / 2 + 1; ++i)
+	{
+
+		cout << string(h/2-i, ' ');
+		if (i == 0)
+			cout << char(c) << endl;
+		else
+		{
+			cout << char(c + i);
+			cout << string(1 + 2 * (i - 1), ' ');
+			cout << char(c + i) << endl;
+		}
+	}
+	for (int i = 0; i < h / 2; ++i)
+	{
+		cout << string(i + 1, ' ');
+		if (i == h/2 -1)
+			cout << char(c + h / 2 - 1 - i) << endl;
+		else
+		{
+			cout << char(c + h / 2 - 1 - i);
+			cout << string(1 + 2* (h / 2 - i-2), ' ');
+			cout << char(c + h / 2 - 1 - i) << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string str;
+	int i, j, n;
+	while (1)
+	{
+		char c;
+		scanf("%c", &c);
+		if (c == '.')
+			break;
+		str += c;
+	}
+
+	i = str.find_first_of(' ');
+	n = j = 0;
+	if (i == string::npos && str.size() != 0)
+		cout << str.size() << endl;
+	else
+	{
+		while (i != string::npos)
+		{
+			if (i - j != 0)
+			{
+				if (n > 0)
+					cout << ' ';
+				cout << i - j;
+				n++;
+			}
+			j = i + 1;
+			i = str.find_first_of(' ', j);
+		}
+		if (str.size() - j != 0)
+		{
+			if (n > 0)
+				cout << ' ';
+			cout << str.size() - j;
+		}
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int count = 0, count_0 = 0;
+	char n;
+	while ((n = getchar()) != '.')
+	{
+		if (n != ' ')
+		{
+			if (count > 0 && count_0 > 0)
+			{
+				printf("%d ", count);
+				count = 0;
+			}
+			count++;
+			count_0 = 0;
+			continue;
+		}
+		if (n == ' ')
+			count_0++;
+	}
+	if (count > 0)
+		printf("%d\n", count);
+	else
+		printf("\n");
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	char pinyin[10][10] = {
+		"ling","yi","er","san","si","wu",
+		"liu", "qi","ba","jiu"
+	};
+	int a,b;
+	cin >> a;
+	b = a > 0 ? a : -a;
+	stack<string> s;
+	if (b == 0)
+		s.push("ling");
+	while (b)
+	{
+		s.push(pinyin[b % 10]);
+		b /= 10;
+	}
+	if (a < 0)
+		s.push("fu");
+	while (!s.empty())
+	{
+		cout << s.top();
+		s.pop();
+		if (!s.empty())
+			cout.put(' ');
+	}
+	cout << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int lo, hi;
+	cin >> lo >> hi;
+
+	if (lo > hi)
+		cout << "Invalid." << endl;
+	else
+	{
+		cout << "fahr celsius" << endl;
+		while (lo <= hi)
+		{
+			cout << lo << setw(6) << fixed <<  setprecision(1) << (5 * float(lo - 32) / 9.0)<< endl;
+			lo += 2;
+		}
+	}
+}
+*/
+
+/*
+int main()
+{
+	int a, b, c, d;
+	cin >> a >> b;
+	c = (b / 100 - a / 100);
+	d = (b % 100 - a % 100);
+
+	if (d < 0)
+	{
+		c--;
+		d += 60;
+	}
+	printf("%02d:%02d\n", c, d);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	cout << "2^" << n << " = " << (1 << n) << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b;
+	scanf("%d %d", &a, &b);
+	printf("%d + %d = %d\n", a, b, a + b);
+	printf("%d - %d = %d\n", a, b, a - b);
+	printf("%d * %d = %d\n", a, b, a * b);
+	if (a % b == 0)
+		printf("%d / %d = %d\n", a, b, a / b);
+	else
+		printf("%d / %d = %.2f\n", a, b, float(a)/ b);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	float cm;
+	int foot, inch;
+	cin >> cm;
+	cm /= 100;
+	cm /= 0.3048;
+	foot = int(cm);
+	inch = (cm - int(cm))*12;
+	cout << foot << ' ' << inch << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	float a, b;
+	int c;
+	char d;
+	cin >> a >> c >> d >> b;
+	cout << fixed << setprecision(2)  << d << ' ' << c << ' ' << a << ' ' << b << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b;
+	cin >> a >> b;
+	printf("%d + %d = %d\n", a, b, a + b);
+	printf("%d - %d = %d\n", a, b, a - b);
+	printf("%d * %d = %d\n", a, b, a * b);
+	printf("%d / %d = %d\n", a, b, a / b);
+
+	return 0;
+}
+*/
+
+/*
 int m, n, l, t;
 int g[62][1300][130] = { 0 };
 
@@ -82,7 +475,7 @@ int main()
 	cout << get() << endl;
 	return 0;
 }
-
+*/
 
 /*
 #include <iostream>

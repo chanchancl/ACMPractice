@@ -4,8 +4,672 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
+#define EPS (1e-8)
+
+float round1(float f)
+{
+	int t;
+	if (f > 0)
+		t = (f + 0.05) * 10.0;
+	else
+		t = (f - 0.05) * 10.0;
+	return t / 10.0;
+}
+
+int main()
+{
+	float x1, y1, x2, y2;
+	cin >> x1 >> y1 >> x2 >> y2;
+	float x, y;
+	x = round1(x1 + x2);
+	y = round1(y1 + y2);
+	
+	bool flag1 = false, flag2 = false;
+
+	printf("(%.1f+%.1fi) + (%.1f+%.1fi) = " ,x1, y1, x2, y2);
+	if (abs(x) > EPS)
+	{
+		flag1 = true;
+		flag2 = true;
+		printf("%.1f", x);
+	}
+	if (abs(y) > EPS)
+	{
+		if (y > 0 && flag1)
+			putchar('+');
+		flag2 = true;
+		printf("%.1fi", y);
+	}
+	if (!flag2)
+		printf("0.0");
+	putchar('\n');
+
+	flag1 = flag2 = false;
+	x = round1(x1 - x2);
+	y = round1(y1 - y2);
+	printf("(%.1f+%.1fi) - (%.1f+%.1fi) = ", x1, y1, x2, y2);
+	if (abs(x) > EPS)
+	{
+		flag1 = true;
+		flag2 = true;
+		printf("%.1f", x);
+	}
+	if (abs(y) > EPS)
+	{
+		if (y > 0 && flag1)
+			putchar('+');
+		flag2 = true;
+		printf("%.1fi", y);
+	}
+	if (!flag2)
+		printf("0.0");
+	putchar('\n');
+
+	flag1 = flag2 = false;
+	x = round1(x1*x2 - y1*y2);
+	y = round1(x1*y2 + x2*y1);
+	printf("(%.1f+%.1fi) * (%.1f+%.1fi) = ", x1, y1, x2, y2);
+	if (abs(x) > EPS)
+	{
+		flag1 = true;
+		flag2 = true;
+		printf("%.1f", x);
+	}
+	if (abs(y) > EPS)
+	{
+		if (y > 0 && flag1)
+			putchar('+');
+		flag2 = true;
+		printf("%.1fi", y);
+	}
+	if (!flag2)
+		printf("0.0");
+	putchar('\n');
+
+	flag1 = flag2 = false;
+	x = round1((x1*x2 + y1*y2) / (x2*x2 + y2*y2));
+	y = round1((-x1*y2 + x2*y1) / (x2*x2 + y2*y2));
+	printf("(%.1f+%.1fi) / (%.1f+%.1fi) = ", x1, y1, x2, y2);
+	if (abs(x) > EPS)
+	{
+		flag1 = true;
+		flag2 = true;
+		printf("%.1f", x);
+	}
+	if (abs(y) > EPS)
+	{
+		if (y > 0 && flag1)
+			putchar('+');
+		flag2 = true;
+		printf("%.1fi", y);
+	}
+	if (!flag2)
+		printf("0.0");
+	putchar('\n');
+
+	return 0;
+}
+
+
+/*
+struct stu
+{
+	string name, birth, sex, guhua, phone;
+};
+
+int main()
+{
+	int n, i;
+	cin >> n;
+	vector<stu> v;
+	v.resize(n);
+	for (i = 0; i < n; ++i)
+		cin >> v[i].name >> v[i].birth >> v[i].sex >> v[i].guhua >> v[i].phone;
+
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		int k;
+		cin >> k;
+		if (k >= v.size())
+			cout << "Not Found" << endl;
+		else
+			cout << v[k].name << ' ' << v[k].guhua << ' ' << v[k].phone << ' ' << v[k].sex << ' ' << v[k].birth << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+struct stu
+{
+	string number, name;
+	int a, b, c, total;
+};
+
+int main()
+{
+	int n, i;
+	cin >> n;
+	vector<stu> v;
+	v.resize(n);
+	for (i = 0; i < n; ++i)
+	{
+		cin >> v[i].number >> v[i].name >> v[i].a >> v[i].b >> v[i].c;
+		v[i].total = v[i].a + v[i].b + v[i].c;
+	}
+	sort(v.begin(), v.end(), [](const stu s1, const stu s2) {
+		return s1.total > s2.total;
+	});
+	cout << v[0].name << ' ' << v[0].number << ' ' <<  v[0].total << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	double x1, y1, x2, y2, x,y;
+	cin >> x1 >> y1 >> x2 >> y2;
+	x = x1 + x2;
+	y = y1 + y2;
+	int t;
+	if (x > 0)
+	{
+		t = (x + 0.05) * 10;
+		x = t / 10.0;
+	}
+	else
+	{
+		t = (x - 0.05) * 10;
+		x = t / 10.0;
+	}
+	if (y > 0)
+	{
+		t = (y + 0.05) * 10;
+		y = t / 10.0;
+	}
+	else
+	{
+		t = (y - 0.05) * 10;
+		y = t / 10.0;
+	}
+
+	printf("(%.1f, %.1f)\n", x, y);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int h, m, s, n;
+	scanf("%d:%d:%d", &h, &m, &s);
+	scanf("%d", &n);
+
+	int nh, nm, ns;
+	nh = nm = ns = 0;
+	ns = n % 60;
+	nm = n / 60;
+	nh = nm / 60;
+
+	h += nh;
+	m += nm;
+	s += ns;
+
+	if (s >= 60)
+	{
+		s -= 60;
+		m++;
+	}
+	if (m >= 60)
+	{
+		m -= 60;
+		h++;
+	}
+	h = h % 24;
+	printf("%02d:%02d:%02d", h, m, s);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int table[11][20] = {
+		{1},
+		{1,1}
+	};
+
+	int i, j,n;
+	cin >> n;
+	for (i = 2; i < 11; ++i)
+	{
+		table[i][0] = 1;
+		for (j = 1; j < i; ++j)
+			table[i][j] = table[i - 1][j - 1] + table[i - 1][j];
+		table[i][j] = 1;
+	}
+
+	for (i = 0; i < n; ++i)
+	{
+		cout << string(n - i - 1, ' ');
+		for (j = 0; j <= i; ++j)
+			printf("%4d", table[i][j]);
+		cout << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, a, b, c, d;
+	cin >> n;
+	a = n / 1000;
+	b = (n % 1000) / 100;
+	c = (n % 100) / 10;
+	d = (n % 10);
+	a = (a + 9) % 10;
+	b = (b + 9) % 10;
+	c = (c + 9) % 10;
+	d = (d + 9) % 10;
+	swap(a, c);
+	swap(b, d);
+	cout << "The encrypted number is ";
+	if (a == 0)
+		cout << 0;
+	if (b == 0 && a == 0)
+		cout << 0;
+	if (c == 0 && a == 0 && b == 0)
+		cout << 0;
+	cout << a * 1000 + b * 100 + c * 10 + d << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<string> v;
+	v.resize(5);
+	int i;
+	for (i = 0; i < 5; ++i)
+		cin >> v[i];
+	sort(v.begin(), v.end());
+	cout << "After sorted:\n";
+	for (i = 0; i < 5; ++i)
+		cout << v[i] << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i, n;
+	queue<char> q;
+	string str;
+	getline(cin, str);
+	cin >> n;
+
+	for (i = 0; i < str.size(); ++i)
+		q.push(str[i]);
+
+	for (i = 0; i < n; ++i)
+	{
+		q.push(q.front());
+		q.pop();
+	}
+	while (!q.empty())
+	{
+		putchar(q.front());
+		q.pop();
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i, n, k,c;
+	cin >> n >> k;
+	vector<string> v;
+	while (n--)
+	{
+		string str;
+		cin >> str;
+		v.push_back(str);
+	}
+
+	bool flag = true;
+	c = 0;
+	while (flag)
+	{
+		flag = false;
+
+		for (i = 0; i < v.size() - 1; ++i)
+		{
+			if (v[i] > v[i + 1])
+			{
+				swap(v[i], v[i + 1]);
+				flag = true;
+			}
+		}
+		c++;
+		if (c == k)
+			break;
+	}
+	for (i = 0; i < v.size(); ++i)
+		cout << v[i] << endl;
+
+	return 0;
+}
+*/
+
+/*
+int table[10];
+
+int find_min()
+{
+	for (int i = 0; i < 10; ++i)
+		if (table[i] > 0)
+			return i;
+}
+
+int main()
+{
+	int n, i, t, zero;
+	n = 0;
+	for (i = 0; i < 10; ++i)
+	{
+		cin >> t;
+		table[i] = t;
+		n += t;
+	}
+
+	zero = table[0];
+	table[0] = 0;
+	t = find_min();
+	putchar(t + '0');
+	n--;
+	table[0] = zero;
+	table[t]--;
+
+	while (n--)
+	{
+		t = find_min();
+		putchar(t+ '0');
+		table[t]--;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b;
+	bool aa, bb;
+	aa = bb = true;
+	string str;
+	cin >> str;
+	int i;
+
+	for (i = 0; i < str.size(); ++i)
+	{
+		if (!isdigit(str[i]) && str[i] != '-')
+			aa = false;
+	}
+
+	if (aa)
+	{
+		int t = atoi(str.c_str());
+		if (t > 1000 || t <= 0)
+			aa = false;
+		else
+			a = t;
+	}
+
+	getline(cin, str);
+	for (i = 0; i < str.size(); ++i)
+	{
+		if (str[0] == ' ' && i == 0)
+			i++;
+		if (!isdigit(str[i]) && str[i] != '-')
+			bb = false;
+	}
+
+	if (bb)
+	{
+		int t = atoi(str.c_str());
+		if (t > 1000 || t <= 0)
+			bb = false;
+		else
+			b = t;
+	}
+	
+	if (aa)
+		cout << a << ' ';
+	else
+		cout << "? ";
+	cout << "+ ";
+	if (bb)
+		cout << b << ' ';
+	else
+		cout << "? ";
+	cout << "= ";
+	if (aa && bb)
+		cout << a + b << endl;
+	else
+		cout << '?' << endl;
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	stack<string> s;
+	string in;
+	while (cin >> in)
+		s.push(in);
+	while (!s.empty())
+	{
+		cout << s.top();
+		s.pop();
+		if (!s.empty())
+			cout << ' ';
+	}
+	return 0;
+}
+*/
+
+/*
+bool isnothex(int c)
+{
+	return !((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
+}
+
+int hex2int(char c)
+{
+	if (isdigit(c))
+		return c - '0';
+	if (isupper(c))
+		return c - 'A' + 10;
+	else
+		return c - 'a' + 10;
+}
+
+int main()
+{
+	string in;
+	getline(cin, in);
+	in = in.substr(0, in.find('#'));
+	int fu, i, flag;
+	string::iterator it;
+	fu = 0;
+	flag = 0;
+	for (it = in.begin(); it != in.end(); )
+	{
+		if (*it == '-')
+		{
+			if (!flag)
+				fu = 1;
+		}
+		if (isnothex(*it))
+			it = in.erase(it);
+		else
+		{
+			flag = 1;
+			it++;
+		}
+	}
+	long long ret = 0;
+	for (i = 0; i < in.size(); ++i)
+	{
+		ret += hex2int(in[i]) * pow(16, in.size() - 1 - i);
+	}
+	if (fu)
+		ret = -ret;
+	cout << ret << endl;
+}
+*/
+
+/*
+int main()
+{
+	map<int,int> m;
+	int n,t;
+	cin >> n;
+	while (n--)
+	{
+		cin >> t;
+		m[t]++;
+	}
+	int number, count;
+	number = 0, count = 0;
+	map<int, int>::iterator it;
+	for (it = m.begin(); it != m.end(); ++it)
+	{
+		if (it->second > count)
+		{
+			number = it->first;
+			count = it->second;
+		}
+	}
+	cout << number << ' ' << count << endl;
+	return 0;
+}
+*/
+
+/*
+bool is_prim(int x)
+{
+	int end = sqrt(x);
+
+	for (int i = 2; i <= end; ++i)
+	{
+		if (x % i == 0)
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	int i, n, c;
+	cin >> n;
+	c = 0;
+	for (i = 2; i <= n; ++i)
+	{
+		int t = (1 << i) - 1;
+		if (is_prim(t))
+		{
+			c++;
+			cout << t << endl;
+		}
+	}
+	if (!c)
+		cout << "None" << endl;
+	return 0;
+}
+*/
+
+/*
+bool is_prim(int x)
+{
+	int end = sqrt(x);
+
+	for (int i = 2; i <= end; ++i)
+	{
+		if (x % i == 0)
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	int n, p, q;
+	cin >> n;
+	for (int i = 2; i <= n / 2; ++i)
+	{
+		if (is_prim(i) && is_prim(n - i))
+		{
+			p = i;
+			q = n - i;
+			break;
+		}
+	}
+	cout << n << " = " << p << " + " << q << endl;
+
+	return 0;
+}
+*/
+/*
+int main()
+{
+	char key[10][10] = {
+		"0 ","1,.?!","2ABC","3DEF","4GHI","5JKL",
+		"6MNO","7PQRS","8TUV","9WXYZ"
+	};
+	int length[10];
+	for (int i = 0; i < 10; ++i)
+		length[i] = strlen(key[i]);
+	string in;
+	while (cin >> in)
+	{
+		int k, c;
+		k = in[0]-'0';
+		c = (in.size()-1) % length[k];
+		putchar(key[k][c]);
+	}
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n, u, d;
@@ -27,6 +691,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

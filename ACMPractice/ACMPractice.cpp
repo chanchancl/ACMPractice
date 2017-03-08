@@ -6,8 +6,215 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 using namespace std;
 
+/*
+int main()
+{
+	int n, i, ma, m;
+	ma = m = -0x7fffffff;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		int t;
+		cin >> t;
+		if (t > ma)
+		{
+			ma = t;
+			m = i;
+		}
+	}
+	cout << ma << ' ' << m << endl;
+	return 0;
+}
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+	long long a;
+	double S,high;
+	long long n;
+	cin >> a >>n;
+	S = (2 * a * (1 - pow(1 / 2.0, n))-a)*2 + a;
+	high = a*pow(1 / 2.0, n);
+	printf("%.1lf %.1lf\n", S, high);
+	return 0;
+}
+
+
+/*
+int gcd(int a, int b)
+{
+	if (a < b) swap(a, b);
+	
+	while (a % b != 0)
+	{
+		int t = a % b;
+		a = b;
+		b = t;
+	}
+	return b;
+}
+
+int main()
+{
+	int a, b,c;
+	cin >> a >> b;
+	c = gcd(a, b);
+	cout << c << ' ' << a*b / c << endl;
+	return 0;
+}
+*/
+
+/*
+int dat[15][15];
+
+int main()
+{
+	int n, i, x, y;
+	int arrow[4][2] = {
+		{1,0}, {0,1},{-1,0}, {0,-1}
+	};
+	int dir = 0;
+	cin >> n;
+	int left, top, right, bottom;
+
+	
+	left = top = -1;
+	right = bottom = n;
+	x = y = 0;
+	for (i = 0; i < n*n; ++i)
+	{
+		dat[x][y] = i + 1;
+		int new_x, new_y;
+		new_x = x + arrow[dir][0];
+		new_y = y + arrow[dir][1];
+		if ( new_x > left && new_x < right && new_y > top && new_y < bottom)
+		{
+			x = new_x;
+			y = new_y;
+		}
+		else
+		{
+			if (dir == 0)
+				top +=1;
+			if (dir == 1)
+				right -= 1;
+			if (dir == 2)
+				bottom -= 1;
+			if (dir == 3)
+				left += 1;
+
+			dir = (dir + 1) % 4;
+			x = x + arrow[dir][0];
+			y = y + arrow[dir][1];
+		}
+	}
+
+	for (y = 0; y < n; ++y)
+	{
+		for (x = 0; x < n; ++x)
+		{
+			printf("%3d", dat[x][y]);
+		}
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+
+/*
+int dat[20][20];
+
+int maxx[20];
+int minn[20];
+
+int main()
+{
+	int n, i, j,m;
+	cin >> n;
+	
+	for (i = 0; i < n; ++i)
+	{
+		m = -1;
+		for (j = 0; j < n; ++j)
+		{
+			int t;
+			cin >> t;
+			dat[i][j] = t;
+			if (t > m)
+			{
+				m = t;
+			}
+		}
+		maxx[i] = m;
+	}
+	
+	for (i = 0; i < n; ++i)
+	{
+		m = 0x7fffffff;
+		for (j = 0; j < n; ++j)
+		{
+			if (dat[j][i] < m)
+			{
+				m = dat[j][i];
+				m = dat[j][i];
+			}
+		}
+		minn[i] = m;
+	}
+
+	int find = 0;
+	int x, y;
+	for (i = 0; i < n && !find; ++i)
+		for (j = 0; j < n && !find; ++j)
+		{
+			if ( dat[i][j] == maxx[i] && dat[i][j] == minn[j])
+			{
+				x = i, y = j;
+				find = 1;
+				break;
+			}
+		}
+
+	if (find)
+		cout << x << ' ' << y << endl;
+	else
+		cout << "NONE" << endl;
+}
+*/
+
+
+/*
+int main()
+{
+	int n, i, j, ret;
+	cin >> n;
+	ret = 0;
+	for(i=0; i < n; ++i)
+		for (j = 0; j < n; ++j)
+		{
+			int t;
+			cin >> t;
+			if ((n - i - 1) != j && j != n - 1 && i != n - 1)
+			{
+				ret += t;
+			}
+		}
+	cout << ret << endl;
+}
+*/
+
+/*
 #define EPS (1e-8)
 
 float round1(float f)
@@ -113,7 +320,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 struct stu

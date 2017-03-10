@@ -10,6 +10,287 @@
 #include <cmath>
 using namespace std;
 
+
+
+/*
+int m, n, l, t;
+
+int map[61][1300][130] = { 0 };
+
+struct point
+{
+	int i, j, k;
+	point(int ii, int jj, int kk) : i(ii), j(jj), k(kk) {}
+};
+
+int bfs(int i, int j, int k)
+{
+	int ret = 0;
+	if (!map[i][j][k])
+		return 0;
+
+	queue<point> q;
+	q.push(point(i, j, k));
+
+	while (!q.empty())
+	{
+		point cur = q.front();
+		q.pop();
+
+		if (!map[cur.i][cur.j][cur.k])
+			continue;
+		ret++;
+		map[cur.i][cur.j][cur.k] = 0;
+
+		if (cur.i != 0)
+			q.push(point(cur.i - 1, cur.j, cur.k));
+		if (cur.i != l - 1)
+			q.push(point(cur.i + 1, cur.j, cur.k));
+		if (cur.j != 0)
+			q.push(point(cur.i, cur.j - 1, cur.k));
+		if (cur.j != m - 1)
+			q.push(point(cur.i, cur.j + 1, cur.k));
+		if (cur.k != 0)
+			q.push(point(cur.i, cur.j, cur.k - 1));
+		if (cur.k != n - 1)
+			q.push(point(cur.i, cur.j, cur.k + 1));
+	}
+	return ret;
+}
+
+
+int get()
+{
+	int ret = 0, i, j, k;
+	for (i = 0; i < l; ++i)
+		for (j = 0; j < m; ++j)
+			for (k = 0; k < n; ++k)
+			{
+				int tmp = bfs(i, j, k);
+				if (tmp >= t)
+					ret += tmp;
+			}
+	return ret;
+}
+
+int main()
+{
+	int i, j, k;
+	cin >> m >> n >> l >> t;
+
+	for (i = 0; i < l; ++i)
+		for (j = 0; j < m; ++j)
+			for (k = 0; k < n; ++k)
+			{
+				scanf("%d", &map[i][j][k]);
+			}
+
+	cout << get() << endl;
+	return 0;
+}
+*/
+
+/*
+#include <iostream>  
+#include <string>  
+using namespace std;
+
+int maxLen = 0;
+
+void LPS(const string &str)
+{
+	int len = str.length();
+
+	for (int i = 0; i<len; i++)
+	{
+		for (int j = len - 1; j >= i; j--)
+		{
+			if (str[j] == str[i])
+			{
+				int start, end;
+				for (start = i, end = j; start <= end; start++, end--)
+					if (str[start] != str[end])
+						break;
+
+				if (end <= start)
+					maxLen = (maxLen >= j - i + 1) ? maxLen : j - i + 1;
+
+			}
+
+		}
+
+	}
+
+}
+
+int main()
+{
+	string str;
+	getline(cin, str);
+
+	LPS(str);
+
+	cout << maxLen << endl;
+
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+#include <string>
+#include <queue>
+using namespace std;
+
+struct Tree;
+typedef Tree* pointer;
+
+struct Tree
+{
+	int number;
+	pointer left, right;
+	Tree(int n) : number(n), left(NULL), right(NULL) {}
+};
+
+vector<int> mid, last;
+int current;
+
+int find(int number)
+{
+	int i;
+	for (i = 0; i < mid.size(); ++i)
+		if (number == mid[i])
+			return i;
+
+	return -1;
+}
+
+pointer genTree(int num, int l, int m, int r)
+{
+	pointer ret = new Tree(num);
+	current--;
+	if (current < 0 || l >= r)
+		return ret;
+
+	if (current >= 0 && m != r)
+		ret->right = genTree(last[current], m + 1, find(last[current]), r);
+	if (current >= 0 && m != l)
+		ret->left = genTree(last[current], l, find(last[current]), m - 1);
+
+	return ret;
+}
+
+
+
+int first = 1;
+void visit(pointer tree)
+{
+	queue<pointer> q;
+	q.push(tree);
+
+	while (!q.empty())
+	{
+		tree = q.front();
+		q.pop();
+
+		if (!first)
+			cout << ' ';
+		first = 0;
+		cout << tree->number;
+		if (tree->left != NULL)
+			q.push(tree->left);
+		if (tree->right != NULL)
+			q.push(tree->right);
+	}
+}
+
+
+int main()
+{
+	int n, i, t;
+	cin >> n;
+	for (i = 0; i <n; ++i)
+	{
+		cin >> t;
+		last.push_back(t);
+	}
+	for (i = 0; i <n; ++i)
+	{
+		cin >> t;
+		mid.push_back(t);
+	}
+
+	current = last.size() - 1;
+	pointer root = genTree(last[current], 0, find(last[current]), current);
+	visit(root);
+	putchar('\n');
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+struct Tree
+{
+	char c;
+	struct Tree *left, *right;
+	Tree(char cc) : c(cc), left(NULL), right(NULL) {}
+};
+typedef Tree* pointer;
+string pre, mid;
+int current;
+
+int getHeight(pointer p)
+{
+	int height = 0;
+	if (p->left == NULL && p->right == NULL)
+		return 1;
+
+	if (p->left != NULL)
+		height = max(height, getHeight(p->left) + 1);
+	if (p->right != NULL)
+		height = max(height, getHeight(p->right) + 1);
+
+	return height;
+}
+
+pointer genTree(char c, int l, int r)
+{
+	pointer ret = new Tree(c);
+	current++;
+	if (l >= r || current >= pre.size())
+		return ret;
+	int m = mid.find(c);
+	if (m != l)
+		ret->left = genTree(pre[current], l , m - 1);
+	if (current >= pre.size())
+		return ret;
+	if (m != r)
+		ret->right = genTree(pre[current], m + 1, r);
+
+	return ret;
+}
+
+int main()
+{
+
+	int n;
+	cin >> n >> pre >> mid;
+
+	current = 0;
+	pointer root = genTree(pre[0], 0 , pre.size() - 1);
+	cout << getHeight(root) << endl;
+	return 0;
+}
+*/
+
+/*
 const int MAX = 30005;
 int table[MAX];
 
@@ -58,7 +339,7 @@ int main()
 	cout << *c << endl;
 	return 0;
 }
-
+*/
 
 /*
 struct msg

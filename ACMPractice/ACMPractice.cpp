@@ -5,9 +5,160 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <algorithm>
 #include <cmath>
 using namespace std;
+
+const int MAX = 30005;
+int table[MAX];
+
+void init()
+{
+	for (int i = 0; i < MAX; ++i)
+		table[i] = i;
+}
+int find(int x)
+{
+	if (table[x] != x)
+		return table[x] = find(table[x]);
+	return x;
+}
+void Union(int x, int y)
+{
+	x = find(x);
+	y = find(y);
+	if (x != y)
+		table[x] = y;
+}
+
+int main()
+{
+	int n, m, i, j;
+	scanf("%d %d", &n, &m);
+	init();
+	for (i = 0; i < m; ++i)
+	{
+		int t, first;
+		scanf("%d %d", &t, &first);
+		t--;
+		for (j = 0; j < t; ++j)
+		{
+			int k;
+			scanf("%d", &k);
+			Union(k, first);
+		}
+	}
+
+	int count[MAX] = { 0 };
+	for (i = 0; i < n; ++i)
+		count[table[i]]++;
+
+	int *c = max_element(count, (count + n));
+	cout << *c << endl;
+	return 0;
+}
+
+
+/*
+struct msg
+{
+	int level;
+	string name;
+	msg(int l, string n) : level(l), name(n) {}
+};
+
+
+bool operator<(const msg m1, const msg m2)
+{
+	return m1.level > m2.level;
+}
+
+
+int main()
+{
+	priority_queue<msg> q;
+	int n;
+	cin >> n;
+	char buffer[10];
+	while (n--)
+	{
+		char name[15];
+		int level;
+		scanf("%s", buffer);
+		if (buffer[0] == 'P')
+		{
+			scanf(" %s %d", name, &level);
+			q.push(msg(level, name));
+		}
+		else
+		{
+			if (!q.empty())
+			{
+				const char *p = q.top().name.c_str(); 
+				printf("%s\n", p);
+				q.pop();
+			}
+			else
+				cout << "EMPTY QUEUE!" << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+struct Tree
+{
+	char c;
+	struct Tree *left, *right;
+	Tree(char cc) : c(cc), left(NULL), right(NULL) {}
+};
+typedef Tree* pointer;
+string pre, mid;
+int current;
+
+int getHeight(pointer p)
+{
+	int height = 0;
+	if (p->left == NULL && p->right == NULL)
+		return 1;
+
+	if (p->left != NULL)
+		height = max(height, getHeight(p->left) + 1);
+	if (p->right != NULL)
+		height = max(height, getHeight(p->right) + 1);
+
+	return height;
+}
+
+pointer genTree(char c, int l, int m, int r)
+{
+	pointer ret = new Tree(c);
+	current++;
+	if (l >= r || l >= m || current >= pre.size())
+		return ret;
+
+	ret->left = genTree(pre[current], l, mid.find(pre[current]), m - 1);
+	if (current >= pre.size())
+		return ret;
+	ret->right = genTree(pre[current], m + 1, mid.find(pre[current]), r);
+
+	return ret;
+}
+
+int main()
+{
+	
+	int n;
+	cin >> n >> pre >> mid;
+
+	current = 0;
+	pointer root = genTree(pre[0], 0, mid.find(pre[0]), pre.size()-1);
+	cout << getHeight(root) << endl;
+	return 0;
+}
+*/
 
 /*
 int main()
@@ -30,13 +181,7 @@ int main()
 }
 */
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <cmath>
-using namespace std;
-
+/*
 int main()
 {
 	long long a;
@@ -48,7 +193,7 @@ int main()
 	printf("%.1lf %.1lf\n", S, high);
 	return 0;
 }
-
+*/
 
 /*
 int gcd(int a, int b)

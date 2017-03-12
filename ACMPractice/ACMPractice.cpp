@@ -3,12 +3,556 @@
 #include "stdafx.h"
 
 #include <iostream>
-#include <string>
 #include <vector>
 #include <queue>
 #include <algorithm>
 #include <cmath>
 using namespace std;
+
+#include <stdio.h>
+
+int main()
+{
+	int choose, people;
+
+	printf("[1]:艺术学院\n[2]:医学院\n");
+	printf("请输入学院对应的编号:\n");
+	scanf("%d", &choose);
+	switch (choose)
+	{
+	case 1:
+		printf("[1]:音乐\n[2]:器乐\n[3]:舞蹈\n");
+		printf("请输入专业对应的编号:\n");
+		scanf("%d", &choose);
+		switch (choose)
+		{
+		case 1:
+			printf("[1]:一年级\n[2]:二年级\n[3]:三年级\n[4]:四年级\n");
+			printf("请输入年级对应的编号:\n");
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				people = 12; break;
+			case 2:
+				people = 11; break;
+			case 3:
+				people = 10; break;
+			case 4:
+				people = 8; break;
+			}
+			break;
+		case 2:
+			printf("[1]:一年级\n[2]:二年级\n[3]:三年级\n[4]:四年级\n");
+			printf("请输入年级对应的编号:\n");
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				people = 21; break;
+			case 2:
+				people = 19; break;
+			case 3:
+				people = 18; break;
+			case 4:
+				people = 16; break;
+			}
+			break;
+		case 3:
+			printf("[1]:一年级\n[2]:二年级\n[3]:三年级\n[4]:四年级\n");
+			printf("请输入年级对应的编号:\n");
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				people = 30; break;
+			case 2:
+				people = 28; break;
+			case 3:
+				people = 26; break;
+			case 4:
+				people = 20; break;
+			}
+		}
+		break;
+	case 2:
+		printf("[1]:护士\n[2]:医生\n");
+		printf("请输入专业对应的编号:\n");
+		scanf("%d", &choose);
+		switch (choose)
+		{
+		case 1:
+			printf("[1]:低年级\n[2]:高年级\n");
+			printf("请输入年级对应的编号:\n");
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				people = 50; break;
+			case 2:
+				people = 40; break;
+			}
+			break;
+		case 2:
+			printf("[1]:低年级\n[2]:中年级\n[3]:高年级\n");
+			printf("请输入年级对应的编号:\n");
+			scanf("%d", &choose);
+			switch (choose)
+			{
+			case 1:
+				people = 30; break;
+			case 2:
+				people = 28; break;
+			case 3:
+				people = /*少一个数字*/; break;
+			}
+			break;
+		}
+		break;
+	}
+	printf("所选专业有 %d 人\n",people);
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int i, n, l, r;
+	vector<int> v;
+	cin >> n;
+	v.resize(n+1);
+	for (i = 1; i <= n; ++i)
+		cin >> v[i];
+	cin >> l >> r;
+
+	if (v[l] == 0)
+		printf("ERROR: T[%d] is NULL\n", l);
+	else if (v[r] == 0)
+		printf("ERROR: T[%d] is NULL\n", r);
+	else
+	{
+		if (l < r)
+			swap(l, r);
+		if (l != 1)
+		{
+			do
+			{
+				l = l / 2;
+				if (l < r)
+					swap(l, r);
+			} while (l != r);
+		}
+
+		printf("%d %d", l, v[l]);
+	}
+	return 0;
+}
+*/
+/*
+vector<int> mid, last;
+int current;
+
+struct Tree
+{
+	int value;
+	Tree *left, *right;
+	Tree(int v) : value(v), left(NULL), right(NULL) {}
+};
+
+int find(int x)
+{
+	int i;
+	for (i = 0; i < mid.size(); ++i)
+		if (mid[i] == x)
+			return i;
+}
+
+Tree* genTree(int v, int l, int r)
+{
+	Tree *ret = new Tree(v);
+	current--;
+
+	if (l >= r)
+		return ret;
+	int mid = find(v);
+	if (current >= 0 && mid != r)
+		ret->right = genTree(last[current], mid + 1, r);
+	if (current >= 0 && mid != l)
+		ret->left = genTree(last[current], l, mid - 1);
+	return ret;
+}
+
+void visit(Tree *p)
+{
+
+	cout << ' ' << p->value;
+	if (p->left)
+		visit(p->left);
+	if (p->right)
+		visit(p->right);
+}
+
+int main()
+{
+	int i, n, t;
+	cin >> n;
+	mid.resize(n);
+	last.resize(n);
+	for (i = 0; i < n; ++i)
+		cin >> last[i];
+	for (i = 0; i < n; ++i)
+		cin >> mid[i];
+
+	current = last.size() - 1;
+	Tree *root = genTree(last[current], 0, current);
+
+	cout << "Preorder:" ;
+	visit(root);
+
+	return 0;
+}
+*/
+
+/*
+vector<int> e[10000];
+int			visited[10000] = { 0 };
+int			gtao[10000] = { 0 };
+int			gS[10000] = { 0 };
+
+struct family
+{
+	int min, people;
+	float tao, s;
+	family(int m, int p, float t, float ss) : min(m), people(p), tao(t), s(ss) {}
+};
+
+vector<family> vfamily;
+
+bool operator<(const family f1, const family f2)
+{
+	if (abs(f1.s - f2.s) > 1e-8)
+		return f1.s > f2.s;
+	else
+		return f1.min < f2.min;
+}
+
+void addpath(int a, int b)
+{
+	int i;
+	for (i = 0; i < e[a].size(); ++i)
+		if (e[a][i] == b)
+			return;
+
+	visited[a] = 0;
+	visited[b] = 0;
+	e[a].push_back(b);
+	e[b].push_back(a);
+}
+
+void bfs()
+{
+	int min, people, tao, s;
+	min = 0x7fffffff;
+	people = tao = s = 0;
+
+	int i, j;
+	for (i = 0; i < 10000; ++i)
+	{
+		min = 0x7fffffff;
+		people = tao = s = 0;
+
+		if (!visited[i])
+		{
+			queue<int> q;
+			q.push(i);
+
+			while (!q.empty())
+			{
+				int now = q.front();
+				q.pop();
+
+				if (visited[now])
+					continue;
+				visited[now] = 1;
+				if (now < min)
+					min = now;
+				people++;
+				tao += gtao[now];
+				s += gS[now];
+
+				for (j = 0; j < e[now].size(); ++j)
+				{
+					int v = e[now][j];
+					if (!visited[v])
+						q.push(v);
+				}
+			}
+			vfamily.push_back(family(min, people, 1.0*tao / people, 1.0*s / people));
+		}
+	}
+}
+
+int main()
+{
+	int n, i, j;
+
+	cin >> n;
+	fill(visited, visited + 10000, 1);
+
+	for (i = 0; i < n; ++i)
+	{
+		int id, parent1, parent2, cc, child, tao, s;
+		cin >> id >> parent1 >> parent2 >> cc;
+
+		if (parent1 != -1)
+			addpath(id, parent1);
+		if (parent2 != -1)
+			addpath(id, parent2);
+
+		for (j = 0; j < cc; ++j)
+		{
+			cin >> child;
+			addpath(id, child);
+		}
+
+		visited[id] = 0;
+
+		cin >> tao >> s;
+		gtao[id] = tao;
+		gS[id] = s;
+	}
+
+	bfs();
+	sort(vfamily.begin(), vfamily.end());
+
+	cout << vfamily.size() << endl;
+	for (i = 0; i < vfamily.size(); ++i)
+		printf("%04d %d %.3f %.3f\n", vfamily[i].min, vfamily[i].people, vfamily[i].tao, vfamily[i].s);
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	char table[30][30][30];
+	int  count[30] = { 0 };
+	char buffer[30];
+	int i, j, len, first, n;
+	
+	scanf("%d", &n);
+	while (n--)
+	{
+		scanf("%s", buffer);
+		len = strlen(buffer);
+		strcpy(table[len][count[len]++], buffer);
+	}
+
+	first = 1;
+	for (i = 1; i < 30; ++i)
+	{
+		int c = count[i];
+		for (j = 0; j < c; ++j)
+		{
+			if (!first)
+				putchar(' ');
+			else
+				first = 0;
+			printf("%s", table[i][j]);
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, i, j;
+	string in;
+	set<string> s;
+	map<string, int> m;
+
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		getline(cin, in);
+		if (in != "")
+		{
+			s.insert(in);
+			for (j = 0; j < in.size(); ++j)
+				if (isupper(in[j]))
+					in[j] = tolower(in[j]);
+			m[in]++;
+		}
+		else
+			i--;
+	}
+	
+	set<string>::iterator it = s.begin();
+	for (; it != s.end(); ++it)
+	{
+		string tmp;
+		tmp = *it;
+		for (i = 0; i < tmp.size(); ++i)
+			if (isupper(tmp[i]))
+				tmp[i] = tolower(tmp[i]);
+		printf("%s %.4lf%%\n", it->c_str(), 100.0*(double(m[tmp]) / n));
+	}
+
+	return 0;
+}
+*/
+
+#include <iostream>
+#include <string>
+#include <queue>
+#include <algorithm>
+#include <cctype>
+using namespace std;
+/*
+struct Tree
+{
+	int value;
+	Tree *left, *right;
+	Tree(int v) : value(v), left(NULL), right(NULL) {}
+};
+
+void insert(Tree *p, int v)
+{
+	if (v < p->value)
+	{
+		if (p->right != NULL)
+			insert(p->right, v);
+		else
+			p->right = new Tree(v);
+	}
+	if (v > p->value)
+	{
+		if (p->left != NULL)
+			insert(p->left, v);
+		else
+			p->left = new Tree(v);
+	}
+}
+
+bool wanquan(Tree *p)
+{
+	bool ret = true;
+	
+	if ((p->left && !p->right) || (!p->left && p->right))
+		return false;
+
+	if (p->left)
+		ret = wanquan(p->left);
+	if (ret && p->right)
+		ret = wanquan(p->right);
+
+	return ret;
+}
+
+bool first = true;
+void visit(Tree *p)
+{
+	queue<Tree*> q;
+
+	q.push(p);
+
+	while (!q.empty())
+	{
+		p = q.front();
+		q.pop();
+
+		if (!first)
+			putchar(' ');
+		else
+			first = false;
+		cout << p->value;
+		if (p->left != NULL)
+			q.push(p->left);
+		if (p->right != NULL)
+			q.push(p->right);
+	}
+}
+
+int main()
+{
+	int  t, n;
+	cin >> n >> t;
+	Tree *root = new Tree(t);
+	n--;
+	while (n--)
+	{
+		cin >> t;
+		insert(root, t);
+	}
+
+	visit(root);
+	cout << endl;
+	if (wanquan(root))
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	// 一般的二维数组
+	int table[100][100];
+
+	// 下面两个操作都是合法的，因为内存已经分配了
+	table[5][5] = 0;
+	table[99][99] = 0;
+
+	// 与之对应的动态二维数组有两种
+
+	vector<vector<int>> dyn1;
+	vector<int>         dyn2[100];
+
+	// 此时 dy1,是一点内存都没分配的，
+	// dy2 则是一个容量为100的 vector<int> 的数组
+	// 此时
+	// 对 dyn1 进行下标访问时非法的，
+	// 对dyn2 则是合法的
+	//dyn1[2].push_back(1);   // 非法
+	//dyn2[4].push_back(2);   // 合法
+
+	//可以这样为 dyn1 分配内存，这样dyn1的第一维就是一个长度为100的 vector<int>数组
+	//dyn1.resize(100);
+	//dyn1[2].push_back(1);   // 合法
+	
+
+	// 现在两者基本等价
+	// 也就是说，dyn1 是长度和宽度都可以 动态决定的
+	// dyn2 的长度是 100， 但宽度是可以 动态决定的
+
+	// 实例
+	// dyn2 分别赋值为长度为 1,2,3 ... n 的元素
+	dyn2[4].clear();
+	for (int i = 0; i < 100; ++i)
+		for (int j = 0; j <= i; ++j)
+			dyn2[i].push_back(j);
+
+	for (int i = 0; i < 100; ++i)
+	{
+		for (int j = 0; j < dyn2[i].size(); ++j)
+			cout << dyn2[i][j] << ' ';
+		cout << endl;
+	}
+
+	// 这种情况下， dyn2 中每个 vector<int> 分配的内存可以认为是不相等的
+	
+}
+*/
 
 
 
@@ -291,6 +835,9 @@ int main()
 */
 
 /*
+#include <iostream>
+#include <algorithm>
+using namespace std;
 const int MAX = 30005;
 int table[MAX];
 
@@ -330,6 +877,9 @@ int main()
 			Union(k, first);
 		}
 	}
+
+	for (i = 0; i < n; ++i)
+		find(i);
 
 	int count[MAX] = { 0 };
 	for (i = 0; i < n; ++i)

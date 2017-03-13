@@ -1,6 +1,262 @@
 // ACMPractice.cpp : 定义控制台应用程序的入口点。
 //
 #include "stdafx.h"
+/*
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stack>
+#include <map>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+*/
+
+/*
+const int INF = 0x7fffffff;
+const int MAX = 205;
+
+map<string, int> name2i;
+vector<string> i2name;
+int army[MAX] = { 0 };
+int Map[MAX][MAX] = { 0 };
+int visited[MAX] = { 0 };
+int mappsize;
+
+int dis[MAX];
+int pathnumber[MAX] = { 0 };
+int kill[MAX] = { 0 };
+vector<int> path;
+int road = 0;
+
+int n, k;
+
+int findnext()
+{
+	int mindis, id;
+	mindis = INF;
+	id = -1;
+	for (int i = 0; i < n; ++i)
+	{
+		if (!visited[i] && dis[i] != INF)
+			if (dis[i] < mindis)
+			{
+				id = i;
+				mindis = dis[i];
+			}
+	}
+	return id;
+}
+
+void djstra(int start, int end)
+{
+	fill(dis, dis + MAX, INF);
+	fill(pathnumber, pathnumber + MAX, INF);
+	fill(kill, kill + MAX, INF);
+
+	dis[start] = 0;
+	pathnumber[start] = 0;
+	kill[start] = 0;
+	path.resize(n);
+	path[start] = -1;
+
+	for (int i = 0; i < n; ++i)
+	{
+		int id = findnext();
+		if (id == -1)
+			return;
+
+		visited[id] = 1;
+
+		if (id == end)
+			break;
+
+		for (int j = 0; j < n; ++j)
+		{
+			if (!visited[j] && Map[id][j])
+			{
+				if (dis[id] + Map[id][j] < dis[j])
+				{
+					dis[j] = dis[id] + Map[id][j];
+					pathnumber[j] = pathnumber[id] + 1;
+					kill[j] = kill[id] + army[j];
+					path[j] = id;
+				}
+				else if (dis[id] + Map[id][j] == dis[j])
+				{
+					if (pathnumber[j] < pathnumber[id] + 1)
+					{
+						pathnumber[j] = pathnumber[id] + 1;
+						kill[j] = kill[id] + army[j];
+						path[j] = id;
+					}
+					else if (pathnumber[j] == pathnumber[id] + 1)
+					{
+						if (kill[j] < kill[id] + army[j])
+						{
+							kill[j] = kill[id] + army[j];
+							path[j] = id;
+						}
+					}
+				}
+
+			}
+		}
+	}
+}
+
+void dfs(int start, int end)
+{
+	if (start == end)
+	{
+		road++;
+		return;
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		if (!visited[i] && Map[start][i] && dis[start] + Map[start][i] == dis[i])
+		{
+			visited[i] = 1;
+			dfs(i, end);
+			visited[i] = 0;
+		}
+	}
+}
+
+int savename(const string &str)
+{
+	if (name2i.find(str) != name2i.end())
+		return name2i[str];
+	i2name[mappsize] = str;
+	name2i[str] = mappsize;
+	return mappsize++;
+}
+
+int main()
+{
+	string s1,s2;
+	scanf("%d %d", &n, &k);
+	i2name.resize(n);
+	mappsize = 0;
+
+	int start, end, i,j;
+	cin >> s1 >> s2;
+	start = savename(s1);
+	end   = savename(s2);
+
+	for (i = 0; i < n - 1; ++i)
+	{
+		cin >> s1 >> j;
+		int id = savename(s1);
+		army[id] = j;
+	}
+	for (i = 0; i < k; ++i)
+	{
+		int a, b, c;
+		cin >> s1 >> s2 >> c;
+		a = savename(s1);
+		b = savename(s2);
+		Map[a][b] = Map[b][a] = c;
+	}
+
+	djstra(start, end);
+	fill(visited, visited + MAX, 0);
+	dfs(start, end);
+
+	stack<int> st;
+	int e = end;
+	while (e != -1)
+	{
+		st.push(e);
+		e = path[e];
+	}
+
+	cout << i2name[st.top()];
+	st.pop();
+	while(!st.empty())
+	{
+		cout << "->" << i2name[st.top()];
+		st.pop();
+	}
+	cout << endl;
+	
+	int mindis, killall = 0;
+	mindis = dis[end];
+	killall = kill[end];
+
+	cout << road << ' ' << mindis << ' ' << killall << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+const int MAX = 105;
+int table[MAX];
+int map[MAX][MAX] = { 0 };
+
+void init()
+{
+	for (int i = 0; i < MAX; ++i)
+		table[i] = i;
+}
+
+int find(int x)
+{
+	if (x != table[x])
+		return table[x] = find(table[x]);
+	return x;
+}
+
+void Union(int a, int b)
+{
+	table[find(a)] = find(b);
+}
+
+bool conncted(int a, int b)
+{
+	return find(a) == find(b);
+}
+
+int main()
+{
+	int n, m, k, i;
+	cin >> n >> m >> k;
+	init();
+	for (i = 0; i < m; ++i)
+	{
+		int a, b, c;
+		cin >> a >> b >> c;
+		if (c == -1)
+			map[a][b] = map[b][a] = -1;
+		else
+			Union(a, b);
+	}
+	for (i = 0; i < k; ++i)
+	{
+		int a, b;
+		cin >> a >> b;
+		if (conncted(a, b))
+		{
+			if (map[a][b] != -1)
+				cout << "No problem" << endl;
+			else if (map[a][b] == -1)
+				cout << "OK but..." << endl;
+		}
+		else
+		{
+			if (map[a][b] != -1)
+				cout << "OK" << endl;
+			else if (map[a][b] == -1)
+				cout << "No way" << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
 
 #include <iostream>
 #include <vector>
@@ -9,114 +265,143 @@
 #include <cmath>
 using namespace std;
 
-#include <stdio.h>
+const int MAX = 1005;
+int map[MAX][MAX] = {0}, path[2 * MAX];
+int visited[MAX] = { 0 };
+int current, n, m, s;
+
+void dfs(int start)
+{
+	int i;
+	for (i = 1; i <= n; ++i)
+	{
+		if (map[start][i] == 1 && !visited[i])
+		{
+			visited[i] = 1;
+			path[current++] = i;
+			dfs(i);
+			path[current++] = start;
+		}
+	}
+}
 
 int main()
 {
-	int choose, people;
+	int i;
+	cin >> n >> m >> s;
 
-	printf("[1]:艺术学院\n[2]:医学院\n");
-	printf("请输入学院对应的编号:\n");
-	scanf("%d", &choose);
-	switch (choose)
+	for (i = 0; i < m; ++i)
 	{
-	case 1:
-		printf("[1]:音乐\n[2]:器乐\n[3]:舞蹈\n");
-		printf("请输入专业对应的编号:\n");
-		scanf("%d", &choose);
-		switch (choose)
-		{
-		case 1:
-			printf("[1]:一年级\n[2]:二年级\n[3]:三年级\n[4]:四年级\n");
-			printf("请输入年级对应的编号:\n");
-			scanf("%d", &choose);
-			switch (choose)
-			{
-			case 1:
-				people = 12; break;
-			case 2:
-				people = 11; break;
-			case 3:
-				people = 10; break;
-			case 4:
-				people = 8; break;
-			}
-			break;
-		case 2:
-			printf("[1]:一年级\n[2]:二年级\n[3]:三年级\n[4]:四年级\n");
-			printf("请输入年级对应的编号:\n");
-			scanf("%d", &choose);
-			switch (choose)
-			{
-			case 1:
-				people = 21; break;
-			case 2:
-				people = 19; break;
-			case 3:
-				people = 18; break;
-			case 4:
-				people = 16; break;
-			}
-			break;
-		case 3:
-			printf("[1]:一年级\n[2]:二年级\n[3]:三年级\n[4]:四年级\n");
-			printf("请输入年级对应的编号:\n");
-			scanf("%d", &choose);
-			switch (choose)
-			{
-			case 1:
-				people = 30; break;
-			case 2:
-				people = 28; break;
-			case 3:
-				people = 26; break;
-			case 4:
-				people = 20; break;
-			}
-		}
-		break;
-	case 2:
-		printf("[1]:护士\n[2]:医生\n");
-		printf("请输入专业对应的编号:\n");
-		scanf("%d", &choose);
-		switch (choose)
-		{
-		case 1:
-			printf("[1]:低年级\n[2]:高年级\n");
-			printf("请输入年级对应的编号:\n");
-			scanf("%d", &choose);
-			switch (choose)
-			{
-			case 1:
-				people = 50; break;
-			case 2:
-				people = 40; break;
-			}
-			break;
-		case 2:
-			printf("[1]:低年级\n[2]:中年级\n[3]:高年级\n");
-			printf("请输入年级对应的编号:\n");
-			scanf("%d", &choose);
-			switch (choose)
-			{
-			case 1:
-				people = 30; break;
-			case 2:
-				people = 28; break;
-			case 3:
-				people = /*少一个数字*/; break;
-			}
-			break;
-		}
-		break;
+		int a, b;
+		cin >> a >> b;
+		map[a][b] = map[b][a] = 1;
 	}
-	printf("所选专业有 %d 人\n",people);
+	current = 0;
+	path[current++] = s;
+	visited[s] = 1;
+	dfs(s);
+
+	bool allvisit = true;
+	for (i = 1; i <= n; ++i)
+	{
+		if (!visited[i])
+			allvisit = false;
+	}
+
+
+	cout << path[0];
+	for (i = 1; i < current; ++i)
+		cout << ' ' << path[i];
+	if (!allvisit)
+		cout << ' ' << 0;
 
 	return 0;
 }
+*/
+
 
 
 /*
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+int table[1005];
+int e[1005] = { 0 };
+
+void init()
+{
+	for (int i = 0; i < 1005; ++i)
+		table[i] = i;
+}
+
+int find(int x)
+{
+	if (x != table[x])
+		return table[x] = find(table[x]);
+	return x;
+}
+
+void Union(int a, int b)
+{
+	table[find(a)] = find(b);
+}
+
+
+int main()
+{
+	int n, m, i;
+	cin >> n >> m;
+	init();
+	for (i = 0; i < m; ++i)
+	{
+		int a, b;
+		scanf("%d %d", &a, &b);
+		Union(a, b);
+		e[a]++;
+		e[b]++;
+	}
+
+	int current = find(1);
+	for (i = 1; i <= n; ++i)
+	{
+		if (find(i) != current)
+		{
+			cout << 0 << endl;
+			return 0;
+		}
+	}
+
+	for (i = 1; i <= n; ++i)
+	{
+		if (e[i]%2 == 1)
+		{
+			cout << 0 << endl;
+			return 0;
+		}
+	}
+
+	cout << 1 << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stack>
+#include <map>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
 int main()
 {
 	int i, n, l, r;
@@ -142,6 +427,16 @@ int main()
 				l = l / 2;
 				if (l < r)
 					swap(l, r);
+				if (v[l] == 0)
+				{
+					printf("ERROR: T[%d] is NULL\n", l);
+					return 0;
+				}
+				else if (v[r] == 0)
+				{
+					printf("ERROR: T[%d] is NULL\n", r);
+					return 0;
+				}
 			} while (l != r);
 		}
 
@@ -150,6 +445,7 @@ int main()
 	return 0;
 }
 */
+
 /*
 vector<int> mid, last;
 int current;
@@ -408,14 +704,14 @@ int main()
 	return 0;
 }
 */
-
+/*
 #include <iostream>
 #include <string>
 #include <queue>
 #include <algorithm>
 #include <cctype>
 using namespace std;
-/*
+
 struct Tree
 {
 	int value;
@@ -425,14 +721,14 @@ struct Tree
 
 void insert(Tree *p, int v)
 {
-	if (v < p->value)
+	if (v <= p->value)
 	{
 		if (p->right != NULL)
 			insert(p->right, v);
 		else
 			p->right = new Tree(v);
 	}
-	if (v > p->value)
+	else
 	{
 		if (p->left != NULL)
 			insert(p->left, v);

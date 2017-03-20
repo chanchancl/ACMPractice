@@ -1,13 +1,230 @@
 
-
 #include <iostream>
 #include <algorithm>
 #include <stack>
 #include <queue>
 #include <vector>
 #include <functional>
+#include <utility>
 using namespace std;
 
+int d[21] = {0};
+
+void insert(int root, int x)
+{
+	if (d[root] == 0)
+	{
+		d[root] = x;
+		return;
+	}
+	if (x > d[root])
+		insert(root * 2, x);
+	else
+		insert(root * 2 + 1, x);
+}
+
+int main()
+{
+	int i, t, n;
+	cin >> n;
+
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		insert(1, t);
+	}
+
+	bool yes = true;
+	for (i = 1; i <= n; ++i)
+	{
+		if (d[i] != 0)
+		{
+			if (i != 1)
+				putchar(' ');
+			printf("%d", d[i]);
+		}
+		else
+		{
+			n++;
+			yes = false;
+		}
+	}
+	putchar('\n');
+	if (yes)
+		printf("YES\n");
+	else
+		printf("NO\n");
+	return 0;
+}
+
+/*
+typedef pair<int,int> line;
+
+const int MAX = 505;
+int table[MAX] = { 0 };
+void init()
+{
+	for (int i = 0; i < MAX; ++i)
+		table[i] = i;
+}
+int find(int x)
+{
+	if (x == table[x])
+		return x;
+	return table[x] = find(table[x]);
+}
+void merge(int x, int y)
+{
+	table[find(y)] = table[find(x)];
+}
+int count(int end)
+{
+	int ret = 0;
+	for (int i = 0; i < end; ++i)
+		if (find(i) == i)
+			ret++;
+	return ret;
+}
+
+int main()
+{
+	vector<line> v;
+	int n, m, i;
+
+	cin >> n >> m;
+	v.resize(m);
+	init();
+	for (i = 0; i < m; ++i)
+	{
+		cin >> v[i].first >> v[i].second;
+		merge(v[i].first, v[i].second);
+	}
+	
+	int before, now;
+	before = count(n);
+
+	int k;
+	cin >> k;
+
+	for (i = 0; i < k; ++i)
+	{
+		int t;
+		cin >> t;
+		vector<line>::iterator it = v.begin();
+		init();
+		for (; it != v.end();)
+		{
+			if (it->first == t || it->second == t)
+				it = v.erase(it);
+			else
+			{
+				merge(it->first, it->second);
+				it++;
+			}
+		}
+		now = count(n);
+
+		if (before == now || before + 1 == now)
+			printf("City %d is lost.\n", t);
+		else
+			printf("Red Alert: City %d is lost!\n", t);
+		before = now;
+	}
+	if (now == n)
+		printf("Game Over.\n");
+	return 0;
+}
+
+*/
+
+
+/*
+
+// ½±ÅÆ°ñ
+
+struct country
+{
+	int gold, jiang;
+	int people;
+
+	double agold, ajiang;
+	int rank[4];
+	int id;
+};
+
+
+vector<country> vc;
+
+int main()
+{
+	int n, m, i, t;
+	cin >> n >> m;
+	vc.resize(n);
+
+	for (i = 0; i < n; ++i)
+	{
+		vc[i].id = i;
+		cin >> vc[i].gold >> vc[i].jiang >> vc[i].people;
+		vc[i].agold = 1.0*vc[i].gold / vc[i].people;
+		vc[i].ajiang = 1.0*vc[i].jiang / vc[i].people;
+	}
+
+	sort(vc.begin(), vc.end(), [](const country c1, const country c2) {
+		return c1.gold > c2.gold;
+	});
+	for (i = 0; i < n; ++i)
+		vc[i].rank[0] = i;
+
+	sort(vc.begin(), vc.end(), [](const country c1, const country c2) {
+		return c1.jiang > c2.jiang;
+	});
+	for (i = 0; i < n; ++i)
+		vc[i].rank[1] = i;
+
+	sort(vc.begin(), vc.end(), [](const country c1, const country c2) {
+		return c1.agold > c2.agold;
+	});
+	for (i = 0; i < n; ++i)
+		vc[i].rank[2] = i;
+
+	sort(vc.begin(), vc.end(), [](const country c1, const country c2) {
+		return c1.ajiang > c2.ajiang;
+	});
+	for (i = 0; i < n; ++i)
+		vc[i].rank[3] = i;
+
+	int j,k;
+
+	for (i = 0; i < m; ++i)
+	{
+		int c, min = 99999, method;
+		cin >> c;
+		for (j = 0; j < vc.size(); ++j)
+		{
+			if (c == vc[j].id)
+			{
+				k = j;
+				break;
+			}
+		}
+		for (j = 0; j < 4; ++j)
+		{
+			if (min > vc[k].rank[j])
+			{
+				min = vc[k].rank[j];
+				method = j;
+			}
+		}
+		if (i != 0)
+			cout << ' ';
+		printf("%d:%d", min + 1, method+1);
+	}
+
+	return 0;
+}
+*/
+
+/*
 const int MAX = 505;
 const int INF = 0x7fffffff;
 int mapdis[MAX][MAX] = { {0} };
@@ -188,6 +405,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 // dfs Á·Ï°

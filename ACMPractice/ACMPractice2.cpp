@@ -1,13 +1,249 @@
 
 #include <iostream>
 #include <algorithm>
-#include <stack>
+#include <set>
 #include <queue>
 #include <vector>
 #include <functional>
-#include <utility>
+#include <string>
 using namespace std;
 
+int main()
+{
+	int table[200] = { 0 };
+	int n, m, i, head, tail;
+	cin >> n >> m;
+	tail = 0;
+	head = n-1;
+	for (i = 0; i < n; ++i)
+		cin >> table[i];
+	
+	head = (head - m) % n;
+	tail = (tail - m) % n;
+	if (head < 0)
+		head += n;
+	if (tail < 0)
+		tail += n;
+
+	cout << table[tail];
+	for (; tail != head && n != 1; )
+	{
+		++tail;
+		tail %= n;
+		cout << ' ' << table[tail];
+	}
+	return 0;
+}
+
+
+/*
+bool is_prime(int x)
+{
+	int end = sqrt(x), i;
+	if (x == 1)
+		return false;
+	for (i = 2; i <= end; ++i)
+		if (x % i == 0)
+			return false;
+	return true;
+}
+
+int next_prime(int x)
+{
+	do
+	{
+		++x;
+	} while (!is_prime(x));
+	return x;
+}
+
+
+int main()
+{
+	int n;
+	cin >> n;
+	
+	int now = 3, c = 0;
+	while (now <= n)
+	{
+		int next = next_prime(now);
+		if (next > n)
+			break;
+		int d = next - now;
+		if (d == 2)
+			c++;
+		now = next;
+	}
+	cout << c;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int in, a, b, c, i;
+	cin >> in;
+
+	a = in / 100;
+	b = (in % 100) / 10;
+	c = in % 10;
+	
+	if (a > 0)
+		cout << string(a, 'B');
+	if (b > 0)
+		cout << string(b, 'S');
+
+	for (i = 1; i <= c; ++i)
+		cout << i;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int d[10000] = { 0 };
+	int n, in;
+	cin >> n;
+
+	set<int, greater<int> > out;
+	
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> in;
+		int before;
+		bool start = true;
+		while (in != 1)
+		{
+			if (d[in] == 0)
+			{
+				if (start)
+				{
+					out.insert(in);
+					start = false;
+				}
+				before = in;
+				if (in % 2 == 0)
+					in /= 2;
+				else
+					in = (in * 3 + 1) / 2;
+				d[before] = in;
+			}
+			else
+			{
+				if (!start)
+					out.erase(in);
+				break;
+			}
+		}
+	}
+
+	set<int>::iterator it = out.begin();
+	bool first = true;
+	while (it != out.end())
+	{
+		if (!first)
+			cout << ' ';
+		else
+			first = false;
+		cout << *it;
+		it++;
+	}
+	return 0;
+}
+*/
+
+
+
+/*
+struct stu
+{
+	string name, number;
+	int chengji;
+};
+
+
+bool operator<(stu s1, stu s2)
+{
+	return s1.chengji > s2.chengji;
+}
+
+
+int main()
+{
+	int i, n;
+	cin >> n;
+	vector<stu> v;
+	v.resize(n);
+
+	for (i = 0; i < n; ++i)
+		cin >> v[i].name >> v[i].number >> v[i].chengji;
+
+	sort(v.begin(), v.end());
+
+	cout << v[0].name << ' ' << v[0].number << endl;
+	int end = v.size() - 1;
+	cout << v[end].name << ' ' << v[end].number << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int in, n;
+	cin >> in;
+	n = 0;
+	while (in != 1)
+	{
+		n++;
+		if (in % 2 == 0)
+			in /= 2;
+		else
+			in = (in * 3 + 1) / 2;
+	}
+	cout << n;
+	return 0;
+}
+*/
+
+/*
+
+int main()
+{
+	int sum, i;
+	string pin[10] = {
+		"ling", "yi", "er", "san", "si", "wu",
+		"liu", "qi", "ba", "jiu",
+	};
+	stack<string> out;
+	string in;
+	cin >> in;
+
+	sum = 0;
+	for (i = 0; i < in.size(); ++i)
+		sum += (in[i] - '0');
+
+	while (sum)
+	{
+		int d = sum % 10;
+		out.push(pin[d]);
+		sum /= 10;
+	}
+
+	while (!out.empty())
+	{
+		cout << out.top();
+		out.pop();
+		if (!out.empty())
+			cout << ' ';
+	}
+	return 0;
+}
+*/
+
+/*
 int d[21] = {0};
 
 void insert(int root, int x)
@@ -56,6 +292,7 @@ int main()
 		printf("NO\n");
 	return 0;
 }
+*/
 
 /*
 typedef pair<int,int> line;

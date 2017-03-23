@@ -1,13 +1,744 @@
 
 #include <iostream>
-#include <algorithm>
-#include <set>
-#include <queue>
 #include <vector>
-#include <functional>
+#include <queue>
+#include <algorithm>
 #include <string>
+#include <set>
+#include <cmath>
+#include <functional>
 using namespace std;
 
+int n,m;
+vector<int> heap;
+
+
+int find(int x)
+{
+	for(int i=1; i <=n;++i)
+		if (heap[i] == x)
+			return i;
+	return -1;
+}
+
+int main()
+{
+	int i,t;
+	cin >> n >> m;
+	heap.resize(n+1);
+	for(i=1; i <= n; ++i)
+		cin >> heap[i];
+		
+	make_heap(heap.begin()+1, heap.end(), greater<int>());
+	
+	for(i=1; i <= n; ++i)
+	{
+		if (i != 1)
+			cout << ' ';
+		cout << heap[i];
+	}
+	cout << endl;
+	for(i=0; i < m; ++i)
+	{
+		string line;
+		getline(cin, line);
+		if (line.size() == 0)
+		{
+			i--;
+			continue;
+		}
+		if (line.find("root") != string::npos)
+		{
+			int id;
+			sscanf(line.c_str(), "%d is the root", &id);
+			if (heap[1] == id)
+				printf("T\n");
+			else
+				printf("F\n");
+		}
+		else if (line.find("siblings") != string::npos)
+		{
+			int a,b;
+			sscanf(line.c_str(), "%d and %d are siblings", &a, &b);
+			
+			a = int(log(find(a))/log(2));
+			b = int(log(find(b))/log(2));
+			if (a == b)
+				printf("T\n");
+			else
+				printf("F\n");
+		}
+		else if (line.find("parent") != string::npos)
+		{
+			int a,b;
+			sscanf(line.c_str(), "%d is the parent of %d", &a, &b);
+			
+			a = find(a);
+			b = find(b);
+			if (b/2 == a)
+				printf("T\n");
+			else
+				printf("F\n");
+		}
+		else
+		{
+			int a,b;
+			sscanf(line.c_str(), "%d is a child of %d", &a, &b);
+			
+			a = find(a);
+			b = find(b);
+			if (a/2 == b)
+				printf("T\n");
+			else
+				printf("F\n");
+		}
+	}
+	
+	
+	return 0;
+}
+
+
+/*
+const int MAX = 100005;
+int d[MAX];
+set<int> noSingle;
+
+void init()
+{
+	for(int i=0; i <MAX;++i)
+		d[i] = i;
+}
+
+int find(int x)
+{
+	if (x == d[x])
+		return x;
+	return d[x] = find(d[x]);
+}
+
+void merge(int x, int y)
+{
+	d[find(y)] = d[find(x)];
+}
+
+int count(int x)
+{
+	int ret = 0;
+	for(int i=0; i <MAX;++i)
+	{
+		if (i != x && find(i) == x)
+		{
+			ret++;
+			return ret;
+		}
+	}
+	return ret;
+}
+
+bool single(int x)
+{
+	if (find(x) != x)
+		return false;
+	if (noSingle.find(x) != noSingle.end())
+		return false;
+	
+	return true;
+}
+
+int main()
+{
+	int n,k,m,i,j;
+	cin >> n;
+	vector<int> out;
+	init();
+	for(i=0;i<n;++i)
+	{
+		int head, tmp;
+		scanf("%d %d", &k, &head);
+		if (k > 1)
+			noSingle.insert(head);
+		for(j=1; j < k;++j)
+		{
+			scanf("%d", &tmp);
+			merge(tmp,head);
+			noSingle.insert(tmp);
+		}
+	}
+	cin >> m;
+	for(i=0; i < m; ++i)
+	{
+		int tmp;
+		scanf("%d", &tmp);
+		if (single(tmp))
+		{
+			if (find(out.begin(), out.end(), tmp) == out.end())
+				out.push_back(tmp);
+		}
+			
+	}
+	if (!out.empty())
+	{
+		for(i=0; i < out.size(); ++i)
+		{
+			if (i != 0)
+				cout << ' ';
+			printf("%05d", out[i]);
+		}
+	}
+	else
+		cout << "No one is handsome";
+	cout << endl;
+	return 0;
+}
+*/
+
+/*
+int n,m,k;
+vector<int> e[10005];
+int visited[10005];
+
+
+struct node
+{
+	int id;
+	int deep;
+	node() {}
+	node(int i, int d) : id(i), deep(d) {}
+};
+
+int bfs(int s)
+{
+	node ans(0,0);
+	
+	queue<node> q;
+	q.push(node(s,0));
+	visited[s] = 1;
+	
+	while(!q.empty())
+	{
+		node now = q.front();
+		q.pop();
+		if (now.deep == ans.deep)
+			ans.id = min(ans.id, now.id);
+		if (ans.deep < now.deep)
+			ans.id = now.id, ans.deep = now.deep;
+		
+		for(int i=0; i < e[now.id].size(); ++i)
+		{
+			int v = e[now.id][i];
+			if(visited[v])
+				continue;
+			visited[v] = 1;
+			q.push(node(v,now.deep+1));
+		}
+	}
+	
+	return ans.id;
+}
+
+int main()
+{
+	int i;
+	cin >> n >> m >> k;
+	
+	for(i = 0; i <m; ++i)
+	{
+		int a,b;
+		cin >> a >> b;
+		e[a].push_back(b);
+		e[b].push_back(a);
+	}
+	for(i = 0; i < k; ++i)
+	{
+		int a;
+		cin >> a;
+		memset(visited, 0, sizeof(visited));
+		cout << bfs(a) << endl;
+	}
+	
+	return 0;
+}
+*/
+
+
+/*
+vector<int> pre,mid;
+int current;
+
+struct Tree
+{
+	int value;
+	Tree *left, *right;
+	Tree(int v) : value(v), left(NULL), right(NULL) {}
+};
+
+int find(int value)
+{
+	for(int i=0; i <mid.size(); ++i)
+	{
+		if (mid[i] == value)
+			return i;
+	}
+	return -1;
+}
+
+Tree* buildTree(int value, int l, int r)
+{
+	Tree* ret = new Tree(value);
+	current++;
+	if (l >= r || current > mid.size())
+		return ret;
+	
+	int m = find(value);
+	
+	if (current < mid.size() && l != m)
+		ret->left = buildTree(pre[current], l, m-1);
+	if (current < mid.size() && r != m)
+		ret->right = buildTree(pre[current], m+1, r);
+	
+	return ret; 
+}
+
+void translate(Tree *p)
+{
+	if (p == NULL)
+		return;
+	translate(p->left);
+	translate(p->right);
+	Tree *tmp = p->left;
+	p->left = p->right;
+	p->right = tmp;
+}
+
+void visit(Tree *p)
+{
+	queue<Tree*> q;
+	q.push(p);
+	
+	bool first = true;
+	
+	while(!q.empty())
+	{
+		p = q.front();
+		q.pop();
+		if (first)
+			first = false;
+		else
+			cout << ' ';
+		cout << p->value;
+		if (p->left != NULL)
+			q.push(p->left);
+		if (p->right != NULL)
+			q.push(p->right);
+	}
+}
+
+int main()
+{
+	int n,i;
+	cin >> n;
+	pre.resize(n);
+	mid.resize(n);
+	
+	for(i=0; i < n;++i)
+		cin >> mid[i];
+	for(i=0;i < n; ++i)
+		cin >> pre[i];
+	
+	current = 0;
+	Tree *root = buildTree(pre[current],0, pre.size()-1);
+	translate(root);
+	visit(root);
+	
+	return 0;
+}
+*/
+
+/*
+const int MAX = 105;
+
+int didui[MAX][MAX] = {0};
+
+int d[MAX];
+void init()
+{
+	for(int i=0; i <MAX;++i)
+		d[i] = i;
+}
+
+int find(int x)
+{
+	if (x == d[x])
+		return x;
+	return d[x] = find(d[x]);
+}
+
+void merge(int x, int y)
+{
+	d[find(y)] = d[find(x)];
+}
+
+int n,m,k;
+
+int main()
+{
+	int i;
+	cin >> n >> m >> k;
+	
+	init();
+	for(i=0; i < m; ++i)
+	{
+		int a,b,c;
+		cin >> a >> b >> c;
+		if (c == 1)
+			merge(a,b);
+		else
+			didui[a][b] = didui[b][a] = 1;
+	}
+	for(i=0; i < k; ++i)
+	{
+		int a,b;
+		cin >> a >> b;
+		if (find(a) == find(b))
+		{
+			if (didui[a][b] == 0)
+			{
+				cout << "No problem" << endl;
+			}
+			else
+			{
+				cout << "OK but..." << endl;
+			}
+		}
+		else
+		{
+			if (didui[a][b] == 0)
+			{
+				cout << "OK" << endl;
+			}
+			else
+			{
+				cout << "No way" << endl;
+			}
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+struct peo
+{
+	int id;
+	double total;
+	peo() {}
+	peo(int i, double t) : id(i), total(t) {}
+};
+
+int countt[10005] = {0};
+
+bool operator<(peo p1, peo p2)
+{
+	if (fabs(p1.total-p2.total) < 1e-6)
+	{
+		if (countt[p1.id] == countt[p2.id])
+		{
+			return p1.id < p2.id;
+		}
+		else
+			return countt[p1.id] > countt[p2.id];
+	}
+	else
+		return p1.total > p2.total;
+}
+
+int main()
+{
+	int receive[10005] = {0};
+	int send[10005] = {0};
+	
+	vector<peo> v;
+	
+	int n,i;
+	cin >> n;
+	for(i=1; i <= n; ++i)
+	{
+		int m;
+		cin >> m;
+		for(int j=1; j <= m; ++j)
+		{
+			int a,b;
+			cin >> a >> b;
+			countt[a]++;
+			receive[a] += b;
+			send[i] += b;
+		}
+	}
+	v.resize(n);
+	for(i=1; i <=n; ++i)
+	{
+		v[i-1].id = i;
+		v[i-1].total = (1.0*receive[i] - send[i])/100;
+	}
+	sort(v.begin(),v.end());
+	
+	for(i=0; i < n; ++i)
+	{
+		printf("%d %.2lf\n", v[i].id, v[i].total);
+	}
+	return 0;
+}
+*/
+
+
+
+/*
+int main()
+{
+	int in;
+	cin >> in;
+	in = (in+2-1)%7 + 1;
+	printf("%d",in);
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int g,p,l,t,i;
+	g=p=l=t = 0;
+	string in;
+	cin >> in;
+	
+	for(i=0; i < in.size(); ++i)
+	{
+		if (in[i] == 'g' || in[i] == 'G')
+			g++;
+		else if (in[i] == 'p' || in[i] == 'P')
+			p++;
+		else if (in[i] == 'l' || in[i] == 'L')
+			l++;
+		else if (in[i] == 't' || in[i] == 'T')
+			t++;
+	}
+
+	while (g || p || l || t)
+	{
+		if (g > 0)
+		{
+			putchar('G');
+			g--;
+		}
+		if (p > 0)
+		{
+			putchar('P');
+			p--;
+		}
+		if (l > 0)
+		{
+			putchar('L');
+			l--;
+		}
+		if (t > 0)
+		{
+			putchar('T');
+			t--;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,a,b;
+	a = b = 0;
+	cin >> n;
+	while(n--)
+	{
+		int t;
+		cin >> t;
+		if (t % 2 == 1)
+			a++;
+		else
+			b++; 
+	}
+	printf("%d %d", a,b);
+}
+*/
+
+/*
+int main()
+{
+	for(int i=0; i <3;++i)
+		printf("I'm gonna WIN!\n");
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int aMax,bMax;
+	int aHe,bHe;
+	int aHan,bHan;
+	int aHua,bHua;
+	
+	int i,n;
+	cin >> aMax >> bMax;
+	cin >> n;
+	
+	bool agg,bgg;
+	agg = bgg = false;
+	aHe = bHe = 0;
+	for(i=0; i < n;++i)
+	{
+		cin >> aHan >> aHua >> bHan >> bHua;
+		int Han = aHan + bHan;
+		
+		if (aHua == Han && bHua == Han)
+			continue;
+		
+		if (aHua == Han)
+		{
+			aHe++;
+			if (aHe > aMax)
+			{
+				agg = true;
+				break;
+			}
+		}
+		else if (bHua == Han)
+		{
+			bHe++;
+			if (bHe > bMax)
+			{
+				bgg = true;
+				break;
+			}
+		}
+	}
+	if (agg)
+		cout << "A" << endl << bHe;
+	else
+		cout << "B" << endl << aHe;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int hour,m;
+	scanf("%d:%d", &hour, &m);
+	if (hour >= 0 && hour <= 12)
+		printf("Only %02d:%02d.  Too early to Dang.", hour,m);
+	else
+	{
+		int n = hour - 12;
+		for(int i=0; i < n; ++i)
+			printf("Dang");
+		if (m > 0)
+			printf("Dang");
+	}
+	
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	bool fu;
+	int count;
+	string in;
+	cin >> in;
+	fu = false;
+	if (in[0] == '-')
+	{
+		fu = true;
+		in.erase(in.begin());
+	}
+	count = 0;
+	for(int i=0; i < in.size(); ++i)
+	{
+		if (in[i] == '2')
+			count++;
+	}
+	double ret;
+	ret = 1.0*count/in.size();
+	if (fu)
+		ret *= 1.5;
+	if ((in[in.size()-1]-'0')%2 == 0)
+		ret *= 2;
+	printf("%.2lf%%", ret*100);
+	
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	long long a, b, c;
+	int n, i;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> a >> b >> c;
+		printf("Case #%d: ", i+1);
+		if (a + b > c)
+			printf("true\n");
+		else
+			printf("false\n");
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, e, flag = 0;
+	while (cin >> n >> e)
+	{
+		if (n*e)
+		{
+			if (flag)
+				cout << ' ';
+			else
+				flag = 1;
+			cout << n*e << ' ' << e - 1;
+		}
+	}
+	if (!flag)
+		cout << "0 0";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<string> v;
+	string tmp;
+	while (cin >> tmp)
+		v.push_back(tmp);
+
+	for (int i = v.size() - 1; i >= 0; --i)
+	{
+		if (i != v.size() - 1)
+			cout << ' ';
+		cout << v[i];
+	}
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int table[200] = { 0 };
@@ -34,7 +765,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 bool is_prime(int x)

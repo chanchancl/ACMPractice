@@ -7,11 +7,289 @@
 #include <set>
 #include <cmath>
 #include <functional>
+#include <string.h>
 using namespace std;
 
+int main()
+{
+	string s1, s2, s3, s4;
+
+	cin >> s1 >> s2 >> s3 >> s4;
+
+	int i;
+	int index = 0;
+	for (i = 0; i < s1.size() && i < s2.size(); ++i)
+	{
+		if (s1[i] == s2[i] && (s1[i] >= 'A' && s1[i] <= 'G'))
+		{
+			switch (s1[i])
+			{
+			case 'A': cout << "MON "; break;
+			case 'B': cout << "TUE "; break;
+			case 'C': cout << "WED "; break;
+			case 'D': cout << "THU "; break;
+			case 'E': cout << "FRI "; break;
+			case 'F': cout << "SAT "; break;
+			case 'G': cout << "SUN "; break;
+			}
+			index = i;
+			break;
+		}
+	}
+	for (i = index + 1; i < s1.size() && i < s2.size(); ++i)
+	{
+		if (s1[i] == s2[i] && (isdigit(s1[i]) || (s1[i] >= 'A' && s1[i] <= 'N')))
+		{
+			if (isdigit(s1[i]))
+			{
+				printf("%02d:", s1[i] - '0');
+			}
+			else
+			{
+				int d = s1[i] - 'A' + 10;
+				printf("%02d:", d);
+			}
+			break;
+		}
+	}
+	for (i = 0; i < s3.size() && i < s4.size(); ++i)
+	{
+		if (s3[i] == s4[i] && (isupper(s3[i]) || islower(s3[i])))
+		{
+			printf("%02d\n", i);
+			break;
+		}
+	}
+	return 0;
+}
+
+
+/*
+int main()
+{
+	string a, b;
+	int da, db, i,pa,pb;
+
+	cin >> a >> da >> b >> db;
+
+	pa = pb = 0;
+	for (i = 0; i < a.size(); ++i)
+	{
+		if (a[i] == da + '0')
+			pa = pa * 10 + da;
+	}
+	for (i = 0; i < b.size(); ++i)
+	{
+		if (b[i] == db + '0')
+			pb = pb * 10 + db;
+	}
+	cout << pa + pb << endl;
+	return 0;
+}
+*/
+
+/*
+struct people
+{
+	char number[14];
+	int de, cai;
+};
+
+bool operator<(const people& p1,const people& p2)
+{
+	if (p1.de + p1.cai == p2.de + p2.cai)
+	{
+		if (p1.de == p2.de)
+			return strcmp(p1.number,p2.number) < 0;
+		else
+			return p1.de > p2.de;
+	}
+	else
+		return p1.de + p1.cai > p2.de + p2.cai;
+}
+
+int main()
+{
+	vector<people> v[4];
+	int n, l, h, i,j, c;
+	cin >> n >> l >> h;
+
+	c = 0;
+	people tmp;
+	for (i = 0; i < n; ++i)
+	{
+		scanf("%s %d %d", tmp.number, &tmp.de, &tmp.cai);
+
+		if (tmp.de < l || tmp.cai < l)
+			continue;
+
+		c++;
+		if (tmp.de >= h && tmp.cai >= h)
+			v[0].push_back(tmp);
+		else if (tmp.de >= h && tmp.cai < h)
+			v[1].push_back(tmp);
+		else if (tmp.de < h && tmp.cai < h && tmp.de >= tmp.cai)
+			v[2].push_back(tmp);
+		else
+			v[3].push_back(tmp);
+	}
+
+	for (i = 0; i < 4; ++i)
+		sort(v[i].begin(), v[i].end());
+
+	cout << c << endl;
+
+	for (i = 0; i < 4; ++i)
+		for (j = 0; j < v[i].size(); ++j)
+			printf("%s %d %d\n", v[i][j].number, v[i][j].de, v[i][j].cai);
+
+	return 0;
+}
+*/
+
+/*
+bool is_prime(int x)
+{
+	int end = sqrt(x);
+	if (x == 1)
+		return false;
+	for (int i = 2; i <= end; ++i)
+		if (x % i == 0)
+			return false;
+	return true;
+}
+
+int next_prime(int x)
+{
+	int ret = x+1;
+	while (!is_prime(ret))
+		ret++;
+	return ret;
+}
+
+
+int main()
+{
+	int start, end, i, now;
+	cin >> start >> end;
+	int c = 0;
+	i = 1;
+	now = 2;
+	for (; i < start; ++i)
+		now = next_prime(now);
+
+	bool first = true;
+	for (; i <= end; ++i)
+	{
+		if (c == 10)
+		{
+			cout << endl;
+			first = true;
+			c = 0;
+		}
+		if (first)
+			first = false;
+		else
+			cout << ' ';
+		c++;
+		cout << now;
+		now = next_prime(now);
+	}
+}
+
+*/
+
+/*
+int main()
+{
+	int a1,a2,a3,a5;
+	double a4;
+	bool add = true;
+
+	bool b1, b2, b3, b4, b5;
+	b1 = b2 = b3 = b4 = b5 = false;
+
+	a1 = a2 = a3 = a5 = 0;
+	a4 = 0;
+	int c;
+	cin >> c;
+	int n;
+	int count = 0;
+	for(int i=0; i < c; ++i)
+	{
+		cin >> n;
+		switch (n % 5)
+		{
+		case 0:
+			if (n % 2 == 0)
+			{
+				a1 += n;
+				b1 = true;
+			}
+			break;
+		case 1:
+			b2 = true;
+			if (add)
+			{
+				a2 += n;
+				add = false;
+			}
+			else
+			{
+				a2 -= n;
+				add = true;
+			}
+			break;
+		case 2:
+			b3 = true;
+			a3++;
+			break;
+		case 3:
+			b4 = true;
+			count++;
+			a4 += n;
+			break;
+		case 4:
+			b5 = true;
+			if (n > a5)
+				a5 = n;
+			break;
+		}
+	}
+	if (b1)
+		cout << a1;
+	else
+		cout << 'N';
+	cout << ' ';
+	if (b2)
+		cout << a2;
+	else
+		cout << 'N';
+	cout << ' ';
+	if (b3)
+		cout << a3;
+	else
+		cout << 'N';
+	cout << ' ';
+	if (b4)
+	{
+		a4 = a4 / count;
+		printf("%.1lf", a4);
+	}
+	else
+		cout << 'N';
+	cout << ' ';
+	if (b5)
+		cout << a5;
+	else
+		cout << 'N';
+	return 0;
+}
+*/
+
+/*
 int n,m;
 vector<int> heap;
-
 
 int find(int x)
 {
@@ -97,7 +375,7 @@ int main()
 	
 	return 0;
 }
-
+*/
 
 /*
 const int MAX = 100005;

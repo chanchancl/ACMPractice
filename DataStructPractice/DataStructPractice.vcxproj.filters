@@ -32,5 +32,11 @@
     <ClInclude Include="graph.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="dij.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="prim.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

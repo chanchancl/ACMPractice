@@ -145,8 +145,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dij.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="LCS.h" />
+    <ClInclude Include="prim.h" />
     <ClInclude Include="stirling.h" />
     <ClInclude Include="string.h" />
   </ItemGroup>

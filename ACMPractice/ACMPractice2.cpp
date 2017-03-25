@@ -10,6 +10,352 @@
 #include <string.h>
 using namespace std;
 
+#include <cmath>
+using namespace std;
+
+double E = 1000,g = 9.8, m, w,p;
+
+double E2V(double E)
+{
+	return sqrt(2*E/m);
+}
+
+int main()
+{
+	double ang;
+	double v;
+	cin >> w >> p;
+	
+	ang = acos(-1)/4;
+	m = w/100;
+	
+	p = (1-p/100);
+	
+	double s=0,vx,vy,t,dx;
+	v = E2V(E);
+	vy = v * sin(ang);
+	vx = v * cos(ang);
+	t = vy/g;
+	dx = 2*t*vx;
+	do
+	{
+		s += dx;
+		E = E * p;
+		v = E2V(E);
+		vy = v * sin(ang);
+		vx = v * cos(ang);
+		t = vy/g;
+		dx = 2*t*vx;
+	}
+	while(abs(dx) > 1e-10);
+	
+	printf("%.3lf\n", s);
+}
+
+
+
+/*
+const int MAX = 100005;
+vector<int> e[MAX];
+int visited[MAX]  = {0};
+double gongli[MAX];
+int    dedao[MAX] = {0};
+int    shifu[MAX] = {0};
+long long beishu[MAX] = {0};
+
+double z,r;
+
+double bfs()
+{
+	double ans = 0;
+	
+	queue<int> q;
+	q.push(0);
+	visited[0] = 1;
+	
+	while(!q.empty())
+	{
+		int now = q.front();
+		q.pop();
+		
+		if (dedao[now])
+		{
+			gongli[now] = gongli[shifu[now]] * r * beishu[now];
+			
+			ans += gongli[now];
+		}
+		else
+		{
+			if (now != 0)
+				gongli[now] = gongli[shifu[now]] * r;
+		}
+		
+		
+		visited[now] = 1;
+		
+		for(int i=0; i < e[now].size(); ++i)
+		{
+			int v = e[now][i];
+			if (!visited[v])
+			{
+				q.push(v);
+			}
+		}
+	}
+	return ans;
+}
+
+int main()
+{
+	long long n,i,j;
+	
+	cin >> n >> z >> r;
+	gongli[0] = z;
+	
+	r = (1-r/100);
+	for(i=0; i < n; ++i)
+	{
+		long long k,t;
+		cin >> k;
+		if (k == 0)
+		{
+			cin >> t;
+			dedao[i] = 1;
+			beishu[i] = t;
+		}
+		else
+		{
+			for(j=0; j < k; ++j)
+			{
+				cin >> t;
+				e[i].push_back(t);
+				e[t].push_back(i);
+				shifu[t] = i;
+			}
+		}
+	}
+	
+	long long ans = bfs();
+	
+	cout << ans;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,m,i,j;
+	int total;
+	set<string> guanzhu;
+	map<string, int> zan;
+	
+	scanf("%d",&n);
+	
+	char buffer[10];
+	for(i=0; i < n; ++i)
+	{
+		scanf("%s", buffer);
+		guanzhu.insert(buffer);
+	}
+	
+	total = 0;
+	cin >> m;
+	for(i=0; i < m; ++i)
+	{
+		int number;
+		scanf("%s %d", buffer, &number);
+		zan[buffer] = number;
+		total += number;
+	}
+	
+	double avr = 1.0* total / zan.size();
+	
+	map<string,int>::iterator it = zan.begin();
+	
+	set<string> out;
+	for(; it != zan.end(); ++it)
+	{
+		if (it->second > avr && guanzhu.find(it->first) == guanzhu.end())
+		{
+			out.insert(it->first);
+		}
+	}
+
+	if (!out.empty())
+	{
+		set<string>::iterator it2 = out.begin();
+		for(; it2 != out.end(); ++it2)
+			cout << *it2 << endl;
+	}
+	else
+		cout << "Bing Mei You";
+	
+
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int n,i,t;
+	vector<int> v;
+	
+	cin >> n;
+	v.resize(n);
+	for(i=0; i<n;++i)
+		cin >> v[i];
+	
+	sort(v.begin(), v.end());	
+	int sum1,sum2;
+	sum1=sum2=0;
+
+	int half = v.size()/2;
+	
+	for(i=half; i <v.size(); ++i)
+		sum1 += v[i];
+	for(i=0; i < half; ++i)
+		sum2 += v[i];
+	
+	if (v.size() % 2 != 0)
+		half++;
+	
+	int diff = abs(sum1-sum2);
+	
+	printf("Outgoing #: %d\n", half);
+	printf("Introverted #: %d\n", v.size()-half);
+	printf("Diff = %d\n", sum1-sum2);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,i,lie,j;
+	lie = 1;
+	string str;
+	cin >> n;
+	getline(cin,str);
+	if (str == "")
+		getline(cin,str);
+	while(lie*n < str.size())
+	{
+		lie++;
+	}
+	
+	for(i=0; i < n; ++i)
+	{
+		for(j=lie-1; j >=0; --j)
+		{
+			int loc = j*n+i;
+			if (loc < str.size())
+				putchar(str[loc]);
+			else
+				putchar(' ');
+		}
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<string> v;
+	int n;
+	n = 0;
+	string str;
+	while(n <= 20)
+	{	
+		n++;
+		cin >> str;
+		
+		if (str == ".")
+			break;
+		v.push_back(str);
+	}
+	
+	if (v.size() >= 14)
+		printf("%s and %s are inviting you to dinner...", v[1].c_str(), v[13].c_str());
+	else if (v.size() >= 2 )
+		printf("%s is the only one for you...", v[1].c_str());
+	else
+		printf("Momo... No one is for you ...");
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int texing[1005] = {0};
+	int n,i,j,t,k,c;
+	cin >> n;
+	for(i=0; i< n; ++i)
+	{
+		cin >> k;
+		for(j=0; j < k; ++j)
+		{
+			cin >> t;
+			texing[t]++;
+		}
+	}
+	
+	int id, max = -1;
+	for(i=1000; i >= 0; i--)
+	{
+		if (max < texing[i])
+		{
+			id = i;
+			max = texing[i];
+		}
+	}
+	
+	printf("%d %d", id, max);
+	return 0;
+}
+*/
+/*
+int main() 
+{
+	int i,j ;
+	int year,n;
+	cin >> year >> n ;
+	int out;
+	
+	set<int> v;
+	int a[4];
+	a[0] = year /1000;
+	a[1] = year%1000/100;
+	a[2] = year%100/10;
+	a[3] = year%10;
+	for (int i=0; i <4;++i)
+		v.insert(a[i]);
+	
+	out = 0;
+	while(v.size() != n)
+	{
+		year++;
+		out++;
+		v.clear();
+		a[0] = year /1000;
+		a[1] = year%1000/100;
+		a[2] = year%100/10;
+		a[3] = year%10;
+		for (int i=0; i <4;++i)
+			v.insert(a[i]);
+	}
+	
+	printf("%d %04d", out, year);
+	
+	return 0;
+}
+*/
+
+
+/*
 int main()
 {
 	string s1, s2, s3, s4;
@@ -62,6 +408,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 
 /*

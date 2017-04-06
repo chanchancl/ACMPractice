@@ -10,6 +10,367 @@
 #include <string.h>
 using namespace std;
 
+struct edge
+{
+	int a, b;
+	int gongsi;
+	edge() {}
+	edge(int aa, int bb, int g) : a(aa), b(bb), gongsi(gongsi) {}
+};
+
+const int MAX = 100005;
+const int INF = 0x3fffffff;
+
+vector<edge> e[MAX];
+int visited[MAX];
+int repath[MAX];
+int path[MAX];
+int findd = false;
+
+int table[MAX][MAX];
+int finde(int ee, int v)
+{
+	int ret = 0;
+	for (int i = 0; i < e[ee].size(); ++i)
+	{
+		if (e[ee][i].b == v)
+			return i;
+	}
+	return -1;
+}
+
+int getlen(int start, int end)
+{
+	int current = end;
+	int ret = 0;
+	while (current != start)
+	{
+		int prev = e[current][repath[current]].b;
+		path[prev] = finde(prev, current);
+		current = prev;
+		ret++;
+	}
+	return ret;
+}
+
+
+
+void dij(int start, int end)
+{
+	int dis[MAX], count[MAX];
+	fill(dis, dis + MAX, INF);
+	fill(count, count + MAX, INF);
+
+	dis[start] = 0;
+	count[start] = 0;
+
+	while (1)
+	{
+		int id = -1, ii, ma = INF;
+		for (int i = 0; i < MAX; ++i)
+		{
+			if (!visited[i] && dis[i] != INF && ma > dis[i])
+			{
+				id = i;
+				ma = dis[i];
+			}
+		}
+
+		if (id == -1)
+			break;
+
+		if (id == end)
+		{
+			findd = true;
+			break;
+		}
+
+		visited[id] = 1;
+
+		for (int j = 0; j < e[id].size(); ++j)
+		{
+			int v = e[id][j].b;
+			if (!visited[v])
+			{
+				int vid = finde(v, id);
+				if (dis[id] + 1 < dis[v])
+				{
+					dis[v] = dis[id] + 1;
+					if (id == start)
+						count[v] = count[id];
+					else if (e[id][repath[id]].gongsi == e[v][vid].gongsi)
+						count[v] = count[id];
+					else
+						count[v] = count[id] + 1;
+					repath[v] = vid;
+				}
+				else if (dis[id] + 1 == dis[v])
+				{
+					if (count[v] > count[id])
+					{
+						count[v] = count[id];
+						repath[v] = finde(v, id);
+					}
+				}
+			}
+		}
+	}
+
+}
+
+
+int main()
+{
+	int n;
+	edge edg;
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+	{
+		int k;
+		cin >> k;
+		int a, b;
+		cin >> a;
+		edg.gongsi = i+1;
+		for (int j = 1; j < k; ++j)
+		{
+			cin >> b;
+			edg.a = a;
+			edg.b = b;
+			e[a].push_back(edg);
+			swap(edg.a, edg.b);
+			e[b].push_back(edg);
+			a = b;
+		}
+	}
+	int m;
+	cin >> m;
+	for (int i = 0; i < m; ++i)
+	{
+		int start, end;
+		cin >> start >> end;
+		findd = false;
+		memset(visited, 0, 4 * MAX);
+		dij(start, end);
+		
+		if (!findd)
+		{
+			printf("Sorry, no line is available.\n");
+			continue;
+		}
+		int len = getlen(start, end);
+		cout << len << endl;
+		int currentgongsi = e[start][path[start]].gongsi;
+		int next = start;
+		int nextgongsi = currentgongsi;
+		while (start != end)
+		{
+			while (currentgongsi == nextgongsi)
+			{
+				next = e[next][path[next]].b;
+				nextgongsi = e[next][path[next]].gongsi;
+				if (next == end)
+					break;
+			}
+			printf("Go by the line of company #%d from %d to %d.\n", currentgongsi, start, next);
+			start = next;
+			currentgongsi = nextgongsi;
+		}
+	}
+	return 0;
+}
+
+
+
+/*
+string game[100000];
+vector<int> ret[100000];
+
+int main()
+{
+	int i,n;
+	cin >> n;
+	getline(cin, game[0]);
+
+	for (i = 0; i < n; ++i)
+		getline(cin, game[i]);
+
+	for (i = 0; i < n; ++i)
+	{
+		int c = count(game[i].begin(), game[i].end(), 'D');
+		if (c == n - 1)
+		{
+			printf("No Solution\n");
+			return 0;
+		}
+	}
+}
+*/
+
+/*
+double a[1000000], b[1000000], c[1000000];
+
+int main()
+{
+	int maxa, maxb;
+	maxa = maxb = 0;
+
+	int i, n, m;
+	cin >> n;
+	int xi, e;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> e >> xi;
+		a[e] = xi;
+		if (i == 0)
+			maxa = e;
+	}
+
+	cin >> m;
+	for (i = 0; i < m; ++i)
+	{
+		cin >> e >> xi;
+		b[e] = xi;
+		if (i == 0)
+			maxb = e;
+	}
+
+	for (int j = maxa; j >= maxb; --j)
+	{
+		c[j - maxb] = a[j] / b[maxb];
+		for (int k = j, p = maxb; k >= j - maxb && p >= 0; --k, --p)
+			a[k] = a[k] - c[j - maxb] * b[p];
+	}
+
+	int cc = 0;
+
+	for (i = maxa - maxb; i >= 0; --i)
+	{
+		int z = c[i] * 100;
+		int d = z % 10;
+		if (abs(d) > 5)
+		{
+			if (z > 0)
+				c[i] = (z - d + 10)*1.0 / 100;
+			else
+				c[i] = (z - d - 10)*1.0 / 100;
+		}
+
+		else
+			c[i] = (z - d)*1.0 / 100;
+		if (c[i] != 0)
+			cc++;
+	}
+	if (cc == 0)
+		printf("0 0 0.0");
+	else
+	{
+		printf("%d", cc);
+
+		// ÉÌ 
+		// b Óë c Í¬½× 
+		for (i = maxa - maxb; i >= 0; i--)
+		{
+			if (c[i] != 0)
+				printf(" %d %.1lf", i, c[i]);
+		}
+	}
+	putchar('\n');
+
+	cc = 0;
+	for (i = maxb - 1; i >= 0; --i)
+	{
+		int z = a[i] * 100;
+		int d = z % 10;
+		if (abs(d) > 5)
+		{
+			if (d > 0)
+				a[i] = (z - d + 10)*1.0 / 100;
+			else
+				a[i] = (z - d - 10)*1.0 / 100;
+		}
+
+		else
+			a[i] = (z - d)*1.0 / 100;
+		if (a[i] != 0)
+			cc++;
+	}
+	if (cc == 0)
+		printf("0 0 0.0");
+	else
+	{
+		printf("%d", cc);
+		for (i = maxb - 1; i >= 0; --i)
+		{
+			if (a[i] != 0)
+				printf(" %d %.1lf", i, a[i]);
+		}
+	}
+	putchar('\n');
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int half, num, a, b,i;
+	vector<int> v;
+
+	cin >> num;
+	v.resize(num);
+
+	for (i = 0; i < num; ++i)
+		cin >> v[i];
+
+	sort(v.begin(), v.end());
+
+	half = num / 2;
+	a = b = 0;
+	for (i = half; i < num; ++i)
+		a += v[i];
+	for (i = 0; i < half; ++i)
+		b += v[i];
+	if (num % 2 != 0)
+		half++;
+	printf("Outgoing #: %d\n", half);
+	printf("Introverted #: %d\n", num - half);
+	printf("Diff = %d\n", a - b);
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int year, num;
+	set<int> t;
+	cin >> year >> num;
+	int c[4];
+	int ret = 0, tmp;
+
+	tmp = year;
+	do
+	{
+		t.clear();
+		c[0] = tmp / 1000;
+		c[1] = (tmp % 1000) / 100;
+		c[2] = (tmp % 100) / 10;
+		c[3] = tmp % 10;
+		for (int i = 0; i < 4; ++i)
+			t.insert(c[i]);
+		ret++;
+		tmp++;
+		
+	} while (t.size() != num);
+	printf("%d %04d", ret-1, year + ret-1);
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
 #include <cmath>
 using namespace std;
 
@@ -51,10 +412,20 @@ int main()
 	
 	printf("%.3lf\n", s);
 }
-
-
+*/
 
 /*
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <string>
+#include <set>
+#include <cmath>
+#include <functional>
+#include <string.h>
+using namespace std;
+
 const int MAX = 100005;
 vector<int> e[MAX];
 int visited[MAX]  = {0};

@@ -8,8 +8,348 @@
 #include <cmath>
 #include <functional>
 #include <string.h>
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
 using namespace std;
 
+int main()
+{
+	double a, b, c;
+	char op;
+	cin >> a >> op >> b;
+	switch (op)
+	{
+	case '+':
+		printf("%.2lf", a + b);
+		break;
+	case '-':
+		printf("%.2lf", a - b);
+		break;
+	case '*':
+		printf("%.2lf", a * b);
+		break;
+	case '/':
+		if (fabs(b) < 1e-10)
+			printf("Wrong input!");
+		else
+			printf("%.2lf", a / b);
+		break;
+	default:
+		printf("Wrong input!");
+	}
+	return 0;
+}
+
+/*
+int main()
+{
+	int days[12] = { 31 ,28,31,30,31,30,31,31,30,31,30,31 };
+	int year, month;
+	cin >> year >> month;
+	if ((year % 4 == 0 && year % 100 != 0 || year % 400 == 0) && month == 2)
+		cout << days[month-1] + 1;
+	else
+		cout << days[month - 1];
+	return 0;
+}
+*/
+/*
+int f(int x)
+{
+	if (x < -2)
+		return 7 - 2 * x;
+	if (x >= 3)
+		return 3 * x + 4;
+	return 5 - abs(3 * x + 2);
+}
+
+int main()
+{
+	int in;
+	cin >> in;
+	cout << f(in);
+	return 0;
+}
+*/
+
+/*
+int op(char o)
+{
+	if (o == '+' || o == '-')
+		return 1;
+	if (o == '*' || o == '/')
+		return 2;
+	return 0;
+}
+double out(double a, char op, double b)
+{
+	switch (op)
+	{
+	case '+':
+		return a + b;
+	case '-':
+		return a - b;
+	case '*':
+		return a * b;
+	case '/':
+		return a / b;
+	}
+}
+
+int main()
+{
+	double a, b, c, ret,tmp;
+	char op1, op2;
+	while (~scanf("%lf%c%lf%c%lf", &a, &op1, &b, &op2, &c))
+	{
+		if (op(op1) >= op(op2))
+		{
+			tmp = out(a, op1, b);
+			ret = out(tmp, op2, c);
+		}
+		else
+		{
+			tmp = out(b, op2, c);
+			ret = out(a, op1, tmp);
+		}
+		printf("%.4lf\n", ret);
+	}
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int a, b,c,d;
+	int q, w, e;
+	while (cin >> a >> b)
+	{
+		a = a + b;
+		b = a / 100;
+		c = a % 100 / 10;
+		d = a % 10;
+		q = max(b, max(c, d));
+		e = min(b, min(c, d));
+		w = b + c + d - q - e;
+		cout << q * 100 + w * 10 + e << endl;
+	}
+}
+*/
+/*
+int main()
+{
+	int money, n;
+	while (cin >> money)
+	{
+		n = money / 9;
+		bool t = false;
+		while (n)
+		{
+			if (n % 10 == 7)
+			{
+				t = true;
+				break;
+			}
+			n /= 10;
+		}
+		if (t)
+			cout << "Ã´Ã´ßÕ" << endl;
+		else
+			cout << "ºÇºÇßÕ" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	long long i,n, r;
+	
+	while (cin >> n)
+	{
+		r = 0;
+		for (i = 0; i < n; ++i)
+		{
+			if (i == 0)
+				r += 15;
+			else if (i == 1)
+				r += 195;
+			else if (i == 2)
+				r += 1995;
+			else
+				r += 9995;
+			r = r % 10000;
+		}
+		i = r / 1000 + (r / 100) % 10 + (r / 10) % 10 + r % 10;
+		cout << i << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+		cout << string(n - i - 1, ' ') << string(2*i+1,'o') << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	double rx,ry, r,x1,y1,x2,y2;
+	while (cin >> rx >> ry >> r >> x1 >> y1 >> x2 >> y2)
+	{
+		double dis;
+		if (x1 == x2)
+			dis = fabs(rx - x1);
+		else if (y1 == y2)
+			dis = fabs(ry - y1);
+		else
+		{
+			double k1, b1, k2, b2, x3, y3;
+			k1 = (y1 - y2) / (x1 - x2);
+			b1 = y1 - k1*x1;
+			k2 = -1 / k1;
+			b2 = ry - k2*rx;
+			y3 = (k2*b1 - k1*b2) / (k2 - k1);
+			x3 = (y3 - b1) / k1;
+			dis = sqrt(pow(rx - x3, 2) + pow(ry - y3, 2));
+		}
+		if (fabs(dis - r) <= 1e-6)
+			cout << 1;
+		else if (dis < r)
+			cout << 2;
+		else
+			cout << 0;
+		cout << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int year;
+	cin >> year;
+	if ((year % 4 == 0 && year % 100 != 0 ) || year % 400 == 0)
+		cout << "Yes";
+	else
+		cout << "No";
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	double a,b,c,d,e,s,v;
+	cin >> a >> b >> c >> d >> e;
+	s = 2 * (a*b + b*c + a*c) + 8*d*(a+b+c-6*e);
+	v = a*b*c - 2 * d*(a - 2 * e)*(c - 2 * e) - 2 * d*(b - 2 * e)*(c - 2 * e) - 2 * d*(a - 2 * e)*(b - 2 * e);
+	printf("%.0lf %.0lf",s,v);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i;
+	printf("Please enter data of students:\n");
+	for (i = 0; i<SIZE; i++)
+		scanf("%s%d%d%s", stud[i].name, &stud[i].num, &stud[i].age, stud[i].addr);
+	save();
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	long long a,b;
+	cin >> a >> b;
+	cout << a+b << ' ' << a-b << ' ' << a*b << ' ' << a/b << ' ' << a - (a/b)*b;
+	return 0;
+}
+*/
+
+/*
+typedef pair<int, int> cai;
+
+bool cmp(const cai& c1, const cai& c2)
+{
+	return (1.0*c1.first/c1.second) > (1.0*c2.first/c2.second);
+}
+
+int main()
+{
+	int c;
+	cin >> c;
+	
+	cai cc;
+	while (c--)
+	{
+		vector<cai> v;
+		int i, n, k, x, y,sum;
+		sum = 0;
+		cin >> n >> k >> x >> y;
+		for (i = 0; i < n; ++i)
+		{
+			cin >> cc.first >> cc.second;
+			v.push_back(cc);
+			sum += cc.second;
+		}
+		if (sum <= k)
+			cout << "go die" << endl;
+		else
+		{
+			sort(v.begin(), v.end());
+
+			int cm,ck;
+			cm = ck = 0;
+			for (i = 0; i < v.size(); ++i)
+			{
+				cm += v[i].first;
+				ck += v[i].second;
+				if (ck > k)
+					break;
+			}
+			if (cm >= x)
+				cm -= y;
+			else
+			{
+				int tcm, tck;
+				tcm = cm, tck = ck;
+				for (; i < v.size(); ++i)
+				{
+					tcm += v[i].first;
+					tck += v[i].second;
+					if (tcm >= x)
+						break;
+				}
+				tcm -= y;
+				if (tcm < cm)
+					cm = tcm;
+			}
+			cout << cm;
+			if (c)
+				putchar('\n');
+		}
+	}
+	return 0;
+}
+*/
+
+/*
 struct edge
 {
 	int a, b;
@@ -179,7 +519,7 @@ int main()
 	return 0;
 }
 
-
+*/
 
 /*
 string game[100000];

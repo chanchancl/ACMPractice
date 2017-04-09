@@ -13,6 +13,219 @@
 #include <iostream>
 using namespace std;
 
+void printline(int n)
+{
+	int i;
+	for (i = 0; i < n; ++i)
+		printf("%d", i + 1);
+	for (i = n - 1; i > 0; --i)
+		printf("%d", i);
+	putchar('\n');
+}
+
+int main()
+{
+	int n,i;
+	cin >> n;
+	for (i = 1; i <= n; ++i)
+	{
+		cout << string(n - i, ' ');
+		printline(i);
+	}
+	for (i = 1; i < n; ++i)
+	{
+		cout << string(i, ' ');
+		printline(n-i);
+	}
+	return 0;
+}
+
+
+/*
+int reverse(int n)
+{
+	int ret = 0;
+	while (n)
+	{
+		ret *= 10;
+		ret += n % 10;
+		n /= 10;
+	}
+	return ret;
+}
+
+int main()
+{
+	int i, m, n;
+	cin >> n;
+	bool flag = false;
+	if (n == reverse(n))
+		printf("%d",n);
+	else
+	{
+		while (m = reverse(n), m != n)
+		{
+			if (flag)
+				putchar(' ');
+			printf("%d", n);
+			flag = true;
+			n = m + n;
+		}
+		printf(" %d", n);
+	}
+	return 0;
+}
+*/
+
+/*
+int table[100000] = { 0 };
+int facsum(int n)
+{
+	if (table[n])
+		return table[n];
+	int ret, i;
+	ret = 0;
+	for (i = 1; i < n; ++i)
+		if (n % i == 0)
+			ret += i;
+	return table[n] = ret;
+}
+
+int main()
+{
+	int m, n,i,j;
+	cin >> m >> n;
+	bool flag = false;
+	for (i = m; i <= n; ++i)
+	{
+		int other = facsum(i);
+		if (i < other && other <= n && facsum(other) == i)
+		{
+			printf("%d %d\n", i, other);
+			flag = true;
+		}
+	}
+	if (!flag)
+		printf("No answer");
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	int all, a, b,c;
+	cin >> n;
+	all = c = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> a >> b;
+		all += a;
+		if (b >= 60)
+			c += (b - 50) / 10 * a;
+	}
+	printf("%.1lf", 1.0*c / all);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	double in;
+	cin >> in;
+	in *= 0.05;
+	double t = in - int(in);
+	in -= t;
+	if (t < 0.25)
+		t = 0;
+	else if (t < 0.75)
+		t = 0.5;
+	else
+		t = 1;
+	in += t;
+	printf("%.1lf", in);
+	return 0;
+}
+*/
+
+/*
+int reverse(int n)
+{
+	int ret = 0;
+	while (n)
+	{
+		ret *= 10;
+		ret += n % 10;
+		n /= 10;
+	}
+	return ret;
+}
+
+int main()
+{
+	int in;
+	cin >> in;
+	cout << in + reverse(in);
+	return 0;
+}
+*/
+/*
+long long fact(int n)
+{
+	long long ret = 1;
+	for (int i = 2; i <= n; ++i)
+		ret *= i;
+	return ret;
+}
+
+int main()
+{
+	int m,k;
+	cin >> m >> k;
+	cout << fact(m) / (fact(k)*fact(m - k));
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	set<char> s;
+	char duichen[12] = "AHIMOTUVWXY";
+	int i;
+	for (i = 0; i < 12; ++i)
+		s.insert(duichen[i]);
+
+	string str;
+	bool flag = true;
+	while (cin >> str)
+	{
+		flag = true;
+		for (i = 0; i < str.size(); ++i)
+		{
+			if (s.find(str[i]) == s.end())
+			{
+				cout << "No" << endl;
+				flag = false;
+				break;
+			}
+		}
+		if (flag)
+		{
+			string rev(str.rbegin(), str.rend());
+			if (rev == str)
+				cout << "Yes" << endl;
+			else
+				cout << "No";
+		}
+	}
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	double a, b, c;
@@ -40,6 +253,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 /*
 int main()

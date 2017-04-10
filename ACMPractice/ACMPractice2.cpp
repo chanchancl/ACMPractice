@@ -2,17 +2,490 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <functional>
+#include <string.h>
+#include <map>
+#include <cmath>
 #include <algorithm>
 #include <string>
 #include <set>
-#include <cmath>
-#include <functional>
-#include <string.h>
-#include <stdio.h>
-#include <iomanip>
 #include <iostream>
 using namespace std;
 
+int main()
+{
+	int i, n;
+	double sum = 0;
+	cin >> n;
+	for (i = 1; i <= n; ++i)
+	{
+		if (i % 2 == 0)
+			sum -= 1.0 * i / (2 * i - 1);
+		else
+			sum += 1.0 * i/ (2 * i - 1);
+	}
+	printf("%.3lf", sum);
+	return 0;
+}
+
+/*
+int main()
+{
+	int i, n, m=0, t;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		if (t > m)
+			m = t;
+	}
+	cout << m;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i, n;
+	double sum = 0;
+	cin >> n;
+	for (i = 1; i <= n; ++i)
+	{
+		if (i % 2 == 0)
+			sum -= 1.0 / (2*i - 1);
+		else
+			sum += 1.0 / (2 * i - 1);
+	}
+	printf("%.2lf", sum);
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int i, t, m;
+	m = 0;
+	for (i = 0; i < 3; ++i)
+	{
+		cin >> t;
+		if (abs(t) > abs(m))
+			m = t;
+	}
+	cout << m;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, t, i;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		if (t <= 3)
+			cout << "No" << endl;
+		else if (t % 2 == 0)
+			cout << "Yes" << endl;
+		else
+			cout << "No" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, i, m, id, t;
+	cin >> n;
+	m = 999999, id = 0;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		if (t < m)
+		{
+			id = i;
+			m = t;
+		}
+	}
+	cout << m << ' ' << id << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	set<string> s;
+	string str, t;
+	cin >> t >> str;
+	do{
+		s.insert(str);
+	} while (next_permutation(str.begin(), str.end()));
+	cout << s.size();
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int dp[300][300] = { 0 };
+	string s1, s2;
+	getline(cin, s1);
+	getline(cin, s2);
+	int i, j;
+	for (i = 0; i < s1.size(); ++i)
+		dp[i][0] = i;
+	for (i = 0; i < s2.size(); ++i)
+		dp[0][i] = i;
+	for (i = 1; i <= s1.size(); ++i)
+	{
+		for (j = 1; j <= s2.size(); ++j)
+		{
+			if (s1[i - 1] == s2[j - 1])
+				dp[i][j] = dp[i - 1][j - 1];
+			else
+				dp[i][j] = min(dp[i - 1][j] + 1, min(dp[i][j - 1] + 1, dp[i - 1][j - 1] + 1));
+		}
+	}
+	cout << dp[s1.size()][s2.size()];
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,i;
+	cin >> n;
+	while (n--)
+	{
+		int m;
+		cin >> m;
+		vector<int> v;
+		v.resize(m);
+		for (int i = 0; i < m; ++i)
+			cin >> v[i];
+		sort(v.begin(), v.end());
+		int a, b;
+		a = b = 0;
+		for (i = 0; i < m; ++i)
+		{
+			if (v[i] % 2) a++;
+			else b++;
+		}
+		if (a > 0)
+		{
+			int ans = 0;
+			if (a % 2 == 0)
+				a--;
+			for (i = m - 1; i >= 0; --i)
+			{
+				if (v[i] % 2 == 1 && a > 0)
+				{
+					ans += v[i];
+					a--;
+				}
+				else if (v[i] % 2 == 0)
+					ans += v[i];
+			}
+			cout << ans << endl;
+		}
+		else
+			cout << 0 << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int d[31][31];
+	int i,n,x,y;
+	while (cin >> n && n != 0)
+	{
+		fill(d[0], d[0] + 31 * 31, 0);
+		x = (n - 1) / 2;
+		y = n-1;
+		d[x][y] = 1;
+		for (i = 2; i <= n*n; ++i)
+		{
+			x++, y++;
+			if (d[x%n][y%n] != 0)
+				x--, y -= 2;
+			d[x%n][y%n] = i;
+		}
+		for (y = 0; y < n; ++y)
+		{
+			for (x = 0; x < n; ++x)
+			{
+				if (x != 0)
+					putchar(' ');
+				if (n < 5)
+					printf("%d", d[x][y]);
+				else if (n < 10)
+					printf("%2d", d[x][y]);
+				else
+					printf("%3d", d[x][y]);
+			}
+			putchar('\n');
+		}
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+/*
+int d[1005][10] = { 0 };
+int visit[1005] = { 0 };
+bool cmp(int a, int b)
+{
+	for (int i = 0; i < 10; ++i)
+		if (d[a][i] != d[b][i])
+			return false;
+	return true;
+}
+void f(int n)
+{
+	if (visit[n])
+		return;
+	visit[n] = 1;
+	int t = n;
+	while (t)
+	{
+		d[n][t % 10]++;
+		t /= 10;
+	}
+}
+
+int main()
+{
+	vector<int> v;
+	int n, t, i;
+	while (cin >> n && n != 0)
+	{
+		v.clear();
+		v.resize(n);
+		fill(d[0], d[0] + 1005 * 10, 0);
+		for (i = 0; i < n; ++i)
+		{
+			cin >> v[i];
+			f(v[i]);
+		}
+		auto it = v.begin();
+		
+		for (; it != v.end(); )
+		{
+			bool flag = false;
+			auto next = it+1;
+			while (next != v.end())
+			{
+				if (*it == *next || cmp(*it, *next))
+				{
+					next = v.erase(next);
+					flag = true;
+				}
+				else
+					++next;
+			}
+			if (!flag)
+				it++;
+			else
+				it = v.erase(it);
+		}
+		sort(v.begin(), v.end());
+		if (v.empty())
+			cout << "None";
+		else
+		{
+			for (i = 0; i < v.size(); ++i)
+			{
+				if (i != 0)
+					putchar(' ');
+				cout << v[i];
+			}
+		}
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	map<int,int> d;
+	int i, n, t, m;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		d[t]++;
+	}
+	n = (--d.end())->first;
+	m = 0;
+	t = 0;
+	for (i = 0; i < n; ++i)
+	{
+		if (d[i] > m)
+		{
+			t = i;
+			m = d[i];
+		}
+	}
+	cout << t << endl << m;
+	return 0;
+}
+*/
+
+/*
+int main(){
+int m,n,i,a,b,c,d;cin>>m>>n>>a;
+for(i=1;i<m;++i)cin>>b;cin>>c;
+for(i=1;i<n;++i)cin>>d;
+if(a>d)i=abs(a-d);
+else if(c>b)i=abs(c-b);
+else i=0;cout<<i;return 0;
+}
+*/
+
+/*
+void inverse(int n)
+{
+	int t;
+	if (n == 1)
+		cin >> t;
+	else
+	{
+		cin >> t;
+		inverse(n - 1);
+	}
+	printf("%4d", t);
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	inverse(n);
+	return 0;
+}
+*/
+
+/*
+int c = 0;
+int fib(int k)
+{
+	c++;
+	if (k == 1 || k == 2)
+		return 1;
+	else
+		return fib(k - 1) + fib(k - 2);
+}
+
+int main(void)
+{
+	int n;
+	scanf("%d", &n);
+	printf("%d\n", fib(n));
+	printf("递归调用了%d次", c);
+	return 0;
+}
+*/
+
+
+/*
+void convert(int n)
+{
+	if (n > 0)
+	{
+		convert(n / 2);
+		cout << n % 2;
+	}
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	convert(n);
+	return 0;
+}
+*/
+
+/*
+void inverse(int n)
+{
+	int t;
+	if (n == 1)
+		cin >> t;
+	else
+	{
+		cin >> t;
+		inverse(n - 1);
+	}
+	cout << t << ' ';
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	inverse(n);
+	return 0;
+}
+*/
+
+/*
+int common(int x, int y)
+{
+	if (x == y)
+		return x;
+	else if (x > y)
+		return common(x / 2, y);
+	else
+		return common(x, y / 2);
+}
+
+int main()
+{
+	int x, y;
+	cin >> x >> y;
+	cout << common(x, y);
+	return 0;
+}
+*/
+
+/*
+int digitSum(int n)
+{
+	int ret = 0;
+	while (n)
+	{
+		ret += n % 10;
+		n /= 10;
+	}
+	return ret;
+}
+
+int main()
+{
+	int in;
+	cin >> in;
+	while (in >= 10)
+		in = digitSum(in);
+	cout << in;
+	return 0;
+}
+*/
+
+/*
 void printline(int n)
 {
 	int i;
@@ -39,7 +512,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 int reverse(int n)

@@ -4,14 +4,249 @@
 #include <queue>
 #include <functional>
 #include <string.h>
-#include <map>
 #include <cmath>
 #include <algorithm>
 #include <string>
 #include <set>
+#include <stack>
+#include <iomanip>
 #include <iostream>
 using namespace std;
 
+
+
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n != 0)
+	{
+		vector<int> need(n);
+		
+		while (cin >> need[0])
+		{
+			if (need[0] == 0)
+				break;
+			for (int i = 1; i < n; ++i)
+				cin >> need[i];
+			int current = 1;
+			int out = 0;
+			stack<int> q;
+			bool flag = true;
+			for (; out < n && flag;)
+			{
+				int v = need[out];
+				if (v == current)
+				{
+					out++;
+					current++;
+				}
+				else if (!q.empty() && v == q.top())
+				{
+					out++;
+					q.pop();
+				}
+				else
+				{
+					q.push(current);
+					current++;
+				}
+				if (current > n + 1)
+					flag = false;
+			}
+			if (flag)
+				cout << "Yes" << endl;
+			else
+				cout << "No" << endl;
+		}
+		cout << endl;
+	}
+}
+*/
+
+/*
+int w, h;
+char map[30][30];
+
+int bfs(int x, int y)
+{
+	int ret = 0;
+	queue<int> qx;
+	queue<int> qy;
+	qx.push(x);
+	qy.push(y);
+	while (!qx.empty())
+	{
+		x = qx.front(), y = qy.front();
+		qx.pop(), qy.pop();
+		if (map[y][x] == '#')
+			continue;
+
+		if (map[y][x] == '.' || map[y][x] == '@')
+		{
+			ret++;
+			map[y][x] = '#';
+		}
+		if (x != w - 1)
+		{
+			qx.push(x + 1);
+			qy.push(y);
+		}
+		if (x != 0)
+		{
+			qx.push(x - 1);
+			qy.push(y);
+		}
+		if (y != h - 1)
+		{
+			qx.push(x);
+			qy.push(y + 1);
+		}
+		if (y != 0)
+		{
+			qx.push(x);
+			qy.push(y - 1);
+		}
+	}
+	return ret;
+}
+
+int main()
+{	
+	int i,x,y;
+	while (cin >> w >> h && (w != 0 && h != 0))
+	{
+		for (i = 0; i < h; ++i)
+			scanf("%s", map[i]);
+		bool finded = false;
+		for (x = 0; x < w && !finded; ++x)
+			for (y = 0; y < h && !finded; ++y)
+				if (map[y][x] == '@')
+					finded = true;
+		cout << bfs(x-1, y-1) << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+bool joseph(int k, int m)
+{
+	int n, index, i;
+	n = 2 * k;
+	index = 0;
+	for (i = 0; i < k; i++)
+	{
+		index = (index + m - 1) % n;
+		n--;
+		if (index < k)
+			return false;
+	}
+	return true;
+}
+int tab[15] = { 0 };
+int main()
+{
+	int k, n, i, ex;
+	while (cin >> k && k != 0)
+	{
+		if (tab[k] == 0)
+		{
+			ex = 0;
+			for (n = k + 1; !ex; ++n)
+			{
+				if (joseph(k, n))
+				{
+					tab[k] = n;
+					ex = 1;
+					break;
+				}
+			}
+		}
+		cout << tab[k] << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int m, n;
+int main()
+{
+	int T, dp[50][50] = { 0 };
+	cin >> T;
+	dp[0][0] = 1;
+	for(int y=1;y<=40;++y)
+		for (int x = 1; x <= 40; ++x)
+		{
+			if (y - 2 >= 0 && x - 1 >= 0)
+				dp[x][y] += dp[x - 1][y - 2];
+			if (y - 1 >= 0 && x - 2 >= 0)
+				dp[x][y] += dp[x - 2][y - 1];
+		}
+	while (T--)
+	{
+		cin >> m >> n;
+		cout << dp[m - 1][n - 1] << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i,n,t;
+	string str,out;
+	cin >> n;
+	while (n--)
+	{
+		str.clear();
+		getline(cin, str);
+		if (str == "")
+		{
+			n++;
+			continue;
+		}
+		out.resize(str.size());
+		for (i = 0; i < str.size(); ++i)
+		{
+			cin >> t;
+			out[t - 1] = str[i];
+		}
+		cout << out << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<int> v;
+	int n, i, t;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		v.push_back(t);
+	}
+	cin >> t;
+	auto it = find(v.begin(), v.end(), t);
+	if (it == v.end())
+		cout << "Not Found";
+	else
+	{
+		v.erase(it);
+		for (i = 0; i < v.size(); ++i)
+			cout << setw(4) << v[i];
+	}
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int i, n;
@@ -27,6 +262,7 @@ int main()
 	printf("%.3lf", sum);
 	return 0;
 }
+*/
 
 /*
 int main()

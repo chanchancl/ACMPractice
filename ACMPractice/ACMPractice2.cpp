@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <string>
 #include <set>
+#include <map>
 #include <stack>
 #include <iomanip>
 #include <iostream>
@@ -15,6 +16,75 @@ using namespace std;
 
 
 
+/*
+int main()
+{
+	long long a, b;
+	char c;
+	while (cin >> a >> c >> b)
+		cout << a + b << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i,n,cc=1,t;
+	while (cin >> n && n != 0)
+	{
+		map<int, int> id2team;
+		int inqueue[1005];
+		memset(inqueue, 0, sizeof(inqueue));
+		queue<int> q[1005], allqueue;
+		for (i = 0; i < n; ++i)
+		{
+			int tn;
+			cin >> tn;
+			for (int j = 0; j < tn; ++j)
+			{
+				cin >> t;
+				id2team[t] = i;
+			}
+		}
+		cout << "Scenario #" << cc << endl;
+		
+		string tmpstr;
+		while (cin >> tmpstr)
+		{
+			if (tmpstr == "STOP")
+			{
+				cout.put('\n');
+				cc++;
+				break;
+			}
+			else if (tmpstr == "ENQUEUE")
+			{
+				cin >> t;
+				int team = id2team[t];
+				q[team].push(t);	
+				if (!inqueue[team])
+				{
+					allqueue.push(team);
+					inqueue[team] = 1;
+				}
+			}
+			else
+			{
+				queue<int> &tmpq = q[allqueue.front()];
+				cout << tmpq.front() << endl;
+				tmpq.pop();
+				if (tmpq.empty())
+				{
+					inqueue[allqueue.front()] = 0;
+					allqueue.pop();
+				}
+			}
+		}
+	}
+	return 0;
+}
+*/
 
 /*
 int main()

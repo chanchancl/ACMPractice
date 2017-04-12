@@ -14,6 +14,41 @@
 #include <iostream>
 using namespace std;
 
+int main()
+{
+	long long i, n, a, b;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> a >> b;
+		if (a % b == 0)
+			cout << a / b << ' '<< b << endl;
+		else
+			cout << a / b + 1 << ' '<< a%b << endl;
+	}
+	return 0;
+}
+
+/*
+long long tab[4] = {0,0,0,1};
+long long ret[1005];
+int main()
+{
+	int i,n;
+	
+	for (i = 0; i <= 1000; ++i)
+	{
+		ret[i] = (tab[1] + tab[2] + tab[3]) % 1000000007;
+		tab[1] = tab[2] % 1000000007;
+		tab[2] = tab[3] % 1000000007;
+		tab[3] = (tab[1] + tab[2]) % 1000000007;
+	}
+
+	while (cin >> n)
+		cout << ret[n]  << endl;
+	return 0;
+}
+*/
 
 
 /*

@@ -16,6 +16,497 @@ using namespace std;
 
 int main()
 {
+	string op;
+	int m1, m2, r1, r2, r3,first=1;
+	while (cin >> m1 >> m2)
+	{
+		getline(cin, op);
+		while(op == "")
+			getline(cin, op);
+		r1 = r2 = r3 = 0;
+		for(int i=0; i < op.size(); ++i)
+			switch (op[i])
+			{
+			case 'A':
+				r1 = m1;
+				break;
+			case 'B':
+				r2 = m2;
+				break;
+			case 'C':
+				m1 = r3;
+				break;
+			case 'D':
+				m2 = r3;
+				break;
+			case 'E':
+				r3 = r1 + r2;
+				break;
+			case 'F':
+				r3 = r1 - r2;
+				break;
+			}
+		cout << m1 << ',' << m2 << endl;
+	}
+	return 0;
+}
+
+/*
+int main()
+{
+	int t, n, x1, y1, x2, y2, ans;
+	cin >> t;
+	while (t--)
+	{
+		cin >> n >> x1 >> y1 >> x2 >> y2;
+		int d = abs(x1 - x2) + abs(y1 - y2);
+		ans = 0;
+		if ((n + 1) / 2 < d)
+			ans = n & 1;
+		else
+		{
+			if (d & 1)
+			{
+				if (n & 1)
+					ans = 2;
+			}
+			else
+				ans = 1;
+		}
+		if (ans == 0)
+			cout << -1 << endl;
+		else
+			cout << ans << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+int d[32];
+int pos = 0;
+void f(int x)
+{
+	pos = 0;
+	while (x)
+	{
+		d[pos++] = x % 2;
+		x /= 2;
+	}
+}
+
+int check()
+{
+	int i,ret = 0;
+	for (i = 0; i < pos; ++i)
+		if (d[i] == 1)
+			ret++;
+	return ret;
+}
+
+int main()
+{
+	int t, n, k;
+	cin >> t;
+	while (t--)
+	{
+		string str;
+		int need = 0;
+		cin >> str >> k;
+		auto it = str.begin();
+		for (; it != str.end();)
+		{
+			if (*it == ',')
+				it = str.erase(it);
+			else
+				it++;
+		}
+		n = atoi(str.c_str());
+		if (n <= k)
+			cout << 0 << endl;
+		else
+		{
+			f(n);
+			int c = check();
+			if (c <= k)
+			{
+				cout << 0 << endl;
+				continue;
+			}
+			int j;
+			for (j = pos - 1; j >= 0; --j)
+			{
+				if (d[j] == 1)
+					k--;
+				if (k == 0)
+					break;
+			}
+			int n = pow(2, j+1);
+			for (int i = 0; i <= j; ++i)
+				n -= d[i] * pow(2, i);
+			cout << n << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, a, b, c;
+	cin >> n;
+	while (n--)
+	{
+		cin >> a >> b >> c;
+		cout << a*b + a / 30 * c << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int dp[25] = { 0,1,2,4 };
+int main()
+{
+	int t, n, i, m, ret;
+	for (i = 4; i <= 20; ++i)
+		dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
+	cin >> t;
+	while (t--)
+	{
+		cin >> n;
+		ret = 1;
+		for (i = 0; i < n - 1; ++i)
+		{
+			cin >> m;
+			ret = (ret * dp[m]) % 10007;
+		}
+		cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,t,first = 1;
+	cin >> n;
+	while (n--)
+	{
+		if (first)
+			first = 0;
+		else
+			putchar('\n');
+		cin >> t;
+		t %= 10;
+		for (int i = 0; i < t; ++i)
+			cout << "I am a good ACMer" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t,a,b,c;
+	cin >> t;
+	while (t--)
+	{
+		cin >> a >> b >> c;
+		cout << a / 2 - (c - 4 * b) / 4 << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+typedef long long ll;
+ll gcd(ll a, ll b)
+{
+	if (b == 0) return a;
+	else return gcd(b, a%b);
+}
+
+int main()
+{
+	int i, n, m;
+	while (~scanf("%d %d",&n, &m))
+	{
+		vector<int> v, vt;
+		v.resize(n);
+		ll all = 0;
+		for (i = 0; i < n; ++i)
+		{
+			scanf("%d", &v[i]);
+			all += v[i];
+		}
+		ll sq,sqb;
+		if (m == 1)
+		{
+			printf("0/1\n");
+			continue;
+		}
+		else if (n == m)
+		{
+			sq = 0;
+			for (i = 0; i < n; ++i)
+				sq += (n*v[i] - all)*(n*v[i] - all);
+			sqb = n*n;
+		}
+		else
+		{
+			sort(v.begin(), v.end());
+			int start = 0, left, right;
+			for (i = 0; i < n; ++i)
+			{
+				if (n*v[i] - all > 0)
+				{
+					start = i;
+					break;
+				}
+			}
+			if (start - 1 >= 0 && v[start] - all > all - v[start - 1])
+				start--;
+			int c = 1;
+			left = c - 1, right = c + 1;
+			vt.resize(m);
+			vt[0] = v[start];
+			for (; c < m; ++c)
+			{
+				if (left >= 0 && right < n)
+				{
+					if (abs(n*v[left] - all) < abs(n*v[right] - all))
+						vt[c] = v[left--];
+					else
+						vt[c] = v[right++];
+				}
+				else if (left < 0)
+					vt[c] = v[right++];
+				else
+					vt[c] = v[left--];
+			}
+			all = 0;
+			for (i = 0; i < vt.size();++i)
+				all += vt[i];
+			sq = 0;
+			for (i = 0; i < vt.size(); ++i)
+				sq += (m*vt[i] - all)*(m*vt[i] - all);
+			sqb = m*m;
+		}
+		
+		ll g = gcd(sq, sqb);
+		sq /= g, sqb /= g;
+		if (n == m)
+			sqb *= n;
+		else
+			sqb *= m;
+		g = gcd(sq, sqb);
+		sq /= g, sqb /= g;
+		if (sqb == 0 || sqb == 1)
+			printf("%lld\n", sq);
+		else
+			printf("%lld/%lld\n", sq, sqb);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	long long a, b, c,d,e,f;
+	while (cin >> a >> b >> c)
+	{
+		d = min(a, min(b, c));
+		f = max(a, max(b, c));
+		e = a + b + c - d - f;
+		if (d + e > f && e - d < f)
+			cout << d + e + f << endl;
+		else
+			cout << 2 * (d + e)-1 << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b, c;
+	while (cin >> a >> b >> c)
+	{
+		if (a == b && a + b > c)
+			cout << "Yes" << endl;
+		else if (a == c && a + c > b)
+			cout << "Yes" << endl;
+		else if (b == c && b + c > a)
+			cout << "Yes" << endl;
+		else
+			cout << "No" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+
+*/
+
+
+/*
+int days[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+int start[60] = { 3 };
+
+int main()
+{
+	int year, month, c = 1;
+	for (year = 2015; year <= 2018; ++year)
+	{
+		for (month = 1; month <= 12; ++month)
+		{
+			if (year == 2015 && month == 1)
+				month = 2;
+			int m = month - 2;
+			if (m == -1)
+				m = 11;
+			int day = days[m];
+			if (year == 2016 && m == 1)
+				day++;
+			start[c] = (start[c - 1] + day) % 7 ;
+			c++;
+		}
+	}
+	while (~scanf("%d-%d", &year, &month))
+	{
+		int s = start[(year - 2015) * 12 + month - 1];
+		int day = days[month - 1];
+		if (year == 2016 && month == 2)
+			day++;
+
+		int d,now;
+		now = s;
+		cout << string(3 * s, ' ');
+		for (d = 1; d <= day; ++d)
+		{
+			printf("%2d", d);
+			now++;
+			if (now == 7)
+			{
+				putchar('\n');
+				now = 0;
+			}
+			else if (d != day)
+				putchar(' ');
+		}
+		if (now != 0)
+			putchar('\n');
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+/*
+int n,sum;
+vector<int> v;
+int visit[100];
+bool dfs(int curlen, int expect, int start, int num)
+{
+	if (num == n)
+		return true;
+	
+	int last = -1;
+	for (int i = start; i < n; ++i)
+	{
+		if (visit[i] || v[i] == last)
+			continue;
+
+		visit[i] = 1;
+		if (curlen + v[i] < expect)
+		{
+			if (dfs(curlen + v[i], expect, i, num + 1))
+				return true;
+			else
+				last = v[i];
+		}
+		else if (curlen + v[i] == expect)
+		{
+			if (dfs(0, expect, 0, num + 1))
+				return true;
+			else
+				last = v[i];
+		}
+		visit[i] = 0;
+		if (curlen == 0)
+			break;
+	}
+	return false;
+}
+
+int main()
+{
+	while (cin >> n && n != 0)
+	{
+		v.resize(n);
+		sum = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			cin >> v[i];
+			sum += v[i];
+		}
+		sort(v.begin(), v.end(), greater<int>());
+		memset(visit, 0, sizeof(visit));
+		int cur = v[0];
+		bool flag = false;
+		for (cur = v[0]; cur <= sum - cur; ++cur)
+		{
+			if ((sum%cur == 0) && dfs(0, cur, 0, 0))
+			{
+				cout << cur << endl;
+				flag = true;
+				break;
+			}
+		}
+		if (!flag)
+			cout << sum << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	int i, k;
+	while (cin >> n >> m >> k)
+	{
+		if (n % m == 0)
+			cout << 0 << endl;
+		else
+		{
+			int t = n / m;
+			int next = (n - t*m)*10;
+			for (i = 0; i < k; ++i)
+			{
+				t = next / m;
+				next = (next - t*m) * 10;
+			}
+			cout << t << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	long long i, n, a, b;
 	cin >> n;
 	for (i = 0; i < n; ++i)
@@ -28,7 +519,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 /*
 long long tab[4] = {0,0,0,1};
 long long ret[1005];

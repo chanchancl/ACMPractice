@@ -12,9 +12,168 @@
 #include <stack>
 #include <iomanip>
 #include <iostream>
+#include <ctime>
 using namespace std;
 
+int t[10][10];
+int main()
+{
+	int n, i, j;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+		for (j = 0; j < n; ++j)
+			cin >> t[i][j];
+	bool r = true;
+	for (i = 0; i < n; ++i)
+		for (j = 0; j < n; ++j)
+			if (i > j)
+				if (t[i][j] != 0)
+					r = false;
+	if (r)
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
+	return 0;
+}
 
+
+/*
+int main()
+{
+	int i, m, n;
+	vector<int> v1, v2, v3;
+	cin >> m;
+	v1.resize(m);
+	for (i = 0; i < m; ++i)
+		cin >> v1[i];
+	cin >> n;
+	v2.resize(n);
+	for (i = 0; i < n; ++i)
+		cin >> v2[i];
+	int end = n + m;
+	m -= 1, n = 0;
+	for (i=0;i<end;++i)
+	{
+		if (i != 0)
+			cout.put(' ');
+		if (m >= 0 &&n < v2.size() )
+		{
+			if (v1[m] > v2[n])
+				cout << v1[m--];
+			else
+				cout << v2[n++];
+		}
+		else if (m >= 0)
+			cout << v1[m--];
+		else
+			cout << v2[n++];
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t[100] = { 0 };
+	int a, n = 0 , i, r, max;
+	while (cin >> a && a >= 0)
+		t[a]++,n++;
+	max = -1;
+	for(i=0;i<100;++i)
+		if (max < t[i])
+			max = t[i];
+	bool first = true;
+	for(i=0;i<100;++i)
+		if (t[i] == max)
+		{
+			if (first)
+				first = false;
+			else
+				cout.put(' ');
+			cout << i;
+		}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i,n,t;
+	set<int> s;
+	cin >> n;
+	for (i = 0; i < n; ++i)
+	{
+		cin >> t;
+		s.insert(t);
+	}
+	cout << s.size() << endl;
+	for (auto it = s.begin(); it != s.end(); ++it)
+	{
+		if (it != s.begin())
+			cout.put(' ');
+		cout << *it;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int now=0, next, n, total = 0;
+	cin >> n;
+	while (n--)
+	{
+		cin >> next;
+		if (next > now)
+			total += (next - now) * 6;
+		else if (next < now)
+			total += (now - next) * 4;
+		total += 5;
+		now = next;
+	}
+	cout << total << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<int> v;
+	int n, t,i;
+	cin >> n;
+	v.resize(n);
+	for (i = 0; i < n; ++i)
+		cin >> v[i];
+
+	swap(*v.begin(), *min_element(v.begin(), v.end()));
+	swap(*--v.end(), *max_element(v.begin(), v.end()));
+
+	for (auto it = v.begin(); it != v.end(); ++it)
+	{
+		if (it != v.begin())
+			cout << ' ';
+		cout << *it;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	float x, y;
+	for (y = 1; y >= -1; y -= 0.05f, putchar('\n'))
+		for (x = -1; x <= 1; x += 0.025f)
+			putchar(x*x + y*y > 1 ? 'M' : "@@%#*+=;:. "[int(((x + y + sqrt(1 - (x*x + y*y)))*0.5773502692f + 1)*5.0f + 0.5f)]);
+}
+*/
+
+/*
 int main()
 {
 	string op;
@@ -51,7 +210,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 int main()

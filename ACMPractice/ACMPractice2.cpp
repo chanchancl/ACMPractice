@@ -15,6 +15,123 @@
 #include <ctime>
 using namespace std;
 
+
+
+/*
+int main()
+{
+	double x, y, r, x1, y1, x2, y2;
+	double k, b,R;
+	while (cin >> x >> y >> r >> x1 >> y1 >> x2 >> y2)
+	{
+		if (x1 == x2)
+			R = fabs(x - x1);
+		else if (y1 == y2)
+			R = fabs(y - y1);
+		else
+		{
+			k = (y1 - y2) / (x1 - x2);
+			b = y1 - k*x1;
+			R = fabs((k*x - y + b)) / sqrt(k*k + 1);
+		}
+		if (fabs(R - r) <= 1e-6)
+			cout << 1 << endl;
+		else if (R < r)
+			cout << 2 << endl;
+		else
+			cout << 0 << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+struct mofa
+{
+	int a, b,c;
+};
+
+int value[100005];
+mofa mofac[100005];
+int changed, n, m;
+
+int main()
+{
+	int T,i,j,a,b,c;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> m;
+		for (i = 1; i <= n; ++i)
+			scanf("%d", &value[i]);
+		for (i = 0; i < m; ++i)
+			scanf("%d %d %d", &mofac[i].a, &mofac[i].b, &mofac[i].c);
+
+		changed = 1;
+		while (changed)
+		{
+			changed = 0;
+			for (int i = 0; i <= m; ++i)
+			{
+				if (value[mofac[i].c] > value[mofac[i].a] + value[mofac[i].b])
+				{
+					value[mofac[i].c] = value[mofac[i].a] + value[mofac[i].b];
+					changed = 1;
+				}
+			}
+			for (int i = m; i >= 0; --i)
+			{
+				if (value[mofac[i].c] > value[mofac[i].a] + value[mofac[i].b])
+				{
+					value[mofac[i].c] = value[mofac[i].a] + value[mofac[i].b];
+					changed = 1;
+				}
+			}
+		}
+		for (i = 1; i <= n; ++i)
+		{
+			if (i != 1)
+				cout.put(' ');
+			printf("%d", value[i]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+*/
+
+/*
+struct stu
+{
+	char name[30];
+	int id;
+	int actotal; // ac 过的总题数
+	int ac[10]; // 1通过， 0 没通过
+	int wa[10]; // wa 次数
+	int totaltime; // 总罚时
+};
+
+bool operator<(const stu& s1, const stu& s2)
+{
+	if (s1.actotal != s2.actotal)
+		return s1.actotal > s2.actotal;
+	else
+	{
+		if (s1.totaltime != s2.totaltime)
+			return s1.totaltime < s2.totaltime;
+		else
+			return s1.id < s2.id;
+	}
+}
+
+int main()
+{
+	stu s[10];
+	sort(s, s + 10, std::less<stu>());
+}
+*/
+
+/*
 int t[10][10];
 int main()
 {
@@ -35,7 +152,7 @@ int main()
 		cout << "NO" << endl;
 	return 0;
 }
-
+*/
 
 /*
 int main()

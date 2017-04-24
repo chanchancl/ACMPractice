@@ -9,13 +9,214 @@
 #include <string>
 #include <set>
 #include <map>
+#include <list>
 #include <stack>
 #include <iomanip>
 #include <iostream>
 #include <ctime>
 using namespace std;
 
+int num[25];
 
+void lower(string &str)
+{
+	for (int i = 0; i < str.size(); ++i)
+		if (isupper(str[i]))
+			str[i] = tolower(str[i]);
+}
+
+int main()
+{
+	int k, e, i, j,T=0;
+	while (cin >> k >> e)
+	{
+		T++;
+		vector<string> keyword;
+		vector<string> jiekouraw,jiekou;
+		string tmp;
+		keyword.resize(k);
+		jiekou.resize(e);
+		for (i = 0; i < k; ++i)
+			cin >> keyword[i];
+		getline(cin, tmp);
+		for (i = 0; i < e; ++i)
+			getline(cin, jiekou[i]);
+		jiekouraw = jiekou;
+		for (i = 0; i < e; ++i)
+			lower(jiekou[i]);
+		memset(num, 0, sizeof(num));
+		for (i = 0; i < e; ++i)
+		{
+			for (j = 0; j < k; ++j)
+			{
+				int pos,end;
+				if ((pos = jiekou[i].find(keyword[j])) != string::npos)
+				{
+					if (pos == 0 || !isalpha(jiekou[i][pos-1]))
+					{
+						end = pos + keyword[j].size();
+						if (end == jiekou[i].size() || !isalpha(jiekou[i][end]))
+							num[i]++;
+					}
+				}
+			}
+		}
+		int max = -1;
+		for (i = 0; i < e; ++i)
+			if (num[i] > max)
+				max = num[i];
+		cout << "Excuse Set #" << T << endl;
+		for (i = 0; i < e; ++i)
+			if (num[i] == max)
+				cout << jiekouraw[i] << endl;
+		cout << endl;
+	}
+	return 0;
+}
+
+
+/*
+string text, mode;
+int nextt[1000005];
+
+void kmp_next(string &str)
+{
+	int i = 0, j = -1;
+	nextt[0] = -1;
+	while (i < str.length())
+	{
+		if (j == -1 || str[i] == str[j])
+		{
+			i++, j++;
+			if (str[i] != str[j])
+				nextt[i] = j;
+			else
+				nextt[i] = nextt[j];
+		}
+		else
+			j = nextt[j];
+	}
+}
+
+int main()
+{
+	int T,i,j,cnt;
+	cin >> T;
+	while (T--)
+	{
+		cin >> mode >> text;
+		kmp_next(mode);
+		i = j = cnt = 0;
+		while(i < text.length())
+		{
+			if (j == -1 || text[i] == mode[j])
+				i++, j++;
+			else
+				j = nextt[j];
+			if (j == mode.length())
+				cnt++, j = nextt[j];
+		}
+		cout << cnt << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, n, i,j,k;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n;
+		string DNA[10], ans,sub;
+		for (i = 0; i < n; ++i)
+			cin >> DNA[i];
+		for (i = 0; i < 60; ++i)
+		{
+			for (j = 1; j <= 60 - i; ++j)
+			{
+				sub = DNA[0].substr(i, j);
+				
+				int allfind = true;
+				for (k = 1; k < n; ++k)
+				{
+					if (DNA[k].find(sub) == string::npos)
+					{
+						allfind = false;
+						break;
+					}
+				}
+				if (allfind)
+				{
+					if (sub.size() > ans.size())
+						ans = sub;
+					else if (sub.size() == ans.size() && sub < ans)
+						ans = sub;
+				}
+			}
+		}
+		if (ans.size() < 3)
+			cout << "no significant commonalities" << endl;
+		else
+			cout << ans << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+struct task
+{
+	int id, pri;
+	task(int ID, int PRI) : id(ID), pri(PRI){}
+};
+
+int main()
+{
+	int T, n, m, i, t;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> m;
+
+		list<task> l;
+		for (i = 0; i < n; ++i)
+		{
+			cin >> t;
+			l.push_back(task(i, t));
+		}
+
+		int time = 0;
+		while (1)
+		{
+			task head = l.front();
+			l.pop_front();
+			bool canprint = true;
+			for (auto it = l.begin(); it != l.end(); ++it)
+			{
+				if (head.pri < it->pri)
+				{
+					canprint = false;
+					break;
+				}
+			}
+			if (canprint)
+				time++;
+			else
+				l.push_back(head);
+			if (canprint && head.id == m)
+			{
+				cout << time << endl;
+				break;
+			}
+		}
+	}
+
+	return 0;
+}
+*/
 
 /*
 int main()

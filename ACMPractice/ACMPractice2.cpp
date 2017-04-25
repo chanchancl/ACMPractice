@@ -16,6 +16,130 @@
 #include <ctime>
 using namespace std;
 
+int gcd(int a, int b)
+{
+	if (b == 0) return a;
+	return gcd(b, a % b);
+}
+
+int main()
+{
+	int i,n, a, b;
+	while (cin >> n)
+	{
+		cin >> a;
+		for (i = 1; i < n; ++i)
+		{
+			cin >> b;
+			a = b / gcd(a, b)*a;
+		}
+		cout << a << endl;
+	}
+	return 0;
+}
+
+
+/*
+bool cmp(string& raw, string& str)
+{
+	if (raw.size() != str.size())
+		return false;
+	for (int i = 0; i < raw.size();++i)
+	{
+		if (raw[i] != str[i] && raw[i] != '*')
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	int T, n, i,cnt;
+	cin >> T;
+	while (T--)
+	{
+		cnt = 0;
+		string raw, str;
+		cin >> raw;
+		cin >> n;
+		for (i = 0; i < n; ++i)
+		{
+			str = "";
+			while(str == "")
+				getline(cin, str);
+			
+			if (cmp(raw, str))
+				cnt++;
+		}
+		cout << cnt << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, v, k, s, e, n;
+	cin >> T;
+	while (T--)
+	{
+		cin >> v >> k >> s >> e;
+		if (s == e && e % k == 0)
+			n = 1;
+		else
+			n = e / k - (s - 1) / k;
+		if (n > v)
+			n = v;
+		cout << n << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, n, t,i;
+	cin >> T;
+	while (T--)
+	{
+		list<int> anime;
+		vector<int> food;
+		cin >> n;
+		for (i = 0; i < n; ++i)
+		{
+			cin >> t;
+			anime.push_back(t);
+		}
+		food.resize(n);
+		for (i = 0; i < n; ++i)
+			cin >> food[i];
+		sort(food.begin(), food.end());
+		bool bao = true;
+		for (auto it = anime.begin(); it != anime.end(); ++it)
+		{
+			auto it2 = lower_bound(food.begin(), food.end(), *it);
+			if (it2 == food.end())
+			{
+				bao = false;
+				break;
+			}
+			else
+				food.erase(it2);
+		}
+		if (bao)
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
 struct tree
 {
 	tree *left, *right;
@@ -71,6 +195,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 
 /*

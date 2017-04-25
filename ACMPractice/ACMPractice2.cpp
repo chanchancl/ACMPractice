@@ -16,6 +16,64 @@
 #include <ctime>
 using namespace std;
 
+struct tree
+{
+	tree *left, *right;
+	char value;
+	tree(char c) : value(c),left(NULL),right(NULL){}
+};
+
+string pre, mid;
+int current = 0;
+tree* make(char c, int l, int r)
+{
+	tree *ret = new tree(c);
+	current++;
+	if (l > r || current > pre.size())
+		return ret;
+
+	int m = mid.find(c);
+	if (current < mid.size() && l != m)
+		ret->left = make(pre[current], l, m - 1);
+	if (current < mid.size() && r != m)
+		ret->right = make(pre[current], m + 1, r);
+	return ret;
+}
+
+
+void visit(tree *t)
+{
+	if (!t)
+		return;
+	visit(t->left);
+	visit(t->right);
+	cout << t->value;
+}
+
+void del(tree *t)
+{
+	if (!t)
+		return;
+	del(t->left);
+	del(t->right);
+	delete t;
+}
+
+int main()
+{
+	while (cin >> pre >> mid)
+	{
+		current = 0;
+		tree *root = make(pre[current], 0, pre.size());
+		visit(root);
+		printf("\n");
+		del(root);
+	}
+	return 0;
+}
+
+
+/*
 int num[25];
 
 void lower(string &str)
@@ -73,7 +131,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 string text, mode;

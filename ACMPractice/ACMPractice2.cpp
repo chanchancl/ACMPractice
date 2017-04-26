@@ -5,17 +5,88 @@
 #include <functional>
 #include <string.h>
 #include <cmath>
-#include <algorithm>
 #include <string>
 #include <set>
 #include <map>
 #include <list>
 #include <stack>
-#include <iomanip>
-#include <iostream>
 #include <ctime>
+#include <iomanip>
+#include <algorithm>
+#include <iostream>
 using namespace std;
 
+int a[100005];
+int sum[100005];
+int n, S;
+void solve()
+{
+	for (int i = 0; i < n; ++i)
+		sum[i + 1] = sum[i] + a[i];
+	if (sum[n] < S)
+	{
+		cout << 0 << endl;
+		return;
+	}
+	int res = n;
+	for (int s = 0; sum[s] + S <= sum[n]; s++)
+	{
+		int t = lower_bound(sum + s, sum + n, sum[s] + S) - sum;
+		res = min(res, t - s);
+	}
+	cout << res << endl;
+}
+
+int main()
+{
+	int T,i;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> S;
+		for (i = 0; i < n; ++i)
+			cin >> a[i];
+		solve();
+	}
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int T, x, y, ret;
+	cin >> T;
+	while (T--)
+	{
+		cin >> x >> y;
+		ret = -1;
+		if (x == y)
+		{
+			if (x == 0)
+				ret = 0;
+			else if (x & 1)
+				ret = 2 * x - 1;
+			else
+				ret = 2 * x;
+		}
+		else if (x == y + 2)
+		{
+			if (x & 1)
+				ret = x + y - 1;
+			else
+				ret = x + y;
+		}
+		if (ret == -1)
+			cout << "No Number" << endl;
+		else
+			cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+/*
 int gcd(int a, int b)
 {
 	if (b == 0) return a;
@@ -37,7 +108,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 bool cmp(string& raw, string& str)

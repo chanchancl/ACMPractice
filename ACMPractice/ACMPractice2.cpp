@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <functional>
 #include <string.h>
 #include <cmath>
 #include <string>
@@ -10,15 +9,170 @@
 #include <map>
 #include <list>
 #include <stack>
-#include <ctime>
-#include <iomanip>
 #include <algorithm>
 #include <iostream>
+#include <stdio.h>
 using namespace std;
 
+int main()
+{
+	char ch[10][8] = {
+		"zero","one","two","three","four",
+		"five","six","seven","eight","nine"
+	};
+	map<string, int> m;
+	for (int i = 0; i < 10; ++i)
+		m[ch[i]] = i;
+	string a, b;
+	while (cin >> a >> b)
+		cout << m[a] + m[b] << endl;
+	return 0;
+}
+
+
+/*
+int k, m;
+string str;
+int dir[100005];
+int num[100005];
+
+void solve()
+{
+	int sum = 0, res = 0;
+	memset(num, 0, sizeof(num));
+	for (int i = 0; i < str.size(); ++i)
+		dir[i] = str[i] - '0';
+	for (int i = 0; i <= str.size() - k; ++i)
+	{
+		if ((dir[i] + sum) % 2)
+		{
+			res++;
+			num[i] = 1;
+		}
+		sum += num[i];
+		if (i - k + 1 >= 0)
+			sum -= num[i - k + 1];
+	}
+	bool flag = true;
+	for (int i = str.size()-k+1 ; i < str.size(); ++i)
+	{
+		if ((dir[i] + sum) % 2)
+		{
+			flag = false;
+			break;
+		}
+		else
+			sum -= num[i - k + 1];
+	}
+	if (flag && res <= m)
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		cin >> k >> m >> str;
+		solve();
+	}
+	return 0;
+}
+*/
+
+/*
+int a[10005];
+int n, k;
+
+void solve()
+{
+	sort(a, a + n);
+	printf("%d %d\n", a[(k-1)/n], a[(k-1)%n]);
+}
+
+int main()
+{
+	while (cin >> n >> k)
+	{
+		for (int i = 0; i < n; ++i)
+			scanf("%d", &a[i]);
+		solve();
+	}
+	return 0;
+}
+*/
+
+/*
+double v1, v2, x, k;
+void solve()
+{
+	printf("%.2lf\n", k / (x*v1)*(3.1415926 / 2 - atan(-v2 / v1)));
+}
+
+int main()
+{
+	int T;
+	
+	cin >> T;
+	while (T--)
+	{
+		scanf("%lf %lf %lf %lf", &v1, &v2, &x, &k);
+		solve();
+	}
+}
+*/
+
+/*
+struct DNA
+{
+	string str;
+	int num;
+};
+bool operator<(DNA &d1, DNA &d2)
+{
+	return d1.num < d2.num;
+}
+
+vector<DNA> v;
+void solve()
+{
+	for (int i = 0; i < v.size(); ++i)
+	{
+		for (int j = 0; j < v[i].str.size(); ++j)
+		{
+			for (int k = j + 1; k < v[i].str.size(); ++k)
+				if (v[i].str[j] > v[i].str[k])
+					v[i].num++;
+		}
+	}
+	sort(v.begin(), v.end());
+	for (vector<DNA>::iterator it = v.begin(); it != v.end(); ++it)
+		cout << it->str << endl;
+}
+
+int main()
+{
+	int T, n;
+	while (cin >> n >> T)
+	{
+		v.resize(T);
+		for (int i = 0; i < T; ++i)
+			cin >> v[i].str;
+		solve();
+	}
+	return 0;
+}
+*/
+
+
+/*
 int a[100005];
 int sum[100005];
 int n, S;
+
 void solve()
 {
 	for (int i = 0; i < n; ++i)
@@ -43,14 +197,32 @@ int main()
 	cin >> T;
 	while (T--)
 	{
-		cin >> n >> S;
+		scanf("%d %d", &n, &S);
 		for (i = 0; i < n; ++i)
-			cin >> a[i];
+			scanf("%d", &a[i]);
 		solve();
 	}
 	return 0;
 }
 
+
+void solve1()
+{
+	int res = n + 1;
+	int s = 0, t = 0, sum = 0;
+	for (;;)
+	{
+		while (t < n && sum < S)
+			sum += a[t++];
+		if (sum < S) break;
+		res = min(res, t - s);
+		sum -= a[s++];
+	}
+	if (res > n)
+		res = 0;
+	cout << res << endl;
+}
+*/
 
 /*
 int main()

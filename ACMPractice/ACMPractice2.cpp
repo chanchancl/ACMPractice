@@ -9,11 +9,99 @@
 #include <map>
 #include <list>
 #include <stack>
+#include <cctype>
 #include <algorithm>
 #include <iostream>
 #include <stdio.h>
 using namespace std;
 
+int main()
+{
+	int n, t, i;
+	while (cin >> n)
+	{
+		vector<long long> v;
+		v.resize(n);
+		for (i = 0; i < n; ++i)
+			cin >> v[i];
+		sort(v.begin(), v.end());
+		int last = v.size() - 1;
+		if (v.size() == 2)
+			cout << v[0] * v[1] << endl;
+		else
+			cout << v[last] * (v[last - 1] + v[last - 2]) << endl;
+	}
+	return 0;
+}
+
+/*
+int main()
+{
+	string str;
+	int i;
+	while (cin >> str)
+	{
+		for (i = 0; i < str.size(); ++i)
+		{
+			if (((i+1) & 1) && isupper(str[i]))
+				str[i] = tolower(str[i]);
+			else if (((i+1) & 1) == 0 && islower(str[i]))
+				str[i] = toupper(str[i]);
+		}
+		cout << str << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, i, t, r,k;
+	while (cin >> n >> t)
+	{
+		r = 0;
+		for (i = 0; i < t; ++i)
+		{
+			cin >> k;
+			if (k < n)
+				r++;
+		}
+		cout << r << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a[5] = { 1,2,3,4 };
+	sort(a,a+5);
+	do
+	{
+		for (int i = 0; i < 4; ++i)
+			printf("%d ", a[i]);
+		printf("\n");
+	} while (next_permutation(a, a + 4));
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	char c[24] = "ZTtc";
+	unsigned int  a = (*c) << 24;
+	unsigned int  b = (*(c + 1)) << 16;
+	unsigned int  d = (*(c + 2)) << 8;
+	unsigned int  e = (*(c + 3));
+	unsigned int  f = (*c) << 24 | (*(c + 1)) << 16 | (*(c + 2)) << 8 | (*(c + 3));
+	cout << f << endl;
+}
+*/
+
+/*
 int main()
 {
 	char ch[10][8] = {
@@ -28,7 +116,7 @@ int main()
 		cout << m[a] + m[b] << endl;
 	return 0;
 }
-
+*/
 
 /*
 int k, m;

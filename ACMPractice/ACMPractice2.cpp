@@ -6,15 +6,211 @@
 #include <cmath>
 #include <string>
 #include <set>
-#include <map>
 #include <list>
 #include <stack>
 #include <cctype>
+#include <functional>
 #include <algorithm>
 #include <iostream>
 #include <stdio.h>
+#include <sstream>
 using namespace std;
 
+int main()
+{
+	string in;
+	while (getline(cin, in) && in != "")
+	{
+		stringstream ss;
+		ss << in;
+		vector<int> v1, v2,v3;
+		int index = 1;
+		while (ss.good())
+		{
+			int value;
+			ss >> value;
+			if (index % 3 != 0 && index % 2 == 0)
+				v1.push_back(value);
+			else if (index % 3 == 0)
+				v2.push_back(value);
+			else
+				v3.push_back(value);
+			index++;
+		}
+
+		sort(v1.begin(), v1.end(), less<int>());
+		sort(v2.begin(), v2.end(), greater<int>());
+		
+		int i1, i2, i3;
+		i1 = i2 = i3 = 0;
+		for (int i = 1; i < index; ++i)
+		{
+			if (i != 1)
+				cout.put(' ');
+			if (i % 3 != 0 && i % 2 == 0)
+				cout << v1[i1++];
+			else if (i % 3 == 0)
+				cout << v2[i2++];
+			else
+				cout << v3[i3++];
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+
+/*
+#define N 10005
+int first[N], vis[N], len, n, m;
+double dis[N];
+struct node
+{
+	int u, v;
+	double w;
+	int next;
+}g[100020];
+void add_egde(int u, int v, double w)
+{
+	g[len].u = u;
+	g[len].v = v;
+	g[len].w = w;
+	g[len].next = first[u];
+	first[u] = len++;
+}
+void spfa()
+{
+	for (int i = 1; i <= n; i++)
+		dis[i] = 0;
+	dis[1] = 1.0;
+	queue<int>q;
+	vis[1] = 1;
+	q.push(1);
+	while (!q.empty())
+	{
+		int k = q.front();
+		q.pop();
+		vis[k] = 0;
+		for (int i = first[k]; i != -1; i = g[i].next)
+		{
+			if (dis[g[i].u] * g[i].w>dis[g[i].v])
+			{
+				dis[g[i].v] = dis[g[i].u] * g[i].w;
+				if (!vis[g[i].v])
+				{
+					q.push(g[i].v);
+					vis[g[i].v] = 1;
+				}
+			}
+		}
+	}
+}
+int main()
+{
+	int t, a, b, c;
+	scanf("%d", &t);
+	while (t--)
+	{
+		len = 0;
+		memset(vis, 0, sizeof(vis));
+		memset(first, -1, sizeof(first));
+		scanf("%d%d", &n, &m);
+		for (int i = 0; i<m; i++)
+		{
+			scanf("%d%d%d", &a, &b, &c);
+			add_egde(a, b, c / 100.0);//½¨Á¢Ë«Ïò±ß
+			add_egde(b, a, c / 100.0);
+		}
+		spfa();
+		printf("%lf\n", dis[n] * 100);
+	}
+	return 0;
+}
+*/
+
+/*
+int n, m;
+int task[10001000];
+
+int main()
+{
+	while (scanf("%d%d", &n, &m) != EOF)
+	{
+		for (int i = 0; i<n; i++)
+			scanf("%d", &task[i]);
+
+		sort(task, task + n, greater<int>());
+		priority_queue<int, vector<int>, greater<int> > q;
+		for (int i = 0; i<m; i++)
+			q.push(task[i]);
+
+		for (int j = m; j < n; j++)
+		{
+			int min = q.top();
+			q.pop();
+			min += task[j];
+			q.push(min);
+		}
+		int ans;
+		while (!q.empty())
+		{
+			ans = q.top();
+			q.pop();
+		}
+		printf("%d\n", ans);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, n, i;
+	bool first = true;
+	cin >> T;
+	while (T--)
+	{
+		if (first)
+			first = false;
+		else
+			cout << endl;
+		vector<string> v;
+		cin >> n;
+		v.resize(n);
+		getline(cin, v[0]);
+		for (i = 0; i < n; ++i)
+			getline(cin, v[i]);
+		bool code, vim;
+		code = vim = false;
+		size_t pos;
+		for (i = 0; i < n; ++i)
+		{
+			if (!code && (pos = v[i].find("Code::Blocks")) != string::npos)
+				if (pos == 0 || v[i][pos - 1] == ' ')
+					if (pos + 12 == v[i].size() || (pos+12 < v[i].size() && v[i][pos + 12] == ' '))
+						code = true;
+			if (!vim && (pos = v[i].find("Vim")) != string::npos)
+				if (pos == 0 || v[i][pos - 1] == ' ')
+					if (pos + 3 == v[i].size() || (pos + 3 < v[i].size() && v[i][pos + 3] == ' '))
+						vim = true;
+			if (code && vim)
+				break;
+		}
+		if (code && vim)
+			cout << "I can find Code::Blocks and Vim£¡£¡£¡" << endl;
+		else if (code)
+			cout << "I can find Code::Blocks£¡£¡" << endl;
+		else if (vim)
+			cout << "I can find Vim£¡" << endl;
+		else
+			cout << "Are you kidding me?" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n, t, i;
@@ -33,6 +229,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 /*
 int main()

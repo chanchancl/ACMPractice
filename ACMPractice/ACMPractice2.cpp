@@ -18,6 +18,66 @@ using namespace std;
 
 int main()
 {
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		double u, v, w, s;
+		cin >> u >> v >> w >> s;
+		printf("%.3lf\n", s / (u + v)*w);
+	}
+}
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n)
+	{
+		string in;
+		cin >> in;
+		int ret = 0;
+		for (int i = 0; i < in.size() - 1; ++i)
+			if (in[i] == in[i + 1])
+				ret += 1;
+		cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, t, i;
+	while (cin >> n)
+	{
+		priority_queue<int, vector<int>, greater<int> > q;
+		for (i = 0; i < n; ++i)
+		{
+			cin >> t;
+			q.push(t);
+		}
+		int ret = 0;
+		while (!q.empty())
+		{
+			int a, b;
+			a = q.top(); q.pop();
+			b = q.top(); q.pop();
+			ret += a + b;
+			if (q.empty())
+				break;
+			q.push(a + b);
+		}
+		cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	string in;
 	while (getline(cin, in) && in != "")
 	{
@@ -59,6 +119,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 #define N 10005

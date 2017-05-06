@@ -16,6 +16,7 @@
 #include <sstream>
 using namespace std;
 
+/*
 int main()
 {
 	int T;
@@ -27,6 +28,7 @@ int main()
 		printf("%.3lf\n", s / (u + v)*w);
 	}
 }
+*/
 
 /*
 int main()

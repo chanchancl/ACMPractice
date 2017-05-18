@@ -17,6 +17,203 @@
 #include <sstream>
 using namespace std;
 
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int n, ret = 0, x[35],y[35];
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			cin >> x[i] >> y[i];
+		sort(x, x + n);
+		sort(y, y + n);
+		for (int i = 0; i < n/2; ++i)
+			ret += x[n - i - 1] - x[i] + y[n - i - 1] - y[i];
+		printf("%d\n", ret);
+	}
+
+	return 0;
+}
+
+
+/*
+bool is_prime(int x)
+{
+	int end = sqrt(x);
+	for (int i = 2; i <= end; ++i)
+		if (x % i == 0)
+			return false;
+	return x != 1;
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		int mid, l = 0;
+		cin >> mid;
+		if (!is_prime(mid))
+			while (1)
+			{
+				l++;
+				if (mid - l >= 2 && is_prime(mid - l))
+				{
+					mid -= l;
+					break;
+				}
+				else if (is_prime(mid + l))
+				{
+					mid += l;
+					break;
+				}
+			}
+		printf("%d %d\n", mid, l);
+	}
+
+	return 0;
+}
+*/
+
+/*
+void printstr(char *p)
+{
+	while (*p != '\0')
+		putchar(*p++);
+}
+
+int main()
+{
+	char str[20] = "this is it.";
+	printstr(str);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, n;
+	double r[605];
+	cin >> T;
+	while (T--)
+	{
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			cin >> r[i];
+		sort(r, r + n, greater<double>());
+		int ret = 0;
+		double len = 0;
+		while (len < 20)
+		{
+			double l = 2*sqrt(r[ret] * r[ret] - 1);
+			len += l;
+			ret++;
+		}
+		printf("%d\n", ret);
+	}
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		char a[15], b[1005];
+		scanf("%s", a);
+		scanf("%s", b);
+		int la, lb, ret = 0;
+		la = strlen(a), lb = strlen(b);
+		for (int i = 0; i + la <= lb; ++i)
+		{
+			if (strncmp(a, b+i, la) == 0)
+				ret++;
+		}
+		printf("%d\n", ret);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	char c[5];
+	cin >> n;
+	while (n--)
+	{
+		cin >> c;
+		sort(c, c + 3);
+		printf("%c %c %c\n", c[0], c[1], c[2]);
+	}
+	return 0;
+}
+*/
+
+/*
+int n, k;
+double l[10005];
+
+bool C(double len)
+{
+	int num = 0;
+	for (int i = 0; i < n; ++i)
+		num += int(l[i] / len);
+	return num >= k;
+}
+
+void solve()
+{
+	double lb = 0, ub = 100005;
+	for (int i = 0; i < 100; ++i)
+	{
+		double mid = (lb + ub) / 2;
+		if (C(mid))lb = mid;
+		else ub = mid;
+	}
+	printf("%.2lf\n", floor(ub * 100) / 100);
+}
+
+int main()
+{
+	while (cin >> n >> k)
+	{
+		for (int i = 0; i < n; ++i)
+			cin >> l[i];
+		solve();
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	char str[10] = "jklmn";
+	char *p = str + 2;
+
+	printf("%s\n", str);
+	printf("%s\n", str + 2);
+	printf("%s\n", &str[2]);
+
+	printf("%s\n", &*(str + 2));
+
+	printf("%s\n", p);
+	printf("%s\n", p + 1);
+
+	return 0;
+}
+*/
+
+/*
 int inverse(string &str)
 {
 	int ret = 0;
@@ -38,6 +235,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 /*
 int main()

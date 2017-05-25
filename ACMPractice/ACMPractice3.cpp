@@ -17,6 +17,505 @@
 #include <sstream>
 using namespace std;
 
+struct test
+{
+	int t;
+};
+
+void main()
+{
+	test a;
+	a.t = 1;
+	printf("%d %d %d %d\n", a, &a, &a.t, *&a);
+}
+
+
+/*
+int n, t;
+int d[1005], s[1005];
+double ma, mi;
+
+bool C(double c)
+{
+	double nowt = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		if (c + s[i] < 0)
+			return true;
+		nowt += d[i] / (c + s[i]);
+		if (nowt > t)
+			return true;
+	}
+	if (nowt > 0 && nowt <= t)
+		return false;
+	else
+		return true;
+}
+
+void solve()
+{
+	double c, a,b;
+	a = -1005, b = 1005;
+
+	while (b - a > 10e-11)
+	{
+		c = (a + b) / 2;
+		if (C(c))
+			a = c;
+		else
+			b = c;
+	}
+	printf("%.9lf\n", c);
+}
+
+int main()
+{
+	while (~scanf("%d %d", &n, &t))
+	{
+		ma = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			scanf("%d %d", &d[i], &s[i]);
+			if (s[i] > ma)
+				ma = s[i];
+		}
+		solve();
+	}
+
+	return 0;
+}
+*/
+
+/*
+string str[60];
+int n, m;
+int solve()
+{
+	int ret = n*m;
+	if ( m != 1)
+		for (int i = 0; i < n; ++i)
+		{
+			string tmp(str[i].rbegin(), str[i].rend());
+			if (tmp == str[i])
+				ret++;
+		}
+	
+	if (n != 1)
+		for (int i = 0; i < m; ++i)
+		{
+			string s;
+			for (int j = 0; j < n; ++j)
+				s.push_back(str[j][i]);
+			string tmp(s.rbegin(), s.rend());
+			if (s == tmp)
+				ret++;
+		}
+	return ret;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> m;
+		for (int i = 0; i < n; ++i)
+			cin >> str[i];
+		printf("%d\n", solve());
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	char current = 'a';
+	int n;
+	string in;
+	cin >> n >> in;
+	n = 0;
+	for (int i = 0; i < in.size(); ++i)
+	{
+		int l = abs(current - in[i]);
+		if (l > 13)
+			l = 26 - l;
+		n += l;
+		current = in[i];
+	}
+	printf("%d", n);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	if (n <= 2)
+		printf("2");
+	else
+		printf("%d", n);
+	return 0;
+}
+*/
+
+/*
+int n, k;
+
+int solve()
+{
+	int ret = k;
+	while (n--)
+		ret = 4 * ret + 2;
+	return ret;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> k;
+		printf("%d\n", solve());
+	}
+	return 0;
+}
+*/
+
+/*
+void push(list<char>& q, string & s)
+{
+	q.clear();
+	for (int i = 0; i < s.size(); ++i)
+		q.push_back(s[i]);
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		string a, b;
+		cin >> a >> b;
+		list<char> qa, qb;
+		push(qa, a), push(qb, b);
+
+		int right=0, left=0;
+		//  -->
+		while (qa != qb)
+		{
+			right++;
+			char c = qa.front();
+			qa.pop_front();
+			qa.push_back(c);
+		}
+		push(qa, a);
+		while (qa != qb)
+		{
+			left++;
+			char c = qa.back();
+			qa.pop_back();
+			qa.push_front(c);
+		}
+		printf("%d\n", min(left, right));
+
+	}
+	return 0;
+}
+*/
+
+/*
+long long Fib[105] = { 0,1,1 };
+
+long long fib(int x)
+{
+	if (Fib[x]) return Fib[x];
+	return Fib[x] = fib(x - 1) + fib(x - 2);
+}
+
+int main()
+{
+	fib(100);
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		bool find = false;
+		long long n;
+		cin >> n;
+		for (int i = 1; i < 80 && Fib[i] < n; ++i)
+		{
+			for (int j = i; j < 80 && Fib[i] + Fib[j] < n; ++j)
+			{
+				for (int k = j; k < 80 && Fib[i] + Fib[j] + Fib[k] <= n; ++k)
+				{
+					if (find)
+						continue;
+					if (Fib[i] + Fib[j] + Fib[k] == n)
+					{
+						find = true;
+						printf("%d %d %d\n", Fib[i], Fib[j], Fib[k]);
+					}
+				}
+			}
+		}
+		if (!find)
+			printf("No Answer\n");
+
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int n, m, ji, ou;
+		cin >> n >> m;
+		if (n & 1)
+		{
+			ji = (n + 1) / 2;
+			ou = (n - 1) / 2;
+		}
+		else
+		{
+			ji = n / 2;
+			ou = n / 2;
+		}
+		if (m <= ou)
+			printf("%d\n", 2 * m);
+		else
+			printf("%d\n", 2 * (m-ou) - 1);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b, c;
+	while (cin >> a >> b >> c)
+		cout << max(a, max(b, c)) << endl;
+	return 0;
+}
+*/
+
+
+
+/*
+int main()
+{
+	char str[10][100] =
+	{
+		"",
+		"你就是海滩下的那乌克丽丽",
+		"你发如雪",
+		"我喜欢的样子你都有",
+		"你是天使的魔法温暖中慈祥",
+		"你的温柔象羽毛",
+		"终有一天你有属于你的天",
+	};
+
+	int n;
+	while (cin >> n)
+		cout << str[n] << endl;
+	return 0;
+}
+*/
+
+/*
+struct jian
+{
+	int a, b;
+};
+
+bool operator<(const jian& j1, const jian& j2)
+{
+	return j1.a < j2.a;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int n;
+		cin >> n;
+		vector<jian> v;
+		v.resize(n);
+		for (int i = 0; i < n; ++i)
+		{
+			int a, b;
+			cin >> v[i].a >> v[i].b;
+		}
+		sort(v.begin(), v.end());
+
+		for (int i = 0; i < n; ++i)
+		{
+			for (int j = 0; j < v[i].b; ++j)
+				cout << ">+" << string(v[i].a - 2, '-') << "+>" << endl;
+			cout << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+const int MAX = 1005;
+int go[MAX];
+int a[MAX], n;
+int num;
+
+void solve()
+{
+	bool changed = true;
+	num = 0;
+	memset(go, 0, sizeof(go));
+	while (changed)
+	{
+		changed = false;
+		for (int i = 0; i < n; ++i)
+		{
+			if (go[i])
+				continue;
+			if (a[i] == i + 1 || go[a[i] - 1])
+			{
+				go[i] = 1;
+				changed = true;
+				num++;
+			}
+		}
+	}
+}
+
+int main()
+{
+	while (cin >> n)
+	{
+		for (int i = 0; i < n; ++i)
+			cin >> a[i];
+		solve();
+		if (num == n)
+			printf("yes\n");
+		else
+			printf("no\n");
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	string in;
+	while (cin >> in)
+	{
+		int cur = -1;
+		for (int i = 0; i < in.size() - 1; ++i)
+			if (in[i] > in[i + 1])
+			{
+				cur = i;
+				break;
+			}
+		if (cur == -1)
+			cur = in.size() - 1;
+		for (int i = 0; i < in.size(); ++i)
+			if (i != cur)
+				putchar(in[i]);
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		string in;
+		cin >> in;
+		int cnt = 0;
+		for(int i=0; i <in.size(); ++i)
+			switch (in[i])
+			{
+			case 's': case 'n': case 'a': case 'i': case 'l':
+				cnt++;
+				break;
+			}
+		int out = 100.0 * cnt / in.size();
+		printf("%d%%\n", out);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int w,h;
+	while (cin >> w >> h)
+	{
+		cout << '+' << string(w, '-') << '+' << endl;
+		for (int i = 0; i < h; ++i)
+			cout << '|' << string(w, ' ') << '|' << endl;
+		cout << '+' << string(w, '-') << '+' << endl << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	map<char, char> m;
+	m['A'] = 'T', m['T'] = 'A';
+	m['G'] = 'C', m['C'] = 'G';
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		string in;
+		cin >> in;
+		for (int i = 0; i < in.size(); ++i)
+			putchar(m[in[i]]);
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b, c;
+	for (int a = 3; a <= 100; ++a)
+		for (int b = a+1; b <= 100; ++b)
+			for (int c = b+1; c <= 100; ++c)
+				if (a*a + b*b == c*c)
+					printf("(%d,%d,%d)\n", a, b, c);
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int T;
@@ -36,7 +535,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 bool is_prime(int x)

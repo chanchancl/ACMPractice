@@ -17,67 +17,625 @@
 #include <sstream>
 using namespace std;
 
-struct test
+int r = 0, v[15][15] = { 0 }, mi = 0x3fffffff, s[15][15];
+int f[4][2] = { { 1,0 },{ 0,1 },{ -1,0 },{ 0,-1 } };
+int m, n;
+void dfs(int x, int y, int sum, int num)
 {
-	int t;
-};
-
-void main()
+	int i, j;
+	if (sum == r)
+	{
+		if (num<mi)
+			mi = num;
+		return;
+	}
+	if (sum>r || num>mi || x<1 || y<1 || x > m || y > n)
+		return;
+	v[x][y] = 1;
+	for (i = 0; i<4; i++)
+	{
+		if (!v[x+f[i][0]][y+f[i][1]] )
+			dfs(x + f[i][0], y + f[i][1], sum + s[x][y], num + 1);
+	}
+	v[x][y] = 0;
+}
+int main()
 {
-	test a;
-	a.t = 1;
-	printf("%d %d %d %d\n", a, &a, &a.t, *&a);
+	int i, j, k;
+	cin >> n >> m;
+	for (i = 1; i <= m; i++)
+		for (j = 1; j <= n; j++)
+		{
+			cin >> s[i][j];
+			r += s[i][j];
+		}
+	r /= 2;
+	dfs(1, 1, 0, 0);
+	cout << mi;
 }
 
 
 /*
+string a, b;
+bool huiwen(int x)
+{
+	char buffer[10];
+	sprintf(buffer, "%d", x);
+	a = buffer;
+	b = string(a.rbegin(), a.rend());
+	if (a == b)
+		return true;
+	return false;
+}
+
+int sum(int x)
+{
+	int ret = 0;
+	while (x)
+	{
+		ret += x % 10;
+		x /= 10;
+	}
+	return ret;
+}
+
+
+int main()
+{
+	int in;
+	while (cin >> in)
+	{
+		int cont = 0;
+		for (int i = 10000; i <= 999999; ++i)
+		{
+			if (sum(i) == in && huiwen(i))
+			{
+				printf("%d\n", i);
+				cont++;
+			}
+		}
+		if (!cont)
+			printf("%d\n", -1);
+	}
+	return 0;
+}
+*/
+
+
+/*
+int mp[1005][1005];
+int n, m;
+int visit[1005];
+
+bool isLink(int a, int b, int ig = -1)
+{
+	int i, j;
+	visit[a] = 1;
+	for (int i = 1; i <= n; ++i)
+	{
+		if (i == ig || i == a)
+			continue;
+		if (mp[a][i] && !visit[i])
+		{
+			if (i == b)
+			{
+				visit[a] = 0;
+				return true;
+			}
+			visit[i] = 1;
+			if (isLink(i, b, ig))
+			{
+				visit[a] = 0;
+				visit[i] = 0;
+				return true;
+			}
+			visit[i] = 0;
+		}
+	}
+	visit[a] = 0;
+	return false;
+}
+
+int main()
+{
+	int i, j;
+	int start, end;
+	while (cin >> n >> m)
+	{
+		memset(mp, 0, sizeof(mp));
+		for (int i = 0; i < m; ++i)
+		{
+			int a, b;
+			cin >> a >> b;
+			mp[a][b] = 1;
+			mp[b][a] = 1;
+		}
+		cin >> start >> end;
+
+		if (!isLink(start, end))
+		{
+			cout << -1 << endl;
+			continue;
+		}
+		int ret = 0;
+		for (int i = 1; i <= n; ++i)
+			if (i != start && i != end && !isLink(start, end, i))
+			{
+				ret++;
+				//printf("Error %d\n", i);
+			}
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int tab[205][205];
+int main()
+{
+	int m, n;
+
+	while (cin >> m >> n)
+	{
+		memset(tab, 0, sizeof(tab));
+		for (int i = 0; i < m; ++i)
+			for (int j = 0; j < n; ++j)
+				cin >> tab[i][j];
+
+		int i = -1, j = 0;
+		int sum = n*m;
+		while(sum)
+		{
+			while (tab[++i][j] != -1 && i < m)
+			{
+				cout << tab[i][j];
+				if (sum != 1)
+					cout << ' ';
+				tab[i][j] = -1;
+				sum--;
+			}
+			i--;
+			while (tab[i][++j] != -1 && j < n)
+			{
+				cout << tab[i][j];
+				if (sum != 1)
+					cout << ' ';
+				tab[i][j] = -1;
+				sum--;
+			}
+			j--;
+			while (tab[--i][j] != -1 && i >= 0)
+			{
+				cout << tab[i][j];
+				if (sum != 1)
+					cout << ' ';
+				tab[i][j] = -1;
+				sum--;
+			}
+			i++;
+			while (tab[i][--j] != -1 && j >= 0)
+			{
+				cout << tab[i][j];
+				if (sum != 1)
+					cout << ' ';
+				tab[i][j] = -1;
+				sum--;
+			}
+			j++;
+		}
+	}
+	return 0;
+}
+*/
+
+
+/*
+long long tab[30] = {0, 1};
+
+long long getN(int x)
+{
+	if (tab[x] != 0)
+		return tab[x];
+
+	long long a = 1;
+	for (int i = 2; i <= x; ++i)
+		a *= i;
+	return tab[x] = a;
+}
+
+int main()
+{
+	int in;
+	while (cin >> in)
+	{
+		long long sum = 0;
+		for (int i = 1; i <= in; ++i)
+			sum += getN(i);
+		printf("%lld", sum);
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int gcd(int a, int b)
+{
+	if (b == 0) return a;
+	return gcd(b, a % b);
+}
+
+int main()
+{
+	for (int i = 1; i < 40; ++i)
+	{
+		if (gcd(i, 40) == 1)
+			printf("%d/40,", i);
+	}
+	return 0;
+}
+*/
+
+/*
+int getSum(int a)
+{
+	int sum = 1;
+	for (int i = 2; i <= a / 2; ++i)
+	{
+		if (a % i == 0)
+			sum += i;
+	}
+	return sum;
+}
+
+int main()
+{
+	for (int i = 2; i <= 3000; ++i)
+	{
+		int sum = getSum(i);
+		if (sum > i && i == getSum(sum))
+			printf("(%d,%d)", i, sum);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	for (int i = 1; ; ++i)
+	{
+		int q = ((8 * i + 7) * 8 + 1) * 8 + 1;
+		int w = (2 * i * 17 + 15) * 17 + 4;
+		if (q == w)
+		{
+			printf("%d",q);
+			break;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+
+	for(int i=100; i<=999; ++i)
+	{
+		int a = i;
+		int b, c, d;
+		b = a % 10; a /= 10;
+		c = a % 10; a /= 10;
+		d = a % 10; a /= 10;
+		if (i == b*b*b + c*c*c + d*d*d)
+			printf("%d\n", i);
+	}
+	return 0;
+}
+*/
+
+/*
+int tab[205][205];
+int main()
+{
+	int m, n;
+
+	while (cin >> m >> n)
+	{
+		memset(tab, 0, sizeof(tab));
+		for (int i = 0; i < m; ++i)
+			for (int j = 0; j < n; ++j)
+				cin >> tab[i][j];
+		int x, y, dir;
+		x = y = 0;
+		// 1 up, 2 right, 3 down, 4 left
+		int t, l, r, b;
+		l = t = -1;
+		r = n;
+		b = m;
+		dir = 3;
+		for (int i = 0; i < n*m; ++i)
+		{
+			if (i != 0)
+				cout << " ";
+			cout << tab[y][x];
+
+			if (y == b - 1 && dir == 3)
+			{
+				dir = 2;
+				x += 1;
+				l += 1;
+			}
+			else if (x == r - 1 && dir == 2)
+			{
+				dir = 1;
+				y -= 1;
+				b -= 1;
+			}
+			else if (y == t + 1 && dir == 1)
+			{
+				dir = 4;
+				x -= 1;
+				r -= 1;
+			}
+			else if (x == l + 1 && dir == 4)
+			{
+				dir = 3;
+				y += 1;
+				t -= 1;
+			}
+			else
+			{
+				switch (dir)
+				{
+				case 1:
+					y -= 1; break;
+				case 2:
+					x += 1; break;
+				case 3:
+					y += 1; break;
+				case 4:
+					x -= 1; break;
+				}
+			}
+		}
+	}
+	return 0;
+}
+*/
+
+
+/*
+char Switch(char c)
+{
+	if (c == '*') return 'o';
+	if (c == 'o') return '*';
+	return 0;
+}
+
+int main()
+{
+	char in1[1024], in2[1024];
+	while (cin >> in1 >> in2)
+	{
+		int ret = 0;
+		int len = strlen(in1);
+		for (int i = 0; i < len - 1; ++i)
+		{
+			if (in1[i] != in2[i])
+			{
+				in1[i] = Switch(in1[i]);
+				in1[i + 1] = Switch(in1[i+1]);
+				ret++;
+			}
+		}
+		cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int n;
+int tab1[105], tab2[105];
+
+bool equal()
+{
+	for (int i = 0; i < n - 1; ++i)
+		if (tab1[i] != tab1[i + 1])
+			return false;
+	return true;
+}
+
+
+int main()
+{
+	while (cin >> n)
+	{
+		int ret = 0;
+		memset(tab1, 0, sizeof(tab1));
+		memset(tab2, 0, sizeof(tab2));
+
+		for (int i = 0; i < n; ++i)
+			cin >> tab1[i];
+
+		while (!equal())
+		{
+			for (int i = 0; i < n; ++i)
+			{
+				tab1[i] /= 2;
+				tab2[i] = tab1[i];
+			}
+			for (int i = 0; i < n - 1; ++i)
+				tab1[i] += tab2[i + 1];
+			tab1[n - 1] += tab2[0];
+
+			for (int i = 0; i < n; ++i)
+			{
+				if (tab1[i] % 2)
+				{
+					tab1[i]++;
+					ret++;
+				}
+			}
+		}
+		cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	long long current;
+	char buff1[100], buff2[100];
+
+	cout << 0;
+	for (current = 1; current <= 200000; ++current)
+	{
+		long long dou = current * current;
+		sprintf(buff1, "%lld", current);
+		sprintf(buff2, "%lld", dou);
+		int len1 = strlen(buff1), len2 = strlen(buff2);
+		if (strcmp(buff1, buff2 + len2 - len1) == 0)
+			cout << "  " << current;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<string> v;
+	string in;
+	while (cin >> in)
+		v.push_back(in);
+	sort(v.begin(), v.end());
+	for (int i = 0; i < v.size(); ++i)
+		cout << v[i] << endl;
+	return 0;
+}
+*/
+
+/*
+#include <stdio.h>
+#include <string.h>
+void fun(char*a, char*b, char*c)
+{
+	int i, j;
+	char ch;
+	i = 0; j = strlen(a) - 1;
+	while (i<j)
+	{
+		ch = a[i]; a[i] = a[j]; a[j] = ch;
+		i++; j--;
+	}
+	while (*a || *b)
+	{
+		if (*a)
+		{
+			*c = *a; c++; a++;
+		}
+		if (*b)
+		{
+			*c = *b; c++; b++;
+		}
+	}
+	*c = '\0';
+}
+int main()
+{
+	char s1[100], s2[100], t[200];
+	printf("\nEnter s1 string:");
+	scanf("%s", s1);
+	printf("\nEnter s2 string:");
+	scanf("%s", s2);
+	fun(s1, s2, t);
+	printf("\nThe result is:%s\n", t);
+	return 0;
+}
+*/
+
+
+/*
+char str[105];
+
+int getline(FILE *fp)
+{
+	fgets(str, 100, fp);
+	return strlen(str);
+}
+
+int main(int argc, char *argv[])
+{
+	// 我能怎么办。我也很绝望
+
+	if (argc <= 1)
+	{
+		printf("Please input a valid file path.\n");
+		return 0;
+	}
+
+	FILE *fp = fopen(argv[1], "r");
+	if (!fp)
+	{
+		printf("Error: can't open file %s", argv[1]);
+		return 0;
+	}
+
+	int len = getline(fp);
+	printf("%s \n%d\n", str, fp);
+
+	return 0;
+}
+*/
+
+/*
 int n, t;
-int d[1005], s[1005];
-double ma, mi;
+double d[1005], s[1005];
+double a, b;
 
 bool C(double c)
 {
 	double nowt = 0;
 	for (int i = 0; i < n; ++i)
-	{
-		if (c + s[i] < 0)
-			return true;
 		nowt += d[i] / (c + s[i]);
-		if (nowt > t)
-			return true;
-	}
-	if (nowt > 0 && nowt <= t)
-		return false;
-	else
+	if (nowt > t)
 		return true;
+	else
+		return false;
 }
 
 void solve()
 {
-	double c, a,b;
-	a = -1005, b = 1005;
 
-	while (b - a > 10e-11)
+	for (int i = 0; i < 100; ++i)
 	{
-		c = (a + b) / 2;
-		if (C(c))
-			a = c;
+		double mid = (a + b) / 2;
+		if (C(mid))
+			a = mid;
 		else
-			b = c;
+			b = mid;
 	}
-	printf("%.9lf\n", c);
+	printf("%.12lf\n", (a+b)/2);
 }
 
 int main()
 {
 	while (~scanf("%d %d", &n, &t))
 	{
-		ma = 0;
+		a = -1e3, b = 1e9;
 		for (int i = 0; i < n; ++i)
 		{
-			scanf("%d %d", &d[i], &s[i]);
-			if (s[i] > ma)
-				ma = s[i];
+			scanf("%lf %lf", &d[i], &s[i]);
+			a = max(a, double(-s[i]));
 		}
 		solve();
 	}
@@ -99,7 +657,7 @@ int solve()
 			if (tmp == str[i])
 				ret++;
 		}
-	
+
 	if (n != 1)
 		for (int i = 0; i < m; ++i)
 		{
@@ -920,7 +1478,7 @@ int main()
 		ans = -1;
 		for (int i = 0; i <= 24; ++i)
 			ans = max(ans, k[i]);
-		
+
 		cout << ans << endl;
 	}
 	return 0;
@@ -1302,7 +1860,7 @@ int main()
 int main()
 {
 	map<string, int> m;
-	
+
 	string tmp;
 	while (cin >> tmp)
 	{
@@ -1368,7 +1926,7 @@ int main()
 {
 	int m, t, count;
 	scanf("%d", &m);
-	
+
 	while (m--)
 	{
 		int opt, x;
@@ -1475,7 +2033,7 @@ int main(void) {
 /*
 	这道题里面有一些东西需要根据样例的输出来获取
 	比如： 0 也要向上级传递信息
-	      这个树的关系是确定的，但通道并不一定建立
+		  这个树的关系是确定的，但通道并不一定建立
 		  这可以通过样例的前5条推断出来
 */
 /*
@@ -1517,7 +2075,7 @@ int Danger(int s)
 		// 从队列中拉取一个节点
 		s = q.front();
 		q.pop();
-		
+
 		// 看 s 自己是否向上级建立了通道
 		if (build[s])
 		{
@@ -1597,7 +2155,7 @@ int main()
 				s.pop();
 			}
 		}
-		
+
 		if (right)
 			cout << "Yes" << endl;
 		else

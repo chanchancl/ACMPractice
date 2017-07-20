@@ -17,6 +17,656 @@
 #include <sstream>
 using namespace std;
 
+/*
+int mp[105][105];
+int visit[105];
+int n, m;
+const int INF = 0x3fffffff;
+int prim()
+{
+	int ret = 0;
+	int d[105];
+	fill(d, d + 105, INF);
+	memset(visit, 0, sizeof(visit));
+	d[1] = 0;
+
+	for (int i = 0; i < m; ++i)
+	{
+		int min = INF, id = -1;
+		for (int j = 1; j <= m; ++j)
+		{
+			if (!visit[j] && d[j] < min)
+			{
+				id = j;
+				min = d[j];
+			}
+		}
+
+		if (id == -1)
+			break;
+		ret += min;
+		visit[id] = 1;
+		for (int j = 1; j <= m; ++j)
+		{
+			if (!visit[j] && mp[id][j] < d[j] && mp[id][j] != INF)
+			{
+				d[j] = mp[id][j];
+			}
+		}
+	}
+	return ret;
+}
+
+int main()
+{
+	while (~scanf("%d %d", &n, &m) && n)
+	{
+		fill(mp[0], mp[0] + 105 * 105, INF);
+		for (int i = 0; i < n; ++i)
+		{
+			int a, b, c;
+			scanf("%d %d %d", &a, &b, &c);
+			mp[a][b] = mp[b][a] = c;
+		}
+		if (n < m - 1)
+		{
+			printf("?\n");
+			continue;
+		}
+		int ans = prim();
+		int all = 0;
+		for (int i = 1; i <= m; ++i)
+			if (visit[i])
+				all++;
+		if (all == m)
+			printf("%d\n", ans);
+		else
+			printf("?\n");
+	}
+	return 0;
+}
+*/
+
+/*
+class Token
+{
+public:
+	Token(char kid, double val = 0)
+		: kind(kid), value(val) {}
+	char kind;
+	double value;
+};
+
+Token next_Token(stringstream &cin)
+{
+	double val;
+	char c;
+	cin >> c;
+	if (!cin)
+		return Token('e');
+	switch (c)
+	{
+	case '+': case '-':
+		return Token(c, 1);
+	case '*': case '/':
+		return Token(c, 2);
+	case '0': case '1': case '2': case '3': case '4':
+	case '5': case '6': case '7': case '8': case '9':
+		cin.putback(c);
+		cin >> val;
+		return Token('n', val);
+	}
+}
+
+Token compute(Token t1, Token t2, Token op)
+{
+	switch (op.kind)
+	{
+	case '+':
+		return Token('n', t1.value + t2.value);
+	case '-':
+		return Token('n', t1.value - t2.value);
+	case '*':
+		return Token('n', t1.value * t2.value);
+	case '/':
+		return Token('n', t1.value / t2.value);
+	}
+}
+
+int main()
+{
+	string str;
+
+	while (getline(cin, str) && str != "0")
+	{
+		stack<Token> nums;
+		stack<Token> ops;
+
+		stringstream strstream;
+		strstream << str;
+
+		Token tok('e');
+		while ((tok = next_Token(strstream)).kind != 'e')
+		{
+			if (tok.kind == 'n')
+			{
+				nums.push(tok);
+			}
+			else
+			{
+				while (ops.size() && ops.top().value >= tok.value)
+				{
+					Token t2 = nums.top();
+					nums.pop();
+					Token t1 = nums.top();
+					nums.pop();
+					nums.push(compute(t1, t2, ops.top()));
+					ops.pop();
+				}
+				ops.push(tok);
+			}
+		}
+
+		while (ops.size())
+		{
+			Token t2 = nums.top();
+			nums.pop();
+			Token t1 = nums.top();
+			nums.pop();
+			Token op = ops.top();
+			ops.pop();
+			nums.push(compute(t1, t2, op));
+		}
+		printf("%.2lf\n", nums.top().value);
+
+	}
+	return 0;
+}
+*/
+
+
+/*
+int t[101][101];
+
+int main()
+{
+	int T;
+	cin >> T;
+
+	while (T--)
+	{
+		int n;
+		cin >> n;
+		memset(t, 0, sizeof(t));
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j <= i; ++j)
+				cin >> t[i][j];
+		for (int i = n - 1; i >= 0; --i)
+			for (int j = 0; j <= i; ++j)
+				t[i][j] += max(t[i + 1][j], t[i + 1][j + 1]);
+		cout << t[0][0] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int dp[100005][13];
+
+int main()
+{
+	int n;
+	while (~scanf("%d", &n) && n)
+	{
+		int x, t, mt = 0;
+		memset(dp, 0, sizeof(0));
+		for (int i = 0; i < n; ++i)
+		{
+			scanf("%d %d", &x, &t);
+			dp[t][x+1]++;
+			mt = max(mt, t);
+		}
+		for (t = mt - 1; t >= 0; --t)
+			for (x = 1; x < 12; ++x)
+				dp[t][x] += max(dp[t + 1][x - 1], max(dp[t + 1][x], dp[t + 1][x + 1]));
+
+		printf("%d\n", dp[0][6]);
+	}
+	return 0;
+}
+*/
+
+/*
+int dp[1005][2005];
+int maxs = 0x3fffffff;
+int main()
+{
+	int n, k;
+	int s[2005];
+	while (cin >> n >> k)
+	{
+		int i, j, m, t, a, b, c;
+		memset(dp, 0, sizeof(dp));
+		memset(s, 0, sizeof(s));
+		for (i = 1; i <= n; i++)
+			cin >> s[i];
+		sort(s + 1, s + n + 1);
+		for (i = 1; i <= k; i++)
+			for (j = 0; j <= n; j++)
+				dp[i][j] = maxs;
+		for (i = 1; i <= k; i++)
+			for (j = 2 * i; j <= n; j++)
+			{
+				dp[i][j] = min(dp[i][j - 1],
+					dp[i - 1][j - 2] + (s[j] - s[j - 1])*(s[j] - s[j - 1]));
+			}
+
+		cout << dp[k][n] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int dp[2005][1005];
+int maxs = 2147483646;
+int main()
+{
+	int n, k;
+	int s[2005];
+	while (cin >> n >> k)
+	{
+		int i, j, m, t, a, b, c;
+		memset(dp, 0, sizeof(dp));
+		memset(s, 0, sizeof(s));
+		for (i = 1; i <= n; i++)
+			cin >> s[i];
+		sort(s + 1, s + n + 1);
+
+		for (int i = n - 1; i >= 1; --i)
+		{
+			for (int j = i + 1; j <= n; ++j)
+			{
+				dp[i][j] = (s[j] - s[i])*(s[j] - s[i]);
+				for (int q = i; q < j; ++q)
+					dp[i][j] = min(dp[i][j], dp[i][q] + dp[q + 1][j]);
+			}
+		}
+
+		cout << dp[1][n] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int c[26];
+	char buf[100005];
+	while (gets_s(buf,100005))
+	{
+		memset(c, 0, sizeof(c));
+		int len = strlen(buf);
+		for (int i = 0; i < len; ++i)
+		{
+			if (islower(buf[i]))
+				c[buf[i] - 'a']++;
+		}
+		for (int i = 0; i < 26; ++i)
+			cout << char('a' + i) << ':' << c[i] << endl;
+		cout << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int a[1005];
+int dp[1005];
+
+int main()
+{
+	int n,m;
+	while (cin >> n && n)
+	{
+		for (int i = 0; i < n; ++i)
+			cin >> a[i];
+		cin >> m;
+		sort(a, a + n);
+		if (m < 5)
+		{
+			cout << m << endl;
+			continue;
+		}
+		else
+		{
+			m -= 5;
+			memset(dp, 0, sizeof(dp));
+			for (int i = 0; i < n - 1; ++i)
+			{
+				for (int j = m; j >= a[i]; j--)
+				{
+					dp[j] = max(dp[j], dp[j - a[i]] + a[i]);
+				}
+			}
+			cout << m - dp[m] - a[n - 1] + 5 << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int t[100005];
+int dp[100005];
+int head[100005];
+
+int main()
+{
+	int T,c = 1;
+	cin >> T;
+	bool first = true;
+	while (T--)
+	{
+		if (first)
+			first = false;
+		else
+			putchar('\n');
+		int n;
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			cin >> t[i];
+		dp[0] = t[0];
+		head[0] = 0;
+
+		for (int i = 1; i < n; ++i)
+		{
+			if (dp[i - 1] >= 0)
+			{
+				dp[i] = dp[i - 1] + t[i];
+				head[i] = head[i - 1];
+			}
+			else
+			{
+				dp[i] = t[i];
+				head[i] = i;
+			}
+		}
+		int *ret = max_element(dp, dp + n);
+		printf("Case %d:\n%d %d %d\n", c++, *ret, head[ret - dp]+1, ret - dp+1);
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+struct number
+{
+	int c[1000];
+	int len;
+
+	void output()
+	{
+		for (int i = len - 1; i >= 0; --i)
+			putchar('0' + c[i]);
+	}
+
+	number operator+(number &num)
+	{
+		number ret = *this;
+		for (int i = 0; i < num.len; ++i)
+			ret.c[i] += num.c[i];
+		ret.jinwei();
+		return ret;
+	}
+
+	number operator*(int n)
+	{
+		number ret = *this;
+		for (int i = 0; i < len; ++i)
+			ret.c[i] *= n;
+		ret.jinwei();
+		return ret;
+	}
+
+	void jinwei()
+	{
+		for (int i = 0; i < len - 1; ++i)
+		{
+			if (c[i] >= 10)
+			{
+				c[i] -= 10;
+				c[i + 1] += 1;
+			}
+		}
+		if (c[len - 1] >= 10)
+		{
+			c[len - 1] -= 10;
+			c[len] = 1;
+			len++;
+		}
+	}
+};
+
+number t[1005];
+
+int main()
+{
+	t[0] = { {0},1 };
+	t[1] = t[0];
+	t[2] = { {1},1 };
+	t[3] = t[2];
+	for (int i = 4; i <= 1000; ++i)
+		t[i] = (t[i - 2] * 2) + t[i - 1] ;
+	int n;
+	while (cin >> n)
+	{
+		t[n].output();
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n)
+	{
+		map<string, int> mp1;
+		map<int, string, greater<int> > mp2;
+
+		for (int i = 0; i < n; ++i)
+		{
+			string str;
+			cin >> str;
+			mp1[str]++;
+		}
+		for (auto it : mp1)
+		{
+			mp2[it.second] = it.first;
+		}
+		cout << mp2.begin()->second << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	set<int> s;
+	s.insert(1);
+	s.insert(10);
+	s.insert(11);
+	set<int>::iterator it;
+	for (it = s.begin(); it != s.end(); )
+	{
+		if (*it == 10)
+			it = s.erase(it);
+		else
+			++it;
+	}
+	for (it = s.begin(); it != s.end(); ++it)
+		cout << *it << endl;
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n, in;
+	cin >> n;
+	while (n-- && cin >> in)
+	{
+		double t = in*log10(static_cast<double>(in));
+		double r = t - floor(t);
+		printf("%d\n", static_cast<int>(pow(10.0, r)));
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n)
+	{
+		vector<int> v;
+		v.resize(n);
+		for (int i = 0; i < n; ++i)
+			cin >> v[i];
+		int cur = 0, time = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			int next = v[i];
+			if (next > cur)
+				time += 6 * (next - cur);
+			else
+				time += 4 * (cur - next);
+			cur = next;
+			time += 5;
+		}
+		printf("%d\n", time);
+	}
+	return 0;
+}
+*/
+
+/*
+int tab[1000] = { 0,1,1 };
+int main()
+{
+	int A, B, n;
+	while (cin >> A >> B >> n && (A != 0 && B!= 0 && n!=0))
+	{
+		int s = 0, j;
+		for (int i = 3; i <= n; ++i)
+		{
+			tab[i] = (A*tab[i - 1] + B*tab[i - 2]) % 7;
+
+			for (j = 2; j < i; ++j)
+			{
+				if (tab[i] == tab[j] && tab[i - 1] == tab[j - 1])
+				{
+					s = i - j;
+					break;
+				}
+			}
+			if (s > 0)
+				break;
+		}
+		if (s > 0)
+			printf("%d\n", tab[j + (n-j)%s]);
+		else
+			printf("%d\n", tab[n]);
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+void dfs(long long n)
+{
+	if (n)
+	{
+		int t = n % -2;
+		if (t < 0)
+		{
+			t += 2;
+			dfs(n / -2 + 1);
+		}
+		else
+			dfs(n / -2);
+		printf("%d", t);
+	}
+}
+
+int main()
+{
+	long long n;
+	while (cin >> n)
+	{
+		if (!n)
+		{
+			printf("0\n");
+			continue;
+		}
+		dfs(n);
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int N;
+	string str;
+	while (cin >> N >> str)
+	{
+		map<char, int> mp;
+		for (int i = 0; i < str.size(); ++i)
+			mp[str[i]]++;
+
+		int ji = 0;
+		for (const auto it : mp)
+		{
+			if (it.second % 2)
+				ji++;
+		}
+		if (ji > 1)
+		{
+			printf("");
+			break;
+		}
+
+	}
+
+
+	return 0;
+}
+*/
+
+
+/*
 int r = 0, v[15][15] = { 0 }, mi = 0x3fffffff, s[15][15];
 int f[4][2] = { { 1,0 },{ 0,1 },{ -1,0 },{ 0,-1 } };
 int m, n;
@@ -53,7 +703,7 @@ int main()
 	dfs(1, 1, 0, 0);
 	cout << mi;
 }
-
+*/
 
 /*
 string a, b;

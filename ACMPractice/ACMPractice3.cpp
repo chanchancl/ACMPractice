@@ -13,9 +13,754 @@
 #include <functional>
 #include <algorithm>
 #include <iostream>
-#include <stdio.h>
 #include <sstream>
+#include <stdio.h>
 using namespace std;
+
+const int MAXN = 10010;
+int x[MAXN * 2];
+map<int, int> hash;
+struct post
+{
+	int l, r;
+}posters[MAXN];
+
+struct node
+{
+	int l, r;
+	bool bCovered;
+}segtree[MAXN * 8];
+
+void build(int i, int l, int r)
+{
+	segtree[i].l = l;
+	segtree[i].r = r;
+	segtree[i].bCovered = false;
+	if (l == r)
+		return;
+	int mid = (l + r) >> 1;
+	build(i << 1, l, mid);
+	build(i << 1 | 1, mid + 1, r);
+}
+
+bool post(int i, int l, int r)
+{
+	if (segtree[i].bCovered)
+		return false;
+	if (segtree[i].l == l && segtree[i].r == r)
+	{
+		segtree[i].bCovered = true;
+		if (l != r)
+		{
+			int mid = (segtree[i].l + segtree[i].r) >> 1;
+			post(i << 1, l, mid);
+			post(i << 1 | 1, mid + 1, r);
+		}
+		return true;
+	}
+	bool bResult;
+	int mid = (segtree[i].l + segtree[i].r) >> 1;
+	if (r <= mid)
+		bResult = post(i << 1, l, r);
+	else if (l > mid)
+		bResult = post(i << 1 | 1, l, r);
+	else
+	{
+		bool b1 = post(i << 1, l, mid);
+		bool b2 = post(i << 1 | 1, mid + 1, r);
+		bResult = b1 || b2;
+	}
+	if (segtree[i << 1].bCovered && segtree[i << 1 | 1].bCovered)
+		segtree[i].bCovered = true;
+	return bResult;
+}
+
+int main()
+{
+	int T, i, j, k, n;
+	cin >> T;
+	while (T--)
+	{
+		scanf("%d", &n);
+		int nCount = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			scanf("%d %d", &posters[i].l, &posters[i].r);
+			x[nCount++] = posters[i].l;
+			x[nCount++] = posters[i].r;
+		}
+		sort(x, x + nCount);
+		nCount = unique(x, x + nCount) - x;
+		for (i = 0; i < nCount; ++i)
+			::hash[x[i]] = i;
+		build(1, 0, nCount - 1);
+		int res = 0;
+		for (int i = n - 1; i >= 0; i--)
+		{
+			if (post(1, ::hash[posters[i].l], ::hash[posters[i].r]))
+				res++;
+		}
+		printf("%d\n", res);
+	}
+	return 0;
+}
+
+
+
+/*
+struct rect
+{
+	int id, w, h;
+};
+
+bool operator<(const rect& a, const rect& b)
+{
+	if (a.id != b.id)
+		return a.id < b.id;
+	else if (a.h != b.h)
+		return a.h < b.h;
+	else
+		return a.w < b.w;
+}
+
+int main()
+{
+	int T, n;
+	cin >> T;
+	while (T--)
+	{
+		set<rect> st;
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+		{
+			int a, b;
+			rect t;
+			cin >> t.id >> a >> b;
+			t.h = max(a, b);
+			t.w = min(a, b);
+			st.insert(t);
+		}
+		set<rect>::iterator it = st.begin();
+		for (; it != st.end(); ++it)
+			cout << it->id << " " << it->h << " " << it->w << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+typedef long long ll;
+
+int main()
+{
+	ll base;
+	string k;
+	cin >> base >> k;
+	ll ans = 0, pown = 1, tmp;
+	int bg, end = k.size() - 1;
+	while (end >= 0)
+	{
+		bg = 0;
+		for (int i = 0; i <= end; ++i)
+		{
+			if (end - i > 15)
+				continue;
+			tmp = 0;
+			for (int j = i; j <= end; ++j)
+				tmp = tmp * 10 + k[j] - '0';
+			if (tmp < base)
+			{
+				bg = i;
+				break;
+			}
+		}
+		while (bg < end && k[bg] == '0')
+			bg++;
+		ans = ans + pown*tmp;
+		pown *= base;
+		end = bg - 1;
+	}
+	cout << ans;
+	return 0;
+}
+
+*/
+
+/*
+char mp[10][10];
+
+bool check(int x, int y)
+{
+	if (mp[x][y] == 'o')
+		return false;
+
+	int xx=0,o=0;
+	for (int i = x - 1; i <= x + 1; ++i)
+	{
+		if (mp[i][y] == 'x')
+			xx++;
+		if (mp[i][y] == 'o' || mp[i][y] == 'q')
+			o++;
+	}
+	if (o == 0 && xx == 2)
+		return true;
+
+	xx = 0, o = 0;
+	for (int i = y - 1; i <= y + 1; ++i)
+	{
+		if (mp[x][i] == 'x')
+			xx++;
+		if (mp[x][i] == 'o' || mp[x][i] == 'q')
+			o++;
+	}
+	if (o == 0 && xx == 2)
+		return true;
+
+	xx = o = 0;
+	int i = x - 1, j = y - 1;
+	for (int q=0; q < 3;++q)
+	{
+		if (mp[i][j] == 'x')
+			xx++;
+		if (mp[i][j] == 'o' || mp[i][j] == 'q')
+			o++;
+		i++;
+		j++;
+	}
+	if (o == 0 && xx == 2)
+		return true;
+
+	xx = o = 0;
+	i = x - 1, j = y + 1;
+	for (int q = 0; q < 3; ++q)
+	{
+		if (mp[i][j] == 'x')
+			xx++;
+		if (mp[i][j] == 'o' || mp[i][j] == 'q')
+			o++;
+		i++;
+		j--;
+	}
+	if (o == 0 && xx == 2)
+		return true;
+	return false;
+}
+
+int main()
+{
+	fill(mp[0], mp[0] + 10 * 10, 'q');
+	for (int i = 1; i <= 4; ++i)
+	{
+		scanf("%s", &mp[i][1]);
+		mp[i][5] = 'q';
+	}
+	bool yes = false;
+	for(int i=1; i <= 4; ++i)
+		for (int j = 1; j <= 4; ++j)
+		{
+			if (check(i, j))
+			{
+				//printf("%d %d\n", i, j);
+				yes = true;
+			}
+		}
+	printf("%s", yes ? "YES" : "NO");
+	return 0;
+}
+*/
+
+
+/*
+#include <stdio.h>
+int n, m;
+int mp[305][305];
+int visit[305];
+
+const int INF = 0x3fffffff;
+
+struct road
+{
+	int u, v, c;
+} e[100000];
+
+int operator<(const road &r1, const road &r2)
+{
+	return r1.c < r2.c;
+}
+
+int fa[305];
+
+int find(int x)
+{
+	return x == fa[x] ? x : fa[x] = find(fa[x]);
+}
+
+void unit(int a, int b)
+{
+	a = find(a);
+	b = find(b);
+	if (a != b)
+		fa[a] = b;
+}
+
+int main()
+{
+	while (~scanf("%d %d", &n, &m))
+	{
+		printf("%d ", n - 1);
+		for (int i = 0; i < 305; ++i)
+			fa[i] = i;
+		for (int i = 1; i <= m; ++i)
+		{
+			scanf("%d %d %d", &e[i].u, &e[i].v, &e[i].c);
+		}
+		sort(e + 1, e + m + 1);
+
+		int s = 0;
+		n = n - 1;
+		while (n)
+		{
+			s++;
+			if (find(e[s].u) == find(e[s].v))
+				continue;
+			n--;
+			unit(e[s].u, e[s].v);
+		}
+
+		printf("%d\n", e[s].c);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	set<string> st;
+	char c;
+	string s;
+	while ((c = getchar()) != EOF)
+	{
+
+		if (isalpha(c))
+			s += tolower(c);
+		else
+		{
+			if (s.length() > 0)
+			{
+				st.insert(s);
+				s.clear();
+			}
+		}
+
+	}
+	for (set<string>::iterator it = st.begin(); it != st.end(); ++it)
+		printf("%s\n", it->c_str());
+
+	return 0;
+}
+*/
+
+/*
+int un[10005];
+
+void init()
+{
+	for (int i = 0; i < 100005; ++i)
+		un[i] = i;
+}
+
+int find(int x)
+{
+	if (un[x] != x)
+		return un[x] = find(un[x]);
+	return x;
+}
+
+void make(int a, int b)
+{
+	a = find(a);
+	b = find(b);
+	if (a != b)
+		un[a] = b;
+}
+
+int a[100005], b[100005];
+int ans[100005];
+
+int main()
+{
+	int n, m;
+	while (~scanf("%d %d", &n, &m))
+	{
+		init();
+		for (int i = 0; i < m; ++i)
+			scanf("%d %d", &a[i], &b[i]);
+
+		for (int i = m - 1; i >= 0; --i)
+		{
+			ans[i] = n;
+			if (find(a[i]) != find(b[i]))
+			{
+				n--;
+				make(a[i], b[i]);
+			}
+		}
+
+		for (int i = 0; i < m; ++i)
+			printf("%d\n", ans[i]);
+	}
+	return 0;
+}
+*/
+
+/*
+int un[100005];
+
+void init()
+{
+	for (int i = 0; i < 100005; ++i)
+		un[i] = i;
+}
+
+int find(int x)
+{
+	if (un[x] != x)
+		return un[x] = find(un[x]);
+	return x;
+}
+
+void make(int a, int b)
+{
+	a = find(a);
+	b = find(b);
+	if (a != b)
+		un[a] = b;
+}
+
+int get(set<int> &st)
+{
+	int ret = 0;
+	for (set<int>::iterator it = st.begin(); it != st.end(); ++it)
+		if (un[*it] == *it)
+			++ret;
+	return ret;
+}
+
+
+int main()
+{
+	int a, b;
+	while (~scanf("%d %d", &a, &b) && a != -1 && b != -1)
+	{
+		if (a == 0 && b == 0)
+		{
+			printf("Yes\n");
+			continue;
+		}
+		set<int> st;
+		init();
+		bool yes = true;
+		make(min(a, b), max(a, b));
+		st.insert(a);
+		st.insert(b);
+		while (scanf("%d %d", &a, &b) && a && b )
+		{
+			if (find(a) == find(b))
+				yes = false;
+			make(min(a, b), max(a, b));
+			st.insert(a);
+			st.insert(b);
+		}
+
+		printf("%s\n", yes && get(st) == 1 ? "Yes" : "No");
+	}
+	return 0;
+}
+*/
+
+/*
+int un[1005];
+
+void init()
+{
+	for (int i = 0; i < 1005; ++i)
+		un[i] = i;
+}
+
+int find(int x)
+{
+	if (un[x] != x)
+		return un[x] = find(un[x]);
+	return x;
+}
+
+void make(int a, int b)
+{
+	a = find(a);
+	b = find(b);
+	if (a != b)
+		un[a] = b;
+}
+
+int get(int n)
+{
+	int ret = 0;
+	for (int i = 1; i <= n; ++i)
+		if (un[i] == i)
+			ret++;
+	return ret;
+}
+
+
+int main()
+{
+	int n, m;
+	while (~scanf("%d", &n) && n)
+	{
+		scanf("%d", &m);
+		init();
+		for (int i = 0; i < m; ++i)
+		{
+			int a, b;
+			scanf("%d %d", &a, &b);
+			make(min(a, b), max(a, b));
+		}
+		cout << get(n) - 1 << endl;
+	}
+	return 0;
+}
+*/
+
+
+
+/*
+int t, s, d;
+int mp[1005][1005];
+int visit[1005];
+vector<int> iwant;
+vector<int> adj;
+
+int maxnum = 0;
+
+const int INF = 0x3fffffff;
+
+int dij()
+{
+	int time[1005];
+	fill(time, time + 1005, INF);
+	memset(visit, 0, sizeof(visit));
+
+	for (int i = 0; i < adj.size(); ++i)
+		time[adj[i]] = 0;
+
+	for (int i = 0; i < t; ++i)
+	{
+		int MIN = INF, id = -1;
+		for (int j = 1; j <= maxnum; ++j)
+		{
+			if (!visit[j] && time[j] < MIN)
+			{
+				id = j;
+				MIN = time[j];
+			}
+		}
+
+		if (id == -1)
+			break;
+		visit[id] = 1;
+
+		for (int j = 1; j <= maxnum; ++j)
+		{
+			if (!visit[j] && mp[id][j] != INF)
+			{
+				if (time[j] > time[id] + mp[id][j])
+				{
+					time[j] = time[id] + mp[id][j];
+				}
+			}
+		}
+	}
+
+	int ans = INF;
+	for (int i = 0; i < iwant.size(); ++i)
+		ans = min(ans, time[iwant[i]]);
+	return ans;
+}
+
+int main()
+{
+	while (cin >> t >> s >> d)
+	{
+		fill(mp[0], mp[0] + 1005 * 1005, INF);
+		maxnum = 0;
+		for (int i = 0; i < t; ++i)
+		{
+			int a, b, c;
+			scanf("%d %d %d", &a, &b, &c);
+			if (mp[a][b] > c)
+				mp[a][b] = mp[b][a] = c;
+			maxnum = max(maxnum, max(a, b));
+		}
+		adj.resize(s);
+		iwant.resize(d);
+		for (int i = 0; i < s; ++i)
+			scanf("%d", &adj[i]);
+		for (int i = 0; i < d; ++i)
+			scanf("%d", &iwant[i]);
+
+		printf("%d\n", dij());
+	}
+	return 0;
+}
+*/
+
+
+/*
+int dis[1005][1005];
+int pay[1005][1005];
+int visit[1005];
+int n, m;
+const int INF = 0x3fffff;
+
+void dij(int s, int t, int &d, int &p)
+{
+	int D[1005], P[1005];
+
+	memset(visit, 0, sizeof(visit));
+	fill(D, D + n + 1, INF);
+	fill(P, P + n + 1, INF);
+	D[s] = 0;
+	P[s] = 0;
+
+	for (int i = 0; i < n; ++i)
+	{
+		int mi = INF, id = -1;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (!visit[j] && D[j] < mi )
+			{
+				mi = D[j];
+				id = j;
+			}
+		}
+		if (id == -1)
+			break;
+
+		visit[id] = 1;
+
+		for (int j = 1; j <= n; ++j)
+		{
+			if (!visit[j] && dis[id][j] != INF)
+			{
+				if (D[id] + dis[id][j] < D[j])
+				{
+					D[j] = D[id] + dis[id][j];
+					P[j] = P[id] + pay[id][j];
+				}
+				else if (D[id] + dis[id][j] == D[j])
+				{
+					if (P[id] + pay[id][j] < P[j])
+					{
+						P[j] = P[id] + pay[id][j];
+					}
+				}
+			}
+		}
+	}
+	d = D[t];
+	p = P[t];
+}
+
+int main()
+{
+	while (~scanf("%d %d", &n, &m) && n && m)
+	{
+		for (int i = 1; i <= n; ++i)
+			for (int j = 1; j <= n; ++j)
+				dis[i][j] = dis[j][i] = pay[i][j] = pay[j][i] = INF;
+		for (int i = 0; i < m; ++i)
+		{
+			int a, b, c, d;
+			scanf("%d %d %d %d", &a, &b, &c, &d);
+
+			if (dis[a][b] > c)
+			{
+				dis[a][b] = dis[b][a] = c;
+				pay[a][b] = pay[b][a] = d;
+			}
+			else if (dis[a][b] == c && pay[a][b] < d)
+				pay[a][b] = pay[b][a] = d;
+		}
+		int s, t;
+		scanf("%d %d", &s, &t);
+		int d, p;
+		dij(s,t, d, p);
+		printf("%d %d\n", d, p);
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int mp[105][105];
+int visit[105];
+int n, m;
+const int INF = 0x3fffffff;
+
+int dij()
+{
+	int dis[105];
+
+	fill(dis, dis + 105, INF);
+	memset(visit, 0, sizeof(visit));
+	dis[1] = 0;
+	// n ¸öµã£¬ m Ìõ ±ß
+	for (int i = 0; i < n; ++i)
+	{
+		int mi = INF, id = -1;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (dis[j] < mi && !visit[j])
+			{
+				id = j;
+				mi = dis[j];
+			}
+		}
+
+		if (id == -1)
+			break;
+
+		visit[id] = 1;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (!visit[j] && mp[id][j] && dis[id] + mp[id][j] < dis[j])
+			{
+				dis[j] = dis[id] + mp[id][j];
+			}
+		}
+	}
+	return dis[n];
+}
+
+int main()
+{
+	while (~scanf("%d %d", &n, &m) && n && m)
+	{
+		fill(mp[0], mp[0] + 105 * 105, 0);
+		for (int i = 0; i < m; ++i)
+		{
+			int a, b, c;
+			scanf("%d %d %d", &a, &b, &c);
+			mp[a][b] = mp[b][a] = c;
+		}
+		printf("%d\n", dij());
+	}
+	return 0;
+}
+*/
 
 /*
 int mp[105][105];

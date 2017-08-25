@@ -17,6 +17,727 @@
 #include <stdio.h>
 using namespace std;
 
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int m, a, k;
+		cin >> m >> a >> k;
+
+	}
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int k,n;
+	cin >> k;
+	int d[5] = {6,6,5,4 };
+	for(int i=0; i <k; ++i)
+	{
+		scanf("%d", &n);
+		printf("Case %d: ", i + 1);
+
+		if (n == 0)
+			printf("%d %d", 1, 1);
+		else if (n == 1)
+			printf("%d %d", 2, 2);
+		else if (n == 2)
+			printf("%d %d", 4, 4);
+		else
+		{
+			int t = (n - 3) % 4;
+			printf("%d %d", d[t], 6);
+		}
+		putchar('\n');
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	map<char, string> mp;
+	
+	for (int i = 0; i < 26; ++i)
+	{
+		char c;
+		string str;
+		cin >> c >> str;
+		mp[c] = str;
+	}
+	int T;
+	cin >> T;
+	vector<string> ovs;
+	vector<string> vs;
+	for (int i = 0; i < T; ++i)
+	{
+		string str;
+		cin >> str;
+		ovs.push_back(str);
+		stringstream ss;
+		for (int j = 0; j < str.size(); ++j)
+			ss << mp[str[j]];
+		ss >> str;
+		vs.push_back(str);
+	}
+	while (1)
+	{
+		cin >> T;
+		if (T == 0)
+			break;
+
+		int finded = 0;
+		string first = "";
+		vector<int> ret;
+		for (int i = 0; i < T; ++i)
+		{
+			string str;
+			cin >> str;
+			auto it = find(vs.begin(), vs.end(), str);
+			if (it != vs.end())
+			{
+				finded++;
+				ret.push_back(it - vs.begin());
+			}
+			else if (first == "")
+				first = str;
+		}
+		if (finded == T)
+		{
+			cout << ovs[ret[0]];
+			for (int i = 1; i < ret.size(); ++i)
+				cout << ' ' << ovs[ret[i]];
+		}
+		else
+			cout << first << " not in dictionary.";
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int get(int x)
+{
+	if (x == 1)
+		return 1;
+	return (x % 2 ? 1 : 0) + get(x / 2);
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int t;
+		cin >> t;
+		printf("%d\n", get(t));
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int m, a, k;
+		cin >> m >> a >> k;
+		if (k == 1)
+			printf("%d\n", (int)ceil(1.0*m / a));
+		else if (k == 2)
+
+	}
+
+	return 0;
+}
+*/
+
+/*
+bool is_prime[2000000];
+int prime[100005];
+int main()
+{
+	memset(is_prime, true, sizeof(is_prime));
+	is_prime[0] = is_prime[1] = false;
+	is_prime[2] = true;
+	for (int i = 2; i*i<1500000; i++) {
+		if (is_prime[i]) {
+			for (int j = i+i; j<1500000; j += i) {
+				is_prime[j] = false;
+			}
+		}
+	}
+	int n = 0;
+	for (int i = 1; i <= 1299709; ++i)
+	{
+		if (is_prime[i])
+			prime[n++] = i;
+	}
+
+	int T, t;
+	cin >> T;
+	while (T--)
+	{
+		scanf("%d", &t);
+		if (is_prime[t])
+			printf("%d\n", 0);
+		else
+		{
+			int p = upper_bound(prime, prime + n, t) - prime;
+			printf("%d\n", prime[p] - prime[p - 1]);
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int a, b, t;
+		scanf("%d %d", &a, &b);
+		set<int> st;
+		bool finded = false;
+		for (int i = 0; i < a; ++i)
+		{
+			scanf("%d", &t);
+			st.insert(t);
+		}
+		for (int i = 0; i < b; ++i)
+		{
+			scanf("%d", &t);
+			if (!finded && st.find(t) != st.end())
+				finded = true;
+		}
+		printf("%s\n", (finded ? "Yes" : "No"));
+	}
+
+	return 0;
+}
+*/
+
+/*
+char mp[105][105];
+int n, m;
+
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+struct node
+{
+	int x, y;
+	int step;
+};
+
+bool operator<(const node& n1, const node& n2)
+{
+	return n1.step > n2.step;
+}
+
+int find(int x, int y)
+{
+	priority_queue<node> que;
+	node t;
+	t.x = x, t.y = y, t.step = 0;
+	que.push(t);
+	mp[y][x] = '#';
+	while (que.size())
+	{
+		node now = que.top();
+		que.pop();
+		if (now.x == 0 || now.y == 0 || now.x == m - 1 || now.y == n - 1)
+			return now.step;
+		for (int i = 0; i < 4; ++i)
+		{
+			t.x = now.x + dx[i], t.y = now.y + dy[i];
+			if (t.x >= 0 && t.x <= m - 1 && t.y >= 0 && t.y <= n - 1 && mp[t.y][t.x] != '#')
+			{
+				if (mp[t.y][t.x] == '*')
+					t.step = now.step + 1;
+				else if (mp[t.y][t.x] == '.')
+					t.step = now.step;
+				que.push(t);
+				mp[t.y][t.x] = '#';
+			}
+		}
+	}
+
+	return -1;
+}
+
+int main()
+{
+	int T,x,y;
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> m;
+		for (int i = 0; i < n; ++i)
+			scanf("%s", mp[i]);
+		const char *p;
+		for (int i = 0; i < n; ++i)
+		{
+			y = i;
+			if ((p = strchr(mp[i], '@')) != NULL)
+			{
+				x = p - mp[i];
+				break;
+			}
+		}
+		printf("%d\n", find(x,y));
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, n;
+	vector<int> jo, bo;
+	cin >> T;
+	while (T--)
+	{
+		int ret = 0;
+		cin >> n;
+		jo.resize(n), bo.resize(n);
+		for (int i = 0; i < n; ++i)
+			cin >> jo[i];
+		for (int i = 0; i < n; ++i)
+			cin >> bo[i];
+		sort(jo.begin(), jo.end());
+		sort(bo.begin(), bo.end());
+		for (auto it1 = bo.begin(); it1 != bo.end(); ++it1)
+		{
+			for (auto it2 = jo.begin(); it2 != jo.end();)
+			{
+				if (*it1 < *it2)
+				{
+					ret++;
+					it2 = jo.erase(it2);
+					break;
+				}
+				else
+					it2++;
+			}
+		}
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+struct ListNode
+{
+	int value;
+	ListNode* pNext;
+
+	ListNode(int val) : value(val), pNext(NULL) {}
+};
+
+
+void PrintList(ListNode* pNode, int m)
+{
+	if (m > 0)
+		PrintList(pNode->pNext, m-1);
+	if (m == 0)
+		printf("%d", pNode->value);
+	else
+		printf(",%d", pNode->value);
+}
+
+
+int main()
+{
+	int a[100000];
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+		cin >> a[i];
+	int last = -1;
+	printf("%d", last);
+	for (int i = 1; i < n; ++i)
+	{
+		if (last >= a[i] && a[i - 1] >= a[i])
+			printf(",%d", -1);
+		else if (last < a[i] && a[i - 1] >= a[i])
+			printf(",%d", last);
+		else if (a[i-1] < a[i])
+		{
+			printf(",%d", a[i - 1]);
+			last = a[i-1];
+		}
+	}
+	return 0;
+}
+*/
+
+
+/*
+#include <stdio.h>
+int main(int argc, char *argv[])
+{
+	int i;
+	for (i = 1; i < argc; i += 2)
+	{
+		if (argv[i][0] == '-' && argv[i][1] == '-')
+			printf("%s:%s\n", &argv[i][2], argv[i + 1]);
+	}
+	return 0;
+}*/
+
+
+/*
+char op[10];
+int gettag(const char *p, int &pos)
+{
+	sscanf(p + pos, "<%s>", op);
+
+	if (op[0] == 'd')
+	{
+		pos += 5;
+		return 1;
+	}
+	if (op[0] == '/' && op[1] == 'd')
+	{
+		pos += 6;
+		return 2;
+	}
+	if (op[0] == 'p')
+	{
+		pos += 3;
+		return 3;
+	}
+
+	if (op[0] == '/' && op[1] == 'p')
+	{
+		pos += 4;
+		return 4;
+	}
+	return -1;
+}
+
+char t[100];
+int ptag(const char *p, int &pos)
+{
+	int ret = 0;
+	while (isdigit(p[pos]))
+	{
+		ret += p[pos] - '0';
+		pos++;
+	}
+	gettag(p, pos);
+	return ret;
+}
+
+int divtag(const char *p, int &pos)
+{
+	int ret = 0, tag = -1;
+
+	while ((tag = gettag(p, pos)) != 2)
+	{
+		if (tag == 1)
+			ret += 2 * divtag(p, pos);
+		else if (tag == 3)
+			ret += ptag(p, pos);
+	}
+	return ret;
+}
+
+int main()
+{
+	string str;
+	while (getline(cin, str))
+	{
+		int pos = 0, tag = -1,ret=0;
+		while (pos < str.size())
+		{
+			tag = gettag(str.c_str(), pos);
+			if (tag == 1)
+				ret += divtag(str.c_str(), pos);
+			else if (tag == 3)
+				ret += ptag(str.c_str(), pos);
+		}
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+typedef long long ll;
+
+map<ll, ll> mp;
+
+void update(ll money)
+{
+	if (mp.find(money) != mp.end())
+		return;
+	if (money == 2)
+	{
+		mp[2] = 1;
+		return;
+	}
+	for (ll t = money - 1; t > 0; t--)
+	{
+		if (money % t == 0)
+		{
+			mp[money] = t;
+			break;
+		}
+	}
+
+	for (ll l = 2; l < money - 1; ++l)
+	{
+		ll a, b;
+		update(l);
+		a = mp[l];
+		update(money - l);
+		b = mp[money - 1];
+		if (a + b < mp[money])
+			mp[money] = a + b;
+	}
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		ll money;
+		cin >> money;
+		update(money);
+		cout << mp[money] << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int t[100005];
+
+int main()
+{
+	int T;
+	scanf("%d", &T);
+	while (T--)
+	{
+		memset(t, 0, sizeof(t));
+		int n, m;
+		scanf("%d %d", &n, &m);
+		for (int i = 1; i <= n; ++i)
+		{
+			char op[2];
+			scanf("%s", op);
+			if (op[0] == 'J')
+				t[i] = t[i - 1] + 2;
+			else if (op[0] == 'T')
+				t[i] = t[i - 1] + 1;
+			else
+				t[i] = t[i - 1];
+		}
+		for (int i = 0; i < m; ++i)
+		{
+			int l, r;
+			scanf("%d %d", &l, &r);
+			printf("%d\n", t[r] - t[l - 1]);
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+const int MAXN = 100005;
+
+int sum[MAXN << 2];
+char op[2];
+void build(int i, int l, int r)
+{
+	if (l == r)
+	{
+		scanf("%s", op);
+		if (op[0] == 'J')
+			sum[i] = 2;
+		else if (op[0] == 'T')
+			sum[i] = 1;
+		else
+			sum[i] = 0;
+		return;
+	}
+	int mid = (l + r) >> 1;
+	build(i << 1, l, mid);
+	build(i << 1 | 1, mid + 1, r);
+	sum[i] = sum[i << 1] + sum[i << 1 | 1];
+}
+
+int query(int rt, int L, int R, int l, int r)
+{
+	if (L <= l && r <= R)
+		return sum[rt];
+	int mid = (l + r) >> 1;
+	int ans = 0;
+	if (L <= mid)
+		ans += query(rt << 1, L, R, l, mid);
+	if (R > mid)
+		ans += query(rt << 1 | 1, L, R, mid + 1, r);
+	return ans;
+}
+
+int main()
+{
+	int T;
+	scanf("%d", &T);
+	while(T--)
+	{
+		int n,m;
+		scanf("%d %d", &n, &m);
+		build(1, 1, n);
+
+		for (int i = 0; i < m; ++i)
+		{
+			int l, r;
+			scanf("%d %d", &l, &r);
+			printf("%d\n", query(1, l, r, 1, n));
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T, n;
+	scanf("%d", &T);
+	while (T--)
+	{
+		scanf("%d", &n);
+		int ma, mi;
+		ma = -1, mi = 0x7fffffff;
+		int c1, c2;
+		c1 = c2 = 1;
+		for (int i = 0; i < n; ++i)
+		{
+			int t;
+			scanf("%d", &t);
+			if (t > ma)
+			{
+				ma = t;
+				c1 = i + 1;
+			}
+			if (t < mi)
+			{
+				mi = t;
+				c2 = i + 1;
+			}
+			printf("%d %d\n", c1, c2);
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+const int MAXN = 50005;
+
+int sum[MAXN << 2];
+
+void build(int i, int l, int r)
+{
+	if (l == r)
+	{
+		scanf("%d", &sum[i]);
+		return;
+	}
+	int mid = (l + r) >> 1;
+	build(i << 1, l, mid);
+	build(i << 1 | 1, mid + 1, r);
+	sum[i] = sum[i << 1] + sum[i << 1 | 1];
+}
+
+void update(int rt, int L, int R, int p, int add)
+{
+	if (L == R)
+	{
+		sum[rt] += add;
+		return;
+	}
+	int mid = (L + R) >> 1;
+	if (p <= mid)
+		update(rt << 1, L, mid, p, add);
+	else
+		update(rt << 1 | 1, mid+1, R, p, add);
+	sum[rt] = sum[rt << 1] + sum[rt << 1 | 1];
+}
+
+int query(int rt,int L,int R,int l, int r)
+{
+	if (L <= l && r <= R)
+		return sum[rt];
+	int mid = (l + r) >> 1;
+	int ans = 0;
+	if (L <= mid)
+		ans += query(rt << 1, L, R, l, mid);
+	if (R > mid)
+		ans += query(rt << 1 | 1, L, R, mid+1, r);
+	return ans;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	for(int i=1; i<=T; ++i)
+	{
+		int n;
+		printf("Case %d:\n", i);
+		scanf("%d", &n);
+		build(1, 1, n);
+
+		char op[10];
+		while (scanf("%s", op) && op[0] != 'E')
+		{
+			int a, b;
+			scanf("%d %d", &a, &b);
+			if (op[0] == 'Q')
+				printf("%d\n", query(1, a, b, 1, n));
+			else if (op[0] == 'A')
+				update(1, 1, n, a, b);
+			else
+				update(1, 1, n, a, -b);
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
 const int MAXN = 10010;
 int x[MAXN * 2];
 map<int, int> hash;
@@ -104,7 +825,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 
 /*

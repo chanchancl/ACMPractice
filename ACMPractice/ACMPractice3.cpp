@@ -15,21 +15,254 @@
 #include <iostream>
 #include <sstream>
 #include <stdio.h>
+#include <string.h>
 using namespace std;
+
+int n, m, dp[35][35];
 
 int main()
 {
-	int T;
-	cin >> T;
-	while (T--)
+	while (cin >> n >> m)
 	{
-		int m, a, k;
-		cin >> m >> a >> k;
+		memset(dp, 0, sizeof(dp));
+		dp[1][0] = 1;
+		for (int i = 1; i <= m; ++i)
+		{
+			dp[1][i] = dp[2][i - 1] + dp[n][i - 1];
+			dp[n][i] = dp[n - 1][i - 1] + dp[1][i - 1];
+			for (int j = 2; j < n; ++j)
+				dp[j][i] = dp[j - 1][i - 1] + dp[j + 1][i - 1];
+		}
+		cout << dp[1][m] << endl;
+	}
+	return 0;
+}
 
+
+/*
+vector<int> v;
+
+void make(int x)
+{
+	if (x > 0)
+	{
+		v.push_back(x % 2);
+		make(x / 2);
+	}
+}
+
+int main()
+{
+	int n;
+
+	while (cin >> n)
+	{
+		v.clear();
+		make(n);
+		int c1 = count(v.begin(), v.end(), 1);
+		
+		if (c1 == 1 && v[v.size() - 1] == 1 && n != 1)
+		{
+			cout << v.size() << endl;
+			v.clear();
+			make(n - 1);
+			cout << '1' << ' ';
+		}
+		else
+			cout << c1 << endl;
+
+		int t = 1, i = 0;
+		while (v[i] == 0)
+		{
+			t *= 2;
+			i++;
+		}
+
+		cout << t;
+		i++;
+		t *= 2;
+		for (; i < v.size(); ++i)
+		{
+			if (v[i] != 0)
+				cout << ' ' << t;
+			t *= 2;
+		}
+
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+int t[10000];
+
+void init()
+{
+	for (int i = 0; i < 10000; ++i)
+		t[i] = i;
+}
+
+int find(int x)
+{
+	if (t[x] != x)
+		return t[x] = find(t[x]);
+	return x;
+}
+
+void make(int a, int b)
+{
+	a = find(a);
+	b = find(b);
+	if (a != b)
+		t[a] = b;
+}
+
+int main()
+{
+	int n, m, p;
+	
+	
+	while (cin >> n >> m >> p)
+	{
+		init();
+		map<string, int> mp;
+		string tmp1, tmp2;
+		for (int i = 1; i <= n; ++i)
+		{
+			cin >> tmp1;
+			mp[tmp1] = i;
+		}
+
+		for (int i = 0; i < m; ++i)
+		{
+			cin >> tmp1 >> tmp2;
+			make(mp[tmp1], mp[tmp2]);
+		}
+
+		for (int i = 0; i < p; ++i)
+		{
+			cin >> tmp1 >> tmp2;
+			if (find(mp[tmp1]) == find(mp[tmp2]))
+				cout << "safe" << endl;
+			else
+				cout << "erha cry" << endl;
+		}
 	}
 
 	return 0;
 }
+*/
+
+/*
+int main()
+{
+	int n;
+
+	while (cin >> n)
+	{
+		int ret = 0;
+		for (int i = 0; i <= n; ++i)
+		{
+			char buffer[100];
+			sprintf(buffer, "%d", i);
+			if (strchr(buffer, '3') == NULL && i % 3 != 0 &&
+				strchr(buffer, '5') == NULL && i % 5 != 0)
+				ret += i*i;
+
+		}
+		cout << ret << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+void output(int x)
+{
+	if (x > 0)
+	{
+		output(x / 2);
+		cout << x % 2;
+	}
+}
+
+int main()
+{
+	char t[][10] = {
+		"zero", "one", "two", "three", "four",
+		"five", "six", "seven", "eight", "nine"
+	};
+	map<string, int> mp;
+	for (int i = 0; i < 10; ++i)
+		mp[t[i]] = i;
+
+	while (1)
+	{
+		string tmp;
+		int l, r;
+		int n = 1;
+		l = r = 0;
+		while (cin >> tmp && tmp != "+")
+		{
+			l = l*n + mp[tmp];
+			if (l > 0 || n > 1)
+				n *= 10;
+		}
+		n = 1;
+		while (cin >> tmp && tmp != "=")
+		{
+			r = r*n + mp[tmp];
+			if (r > 0 || n > 1)
+				n *= 10;
+		}
+		if (!r && !l)
+			break;
+
+		output(r + l);
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+const int MAX = 3000000;
+int is_prime[MAX + 5];
+
+int main()
+{
+	memset(is_prime, true, sizeof(is_prime));
+	is_prime[0] = is_prime[1] = false;
+	is_prime[2] = true;
+	for (int i = 2; i*i<MAX; i++) {
+		if (is_prime[i]) {
+			for (int j = i + i; j<MAX; j += i) {
+				is_prime[j] = false;
+			}
+		}
+	}
+	int a, b;
+
+	while (~scanf("%d %d", &a, &b))
+	{
+		int mi, ma;
+		mi = min(a, b);
+		ma = max(a, b);
+		long long ret = 0;
+		for (int i = mi; i <= ma; ++i)
+			ret += is_prime[i] ? i : 0;
+		printf("%lld\n", ret);
+	}
+
+	return 0;
+}
+*/
+
+
+
 
 /*
 int main()

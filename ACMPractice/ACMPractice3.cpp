@@ -13,11 +13,2170 @@
 #include <functional>
 #include <algorithm>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <stdio.h>
 #include <string.h>
 using namespace std;
 
+int main()
+{
+
+	return 0;
+}
+
+/*
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+	int swa(char *a[], int n);
+	int print(char *a[], int n);
+	char *a[] = { "Luhan","Leonardo DiCaprio","Jack dawson" };
+	int n = 3;
+	swa(a, 3);
+	print(a, 3);
+	return 0;
+}
+int swa(char *a[], int n)
+{
+	char *t;
+	int i, j, k;
+	for (i = 0; i<n - 1; i++)
+	{
+		k = i;
+		for (j = i + 1; j<n; j++)
+			if (strcmp(a[k], a[j]) > 0)   
+				k = j;
+		if (k != i)
+		{
+			t = a[i];
+			a[i] = a[k];
+			a[k] = t;
+		}
+	}
+	return 0;
+}
+int print(char *a[], int n)
+{
+	int i;
+	for (i = 0; i<n; i++)
+		printf("%s\t", a[i]);
+	return 0;
+}
+*/
+
+/*
+#include<stdio.h>
+void change(int a[100], int n);
+int main()
+{
+	int num[100] = { 0 };
+	int n;
+	scanf("%d", &n);
+	change(num, n);
+	return 0;
+}
+void change(int a[100], int n)
+{
+	int i, j, m;
+	scanf("%d", &m);
+	int b[100] = { 0 };
+	for (i = 0; i < n; i++)
+		scanf("%d", &a[i]);
+	
+	for (int i = 0; i < n-m; ++i)
+		b[i + m] = a[i];
+	
+	for (int i = 0; i < m; ++i)
+		b[i] = a[i + n - m];
+
+	for (j = 0; j < n; j++)
+		printf("%d ", b[j]);
+}
+*/
+
+/*
+#include<stdio.h>
+#include<string.h>
+void swap(char **p1, char **p2);
+
+int main()
+{
+	char *ch[3];
+	char **p;
+	int i;
+	for (i = 0; i < 3; ++i)
+		ch[i] = (char*)malloc(sizeof(char) * 1024);
+
+	scanf("%s", ch[0]);
+	scanf("%s", ch[1]);
+	scanf("%s", ch[2]);
+	if (strcmp(ch[0], ch[1])>0)
+	{
+		swap(&ch[0], &ch[1]);
+	}
+	if (strcmp(ch[1], ch[2])>0)
+	{
+		swap(&ch[1], &ch[2]);
+	}
+	for (p = ch; p < (ch + 3); p++)
+		printf("%s\n", *p);
+
+	for (i = 0; i < 3; ++i)
+		free(ch[i]);
+
+	return 0;
+}
+
+void swap(char **p1, char **p2)
+{
+	char *tmp = *p1;
+	*p1 = *p2;
+	*p2 = tmp;
+}
+*/
+
+/*
+#include<stdio.h>
+#include<string.h>
+void swap(char *p1, char *p2);
+
+int main()
+{
+	char ch[3][1024];
+	char **p;
+
+	scanf("%s", ch[0]);
+	scanf("%s", ch[1]);
+	scanf("%s", ch[2]);
+	if (strcmp(ch[0], ch[1])>0)
+	{
+		swap(ch[0], ch[1]);
+	}
+	if (strcmp(ch[1], ch[2])>0)
+	{
+		swap(ch[1], ch[2]);
+	}
+	for (p = ch; p < (ch + 3); p++)
+		printf("%s", *p);
+	return 0;
+}
+
+void swap(char *p1, char *p2)
+{
+	int len;
+	char *tmp;
+	len = strlen(p1);
+	tmp = (char*)malloc(sizeof(char)*len);
+	strcpy(tmp, p1);
+	strcpy(p1, p2);
+	strcpy(p2, tmp);
+}
+*/
+
+/*
+int main()
+{
+	int n, ma, t;
+	
+	while (cin >> n && n)
+	{
+		ma = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			cin >> t;
+			ma = max(ma, t);
+		}
+		cout << ma << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+#include<stdio.h>
+int main()
+{
+	int f[21];
+	double s1 = 0, s2 = 0;
+
+	f[1] = 2, f[0] = 1;
+
+	for (int i = 2; i <= 20; ++i)
+		f[i] = f[i - 1] + f[i - 2];
+	
+	for (int i = 1; i <= 20; ++i)
+	{
+		printf("第%02d项 : %lf %lf\n", i, double(f[i] / f[i - 1]), 1.0*f[i] / f[i - 1]);
+		s1 += f[i] / f[i - 1];
+		s2 += 1.0*f[i] / f[i - 1];
+	}
+
+	printf("%f\n%f\n", s1, s2);
+	return 0;
+}
+*/
+
+/*
+const int N = 10000;
+
+struct _station {
+	int dist, fuel;
+	bool operator < (const _station& s) const {
+		return dist > s.dist;
+	}
+} station[N];
+int n, l, p;
+
+int main()
+{
+	while (scanf("%d", &n) != EOF) {
+		priority_queue<int> fuel;
+
+		for (int i = 0; i<n; i++)
+			scanf("%d%d", &station[i].dist, &station[i].fuel);
+		sort(station, station + n);     // 距离从大到小  
+
+		scanf("%d%d", &l, &p);
+
+		fuel.push(p);
+		int ans = 0, i = 0;
+		// l 为剩余路程, fuel 是目前可以到达的车站的队列
+		while (l > 0 && !fuel.empty()) {
+			ans++;
+			l -= fuel.top();
+			fuel.pop();
+			// 把可到达，或者说，可以够到的加油站加入优先队列
+			while (i < n && l <= station[i].dist)
+				fuel.push(station[i++].fuel);
+		}
+		printf("%d\n", l <= 0 ? ans - 1 : -1);
+	}
+
+	return 0;
+}
+*/
+
+
+
+// 输入， 若干个 1-4 的数，以 -1 为结束符
+// 统计各个数出现的次数
+
+/*
+void deal(int a[20], int n);
+int main()
+{
+	int b[20];
+	int i, n=0;
+
+	for (i = 0; i<20; i++)
+	{
+		scanf("%d", &b[i]);
+		if (b[i] == -1)
+			break;
+		n++;
+	}
+	deal(b, n);
+
+	return 0;
+}
+
+void deal(int a[20], int n)
+{
+	int i, j;
+	int b[20];
+
+	memset(b, 0, sizeof(b));
+	for (i = 0; i<n; i++)
+	{
+		j = a[i];
+		b[j]++;
+	}
+	for (j = 1; j <= 4; j++)
+		printf("%d:   %d\n", j, b[j]);
+}
+*/
+
+/*
+int bits[20], fn[20][2];
+
+int dfs(int c, int last, bool lim)
+{
+	int ans = 0;
+	if (c == -1)
+		return 1;
+	if (!lim && fn[c][last == 6] != -1)
+		return fn[c][last == 6];
+	int up = lim ? bits[c] : 9;
+	for (int i = 0; i <= up; ++i)
+	{
+		if (last == 6 && i == 2) continue;
+		if (i == 4) continue;
+		ans += dfs(c - 1, i, lim && i == bits[c]);
+	}
+	if (!lim)
+		fn[c][last == 6] = ans;
+	return ans;
+}
+
+int f(int n)
+{
+	int c = 0;
+	memset(bits, 0, sizeof(bits));
+	while (n)
+	{
+		bits[c++] = n % 10;
+		n /= 10;
+	}
+	return dfs(c - 1, -1, true);
+}
+
+int main()
+{
+	int n, m;
+	memset(fn, -1, sizeof(fn));
+	while (cin >> n >> m && n && m)
+		cout << f(m) - f(n-1) << endl;
+
+	return 0;
+}
+*/
+
+/*
+// HDU 2089  Time Limit Exceeded
+int main()
+{
+	int n, m;
+	while (cin >> n >> m && n && m)
+	{
+		int ret = 0;
+		for (int i = n; i <= m; ++i)
+		{
+			string str;
+			stringstream ss;
+			ss << i;
+			ss >> str;
+			if (str.find("62") == string::npos && str.find("4") == string::npos)
+				ret++;
+		}
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	bool f = true;
+	while (cin >> n && n)
+	{
+		if (f)
+			f = !f;
+		else
+			cout << endl;
+		int total = 0, av, ret = 0;
+		vector<int> v;
+		v.resize(n);
+		for (int i = 0; i < n; ++i)
+		{
+			cin >> v[i];
+			total += v[i];
+		}
+		av = total / n;
+		for (int i = 0; i < n; ++i)
+		{
+			if (v[i] > av)
+				ret += v[i] - av;
+		}
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+	int m, i, j;
+	double sum;
+	int a[105];
+	scanf("%d", &m);
+
+	for (i = 0; i<m; i++)
+	{
+		scanf("%d", &a[i]);
+	}
+	for (i = 0; i<m; i++)
+	{
+		sum = 0;
+		for (j = 1; j <= a[i]; j++)
+		{
+			if (j % 2 == 1)
+				sum += 1.0 / j;
+			else
+				sum += -1.0 / j;
+		}
+		printf("%.2lf\n", sum);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	double a0, an, c;
+
+	while (cin >> n)
+	{
+		cin >> a0 >> an;
+		double sum = n*a0 + an;
+		for (int i = 0; i < n; ++i)
+		{
+			cin >> c;
+			sum -= 2*(n - i)*c;
+		}
+		sum /= n + 1;
+		printf("%.2lf\n", sum);
+	}
+
+	return 0;
+}
+*/
+
+/*
+long long a[50] = { 1 }, b[50];
+
+int main()
+{
+
+	for (int i = 1; i <= 33; ++i)
+	{
+		a[i] = 3 * a[i - 1] + 2 * b[i - 1];
+		b[i] = a[i - 1] + b[i - 1];
+	}
+
+	int x;
+	while (cin >> x && x != -1)
+		printf("%lld, %lld\n", a[x], b[x]);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int x, i;
+	scanf("%d", &x);
+
+	for (i = 2; i < x; ++i)
+	{
+		if (x % i == 0)
+		{
+			printf("no\n");
+			break;
+		}
+	}
+	if (i == x)
+		printf("yes\n");
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		int n;
+		int dp[105][105];
+		
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j <= i; ++j)
+				cin >> dp[i][j];
+
+		for (int i = n - 2; i >= 0; --i)
+			for (int j = 0; j <= i; ++j)
+				dp[i][j] += max(dp[i + 1][j], dp[i + 1][j + 1]);
+
+		cout << dp[0][0] << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		int sum, n, x[505], mi;
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			cin >> x[i];
+		for (int i = 0; i < n; ++i)
+		{
+			sum = 0;
+			for (int j = 0; j < n; ++j)
+				sum += abs(x[i] - x[j]);
+
+			if (i == 0)
+				mi = sum;
+			else
+				mi = min(sum, mi);
+		}
+		cout << mi << endl;
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+const int N = 50;
+
+int c1[N + 10], c2[N + 10], num[30];
+
+int main() 
+{
+
+	int t;
+	scanf("%d", &t);
+	while (t--) 
+	{
+		memset(c1, 0, sizeof(c1));    //c1[ ]保存当前得到的多项式各项系数
+		memset(c2, 0, sizeof(c2));    //c2[ ]保存每次计算时的临时结果
+		for (int i = 1; i <= 26; i++)
+			scanf("%d", &num[i]);
+		c1[0] = 1;                //相当于用X^0去乘以后面的多项式 
+		for (int i = 1; i <= 26; i++) 
+		{   
+			//要乘以26个多项式
+			for (int j = 0; j <= N; j++)   //c1的各项的指数
+				for (int k = 0; k <= num[i] && j + k*i <= N; k++)  //k*i表示被乘多项式各项的指数,(X^0*i + X^1*i + X^2*i + ……)
+					c2[j + k*i] += c1[j];       //指数相加得j+k*i,加多少只取决于c1[j]的系数，因为被乘多项式的各项系数均为1
+			for (int j = 0; j <= N; j++) 
+			{
+				c1[j] = c2[j];
+				c2[j] = 0;
+			}
+		}
+		int ans = 0;
+		for (int i = 1; i <= N; i++)
+			ans += c1[i];
+		printf("%d\n", ans);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	double n, sum;
+	int m, i;
+
+	while (scanf("%lf%d", &n, &m) != EOF)
+	{
+		sum = 0;
+		for (i = 0; i < m; ++i)
+		{
+			sum += n;
+			n = sqrt(n);
+		}
+		printf("%.2lf\n", sum);
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	// i++   ++i
+	// 1. ++i 
+	// 2. expression
+	// 3. i++
+
+	int a = 5 ,i = 5;
+	i = ++i + ++i;
+	a = a++ + a++; 
+
+
+	printf("%d\n" , i);
+	printf("%d\n" , a);
+
+	/*					表达式的值	i的值
+		初始							5
+		先计算前缀表达式
+		这里，先计算 ++i	6			6
+		计算i++			6			6
+		计算 (i++)+(++i) 12			6
+		赋值(=)给 i		12			12
+		计算后缀表达式， i再+1		
+	*/
+
+/*
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		string s;
+		cin >> s;
+		cout << "6" + s.substr(6) << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+#include<stdio.h>
+int main()
+{
+	char a[10];
+	int i, j, t;
+	for (i = 0; i<10; i++)
+		scanf("%c", &a[i]);
+	for (j = 0; j < 9; j++)
+	{
+		for (i = 0; i < 9-j; i++)
+		{
+			if (a[i]>a[i + 1])
+			{
+				t = a[i];
+				a[i] = a[i + 1];
+				a[i + 1] = t;
+			}
+		}
+	}
+	for (i = 0; i<10; i++)
+	{
+		printf("%c", a[i]);
+	}
+	return 0;
+}
+*/
+
+/*
+#include<stdio.h>
+int sum(int x);
+int main()
+{
+	int i, a, b, c;
+	for (i = 100; i <= 999; i++)
+	{
+		if (sum(i))
+			printf("%d\n", i);
+	}
+	return 0;
+}
+int sum(int x)
+{
+	int a, b, c;
+	a = x / 100;
+	b = (x - a * 100) / 10;
+	c = x % 10;
+	if (a*a*a + b*b*b + c*c*c == x)
+		return 1;
+	return 0;
+}
+*/
+
+
+/*
+void NumTower(int n);
+
+int main()
+{
+	int n;
+
+	scanf("%d", &n);
+	NumTower(n);
+
+	return 0;
+}
+
+void NumTower(int n)
+{
+	int i, j;
+	// i 代表当前循环的层数
+	for (i = 1; i <= n; i++)
+	{
+		// (n-i）个空格
+		for (j = 0; j < n - i; j++)
+			printf(" ");
+
+		// 从 1 到 i
+		for (j = 1; j <= i; j++)
+			printf("%d", j);
+
+		// 从 (i-1) 到 j
+		for (j = i - 1; j >= 1; j--)
+			printf("%d", j);
+
+		printf("\n");
+	}
+}
+*/
+
+/*
+int isprime(int a);
+
+int main()
+{
+	int x = 57;
+	if (isprime(x) == 0)
+	{
+		printf("%d不是素数", x);
+	}
+	else
+	{
+		printf("%d是素数", x);
+	}
+	return 0;
+}
+
+int isprime(int a)
+{
+	int i;
+	if (a <= 1)
+		return 0;
+	for (i = 2; i <= sqrt(a); i++)
+	{
+		if (a%i == 0)
+		{
+			return 0;
+		}
+			
+	}
+	return 1;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	double x1, y1, x2, y2, len, s;
+	cin >> n;
+	while (n--)
+	{
+		cin >> x1 >> y1 >> x2 >> y2;
+		len = sqrt(x1*x1 + y1*y1) * sqrt(x2*x2 + y2*y2);
+		s = acos((x1*x2 + y1*y2) / len) / 3.1415926*180.0;
+		printf("%.2lf\n", s );
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int dp[50], sc[10], num[10];
+	int T, n, k;
+	cin >> T;
+
+	while (T--)
+	{
+		memset(dp, 0, sizeof(dp));
+		cin >> n >> k;
+		for (int i = 1; i <= k; ++i)
+			cin >> sc[i] >> num[i];
+		dp[0] = 1;
+		for (int i = 1; i <= k; ++i) // 遍历所有科目
+			for (int j = n; j >= sc[i]; --j) // 遍历剩余的分数
+				for (int l = 1; l <= num[i] && j >= l *sc[i]; ++l) // 遍历科目的使用次数
+					dp[j] += dp[j - l*sc[i]];
+		cout << dp[n] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T,n, m, mi;
+
+	cin >> T;
+	while (T--)
+	{
+		cin >> n >> m;
+		mi = 100;
+		while (n--)
+		{
+			int t;
+			cin >> t;
+			mi = min(t, mi);
+		}
+		cout << (100 - mi)*(100 - mi) << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+// HDU - 2076
+int main()
+{
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		int h, m, s;
+		cin >> h >> m >> s;
+
+		h = h % 12;
+		float f1, f2;
+		f1 = m*6 + (s / 60.0f)*6.0f;
+		f2 = h*30 + (f1 / 360.0f)*30.0f;
+		f1 = fabs(f1 - f2);
+		f2 = fminf(f1, 360 - f1);
+		cout << int(f2) << endl;
+
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, ret, y;
+	while (scanf("%d", &n) && n)
+	{
+		ret = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			scanf("%d", &y);
+			ret ^= y;
+		}
+		printf("%d\n", ret);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, a;
+	while (scanf("%d", &n) && n)
+	{
+		set<int> s1, s2;
+		for (int i = 0; i < n; ++i)
+		{
+			scanf("%d", &a);
+			if (s1.find(a) == s1.end())
+			{
+				s1.insert(a);
+				s2.insert(a);
+			}
+			else
+				s2.erase(a);
+		}
+		printf("%d\n", *s2.begin());
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int *a;
+	int b[10] = { 1,2,3,4 };
+
+	a = b;
+
+	cout << (unsigned int)(a + 5) << endl;
+	cout << (unsigned int)(&a[5]);
+
+	return 0;
+}
+*/
+
+/*
+int fun(int n)
+{
+	if (n == 1)
+		return 1;
+	return (n*n-1) * 2 + 1;
+}
+
+int main()
+{
+	int n, a;
+	char c;
+	cin >> n >> c;
+
+	a = 1;
+	while (fun(a + 1) < n)
+		a++;
+
+	for (int i = a; i >= 2; --i)
+		cout << string(a - i, ' ') << string(2 * i - 1, c) << endl;
+	for (int i = 1; i <= a; ++i)
+		cout << string(a - i, ' ') << string(2 * i - 1, c) << endl;
+
+	cout << n - fun(a);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	for (int i = 1; i <= n; ++i)
+	{
+		for (int j = 1; j <= i; ++j)
+		{
+			if (j != 1)
+				cout.put(' ');
+			cout << i*j;
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int fun(int n)
+{
+	int a, b, c, i, j, k;
+	a = n / 100;
+	b = (n / 10) % 10;
+	c = n % 10;
+	if (n < 100)
+		a = 0;
+	j = a + b + c;
+	i = max(a, max(b, c));
+	k = min(a, min(b, c));
+	j -= i + k;
+	return (i * 100 + j * 10 + k) - (k * 100 + j * 10 + i);
+
+}
+
+int main()
+{
+	int n, c = 0;
+	cin >> n;
+	while (n != 495)
+	{
+		c++;
+		n = fun(n);
+	}
+	cout << c;
+
+	return 0;
+}
+*/
+
+/*
+int days[2][12] =
+{
+	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31},
+	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31},
+};
+
+bool isrun(int year)
+{
+	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+		return true;
+	return false;
+}
+
+int main()
+{
+	int year, month, day, ret;
+	char tmp;
+	cin >> year >> tmp >> month >> tmp >> day;
+	ret = day;
+	bool run = isrun(year);
+	for (int i = 0; i < month-1; ++i)
+		ret += days[run][i];
+	cout << ret;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	long long fib[50] = { 0, 1, 1 };
+	for (int i = 3; i <= 40; ++i)
+		fib[i] = fib[i - 1] + fib[i - 2];
+	int n;
+	cin >> n;
+	cout << fib[n];
+
+	return 0;
+}
+*/
+
+/*
+int gcd(int a, int b)
+{
+	if (b == 0)
+		return a;
+	return gcd(b, a%b);
+}
+
+int main()
+{
+	int a, b;
+	cin >> a >> b;
+	cout << gcd(a, b);
+
+	return 0;
+}
+*/
+
+/*
+bool is_prime(int n)
+{
+	int end = (int)sqrt(n);
+	if (n <= 1)
+		return false;
+	for (int i = 2; i <= end; ++i)
+	{
+		if (n % i == 0)
+			return false;
+	}
+
+	return true;
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	cout << (is_prime(n) ? 'Y' : 'N');
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	double ret = 0.0;
+	
+	cin >> n;
+	for (int i = 1; i <= n; ++i)
+		ret += 1.0 / static_cast<double>(i);
+	cout << fixed << setprecision(2) << ret;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	if (n >= 90)
+		cout << 'A';
+	else if (n >= 80)
+		cout << 'B';
+	else if (n >= 70)
+		cout << 'C';
+	else if (n >= 60)
+		cout << 'D';
+	else
+		cout << 'E';
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	string str;
+	cin >> n >> str;
+
+	for (int i = str.size() - 1; i >= 0; --i)
+		cout.put(str[i]);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, a, b, c;
+
+	while (cin >> n >> a >> b >> c)
+	{
+		if (a == b&& b == c)
+		{
+			cout << (n - 1)*a;
+		}
+		else if (a <= b && a <= c)
+		{
+			cout << (n - 1)*a;
+		}
+		else if (b <= a && b <= c)
+		{
+			cout << (n - 1)*b;
+		}
+		else if (c <= a && c <= b)
+		{
+			int l = 0;
+			l = min(a, b);
+			if (n >= 2)
+				l += (n - 2)*c;
+			cout << l;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n)
+		cout << (((abs((n / 10) - (n % 10) * 5) % 17) == 0) ? 1 : 0) << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n = 0, a,b,c;
+	char op,tmp;
+
+	while (cin >> a >> op >> b >> tmp)
+	{
+		cin >> c;
+		if (!cin.good())
+		{
+			cin.clear();
+			cin >> tmp;
+			continue;
+		}
+		else
+		{
+			if (op == '+' && a + b == c)
+				n++;
+			else if (op == '-' && a - b == c)
+				n++;
+		}
+	}
+	cout << n;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n)
+	{
+		int ret = 0, remain = 0;
+
+		do
+		{
+			remain = n / 3;
+			ret += remain;
+
+			n = n % 3 + remain;
+			remain = 0;
+		} while ( n >= 3);
+
+		if (n >= 2)
+			ret++;
+		
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+double d[10000], p[10000];
+int main()
+{
+	double d1, c, d2;
+	int n;
+	cin >> d1 >> c >> d2 >> p[0] >> n;
+	d[n + 1] = d1;
+	for (int i = 1; i <= n; i++)
+		cin >> d[i] >> p[i];
+	
+	int pos = 0;
+	double remain = 0, cost = 0;
+	do
+	{
+		bool found = false;
+		// 找到能走到的，且价格比当前节点低的加油点
+		for (int i = pos + 1; i <= n + 1 ; ++i)
+		{
+			if (d[i] > d[pos] + c*d2)
+				break;
+
+			if (p[i] < p[pos])
+			{
+				// 剩余的油可以走到
+				if (d[pos] + remain*d2 >= d[i])
+				{
+					// 减去消耗的油
+					remain -= (d[i] - d[pos]) / d2;
+				}
+				else
+				{
+					// 算出需要加多少油才能走到
+					cost += ((d[i] - d[pos]) / d2 - remain)*p[pos];
+					remain = 0;
+				}
+				pos = i;
+				found = true;
+				break;
+			}
+		}
+		// 没有可以直接走到的节点
+		if (!found)
+		{
+			// 尝试在当前节点加满油
+			cost += (c - remain)*p[pos];
+			remain = c - (d[pos + 1] - d[pos]) / d2;
+			if (remain >= 0) pos++;
+			else
+			{
+				cout << "No Solution";
+				return 0;
+			}
+		}
+	} while (pos <= n);
+	printf("%.2lf", cost);
+	return 0;
+}
+*/
+
+/*
+int v[205][205];
+int r, c;
+int check(int y, int x)
+{
+	int x1=x, y1=y;
+	int my = v[y][x];
+	int n = 0;
+	while (x1 < c && y1 < r)
+	{
+		x1++, y1++;
+		n++;
+		if (v[y1][x1] != my)
+			break;
+	}
+
+}
+
+int main()
+{
+	int MAX = 1;
+	while (cin >> r >> c)
+	{
+		for (int i = 0; i < r; ++i)
+			for (int j = 0; j < c; ++j)
+				cin >> v[i][j];
+
+		for (int i = 0; i < r - 1; ++i)
+			for (int j = 0; j < c - 1; ++j)
+				MAX = max(MAX, check(i, j));
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string s[5];
+	for (int i = 0; i < 5; ++i)
+		cin >> s[i];
+	int ma = 0,id=0;
+	for (int i = 0; i < 5; ++i)
+	{
+		if (s[i].size() > ma)
+		{
+			ma = s[i].size();
+			id = i;
+		}
+	}
+	cout << s[id];
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	set<int> s;
+	while (cin >> n)
+	{
+		s.clear();
+		for (int i = 0; i < n; ++i)
+		{
+			int t;
+			cin >> t;
+			s.insert(t);
+		}
+		cout << s.size() << endl;
+		for (auto it = s.begin(); it!=s.end(); ++it)
+		{
+			if (it != s.begin())
+				cout << ' ';
+			cout << *it;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int x1, y1, x2, y2;
+	while (cin >> x1 >> y1 >> x2 >> y2)
+	{
+		if (x1 == x2)
+			cout << "INF" << endl;
+		else if (y1 == y2)
+			cout << "0" << endl;
+		else
+			cout << static_cast<float>(1.0f*(y1 - y2) / (x1 - x2)) << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int mi, ma, factor, n = 0;
+	while (cin >> mi >> ma >> factor)
+	{
+		for (int i = mi; i <= ma; ++i)
+		{
+			if (i % factor == 0)
+			{
+				if (n != 0)
+					cout << ' ';
+				else
+					n = 1;
+				cout << i;
+			}
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string str1, str2;
+	while (cin >> str1 >> str2)
+	{
+		if (str1 == str2)
+			cout << 0;
+		else
+		{
+			for (int i = 0; i < min(str1.size(), str2.size()); ++i)
+			{
+				if (str1[i] != str2[i])
+				{
+					cout << (str1[i] - str2[i]) << endl;
+					break;
+				}
+			}
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+bool fun(int x)
+{
+	int a, b, c, d;
+	a = x % 10;
+	b = (x / 10) % 10;
+	c = (x / 100) % 10;
+	if (a*a*a+b*b*b+c*c*c == x)
+		return true;
+	return false;
+}
+
+int main()
+{
+	int n;
+	while (cin >> n)
+	{
+		if (fun(n))
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	} 
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	while (cin >> n >> m)
+		cout << int(pow(n,n+1) - (n-1)*m) << endl;
+
+	return 0;
+}
+*/
+
+/*
+int _fib[1000];
+
+int main()
+{
+	_fib[0] = _fib[1] = 1;
+	for (int i = 2; i < 100; ++i)
+		_fib[i] = _fib[i - 1] + _fib[i - 2];
+
+	int n;
+	while (cin >> n)
+		cout << _fib[n] << endl;
+	return 0;
+}
+*/
+
+/*
+int mat1[1000][1000], mat2[1000][1000];
+
+int main()
+{
+	int n, m;
+	while (cin >> n >> m)
+	{
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j < m; ++j)
+				cin >> mat1[i][j];
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j < m; ++j)
+				cin >> mat2[i][j];
+		for (int i = 0; i < n; ++i)
+		{
+			cout << mat1[i][0] + mat2[i][0];
+			for (int j = 1; j < m; ++j)
+				cout << ' ' <<mat1[i][j] + mat2[i][j];
+			cout << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string str;
+	string yuan = "aeiou";
+	while (cin >> str)
+	{
+		size_t pos = string::npos;
+		for (int i = 0; i < str.length(); ++i)
+		{
+			if ((pos = yuan.find(str[i])) != string::npos)
+			{
+				cout << (i + 1) << endl;
+				break;
+			}
+		}
+		if (pos == string::npos)
+			cout << 0 << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+int main()
+{
+	int i, n, j, len, type, g[4] = { 0,0,0,0 };
+	char a[100][50];
+	scanf("%d", &n);
+	for (i = 0; i < n; i++)
+	{
+		memset(g, 0, sizeof(g));
+		scanf("%s", a[i]);
+		len = strlen(a[i]);
+		if (len >= 8 || len <= 16)
+		{
+			printf("NO\n");
+			continue;
+		}
+		for (j = 0; j < len; j++)
+		{
+			if (islower(a[i][j]))
+				g[0]++;
+			else if (isupper(a[i][j]))
+				g[1]++;
+			else if (isdigit(a[i][j]))
+				g[2]++;
+			else 
+				g[3]++;
+		}
+		for (j = 0; j <= 3; j++)
+			if (g[j] > 0)
+				type++;
+		if (type >= 3)
+			printf("YES\n");
+		else printf("NO\n");
+	}
+
+	return 0;
+}
+*/
+
+/*
+int nex[100010];
+
+int* buildNext(const char *P)
+{
+	unsigned j = 0, m = strlen(P);
+	int t = nex[0] = -1;
+	while (j < m)
+	{
+		if (t < 0 || P[j] == P[t])
+			nex[++j] = ++t;
+		else
+			t = nex[t];
+	}
+	return nex;
+}
+
+// 在 T 中寻找 P
+int Match(const char *P, const char *T)
+{
+	int *next = buildNext(P);
+	int i = 0, n = (int)strlen(T);
+	int j = 0, m = (int)strlen(P);
+	while (i < n && j < m)
+	{
+		if (j < 0 || T[i] == P[j])
+			++i, ++j;
+		else
+			j = next[j];
+		if (j >= m)
+			return 1;
+	}
+	return 0;
+}
+
+string vs[100005];
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int size;
+		cin >> size;
+
+		int maxl = 0, pos = 0;
+		for (int i = 0; i < size; ++i)
+		{
+			cin >> vs[i];
+			if (maxl < vs[i].size())
+			{
+				maxl = vs[i].size();
+				pos = i;
+			}
+		}
+
+		bool right = true;
+		for (int i = 0; i < size; ++i)
+		{
+			if (i == pos)
+				continue;
+
+			if (!Match(vs[i].c_str(), vs[pos].c_str()))
+			{
+				right = false;
+				break;
+			}
+		}
+		if (right)
+			cout << vs[pos] << endl;
+		else
+			cout << "No" << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+bool isrun(int year)
+{
+	if ((year % 4 == 0 && year % 100 != 0) || (year % 100 == 0 && year % 400 == 0))
+		return true;
+	return false;
+}
+
+int days[2][12] = {
+	{31,28,31,30,31,30,31,31,30,31,30,31},
+	{31,29,31,30,31,30,31,31,30,31,30,31}
+};
+
+int main()
+{
+	int year, first = 3;
+	bool run;
+	cin >> year;
+	int current = 1998;
+	
+	while (current < year)
+	{
+		run = isrun(current);
+		for (int month = 0; month < 12; ++month)
+		{
+			for (int day = 0; day < days[run][month]; ++day)
+			{
+				first++;
+				first %= 7;
+			}
+		}
+		current++;
+	}
+	int _count = 0;
+	run = isrun(current);
+	for (int month = 0; month < 12; ++month)
+	{
+		for (int day = 0; day < days[run][month]; ++day)
+		{
+			if (day + 1 == 13 && first + 1 == 5)
+				_count++;
+			first++;
+			first %= 7;
+		}
+	}
+	cout << _count;
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	priority_queue<int, vector<int>, greater<int> > pq;
+
+	while (n--)
+	{
+		int t;
+		cin >> t;
+		pq.push(t);
+	}
+	int cost = 0;
+	
+	while (pq.size() > 1)
+	{
+		int a = pq.top();
+		pq.pop();
+		int b = pq.top();
+		pq.pop();
+		cost += a + b;
+		pq.push(a + b);
+	}
+	cout << cost;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string last, next;
+	int n;
+	while (cin >> n)
+	{
+		last = "A";
+		for (int i = 0; i < n-1; ++i)
+		{
+			for (int j = 0; j < last.size(); ++j)
+			{
+				if (last[j] == 'A')
+					next += "ABA";
+				else
+					next += last[j] + 1;
+			}
+			last = next;
+			next = "";
+		}
+		cout << last;
+	}
+	return 0;
+}
+*/
+
+/*
+// 回文
+// huiwen
+int manacher(string &str)
+{
+	string t;
+	t.resize(str.size() * 2+2);
+	t[0] = '@', t[1] = '#';
+	int j = 2;
+	for (int i = 0; i < str.size(); ++i)
+	{
+		t[j++] = str[i];
+		t[j++] = '#';
+	}
+
+	int *p = new int[t.size()+2];
+	int maxlen = -1, id, mx = 0;
+	for (int i = 1; i < t.size(); ++i)
+	{
+		if (i < mx)
+			p[i] = min(p[2 * id - i], mx - i);
+		else
+			p[i] = 1;
+
+		while (t[i - p[i]] == t[i + p[i]])
+			p[i]++;
+
+		if (mx < i + p[i])
+		{
+			id = i;
+			mx = i + p[i];
+		}
+
+		maxlen = max(maxlen, p[i] - 1);
+	}
+	return maxlen;
+}
+
+int main() 
+{
+	int n;
+	cin >> n;
+	string s;
+	while (n--) 
+	{
+		cin >> s;
+		cout << manacher(s) << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int calc(int n) {
+	if (n == 0) return 1;
+	if (n % 2 == 0) return calc(n / 2) + calc(n / 2 - 1);
+	return calc(n / 2);
+}
+
+int main() {
+	int n;
+	cin >> n;
+	cout << calc(n) << endl;
+	return 0;
+}
+*/
+
+/*
+int* buildNext(const char *P)
+{
+	unsigned j = 0, m = strlen(P);
+	int *N = new int[m+1];
+	int t = N[0] = -1;
+	while (j < m)
+	{
+		if (t < 0 || P[j] == P[t])
+			N[++j] = ++t;
+		else
+			t = N[t];
+	}
+	return N;
+}
+
+// 在 P中，寻找 T
+int Match(const char *P, const char *T)
+{
+	int *next = buildNext(P);
+	int i = 0, n = (int)strlen(T);
+	int j = 0, m = (int)strlen(P);
+	while (i < n && j < m)
+	{
+		if (j < 0 || T[i] == P[j])
+			++i, ++j;
+		else
+			j = next[j];
+	}
+	delete[] next;
+	return i - j;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int size = 0;
+		cin >> size;
+		vector<string> vs;
+		vs.resize(size);
+
+		int maxl = 0, pos = 0;
+		for (int i = 0; i < size; ++i)
+		{
+			cin >> vs[i];
+			if (maxl < vs[i].size())
+			{
+				maxl = vs[i].size();
+				pos = i;
+			}
+		}
+
+		bool right = true;
+		for (int i = 0; i < size; ++i)
+		{
+			if (i == pos)
+				continue;
+
+			int p = Match(vs[i].c_str(), vs[pos].c_str());
+			if (p >= maxl)
+			{
+				right = false;
+				break;
+			}
+		}
+		if (right)
+			printf("%s\n", vs[pos].c_str());
+		else
+			printf("No\n");
+	}
+
+	return 0;
+}
+*/
+
+/*
+// HDU1686
+char P[10005], T[1000005];
+
+int* buildNext(const char *P)
+{
+	int j = 0, m = strlen(P);
+	int t, *next = new int[m+1];
+
+	t = next[0] = -1;
+	while (j < m)
+	{
+		if (0 > t || P[j] == P[t])
+		{
+			++j, ++t;
+			next[j] = t;
+		}
+		else
+			t = next[t];
+	}
+	return next;
+}
+
+// 变化, 
+int kmpCount(const char *P, const char *T)
+{
+	int i, n = strlen(T);
+	int j, m = strlen(P);
+	int *next = buildNext(P);
+	int _count = 0;
+
+	i = j = 0;
+	while (i < n && j < m)
+	{
+		if (0 > j || T[i] == P[j])
+			i++, j++;
+		else
+			j = next[j];
+		if (j == m)
+		{
+			_count++;
+			j = next[j];
+		}
+	}
+	delete[] next;
+	return _count;
+}
+
+int main()
+{
+	int Test;
+	cin >> Test;
+	while (Test--)
+	{
+		cin >> P >> T;
+		cout << kmpCount(P,T) << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+struct node
+{
+	int n;
+	node* next[26];
+	node()
+	{
+		n = 0;
+		for (int i = 0; i < 26; ++i)
+			next[i] = NULL;
+	}
+	void insert(const char *str)
+	{
+		int pos = *str - 'a';
+		if (next[pos] == NULL)
+			next[pos] = new node();
+		next[pos]->n += 1;
+		if (str[1] != '\0')
+			next[pos]->insert(str + 1);
+	}
+	int find(const char *str)
+	{
+		int pos = *str - 'a';
+		if (next[pos] == NULL)
+			return 0;
+		if (str[1] == '\0')
+			return next[pos]->n;
+		return next[pos]->find(str + 1);
+	}
+};
+
+int main()
+{
+	node node;
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		string str;
+		cin >> str;
+		node.insert(str.c_str());
+	}
+	cin >> n;
+	while (n--)
+	{
+		string str;
+		cin >> str;
+		cout << node.find(str.c_str()) << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+// un use
+
+int* buildNext(const char *P)
+{
+	unsigned j = 0, m = strlen(P);
+	int *N = new int[m];
+	int t = N[0] = -1;
+	while (j < m)
+	{
+		if (t < 0 || P[j] == P[t])
+			N[++j] = ++t;
+		else
+			t = N[t];
+	}
+	return N;
+}
+
+// 在 P中，寻找 T
+int Match(const char *P, const char *T)
+{
+	int *next = buildNext(P);
+	int i = 0, n = (int)strlen(T);
+	int j = 0, m = (int)strlen(P);
+	while (i < n && j < m)
+	{
+		if (j < 0 || T[i] == P[j])
+			++i, ++j;
+		else
+			j = next[j];
+	}
+	delete[] next;
+	return i - j;
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int size = 0;
+		cin >> size;
+		vector<string> vs;
+		vs.resize(size);
+
+		int maxl = 0,pos = 0;
+		for (int i = 0; i < size; ++i)
+		{
+			cin >> vs[i];
+			if (maxl < vs[i].size())
+			{
+				maxl = vs[i].size();
+				pos = i;
+			}
+		}
+
+		bool right = true;
+		for (int i = 0; i < size; ++i)
+		{
+			if (i == pos)
+				continue;
+
+			int p = Match(vs[pos].c_str(), vs[i].c_str());
+			if (p >= maxl)
+			{
+				right = false;
+				break;
+			}
+		}
+		if (right)
+			printf("%s\n", vs[pos].c_str());
+		else
+			printf("No\n");
+
+	}
+
+	return 0;
+}
+*/
+
+
+
+/*
+int main()
+{
+	char str[][15] = {
+		"",
+		"rat", "ox", "tiger", "rabbit", "dragon", "snake",
+		"horse", "sheep", "monkey", "rooster", "dog", "pig"
+	};
+
+	map<string, int> mp;
+	for (int i = 1; i <= 12; ++i)
+		mp[str[i]] = i;
+	
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		string str1, str2;
+		cin >> str1 >> str2;
+		int t1, t2;
+		t1 = mp[str1];
+		t2 = mp[str2];
+		if (t1 == t2)
+			cout << "12";
+		else if (t2 > t1)
+			cout << t2 - t1;
+		else
+			cout << 12 - (t1-t2);
+		cout << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		double x, p;
+		cin >> p;
+		x = (sqrt(9 - 12 * (1 - p)) - 3) / 6.0;
+		int flo = 0, cel = 0;
+		flo = floor(x);
+		cel = ceil(x);
+		if ((x - flo) < 1e-6 || (cel - x) < 1e-6)
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
 int n, m, dp[35][35];
 
 int main()
@@ -37,7 +2196,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 vector<int> v;

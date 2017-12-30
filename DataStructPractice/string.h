@@ -41,43 +41,26 @@ namespace BF
 
 namespace KMP
 {
-
-	int* buildNext2(const char *P)
+	int* buildNext(const char *P)
 	{
-		unsigned int t = 0, j = 0, m = strlen(P);
-		int *N = new int[m];
-		t = N[0] = -1;
-		while (j < m)
+		unsigned j = 0, pLen = strlen(P);
+		int *next = new int[pLen];
+		int t = next[0] = -1;
+		while (j < pLen)
 		{
 			if (t < 0 || P[j] == P[t])
 			{
-				++t, ++j;
-				if (P[j] != P[t])
-					N[j] = t;
-				else
-					N[j] = N[t];
+				++j, ++t;
+				next[j] = t;
+
 			}
 			else
-				t = N[t];
+				t = next[t];
 		}
-		return N;
+		return next;
 	}
 
-	int* buildNext(const char *P)
-	{
-		unsigned j = 0, m = strlen(P);
-		int *N = new int[m];
-		int t = N[0] = -1;
-		while (j < m )
-		{
-			if (t < 0 || P[j] == P[t])
-				 N[++j] = ++t;
-			else
-				t = N[t];
-		}
-		return N;
-	}
-
+	// 在主串 T 中，查找模式串 P
 	int Match(const char *P,const char *T)
 	{
 		int *next = buildNext(P);

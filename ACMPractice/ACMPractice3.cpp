@@ -19,11 +19,1237 @@
 #include <string.h>
 using namespace std;
 
+string digits = "0123456789ABCDEFabcdef";
+
 int main()
 {
+	string in, out;
+	cin >> in;
+	bool fu = false;
+	bool before = false;
+	for (int i = 0; i < in.size(); ++i)
+	{
+		if (in[i] == '-' && !fu && !before)
+			fu = true;
+		if (find(digits.begin(), digits.end(), in[i]) != digits.end())
+		{
+			out.push_back(in[i]);
+			before = true;
+		}
+	}
+
+	stringstream ss;
+	ss << hex << out;
+	long long o;
+	ss >> o;
+	if (fu)
+		o = -o;
+	cout << o;
 
 	return 0;
 }
+
+
+/*
+int main()
+{
+	int N;
+	vector<int> a, b;
+
+	cin >> N;
+	for (int i = 0; i < N; ++i)
+	{
+		int t;
+		cin >> t;
+		vector<int>::iterator it;
+		if ((it = find(a.begin(), a.end(), t)) != a.end())
+			b[it - a.begin()]++;
+		else
+		{
+			a.push_back(t);
+			b.push_back(1);
+		}
+	}
+	int index = max_element(b.begin(), b.end()) - b.begin();
+	cout << a[index] << ' ' << b[index];
+
+
+	return 0;
+}
+*/
+
+/*
+bool isprime(int x)
+{
+	int end = sqrt(x);
+	if (x <= 1)
+		return false;
+	if (x == 2)
+		return true;
+
+	for (int i = 2; i <= end; ++i)
+	{
+		if (x % i == 0)
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	bool f = false;
+	for (int i = 0; i <= n; ++i)
+	{
+		int t = pow(2, i) - 1;
+		if (isprime(t))
+		{
+			cout << t << endl;
+			f = true;
+		}
+	}
+	if (!f)
+		cout << "None";
+
+	return 0;
+}
+*/
+
+/*
+bool isprime(int x)
+{
+	int end = sqrt(x);
+	if (x <= 1)
+		return false;
+	if (x == 2)
+		return true;
+
+	for (int i = 2; i <= end; ++i)
+	{
+		if (x % i == 0)
+			return false;
+	}
+	return true;
+}
+
+int main()
+{
+	int N, p;
+	cin >> N;
+	for (p = 2; ; p++)
+	{
+		if (isprime(p) && isprime(N - p))
+		{
+			printf("%d = %d + %d", N, p, N - p);
+			break;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+char keys[10][10] = {
+	"0 ",
+	"1,.?!", "2ABC","3DEF",
+	"4GHI", "5JKL", "6MNO",
+	"7PQRS", "8TUV", "9WXYZ",
+};
+
+char get(int key, int n)
+{
+	if (n != 0)
+		return keys[key][n - 1];
+	else
+		return keys[key][strlen(keys[key]) - 1];
+}
+
+int main()
+{
+	string out;
+	string in;
+	while (cin >> in)
+			out.push_back(get(in[0] - '0', in.size()%strlen(keys[in[0]-'0'])));
+	cout << out;
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int h, n, u, d;
+
+	cin >> n >> u >> d;
+
+	int t;
+	h = 0;
+	for (t = 1; ; ++t)
+	{
+		if (t % 2)
+			h += u;
+		if (h >= n)
+			break;
+		if (t % 2 == 0)
+			h -= d;
+	}
+	cout << t;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int va, vb;
+	int a1, a2, b1, b2;
+	int a, b, n;
+	bool fa, fb;
+	a = b = 0;
+	
+	fa = fb = true;
+	cin >> va >> vb >> n;
+	for (int i = 0; i < n && fa && fb; ++i)
+	{
+		cin >> a1 >> a2 >> b1 >> b2;
+		if (a1 + b1 == a2 && a2 == b2)
+			continue;
+		if (a1 + b1 == a2)
+		{
+			a++;
+			if (a > va)
+				fa = false;
+		}
+		else if (a1 + b1 == b2)
+		{
+			b++;
+			if (b > vb)
+				fb = false;
+		}
+	}
+	if (!fa)
+		cout << "A" << endl << b;
+	else if (!fb)
+		cout << "B" << endl << a;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	char start;
+	int n;
+
+	cin >> start >> n;
+	char c = start;
+	if (n >= 3)
+	{
+		int half = n / 2;
+		cout << string(half, ' ') << c << endl;
+		c++;
+		for (int i = 1; i <= half; ++i)
+		{
+			cout << string((half - i), ' ') << c << string(2 * i - 1, ' ') << c << endl;
+			c++;
+		}
+		c -= 2;
+		for (int i = 1; i < half; ++i)
+		{
+			cout << string(i, ' ') << c << string(2 * (half - i) - 1, ' ') << c << endl;
+			c--;
+		}
+		cout << string(half, ' ') << c;
+	}
+	else
+		cout << c;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> a, b, c;
+
+	int i, j, k;
+	i = j = k = 1;
+	for (i = 1; i <= 30; i++)
+	{
+		for (j = 1; j <= (150 - 5 * i) / 2; ++j)
+		{
+			for (k = 1; k <= (150 - 5 * i - 2 * j); ++k)
+			{
+				if (i * 5 + j * 2 + k == 150 && i +j +k == 100)
+				{
+					a.push_back(i);
+					b.push_back(j);
+					c.push_back(k);
+				}
+			}
+		}
+	}
+
+	n = min(n, int(a.size()));
+	for (int i = 0; i < n; ++i)
+		printf("%d %d %d\n", a[i], b[i], c[i]);
+	return 0;
+}
+*/
+
+/*
+void fun(int array[3][3])
+{
+	for (int i = 0; i < 3 / 2; ++i)
+	{
+		for (int j = 0; j < 3 / 2; ++j)
+		{
+			int t = array[i][j];
+			array[i][j] = array[j][i];
+			array[j][i] = t;
+		}
+	}
+
+}
+
+int main()
+{
+	int a[10005], b[10005], t, n, c;
+	cin >> t;
+	while (t--)
+	{
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			cin >> a[i];
+
+		memset(b, 0, sizeof(b));
+
+		for (int i = 0; i < n; ++i)
+		{
+			int j;
+			for (j = i + 1; j < n && a[j] == a[i]; ++j);
+
+			b[i] = j - i;
+		}
+		cout << *max_element(b, b + n) << endl;
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int  a[100005] = { 0 };
+int  n, m, i, x, k = 0;
+
+int search(int x)
+{
+	int l, h, mid;
+	l = 0;
+	h = n - 1;
+
+	while (l <= h)
+	{
+		mid = (l + h) >> 1;
+		if (x < a[mid])
+			h = mid - 1;
+		else if (a[mid] < x)
+			l = mid + 1;
+		else
+			return mid;
+	}
+
+	return -1;
+}
+
+int  main()
+{
+	cin >> n;
+	for (i = 0; i<n; i++)
+	{
+		cin >> a[i];
+	}
+	cin >> m;
+	for (i = 0; i<m; i++)
+	{
+		cin >> x;
+		k = search(x);
+		if (k >= 0)
+			cout << k << endl;
+		else
+			cout << "Not found!" << endl;
+
+	}
+	return 0;
+}
+*/
+
+
+/*
+const int INF = 0x7fffffff;
+int ani[105][105];
+int visit[105];
+int visited;
+int n, m;
+
+int max = -1;
+int find(int x)
+{
+	int res = 0 ,dis[105];
+	fill(dis, dis + 105, INF);
+	memset(visit, 0, sizeof visit);
+	dis[x] = 0;
+	visited = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		int mi = INF, id = -1;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (!visit[j] && dis[j] < mi)
+			{
+				id = j;
+				mi = dis[j];
+			}
+		}
+		if (id == -1)
+			return 0;
+		visit[id] = 1;
+		visited++;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (ani[id][j] && dis[id] + ani[id][j] < dis[j])
+				dis[j] = dis[id] + ani[id][j];
+		}
+	}
+	int ma = -1;
+	for (int i = 1; i <= n; ++i)
+	{
+		if (dis[i] != INF && dis[i] > ma)
+			ma = dis[i];
+	}
+
+	return ma;
+}
+
+int main()
+{
+	cin >> n >> m;
+	memset(ani, 0, sizeof ani);
+	for (int i = 0; i < m; ++i)
+	{
+		int a, b, c;
+		cin >> a >> b >> c;
+		ani[a][b] = ani[b][a] = c;
+	}
+
+	int flag = true;
+	int res = 0, min = INF;
+	for (int i = 1; i <= n; ++i)
+	{
+		int r = find(i);
+		if (visited != n)
+		{
+			flag = false;
+			break;
+		}
+		if (r < min)
+		{
+			min = r;
+			res = i;
+		}
+	}
+	if (!flag)
+		cout << 0 << endl;
+	else
+	{
+		cout << res << ' ' << min << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	const int MAXN = 10;
+	int a[MAXN][MAXN];
+	int n, x, y, tot = 0;
+	scanf("%d", &n);
+	memset(a, 0, sizeof(a));
+	tot = a[x = 0][y = n - 1] = 1;
+	while (tot < n*n)
+	{
+		while (x + 1 < n  && !a[x + 1][y]) a[++x][y] = ++tot;
+		while (y - 1 >= 0 && !a[x][y - 1]) a[x][--y] = ++tot;
+		while (x - 1 >= 0 && !a[x - 1][y]) a[--x][y] = ++tot;
+		while (y + 1 < n  && !a[x][y + 1]) a[x][++y] = ++tot;
+	}
+	for (x = 0; x < n; x++)
+	{
+		for (y = 0; y < n; y++) printf("%3d", a[x][y]);
+		puts("");
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n;
+	while (~scanf("%d", &n))
+	{
+		int a = 0, ab = 0, aba = 0, abab = 0;
+		for(int i=0; i < n; ++i)
+		{
+			int x;
+			scanf("%d", &x);
+			if (x == 1)
+				a++, aba++;
+			else
+				ab++, abab++;
+			ab = max(ab, a);
+			aba = max(aba, ab);
+			abab = max(abab, aba);
+		}
+		printf("%d\n", abab);
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int n, m;
+		cin >> n >> m;
+		int ac[13], wa[13];
+		int hr, mi;
+		int num;
+		char c;
+		string rst;
+		int pently = 0;
+		memset(ac, 0, sizeof(ac));
+		memset(wa, 0, sizeof(wa));
+		for (int i = 0; i < m; ++i)
+		{
+			cin >> num >> hr >> c >> mi >> rst;
+			num -= 1001;
+			if (ac[num])
+				continue;
+			if (rst == "AC")
+			{
+				pently += hr * 60 + mi + wa[num] * 20;
+				ac[num] = 1;
+			}
+			else
+				wa[num]++;
+		}
+		cout << count(ac, ac + n, 1) << ' ' << pently << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int i, a, n, m, p, flag;
+	scanf("%d", &a);
+	for (i = 0; i<a; i++)
+	{
+		flag = 1;
+		int a[9][9] = { 0 };
+		int b[9][9] = { 0 };
+		for (n = 0; n<9; n++)
+		{
+			for (m = 0; m<9; m++)
+			{
+				scanf("%d", &p);
+				a[n][p - 1]++;
+				b[p - 1][m]++;
+			}
+		}
+		for (m = 0; m<9; m++)
+		{
+			for (n = 0; n<9; n++)
+			{
+				if (a[m][n] != 1)
+				{
+					flag = 0;
+					break;
+				}
+			}
+		}
+		for (m = 0; m<9; m++)
+		{
+			for (n = 0; n<9; n++)
+			{
+				if (b[n][m] != 1)
+				{
+					flag = 0;
+					break;
+				}
+			}
+		}
+		if (flag) printf("Yes\n");
+		else printf("No\n");
+	}
+}
+*/
+
+/*
+struct people
+{
+	string name;
+	int arr;
+	int use;
+}peo[10005];
+
+int fn[10005];
+
+void init()
+{
+	for (int i = 0; i < 10005; ++i)
+		fn[i] = i;
+}
+
+int find(int x)
+{
+	if (fn[x] != x)
+		return fn[x] = find(fn[x]);
+	return x;
+}
+
+void make(int a, int b)
+{
+	a = find(a);
+	b = find(b);
+	if (a != b)
+		fn[a] = b;
+}
+
+int visit[10005];
+map<string, int> ID;
+int cur = 0;
+int getid(string x)
+{
+	if (ID.find(x) != ID.end())
+		return ID[x];
+	int tmp = ID[x] = cur++;
+	peo[tmp].name = x;
+	return tmp;
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	people tmp;
+	int t;
+	int cid = 0;
+
+	init();
+	for (int i = 0; i < m; ++i)
+	{
+		int l, id;
+		cin >> l;
+		cin >> tmp.name;
+		id = getid(tmp.name);
+		peo[id] = tmp;
+		int last = id;
+
+		for (int j = 1; j < l; ++j)
+		{
+			cin >> tmp.name;
+			id = getid(tmp.name);
+			peo[id] = tmp;
+			make(last, id);
+		}
+	}
+
+	vector<int> li;
+	for (int i = 0; i < n; ++i)
+	{
+		string name;
+		int arr, use;
+		cin >> name >> arr >> use;
+		int id = getid(name);
+		peo[id].arr = arr;
+		peo[id].use = min(use, 60);
+		
+		li.push_back(id);
+	}
+
+	memset(visit, 0, sizeof(visit));
+	queue<people> q;
+	q.push(peo[li[0]]);
+	visit[li[0]] = 1;
+
+	double total = 0;
+	int last = peo[li[0]].arr + peo[li[0]].use;
+	vector<string> out;
+
+	while (!q.empty())
+	{
+		people p = q.front(); q.pop();
+		out.push_back(p.name);
+		bool f = false;
+		for (int i = 0; i < li.size(); ++i)
+		{
+			if (visit[li[i]]) continue;
+			if (peo[li[i]].arr > last) break;
+			if (find(getid(p.name)) == find(li[i]))
+			{
+				q.push(peo[li[i]]);
+				visit[li[i]] = 1;
+				f = true;
+				total += last - peo[li[i]].arr;
+				last += peo[li[i]].use;
+				break;
+			}
+		}
+		if (!f)
+		{
+			for (int i = 0; i < li.size(); ++i)
+			{
+				if (visit[li[i]]) continue;
+				q.push(peo[li[i]]);
+				visit[li[i]] = 1;
+				total += max(0, last - peo[li[i]].arr);
+				last = max(last, peo[li[i]].arr);
+				last += peo[li[i]].use;
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < out.size(); ++i)
+	{
+		cout << out[i] << endl;
+	}
+	printf("%.1f\n", total / n);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	vector<int> v;
+	cin >> n;
+	v.resize(n);
+	for (int i = 0; i < n; ++i)
+		cin >> v[i];
+
+	int mlen, clen;
+	mlen = clen = 1;
+	int s, e;
+	s = e = 0;
+	int cs, ce;
+	cs = ce = 0;
+	for (int i = 1; i < n; ++i)
+	{
+		if (v[i] > v[i - 1])
+		{
+			clen++;
+			ce++;
+			if (clen > mlen)
+			{
+				mlen = clen;
+				s = cs;
+				e = ce;
+			}
+		}
+		else
+		{
+			clen = 1;
+			cs = ce = i;
+		}
+	}
+	cout << v[s];
+	for (int i = s + 1; i <= e; ++i)
+		cout << ' ' << v[i];
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	list<int > v1, v2,o;
+	int n,t;
+	cin >> n;
+	for(int i=0; i < n; ++i)
+	{
+		cin >> t;
+		if (t % 2)
+			v1.push_back(t);
+		else
+			v2.push_back(t);
+	}
+	while (v1.size() || v2.size())
+	{
+		if (v1.size())
+		{
+			o.push_back(*v1.begin());
+			v1.pop_front();
+		}
+		if (v1.size())
+		{
+			o.push_back(*v1.begin());
+			v1.pop_front();
+		}
+		if (v2.size())
+		{
+			o.push_back(*v2.begin());
+			v2.pop_front();
+		}
+	}
+	list<int>::iterator it = o.begin();
+	cout << *it;
+	for (it++; it != o.end(); ++it)
+	{
+		cout << ' ' << *it;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int num = 0;
+string err;
+/*
+	1   2
+	l	r
+
+	/*  0
+	(   1
+	[   2
+	{   3
+*/
+/*
+bool func(string s)
+{
+	int a[4];
+	memset(a, 0, sizeof(int) * 4);
+	for (int i = 0; i < s.size() && num == 0; ++i)
+	{
+		if (s[i] == '(')
+			a[1]++;
+		else if (s[i] == '[')
+			a[2]++;
+		else if (s[i] == '{')
+			a[3]++;
+		else if (s[i] == '/' && s[i + 1] == '*')
+		{
+			a[0]++;
+			i++;
+		}
+		else if (s[i] == ')')
+		{
+			a[1]--;
+			if (a[1] < 0)
+			{
+				err = ")";
+				num = 1;
+			}
+		}
+		else if (s[i] == ']')
+		{
+			a[2]--;
+			if (a[2] < 0)
+			{
+				err = ']';
+				num = 1;
+			}
+		}
+		else if (s[i] == '}')
+		{
+			a[3]--;
+			if (a[3] < 0)
+			{
+				err = "}";
+				num = 1;
+			}
+		}
+		else if (s[i] == '*' && s[i + 1] == '/')
+		{
+			a[0]--;
+			if (a[0] < 0)
+			{
+				err = "*///";
+	/*
+				num = 1;
+			}
+		}
+	}
+	if (err != "")
+		return false;
+
+	if (a[0] != 0)
+	{
+		err = "/*";
+		num = 2;
+	}
+	else if (a[1] != 0)
+	{
+		err = "(";
+		num = 2;
+	}
+	else if (a[2] != 0)
+	{
+		err = "[";
+		num = 2;
+	}
+	else if (a[3] != 0)
+	{
+		err = "{";
+		num = 2;
+	}
+	if (err != "")
+		return false;
+	return true;
+}
+
+int main()
+{
+	string prog;
+	set<char> s{'(',')','[',']', '{','}' };
+	while (1)
+	{
+		string str;
+		getline(cin, str);
+		if (str[0] == '.')
+			break;
+		for (int i = 0; i < str.size(); ++i)
+		{
+			if (s.find(str[i]) != s.end())
+				prog.push_back(str[i]);
+			else if ((str[i] == '/' && str[i + 1] == '*') || (str[i] == '*' && str[i + 1] == '/'))
+			{
+				prog.push_back(str[i]);
+				prog.push_back(str[i + 1]);
+				i++;
+			}
+		}
+	}
+	if (func(prog))
+	{
+		cout << "YES";
+	}
+	else
+	{
+		cout << "NO" << endl;
+		if (num == 1)
+		{
+			cout << "?-" << err;
+		}
+		else if (num == 2)
+		{
+			cout << err << "-?";
+		}
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	for (int t = 0; t < n; ++t)
+	{
+		string op;
+		cin >> op;
+		int c = 0;
+		bool err = false;
+		for (int i = 0; i < op.size() && !err; ++i)
+		{
+			if (op[i] == 'S')
+			{
+				c++;
+				if (c > m)
+					err = true;
+			}
+			else if (op[i] == 'X')
+			{
+				c--;
+				if (c < 0)
+					err = true;
+			}
+		}
+		cout << (!err && c == 0 ? "YES" : "NO") << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int k;
+	cin >> k;
+	vector<int> v;
+	v.resize(k);
+	for (int i = 0; i < k; ++i)
+		cin >> v[i];
+
+	int msum, csum;
+	msum = csum = 0;
+	for (int i = 0; i < k; ++i)
+	{
+		csum += v[i];
+		if (csum > msum)
+			msum = csum;
+		else if (csum < 0)
+			csum = 0;
+	}
+	cout << msum;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t;
+	vector<int> s;
+	while (1)
+	{
+		cin >> t;
+		if (t != -1)
+			s.push_back(t);
+		else
+			break;
+	}
+	while (1)
+	{
+		cin >> t;
+		if (t != -1)
+			s.push_back(t);
+		else
+			break;
+	}
+	if (s.size() > 0)
+	{
+		sort(s.begin(), s.end());
+		vector<int>::iterator it = s.begin();
+		cout << *it;
+		for (it++; it != s.end(); ++it)
+		{
+			cout << ' ' << *it;
+		}
+	}
+	else
+		cout << "NULL";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n)
+	{
+		vector<int> v;
+		v.resize(n);
+		for (int i = 0; i < n; ++i)
+			cin >> v[i];
+		sort(v.begin(), v.end(), [](int a, int b) { return abs(a) > abs(b); });
+		cout << v[0];
+		for (int i = 1; i < n; ++i)
+			cout << ' ' << v[i];
+		cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int get(int x)
+{
+	int i, sum = 0;
+	for (i = 1; i < x; ++i)
+		if (x % i == 0)
+			sum += i;
+	return sum;
+}
+
+int main()
+{
+	int m;
+	while (cin >> m)
+	{
+		while (m--)
+		{
+			int a, b;
+			cin >> a >> b;
+			if (get(a) == b && get(b) == a)
+				cout << "YES" << endl;
+			else
+				cout << "NO" << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<string> v1,v2,v3;
+	string s1,s2;
+	v1.push_back("123");
+	v1.push_back("456");
+	v1.push_back("789");
+
+	cout << string(10, '-') << "Round 1" << string(10, '-') << endl;
+	cout << "v1.size() :" << v1.size() << endl;
+	cout << "v2.size() :" << v2.size() << endl;
+	v2 = v1;
+	cout << "After assign" << endl;
+	cout << "v1.size() :" << v1.size() << endl;
+	cout << "v2.size() :" << v2.size() << endl;
+
+	cout << string(10, '-') << "Round 2" << string(10, '-') << endl;
+	v2 = v1;
+	cout << "v2.size() :" << v2.size() << endl;
+	cout << "v3.size() :" << v3.size() << endl;
+
+	v3 = move(v2);
+
+	cout << "After move" << endl;
+	cout << "v2.size() :" << v2.size() << endl;
+	cout << "v3.size() :" << v3.size() << endl;
+
+	cout << string(10, '-') << "Round 2" << string(10, '-') << endl;
+	v2 = v1;
+	cout << "v1.size() :" << v1.size() << endl;
+	cout << "v2.size() :" << v2.size() << endl;
+
+	s1.reserve(9), s2.reserve(9);
+
+	for (const string str : v1)
+	{
+		s1 += str;
+	}
+	for (const string str : v2)
+	{
+		s2 += move(str);
+	}
+	cout << "After build" << endl;
+	cout << "s1 : " << s1 << endl;
+	cout << "s2 : " << s2 << endl;
+	cout << "v1.size() :" << v1.size() << endl;
+	cout << "v2.size() :" << v2.size() << endl;
+	for (string str : v1)
+	{
+		cout << str << endl;
+	}
+	for (string str : v2)
+	{
+		cout << str << endl;
+	}
+}
+*/
+
+/*
+int getid(map<string, int> &id, string &str)
+{
+	if (id.find(str) == id.end())
+		id[str] = id.size();
+	return id[str];
+}
+
+int main()
+{
+	int n;
+	map<string, int> id;
+	set<string> s;
+	while (cin >> n && n)
+	{
+		vector<int> v,v1,v2;
+		id.clear();
+		s.clear();
+		
+
+		for (int i = 0; i < n; ++i)
+		{
+			int id2;
+			string str;
+			cin >> str;
+			s.insert(str);
+			//id1 = getid(id, str);
+			//v1.push_back(id1);
+
+			cin >> str;
+			s.insert(str);
+			id2 = getid(id, str);
+			v2.push_back(id2);
+		}
+		v.resize(s.size(), 1);
+		for (int i = 0; i < n; ++i)
+			v[v2[i]] = 0;
+
+		int c = count(v.begin(), v.end(), 1);
+		cout << (c == 1 ? "Yes" : "No") << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	
+	int time;
+	int work1, work2, work3, work4;
+	int flag;
+	for (time = 160; time <= 184; ++time)
+	{
+		work1 = time - 160;
+		work2 = 200 - 184;
+		work3 = work2 / 3;
+		work4 = work3 / 2;
+		if (work1 >= 0 && work2 >= 0 && work3 > 0)
+		{
+			if ((work1%work3 <= work4))
+				printf("%d is on.\n", time);
+			else
+				printf("%d is off.\n", time);
+		}
+		
+	}
+	return 0;
+}
+*/
 
 /*
 #include<stdio.h>

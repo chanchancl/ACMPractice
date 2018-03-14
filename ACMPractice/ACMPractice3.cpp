@@ -16,9 +16,269 @@
 #include <iomanip>
 #include <sstream>
 #include <stdio.h>
-#include <string.h>
 using namespace std;
 
+#include<stdio.h>
+int main() {
+	int i, j, t, a[11] = { 0 }, m;
+	for (i = 0; i<10; i++) {
+		scanf("%d", &a[i]);
+	}
+	scanf("%d", &m);
+	for (j = 0; j<9; j++) {
+		for (i = 0; i<9 - j; i++) {
+			if (a[i]>a[i + 1]) {
+				t = a[i];
+				a[i] = a[i + 1];
+				a[i + 1] = t;
+			}
+		}
+	}
+
+	for (i = 0; i<10; i++) {
+		if (a[i]>m) {
+			for (j = 10; j > i; j--) {
+				a[j] = a[j-1];
+			}
+			a[i] = m;
+			break;
+		}
+	}
+	if (i == 10)
+		a[i] = m;
+	for (i = 0; i < 11; i++) {
+		printf("%d ", a[i]);
+	}
+	return 0;
+}
+
+/*
+vector<string> v;
+string spaces[10005];
+map<string, string> father;
+const string null = "null";
+
+void build()
+{
+	for (int i = 0; i < v.size(); ++i)
+	{
+		int n = count(v[i].begin(), v[i].end(), ' ');
+		if (n == 0)
+		{
+			father[v[i]] = null;
+			spaces[0] = v[i];
+		}
+		else
+		{
+			v[i] = v[i].substr(n);
+			father[v[i]] = spaces[n - 2];
+			spaces[n] = v[i];
+		}
+	}
+}
+
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	cin.get();
+
+	for (int i = 0; i < n; ++i)
+	{
+		string str;
+		getline(cin, str);
+		v.push_back(str);
+	}
+
+	build();
+
+	for (int i = 0; i < m; ++i)
+	{
+		string a, b, c, d;
+		cin >> a >> d >> d >> c >> d >> b;
+		bool flag = false;
+		if (c == "ancestor" || c == "descendant")
+		{
+			// a is ancestor of b
+			if (c == "descendant") swap(a, b);
+			while (father[b] != a && father[b] != null)
+				b = father[b];
+			flag = father[b] != null;
+		}
+		else if (c == "parent" || c == "child")
+		{
+			if (c == "child") swap(a, b);
+			// a is parent of b
+			if (father[b] == a)
+				flag = true;
+		}
+		else
+		{
+			if (father[a] == father[b])
+				flag = true;
+		}
+		cout << (flag ? "True" : "False") << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+vector<string> v;
+map<string, set<string>> mp;
+map<string, string> father;
+map<string, int> _n;
+int getn(string& str)
+{
+	if (_n.find(str) == _n.end())
+	{
+		int n = count(str.begin(), str.end(), ' ');
+		str = str.substr(n);
+		_n[str] = n;
+	}
+	
+	return _n[str];
+}
+
+void build(string name, int n)
+{
+	int c = getn(name);
+	for (int i = n+1; i < v.size(); ++i)
+	{
+		string cur = v[i];
+		int curN = getn(cur);
+		if (c == curN)
+			break;
+		if (curN == c + 2)
+		{
+			mp[name].insert(cur);
+			father[cur] = name;
+			build(cur, i);
+		}
+	}
+}
+
+bool find(string &a, string &b)
+{
+	bool finded = false;
+	for (auto i : mp[a])
+	{
+		if (i == b)
+		{
+			finded = true;
+			break;
+		}
+		finded = find(i, b);
+	}
+	return finded;
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	cin.get();
+
+	for (int i = 0; i < n; ++i)
+	{
+		string str;
+		getline(cin, str);
+		v.push_back(str);
+	}
+
+	build(v[0], 0);
+
+	for (int i = 0; i < m; ++i)
+	{
+		string a, b, c, d;
+		cin >> a >> d >> d >> c >> d >> b;
+		bool flag = false;
+		if (c == "ancestor" || c == "descendant")
+		{
+			// a is ancestor of b
+			if (c == "descendant") swap(a, b);
+			if (find(a, b))
+				flag = true;
+		}
+		else if (c == "parent" || c == "child")
+		{
+			if (c == "child") swap(a, b);
+			// a is parent of b
+			set<string> &s = mp[a];
+			if (find(s.begin(), s.end(), b) != s.end())
+				flag = true;
+		}
+		else
+		{
+			if (getn(a) == getn(b) && father[a] == father[b])
+				flag = true;
+		}
+		cout << (flag ? "True" : "False") << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+using namespace std;
+int main() {
+	int n, m;
+	string t;
+	unordered_map<string, int> mp;
+	unordered_map<string, int>::iterator it;
+	cin >> n >> m;
+	getchar();
+	for (int i = 0; i < n; i++) {
+		getline(cin, t);
+		int num = count(t.begin(), t.end(), ' ');
+		mp[t.substr(num)] = num;
+		cout << t.substr(num) << ' ' << num << endl;
+		// mp['Robert'] = 2
+		// mp['Nancy'] = 2
+		// mp['Frank'] = 4
+		// mp['David'] = 4
+	}
+	string a, b, c, d;
+	while (m--) {
+		cin >> a >> d >> d >> c >> d >> b;
+		if (c[0] == 'a') {
+			if (mp[a] < mp[b])cout << "True" << endl;
+			else cout << "False" << endl;
+		}
+		else if (c[0] == 's') {
+			if (mp[a] == mp[b])cout << "True" << endl;
+			else cout << "False" << endl;
+		}
+		else if (c[0] == 'd') {
+			if (mp[a] > mp[b])cout << "True" << endl;
+			else cout << "False" << endl;
+		}
+		else {
+			if (c[0] == 'c')swap(a, b);
+			int flag = 0;
+			if (mp[a] == mp[b] - 2) {
+				it = mp.find(a);
+				it++;
+				while (it != mp.end() && it->second > mp[a]) {
+					if (it->first == b) {
+						flag = 1;
+						break;
+					}
+					it++;
+				}
+			}
+			if (flag == 0)cout << "False" << endl;
+			else cout << "True" << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+/*
 string digits = "0123456789ABCDEFabcdef";
 
 int main()
@@ -48,6 +308,7 @@ int main()
 
 	return 0;
 }
+*/
 
 
 /*

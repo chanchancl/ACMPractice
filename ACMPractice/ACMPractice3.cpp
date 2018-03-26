@@ -18,39 +18,65 @@
 #include <stdio.h>
 using namespace std;
 
-#include<stdio.h>
-int main() {
-	int i, j, t, a[11] = { 0 }, m;
-	for (i = 0; i<10; i++) {
-		scanf("%d", &a[i]);
-	}
-	scanf("%d", &m);
-	for (j = 0; j<9; j++) {
-		for (i = 0; i<9 - j; i++) {
-			if (a[i]>a[i + 1]) {
-				t = a[i];
-				a[i] = a[i + 1];
-				a[i + 1] = t;
-			}
+void f(int a, int b)
+{
+	printf("%d, %d", a,b);
+}
+
+int main()
+{
+	int i = 3;
+	f(i, ++i);
+}
+
+
+/*
+int st[10005];
+int c=1;
+
+void insert(int x)
+{
+	int now = c;
+	st[c] = x;
+	for (int i = c / 2; i > 0; i /=2)
+	{
+		if (st[now] < st[i])
+		{
+			swap(st[now], st[i]);
+			now = i;
 		}
+	}
+	c++;
+}
+
+int main()
+{
+	int n, m, t;
+	cin >> n >> m;
+
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> t;
+		insert(t);
+	}
+	for (int i = 0; i < m; ++i)
+	{
+		cin >> t;
+		vector<int> v;
+		while (t)
+		{
+			v.push_back(st[t]);
+			t /= 2;
+		}
+		cout << v[0];
+		for (int i = 1; i < v.size(); ++i)
+			cout << ' ' << v[i];
+		cout << endl;
 	}
 
-	for (i = 0; i<10; i++) {
-		if (a[i]>m) {
-			for (j = 10; j > i; j--) {
-				a[j] = a[j-1];
-			}
-			a[i] = m;
-			break;
-		}
-	}
-	if (i == 10)
-		a[i] = m;
-	for (i = 0; i < 11; i++) {
-		printf("%d ", a[i]);
-	}
 	return 0;
 }
+*/
 
 /*
 vector<string> v;

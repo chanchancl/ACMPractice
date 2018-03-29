@@ -18,15 +18,44 @@
 #include <stdio.h>
 using namespace std;
 
-void f(int a, int b)
-{
-	printf("%d, %d", a,b);
-}
+int main() {
+	int n,i;
+	char blocks[105][105];
+	int vis[105];
 
-int main()
-{
-	int i = 3;
-	f(i, ++i);
+	while (cin >> n && n >= 0) {
+		memset(vis, 0, sizeof vis);
+		for (i = 1; i <= n; ++i)
+			cin >> (blocks[i] + 1);
+		
+		int maxnum, minnum;
+		maxnum = minnum = 0;
+		for (i = 1; i <= n; ++i) {
+			if (i % 2 == 0) {
+				maxnum += i / 2;
+				minnum += i / 2;
+			}
+			else {
+				for (int j = 1; j <= i; ++j) {
+					if (blocks[i][j] != '?' && !vis[i]) {
+						vis[i] = 1;
+						if (blocks[i][j] == '*') {
+							if (j % 2) minnum += i / 2, maxnum += i / 2;
+							else minnum += i / 2 + 1, maxnum += i / 2 + 1;
+						}
+						else {
+							if (j % 2) minnum += i / 2 + 1, maxnum += i / 2 + 1;
+							else minnum += i / 2, maxnum += i / 2;
+						}
+					}
+				}
+				if (!vis[i]) minnum += i / 2, maxnum += i / 2 + 1;
+			}
+		}
+		cout << maxnum << ' ' << minnum << endl;
+	}
+
+	return 0;
 }
 
 

@@ -18,6 +18,42 @@
 #include <stdio.h>
 using namespace std;
 
+#define MAX 200005
+int v[MAX], ans[MAX];
+
+int main()
+{
+	int n;
+	while (~scanf("%d",&n))
+	{
+		for (int i = 0; i < n; ++i)
+		{
+			int a, b;
+			scanf("%d %d", &a, &b);
+			v[i] = v[i+n] = a - b;
+			ans[i] = ans[i+n] = 1;
+		}
+		for (int i = 1; i < 2 * n; ++i)
+		{
+			if (v[i] + v[i - 1] >= 0 && v[i - 1] >= 0)
+			{
+				v[i] = v[i] + v[i - 1];
+				ans[i] += ans[i - 1];
+				if (ans[i] == n) break;
+			}
+		}
+
+		int max=0;
+		for (int i = 0; i < 2 * n; ++i)
+			if (max < ans[i])
+				max = ans[i];
+		printf("%d\n", max);
+	}
+
+	return 0;
+}
+
+/*
 int main() {
 	int n,i;
 	char blocks[105][105];
@@ -57,7 +93,7 @@ int main() {
 
 	return 0;
 }
-
+*/
 
 /*
 int st[10005];

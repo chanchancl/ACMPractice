@@ -18,6 +18,114 @@
 #include <stdio.h>
 using namespace std;
 
+#include<iostream>
+using namespace std;
+
+// set  <- array
+// setn O(lg2(n))
+
+//           liner
+
+// array vector list stack queue  
+//           deque
+
+//    tree        graph
+//
+
+
+class Set
+{
+public:
+	Set()
+	{
+		PC = 0;
+	}
+	Set(Set &s);
+	void Empty() //clear
+	{
+		PC = 0;
+	}
+	int IsEmpty()
+	{
+		return PC == 0;
+	}
+	int IsMemberOf(int n);
+	int Add(int n);
+	void Print();
+	friend void reverse(Set *m);
+private:
+	int elems[100];
+	int PC;
+};
+int Set::IsMemberOf(int n)
+{
+	for (int i = 0; i<PC; i++)
+		if (elems[i] == n)
+			return 1;
+	return 0;
+}
+int Set::Add(int n)
+{
+	if (IsMemberOf(n))
+		return 1;
+	else if (PC >= 100)
+		return 0;
+	else
+	{	
+		elems[PC++] = n;
+		return 1;
+	}
+}
+Set::Set(Set &p)
+{
+	PC = p.PC;
+	for (int i = 0; i<PC; i++)
+		elems[i] = p.elems[i];
+}
+void Set::Print()
+{
+	cout << "{";
+	for (int i = 0; i<PC - 1; i++)
+		cout << elems[i] << ",";
+	if (PC>0)
+		cout << elems[PC - 1];
+	cout << "}" << endl;
+}
+void reverse(Set *m)
+{
+	int n = m->PC / 2;
+	for (int i = 0; i<n; i++)
+	{
+		int temp;
+		temp = m->elems[i];
+		m->elems[i] = m->elems[m->PC - i - 1];
+		m->elems[m->PC - i - 1] = temp;
+	}
+}
+
+//c98   c11  c14  c17
+int main()
+{
+	Set A;
+	cout << A.IsEmpty() << endl;
+	A.Print();
+	Set B;
+	for (int i = 1; i <= 8; i++)
+		B.Add(i);
+	B.Print();
+	cout << B.IsMemberOf(5) << endl;
+	//cout << B.Empty() << endl;
+	for (int j = 11; j<20; j++)
+		B.Add(j);
+	Set C(B);
+	C.Print();
+	reverse(&C);
+	C.Print();
+}
+
+
+
+/*
 #define MAX 200005
 int v[MAX], ans[MAX];
 
@@ -52,6 +160,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main() {

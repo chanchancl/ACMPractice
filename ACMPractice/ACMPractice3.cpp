@@ -18,111 +18,115 @@
 #include <stdio.h>
 using namespace std;
 
-#include<iostream>
-using namespace std;
-
-// set  <- array
-// setn O(lg2(n))
-
-//           liner
-
-// array vector list stack queue  
-//           deque
-
-//    tree        graph
-//
-
-
-class Set
-{
-public:
-	Set()
-	{
-		PC = 0;
-	}
-	Set(Set &s);
-	void Empty() //clear
-	{
-		PC = 0;
-	}
-	int IsEmpty()
-	{
-		return PC == 0;
-	}
-	int IsMemberOf(int n);
-	int Add(int n);
-	void Print();
-	friend void reverse(Set *m);
-private:
-	int elems[100];
-	int PC;
-};
-int Set::IsMemberOf(int n)
-{
-	for (int i = 0; i<PC; i++)
-		if (elems[i] == n)
-			return 1;
-	return 0;
-}
-int Set::Add(int n)
-{
-	if (IsMemberOf(n))
-		return 1;
-	else if (PC >= 100)
-		return 0;
-	else
-	{	
-		elems[PC++] = n;
-		return 1;
-	}
-}
-Set::Set(Set &p)
-{
-	PC = p.PC;
-	for (int i = 0; i<PC; i++)
-		elems[i] = p.elems[i];
-}
-void Set::Print()
-{
-	cout << "{";
-	for (int i = 0; i<PC - 1; i++)
-		cout << elems[i] << ",";
-	if (PC>0)
-		cout << elems[PC - 1];
-	cout << "}" << endl;
-}
-void reverse(Set *m)
-{
-	int n = m->PC / 2;
-	for (int i = 0; i<n; i++)
-	{
-		int temp;
-		temp = m->elems[i];
-		m->elems[i] = m->elems[m->PC - i - 1];
-		m->elems[m->PC - i - 1] = temp;
-	}
-}
-
-//c98   c11  c14  c17
 int main()
 {
-	Set A;
-	cout << A.IsEmpty() << endl;
-	A.Print();
-	Set B;
-	for (int i = 1; i <= 8; i++)
-		B.Add(i);
-	B.Print();
-	cout << B.IsMemberOf(5) << endl;
-	//cout << B.Empty() << endl;
-	for (int j = 11; j<20; j++)
-		B.Add(j);
-	Set C(B);
-	C.Print();
-	reverse(&C);
-	C.Print();
+	int n;
+	map<string, int> a, b;
+	double ave;
+	double sum;
+	sum = 0;
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+	{
+		string name;
+		int t;
+		cin >> name >> t;
+		a[name] = t;
+		sum += t;
+	}
+	ave = sum / n / 2;
+	for (auto i : a)
+		b[i.first] = abs(i.second - ave);
+	
+	string win;
+	double now = 1e8;
+	for (auto i : b)
+	{
+		if (i.second < now)
+		{
+			win = i.first;
+			now = i.second;
+		}
+	}
+	printf("%d %s", int(ave), win.c_str());
+
+	return 0;
 }
 
+
+/*
+int main()
+{
+	int n, m[105];
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+		cin >> m[i];
+
+	vector<vector<int>> s[105];
+	for (int i = 0; i < 105; ++i)
+		s[i].resize(15);
+
+	int num = 0;
+
+	int cur = 1;
+	int last = 0;
+	for(num =0; ;num++)
+	{
+		bool exit = true;
+		int c = 0;
+		int id = -1;
+		for (int i = 0; i < n; ++i)
+			if (m[i] > num)
+			{
+				exit = false;
+				c++;
+				id = i;
+			}
+		if (exit)
+			break;
+		for (int i = 0; i < 10; ++i)
+		{
+			if (c == 1)
+			{
+				if (last && last == id)
+				{
+					cur++;
+					last = 0;
+				}
+				s[id][num].push_back(cur);
+				cur += 2;
+			}
+			else
+			{
+				for (int j = 0; j < n; ++j)
+				{
+					if (m[j] > num)
+					{
+						s[j][num].push_back(cur);
+						last = j;
+						cur++;
+					}
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < n; ++i)
+	{
+		cout << "#" << i+1 << endl;
+		for (int j = 0; j < m[i]; ++j)
+		{
+			cout << s[i][j][0];
+			for (int k = 1; k < 10; ++k)
+				cout << ' ' << s[i][j][k];
+			cout << endl;
+		}
+	}
+	
+
+	return 0;
+}
+*/
 
 
 /*

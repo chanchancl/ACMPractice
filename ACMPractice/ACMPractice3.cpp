@@ -20,6 +20,402 @@ using namespace std;
 
 int main()
 {
+
+	return 0;
+}
+
+
+/*
+double qin[1005][1005];
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	set<int> nv;
+	vector<int> v[1005];
+
+	for (int i = 0; i < m; ++i)
+	{
+		int k;
+		cin >> k;
+		v[i].resize(k);
+		for (int j = 0; j < k; ++j)
+			cin >> v[i][j];
+	}
+	string sa, sb;
+	cin >> sa >> sb;
+	int a, b;
+	a = atoi(sa.c_str());
+	b = atoi(sb.c_str());
+	if (sa[0] == '-')
+		nv.insert(a);
+	if (sb[0] == '-')
+		nv.insert(b);
+
+	for (int i = 0; i < m; ++i)
+	{
+		if (find(v[i].begin(), v[i].end(), a) != v[i].end())
+		{
+			for (int j = 0; j < v[i].size(); ++j)
+			{
+				if (v[i][j] == a || v[i][j] * a > 0)
+					continue;
+				qin[abs(a)][abs(v[i][j])] += 1.0 / v[i].size();
+			}
+		}
+		if (find(v[i].begin(), v[i].end(), b) != v[i].end())
+		{
+			for (int j = 0; j < v[i].size(); ++j)
+			{
+				if (v[i][j] == b || v[i][j] * b > 0)
+					continue;
+				qin[abs(b)][abs(v[i][j])] += 1.0 / v[i].size();
+			}
+		}
+	}
+	double ab = qin[abs(a)][abs(b)];
+	double maxa, maxb;
+	int ida, idb;
+	maxa = maxb = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		if (qin[abs(a)][i] > maxa)
+		{
+			ida = i;
+			maxa = qin[abs(a)][i];
+		}
+		if (qin[abs(b)][i] > maxb)
+		{
+			idb = i;
+			maxb = qin[abs(b)][i];
+		}
+	}
+	if (ida == b && idb == a)
+		cout << a << ' ' << b;
+	else
+	{
+		vector<int> out,out2;
+
+		for (int i = 0; i < n; ++i)
+		{
+			if (abs(qin[abs(a)][i] - maxa) <= 1e-4)
+			{
+				if (a >= 0)
+					out.push_back(-i);
+				else
+					out.push_back(i);
+			}
+		}
+
+		for (int i = 0; i < n; ++i)
+		{
+			if (abs(qin[abs(b)][i] - maxb) <= 1e-4)
+			{
+				if (b >= 0)
+					out2.push_back(-i);
+				else
+					out2.push_back(i);
+			}
+		}
+
+		sort(out.begin(), out.end(), [](int a, int b) { return abs(a) < abs(b); });
+		sort(out2.begin(), out2.end(), [](int a, int b) { return abs(a) < abs(b); });
+
+		if (find(out.begin(), out.end(), b) != out.end() && find(out2.begin(), out2.end(), a) != out2.end())
+			cout << a << ' ' << b;
+		else
+		{
+			for (int i = 0; i < out.size(); ++i)
+				cout << a << ' ' << out[i] << endl;
+			for (int i = 0; i < out2.size(); ++i)
+				cout << b << ' ' << out2[i] << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+#include<iostream>
+using namespace std;
+class Set
+{
+public:
+	int items[100]; //定义一个数组作为容器存放100个集合元素
+	int number; //定义数字i表示集合中元素的个数
+				//构造函数和析构函数
+	Set() {
+		this->number = 0;
+		memset(this->items, 0, sizeof(items));
+	}
+	//初始化方法
+	void init(int items[], int num)
+	{
+		this->number = num;
+		memcpy(this->items, items, sizeof(int)*num);
+	}
+	//添加元素
+	bool add_item(int item);
+	//删除元素
+	bool remove_item(int item);
+	//求集合的并集
+	Set operator+ (Set &set2);
+	//求集合的交集
+	Set operator* (Set &set2);
+	//显示集合元素
+	void display();
+	//判断集合当中是否存在item,返回元素在集合中的位置，不存在返回-1
+	int is_exist(int item);
+};
+
+int Set::is_exist(int item)
+{
+	for (int i = 0; i< this->number; i++) {
+		if (this->items[i] == item) {
+			return i;
+		}
+	}
+	return -1;
+}
+bool Set::add_item(int item)
+{
+	if (is_exist(item) >= 0 || this->number >= 100) {
+		return false;
+	}
+	this->items[this->number] = item;
+	this->number++;
+	return true;
+}
+
+bool Set::remove_item(int item)
+{
+	int pos = is_exist(item);
+	if (pos == -1) return false;
+	for (int i = pos; i< this->number - 1; i++) {
+		this->items[i] = this->items[i + 1];
+	}
+	this->number--;
+	return true;
+}
+Set Set::operator* (Set &set2)
+{
+	Set result;
+	for (int i = 0; i< this->number; i++) {
+		if (set2.is_exist(this->items[i]) >= 0) {
+			result.add_item(this->items[i]);
+		}
+	}
+	return result;
+}
+Set Set::operator+ (Set &set2)
+{
+	Set result;
+	for (int i = 0; i<this->number; i++) {
+		result.add_item(this->items[i]);
+	}
+	for (int j = 0; j<set2.number; j++) {
+		if (result.is_exist(set2.items[j]) == -1) {
+			result.add_item(set2.items[j]);
+		}
+	}
+	return result;
+}
+
+void Set::display()
+{
+	cout << "{";
+	if (this->number > 0)
+		cout << this->items[0];
+	for (int i = 1; i < this->number; ++i)
+		cout << ',' << this->items[i];
+	cout << "}";
+}
+
+int main()
+{
+	Set a, b, c;
+	int data[] = { 1,4,6,8,9,15,23 };
+	a.init(data, 7);
+	
+	for (int i = 1; i < 5; ++i)
+		b.add_item(i);
+
+	cout << "Set A : ";
+	a.display();
+	cout << endl;
+	cout << "Set B : ";
+	b.display();
+	cout << endl;
+	cout << "Set C : ";
+	c.display();
+	cout << endl;
+
+	Set res = a + b;
+	cout << "Set A + B : ";
+	res.display();
+	cout << endl;
+
+	res = a * b;
+	cout << "Set A * B : ";
+	res.display();
+	cout << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+struct _stu
+{
+	string name;
+	int p;
+}stu[10005];
+
+bool operator<(_stu &a, _stu &b)
+{
+	if (a.p != b.p)
+		return a.p > b.p;
+	else return a.name < b.name;
+}
+
+int main()
+{
+	int n, g, k;
+	int moy = 0;
+	cin >> n >> g >> k;
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> stu[i].name >> stu[i].p;
+		if (stu[i].p >= g)
+			moy += 50;
+		else if (stu[i].p >= 60)
+			moy += 20;
+	}
+	sort(stu, stu + n);
+	int prevn = 0;
+	int prevp = 0;
+	cout << moy << endl;
+	for (int i = 0; ; ++i)
+	{
+		if (i + 1 > k && stu[i].p < prevp)
+			break;
+		if (prevp && stu[i].p == prevp)
+			cout << prevn << ' ' << stu[i].name << ' ' << stu[i].p;
+		else
+		{
+			cout << i + 1 << ' ' << stu[i].name << ' ' << stu[i].p;
+			prevn = i + 1;
+		}
+		cout << endl;
+		prevp = stu[i].p;
+	}
+
+	return 0;
+}
+*/
+
+/*
+set<int> childs[100005];
+int lev[100005];
+int maxx = -1;
+
+void updatelev(int x, int l)
+{
+	lev[x] = l + 1;
+	if (lev[x] > maxx)
+		maxx = lev[x];
+	for (auto child : childs[x])
+		updatelev(child, lev[x]);
+}
+
+int main()
+{
+	memset(lev, 0, sizeof lev);
+	int n, t, top = -1;
+	cin >> n;
+
+	for (int i = 1; i <= n; ++i)
+	{
+		cin >> t;
+		if (t == -1)
+			top = i;
+		else
+			childs[t].insert(i);
+	}
+	updatelev(top, 0);
+	cout << maxx << endl;
+	vector<int> v;
+	for (int i = 1; i <= n; ++i)
+	{
+		if (lev[i] == maxx)
+			v.push_back(i);
+	}
+	cout << v[0];
+	for (int i = 1; i < v.size(); ++i)
+		cout << ' ' << v[i];
+
+	return 0;
+}
+*/
+
+
+/*
+int vis[10005];
+int main()
+{
+	set<int> s[10005];
+	int n, m;
+	scanf("%d %d", &n, &m);
+	for (int i = 0; i < m; ++i)
+	{
+		int a, b;
+		scanf("%d %d", &a, &b);
+		s[a].insert(b);
+		s[b].insert(a);
+	}
+	int ka;
+	scanf("%d", &ka);
+	for (int i = 0; i < ka; ++i)
+	{
+		int np, t;
+		scanf("%d", &np);
+		memset(vis, 0, sizeof vis);
+		for (int j = 0; j < np; ++j)
+		{
+			scanf("%d", &t);
+			vis[t] = 1;
+		}
+		bool flag = true;
+		for (int j = 1; j <= n; ++j)
+		{
+			if (s[j].size() && !vis[j])
+			{
+				for (auto k : s[j])
+				{
+					if (!vis[k])
+					{
+						flag = false;
+						break;
+					}
+				}
+			}
+			if (!flag)
+				break;
+		}
+
+		printf("%s\n", flag ? "YES" : "NO");
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n;
 	map<string, int> a, b;
 	double ave;
@@ -52,7 +448,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

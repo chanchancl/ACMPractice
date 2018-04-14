@@ -20,10 +20,120 @@ using namespace std;
 
 int main()
 {
+	int a, b, c;
+	while (cin >> a >> b)
+	{
+		a %= 10;
+		b -= 1;
+		switch (a)
+		{
+		case 0: case 1: case 5: case 6: c = a; break;
+		case 2:
+			c = "2486"[b % 4] - '0'; break;
+		case 3:
+			c = "3971"[b % 4] - '0'; break;
+		case 4:
+			c = "46"[b % 2] - '0'; break;
+		case 7:
+			c = "7931"[b % 4] - '0'; break;
+		case 8:
+			c = "8426"[b % 4] - '0'; break;
+		case 9:
+			c = "91"[b % 2] - '0'; break;
+		}
+		cout << c << endl;
+	}
 
 	return 0;
 }
 
+/*
+int n, k;
+int vis[10];
+char mp[10][10];
+int ans, cur;
+
+void dfs(int r)
+{
+	if (cur == k)
+	{
+		ans++;
+		return;
+	}
+	if (cur > n)
+		return;
+	int i = 0;
+	for (i = 0; i < n; ++i)
+	{
+		if (vis[i] == 0 && mp[r][i] == '#')
+		{
+			vis[i] = 1;
+			cur++;
+			dfs(r + 1);
+			vis[i] = 0;
+			cur--;
+		}
+	}
+	if (r < n)
+		dfs(r + 1);
+}
+
+int main()
+{
+	while (cin >> n >> k && n != -1 && k != -1)
+	{
+		ans = cur = 0;
+		for (int i = 0; i < n; ++i)
+			cin >> mp[i];
+		memset(vis, 0, sizeof vis);
+		dfs(0);
+		cout << ans << endl;
+	}
+	
+	return 0;
+}
+*/
+
+
+/*
+int vis[10];
+int ans = 0;
+
+bool check(int r, int c)
+{
+	for (int i = 1; i < r; ++i) {
+		if (vis[i] == c) return false;
+		if (abs(vis[i] - c) == abs(r - i)) return false;
+	}
+	return true;
+}
+
+void dfs(int r)
+{
+	if (r > 8)
+	{
+		ans++;
+		return;
+	}
+
+	for (int i = 1; i <= 8; ++i)
+	{
+		if (check(r, i))
+		{
+			vis[r] = i;
+			dfs(r + 1);
+			vis[r] = 0;
+		}
+	}
+}
+
+int main()
+{
+	dfs(1);
+	cout << ans << endl;
+	return 0;
+}
+*/
 
 /*
 double qin[1005][1005];

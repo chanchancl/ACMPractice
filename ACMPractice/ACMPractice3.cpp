@@ -18,6 +18,85 @@
 #include <stdio.h>
 using namespace std;
 
+#define loop(i,n) for(i=0; i < n; ++i)
+
+struct
+{
+	int l, r, sum,lazy,t;
+}tree[100005 * 4];
+int n;
+
+void init(int l, int r, int rt)
+{
+	tree[rt].l = l;
+	tree[rt].r = r;
+	tree[rt].lazy = 0;
+	tree[rt].t = 0;
+	if (l == r) 
+	{
+		tree[rt].sum = 1;
+		return;
+	}
+	else {
+		int mid = (tree[rt].l + tree[rt].r) >> 1;
+		init(l, mid, rt << 1);
+		init(mid + 1, r, rt << 1 | 1);
+		tree[rt].sum = tree[rt << 1].sum + tree[rt << 1 | 1].sum;
+	}
+}
+
+void update(int l, int r, int rt, int x)
+{
+	if (tree[rt].l == l && tree[rt].r == r)
+	{
+		tree[rt].sum = (r - l + 1)*x;
+		tree[rt].lazy = 1;
+		tree[rt].t = x;
+		return;
+	}
+	int mid = (tree[rt].l + tree[rt].r) >> 1;
+
+	if (tree[rt].lazy)
+	{
+		tree[rt].lazy = 0;
+		update(tree[rt].l, mid, rt << 1, tree[rt].t);
+		update(mid + 1, tree[rt].r, rt << 1 | 1, tree[rt].t);
+		tree[rt].t = 0;
+	}
+	if (mid < l)
+		update(l, r, rt << 1 | 1, x);
+	else if (mid >= r)
+		update(l, r, rt << 1, x);
+	else
+	{
+		update(l, mid, rt << 1, x);
+		update(mid + 1, r, rt << 1 | 1, x);
+	}
+	tree[rt].sum = tree[rt << 1].sum + tree[rt << 1 | 1].sum;
+}
+
+int main()
+{
+	int i,q,t,k;
+	scanf("%d", &k);
+	loop(t, k)
+	{
+		scanf("%d %d", &n, &q);
+		init(1, n, 1);
+		loop(i, q)
+		{
+			int x, y, z;
+			scanf("%d %d %d", &x, &y, &z);
+			update(x, y, 1,z);
+		}
+		printf("Case %d: The total value of the hook is %d.\n", t + 1, tree[1].sum);
+	}
+	
+	return 0;
+}
+
+
+/*
 int main()
 {
 	int a, b, c;
@@ -46,6 +125,8 @@ int main()
 
 	return 0;
 }
+*/
+
 
 /*
 int n, k;

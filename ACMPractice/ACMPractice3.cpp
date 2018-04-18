@@ -17,7 +17,102 @@
 #include <sstream>
 #include <stdio.h>
 using namespace std;
+	
+int k,n,m;
 
+struct edge
+{
+	int end, speed;
+};
+
+vector<edge> mp[505];
+int visit[505];
+
+int main()
+{
+	cin >> k;
+	edge tmp;
+	while (k--)
+	{
+		cin >> n >> m;
+		for (int i = 0; i < m; ++i)
+		{
+			int a, b, c;
+			cin >> a >> b >> c;
+			tmp.end = b;
+			tmp.speed = c;
+			mp[a].push_back(tmp);
+			tmp.end = a;
+			mp[b].push_back(tmp);
+		}
+	}
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	string str;
+	cin >> n >> str;
+	set<string> s;
+	sort(str.begin(), str.end());
+	do
+	{
+		s.insert(str);
+	} while (next_permutation(str.begin(), str.end()));
+	cout << s.size();
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string a, b;
+	while (cin >> a >> b)
+	{
+		if (a == "0" && b == "0")
+			break;
+		if (a.size() < b.size())
+			cout << "No" << endl;
+		else
+		{
+			bool flag = true;
+			for (int i = 0; i <= a.size()-b.size(); ++i)
+			{
+				// a[i]
+				size_t last = 0;
+				for (auto t : b)
+				{
+					char f = char('A'+25-(t-'A'));
+					last = a.find(f, last);
+					if (last == string::npos)
+					{
+						flag = false;
+						break;
+					}
+					last++;
+				}
+				if (flag)
+					break;
+			}
+			if (flag)
+				cout << "Yes" << endl;
+			else
+				cout << "No" << endl;
+		}
+
+	}
+
+	return 0;
+}
+*/
+
+
+/*
 #define loop(i,n) for(i=0; i < n; ++i)
 
 struct
@@ -94,6 +189,7 @@ int main()
 	
 	return 0;
 }
+*/
 
 
 /*

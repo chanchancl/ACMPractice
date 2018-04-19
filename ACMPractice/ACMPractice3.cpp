@@ -17,39 +17,134 @@
 #include <sstream>
 #include <stdio.h>
 using namespace std;
-	
-int k,n,m;
 
-struct edge
-{
-	int end, speed;
-};
-
-vector<edge> mp[505];
-int visit[505];
+int a[1000005];
 
 int main()
 {
-	cin >> k;
-	edge tmp;
-	while (k--)
+	int T, n, t, i;
+	scanf("%d", &T);
+	while (T--)
 	{
-		cin >> n >> m;
+		int sum, max;
+		sum = max = 0;
+		scanf("%d", &n);
+		for (i = 0; i < n; ++i)
+		{
+			scanf("%d", &a[i]);
+			if (max < a[i]) max = a[i];
+		}
+		for ( i = 0; i < n; ++i)
+		{
+			if (a[i] != max) sum += a[i];
+			if (sum >= max - 1) break;
+		}
+
+		printf("%s\n", i!=n ? "Yes" : "No");
+	}
+	return 0;
+}
+
+
+/*
+const int N = 100005;
+int n, m, a[2*N], b[2*N],fa[N], in[N], all;
+char op[2*N];
+vector<int> v[N];
+
+void init()
+{
+	for (int i = 0; i < n; ++i)
+	{
+		fa[i] = i;
+		v[i].clear();
+		in[i] = 0;
+	}
+}
+
+int find(int x)
+{
+	if (x != fa[x])
+		return fa[x] = find(fa[x]);
+	return x;
+}
+
+void h(int a, int b)
+{
+	a = find(a), b = find(b);
+	if (a != b)
+		fa[a] = b;
+}
+
+void topsort()
+{
+	queue<int> q;
+	bool flag = true;
+	for (int i = 0; i < n; ++i)
+	{
+		if (in[i] == 0 && find(i) == i)
+			q.push(i);
+	}
+
+	while (!q.empty())
+	{
+		if (q.size() > 1) flag = false;
+		int cur = q.front(); q.pop();
+		all--;
+		for (int i = 0; i < v[cur].size(); ++i)
+		{
+			in[v[cur][i]]--;
+			if (in[v[cur][i]] == 0)
+				q.push(v[cur][i]);
+		}
+	}
+
+	if (all > 0) printf("CONFLICT\n");
+	else if (!flag) printf("UNCERTAIN\n");
+	else printf("OK\n");
+}
+
+int main()
+{
+	while (cin >> n >> m)
+	{
+		init();
+		all = n;
 		for (int i = 0; i < m; ++i)
 		{
-			int a, b, c;
-			cin >> a >> b >> c;
-			tmp.end = b;
-			tmp.speed = c;
-			mp[a].push_back(tmp);
-			tmp.end = a;
-			mp[b].push_back(tmp);
+			cin >> a[i] >> op[i] >> b[i];
+			if (op[i] == '=')
+			{
+				int aa = find(a[i]);
+				int bb = find(b[i]);
+				if (aa != bb)
+				{
+					h(aa, bb);
+					all--;
+				}
+			}
 		}
+		for (int i = 0; i < m; ++i)
+		{
+			int aa = find(a[i]);
+			int bb = find(b[i]);
+			if (op[i] == '>')
+			{
+				in[bb]++;
+				v[aa].push_back(bb);
+			}
+			else if (op[i] == '<')
+			{
+				in[aa]++;
+				v[bb].push_back(aa);
+			}
+		}
+		topsort();
 	}
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

@@ -18,6 +18,162 @@
 #include <stdio.h>
 using namespace std;
 
+const double esp = 1e-8;
+const int N = 1010;
+struct point { double x, y; }p[N];
+
+#define parm (double x, double y)
+bool dy parm{ return x+esp > y ; }
+bool xy parm{ return x < y - esp; }
+bool dyd parm{ return x > y - esp; }
+bool xyd parm{ return x < y + esp; }
+bool dd parm{ return abs(x - y) <= esp; }
+
+double dis(point a, point b)
+{
+	return sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
+}
+
+point center(point a, point b, point c)
+{
+	point ret;
+	double a1 = b.x - a.x, b1 = b.y - a.y, c1 = (a1*a1 + b1 * b1) / 2;
+	double a2 = c.x - b.x, b2 = c.y - b.y, c2 = (a2*a2 + b2 * b2) / 2;
+	double d = a1 * b2 - a2 * b1;
+	ret.x = a.x + (c1*b2 - c2 * b1) / d;
+	ret.y = a.y + (a1*c2 - a2 * c1) / d;
+	return ret;
+}
+
+void min_cov_circle(int n, point& c, double &r)
+{
+	random_shuffle(p, p + n);
+	c = p[0]; r = 0;
+	for (int i = 1; i < n; ++i)
+	{
+		if (dy(dis(p[i], c), r))
+		{
+			c = p[i]; r = 0;
+			for (int k = 0; k < i; ++k)
+			{
+				if (dy(dis(p[k], c), r))
+				{
+					c.x = (p[i].x + p[k].x) / 2;
+					c.y = (p[i].y + p[k].y) / 2;
+					r = dis(p[k], c);
+					for (int j = 0; j < k; ++j)
+					{
+						if (dy(dis(p[j], c), r))
+						{
+							c = center(p[i], p[k], p[j]);
+							r = dis(p[i], c);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+int main()
+{
+	int n;
+
+	double x, y;
+	while (cin >> x >> y >> n)
+	{
+		for (int i = 0; i < n; ++i)
+			cin >> p[i].x >> p[i].y;
+		double r;
+		point c;
+		min_cov_circle(n, c, r);
+		printf("(%.1lf,%.1lf).\n", c.x, c.y);
+		printf("%.1lf\n", r);
+	}
+	return 0;
+}
+
+
+/*
+const int N = 5005;
+struct _s
+{
+	int from, to, v;
+}edge[N];
+
+int fa[N];
+void init(int n)
+{
+	for (int i = 0; i <= n; ++i)
+		fa[i] = i;
+}
+int find(int x)
+{
+	if (fa[x] != x)
+		return fa[x] = find(fa[x]);
+	return x;
+}
+void h(int a, int b)
+{
+	a = find(a), b = find(b);
+	if (a != b)
+		fa[a] = b;
+}
+
+int gcd(int a, int b)
+{
+	if (b == 0) return a;
+	return gcd(b, a%b);
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int n, m, s, t, j;
+		cin >> n >> m;
+		for (int i = 0; i < m; ++i)
+			cin >> edge[i].from >> edge[i].to >> edge[i].v;
+		cin >> s >> t;
+
+		sort(edge, edge + m, [](_s a, _s b) { return a.v > b.v; });
+
+		//for (int i = 0; i < m; ++i)
+		//	printf("%d to %d , v : %d\n", edge[i].from, edge[i].to, edge[i].v);
+
+		double rate = 1e10;
+		int x, y;
+		for (int i = 0; i < m; ++i)
+		{
+			init(n);
+
+			for (j = i; j < m; ++j)
+			{
+				if (find(edge[j].from) != find(edge[j].to)) h(edge[j].from, edge[j].to);
+				if (find(s) == find(t)) break;
+			}
+			if (j == m) break;
+
+			if (edge[i].v*1.0 / edge[j].v < rate) 
+			{
+				x = edge[i].v, y = edge[j].v;
+				rate = edge[i].v*1.0 / edge[j].v;
+			}
+		}
+		if (rate == 1e10) printf("IMPOSSIBLE\n");
+		else if (x % y == 0) printf("%d\n", x/y);
+		else printf("%d/%d", x / gcd(x, y), y / gcd(x, y));
+
+	}
+
+	return 0;
+}
+*/
+
+
+/*
 int a[1000005];
 
 int main()
@@ -44,6 +200,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 
 /*

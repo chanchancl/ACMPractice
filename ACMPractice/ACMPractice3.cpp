@@ -18,6 +18,130 @@
 #include <stdio.h>
 using namespace std;
 
+int main()
+{
+	int n;
+	while (cin >> n)
+	{
+		if (n == 1 || n % 2 == 0)
+			printf("2^? mod %d = 1\n", n);
+		else
+		{
+			int x = 1, t = 2;
+			while (t%n != 1)
+			{
+				x++;
+				t = t * 2 % n;
+			}
+			printf("2^%d mod %d = 1\n", x,n);
+		}
+	}
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		long long n;
+		cin >> n;
+		cout << "Alice" << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+char in[55][55];
+char out[55][55];
+int n, m;
+
+void output(char c[55][55])
+{
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < m; ++j)
+			putchar(c[i][j]);
+		putchar('\n');
+	}
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int  ang;
+		cin >> n >> m;
+		for (int i = 0; i < n; ++i)
+			cin >> in[i];
+		cin >> ang;
+		if (ang == 0)
+			output(in);
+		else if (ang == 90)
+		{
+			for (int i = 0; i < m; ++i)
+			{
+				for (int j = n - 1; j >= 0; --j)
+					putchar(in[j][i]);
+				putchar('\n');
+			}
+		}
+		else if (ang == 180)
+		{
+			for (int i = n - 1; i >= 0; --i)
+			{
+				for (int j = m - 1; j >= 0; --j)
+					putchar(in[i][j]);
+				putchar('\n');
+			}
+		}
+		else
+		{
+			for (int i = m - 1; i >= 0; --i)
+			{
+				for (int j = 0; j < n; ++j)
+					putchar(in[j][i]);
+				putchar('\n');
+			}
+		}
+	
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--)
+	{
+		int a;
+		cin >> a;
+		if (a <= 3 || a % 2)
+			cout << "No" << endl;
+		else
+			cout << "Yes" << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
 const double esp = 1e-8;
 const int N = 1010;
 struct point { double x, y; }p[N];
@@ -38,7 +162,7 @@ point center(point a, point b, point c)
 {
 	point ret;
 	double a1 = b.x - a.x, b1 = b.y - a.y, c1 = (a1*a1 + b1 * b1) / 2;
-	double a2 = c.x - b.x, b2 = c.y - b.y, c2 = (a2*a2 + b2 * b2) / 2;
+	double a2 = c.x - a.x, b2 = c.y - a.y, c2 = (a2*a2 + b2 * b2) / 2;
 	double d = a1 * b2 - a2 * b1;
 	ret.x = a.x + (c1*b2 - c2 * b1) / d;
 	ret.y = a.y + (a1*c2 - a2 * c1) / d;
@@ -92,7 +216,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 const int N = 5005;

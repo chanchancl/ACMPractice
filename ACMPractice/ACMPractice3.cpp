@@ -15,9 +15,29 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <fstream>
 #include <stdio.h>
 using namespace std;
 
+int main()
+{
+	int n,t;
+	ifstream fin("ate.in");
+	ofstream fout("ate.out");
+	while (fin >> n)
+	{
+		if (n > 99 * 2)
+			fout << 0 << endl;
+		else
+			fout << 199 - n << endl;
+	}
+	
+
+	return 0;
+}
+
+
+/*
 int main()
 {
 	int n;
@@ -39,6 +59,7 @@ int main()
 
 	return 0;
 }
+*/
 
 
 /*

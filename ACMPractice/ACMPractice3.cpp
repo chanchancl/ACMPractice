@@ -19,6 +19,41 @@
 #include <stdio.h>
 using namespace std;
 
+
+bool found;
+
+void dfs(unsigned long long t, int n, int k)
+{
+	if (found)
+		return;
+	if (t % n == 0)
+	{
+		cout << t << endl;
+		found = true;
+		return;
+	}
+	if (k == 19)
+		return;
+	dfs(t * 10, n, k + 1);
+	dfs(t * 10 + 1, n, k + 1);
+}
+
+
+int main()
+{
+	int n;
+	while (cin >> n && n )
+	{
+		found = false;
+		dfs(1, n, 0);
+	}
+
+	return 0;
+}
+
+
+
+/*
 int main()
 {
 	int n,t;
@@ -31,11 +66,10 @@ int main()
 		else
 			fout << 199 - n << endl;
 	}
-	
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

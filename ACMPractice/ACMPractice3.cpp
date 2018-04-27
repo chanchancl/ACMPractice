@@ -16,10 +16,268 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
+#include <numeric>
+using namespace std;
+
+struct tnode {
+	tnode *go[26];
+	bool term;
+	tnode() {
+		for (int i = 0; i < 26; ++i) go[i] = nullptr;
+		term = false;
+	}
+};
+
+tnode *root;
+char s[100005];
+int n;
+
+void add() {
+	tnode *cur = root;
+	char *a = s;
+	while (*a != '\0') {
+		if (cur->go[*a - 'a'] == nullptr) cur->go[*a - 'a'] = new tnode;
+		cur = cur->go[*a - 'a'];
+		a++;
+	}
+	cur->term = true;
+}
+
+using tans = multiset<int>;
+using pans = tans * ;
+
+pans merge(pans a, pans b) {
+	if (a->size() > b->size()) swap(a, b);
+	for (auto i : *a) b->insert(i);
+	delete a;
+	return b;
+}
+
+pans calc(tnode *cur, int curd) {
+	pans ans = new tans;
+	for (int i = 0; i < 26; ++i) if (cur->go[i] != nullptr) {
+		auto t = calc(cur->go[i], curd + 1);
+		ans = merge(ans, t);
+	}
+	if (cur->term) ans->insert(curd);
+	else if (curd != 0) {
+		ans->erase(prev(ans->end()));
+		ans->insert(curd);
+	}
+	return ans;
+}
+
+int main()
+{
+	root = new tnode;
+	scanf("%d", &n);
+	for (int i = 0; i < n; ++i) {
+		scanf("%s", s);
+		add();
+	}
+	auto ans = calc(root, 0);
+	cout << accumulate(ans->begin(), ans->end(), 0) << endl;
+
+	return 0;
+}
+
+/*
+int main()
+{
+	long long n, k, M, D;
+	cin >> n >> k >> M >> D;
+
+	long long ans = 0,x;
+	for (int d = 1; d <= D; d++)
+	{
+		x = min(M, n / ((d - 1)*k + 1));
+		if (x == 0)
+			break;
+		if (((n/x +k-1)/k) != d )
+			continue;
+
+		ans = max(ans, d*x);
+
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+char mp[105][105];
+int n, k;
+
+int main()
+{
+	cin >> n >> k;
+	for (int i = 0; i < n; ++i)
+		cin >> mp[i];
+
+	int ma = 0;
+	int ansx=0, ansy=0;
+	for (int y = 0; y < n; ++y) {
+		for (int x = 0; x < n; ++x) {
+			int cur = 0;
+			int l, r ;
+			l = r = 0;
+			while (l < k && x - l >= 0 && mp[y][x - l] == '.') l++;
+			while (r < k && x + r < n && mp[y][x + r] == '.') r++;
+			cur = max(0, r + l - k);
+			if (k != 1) {
+				l = r = 0;
+				while (l < k && y - l >= 0 && mp[y - l][x] == '.') l++;
+				while (r < k && y + r < n && mp[y + r][x] == '.') r++;
+				cur += max(0, r + l - k);
+			}
+			//printf("%d %d  : %d\n", y+1, x+1, cur);
+			if (cur > ma) {
+				ma = cur;
+				ansx = x;
+				ansy = y;
+			}
+		}
+	}
+	cout << ansy+1  << ' ' << ansx+1 << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+#include <iostream>
 #include <stdio.h>
 using namespace std;
 
 
+int main()
+{
+	int n1, n2;
+	float h[100], w[100];
+	float r[100];
+
+	cout << "输入格式 类型 参数" <<endl;
+	cout << "1 代表矩形，后跟两个数 长和宽，如 1 2 2" << endl;
+	cout << "2 代表圆形，后跟一个数 半径，如 2 3" << endl;
+	cout << "0 代表计算所有面积，并退出" << endl;
+	cout << "请输入选项：";
+
+	int op;
+	n1 = n2 = 0;
+	while (cin >> op) {
+		if (op == 1) {
+			cin >> h[n1] >> w[n1];
+			n1++;
+		}
+		else if (op == 2) {
+			cin >> r[n2++];
+		}
+		else if (op == 0) {
+			cout << "共有" << n1 + n2 << "个图形" << endl;
+			for (int i = 0; i < n1; ++i) {
+				printf("长为%.2f，宽为%.2f的矩形的面积是%.2f\n", h[i], w[i], h[i] * w[i]);
+			}
+			for (int i = 0; i < n2; ++i) {
+				printf("半径为%.2f的圆的面积是%.2f\n", r[i], 3.1415926*r[i] * r[i]);
+			}
+			cout << "输入任意键退出";
+			getchar();
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int k, n, s, p;
+	cin >> k >> n >> s >> p;
+	int packs = ceil(k*ceil(1.0*n / s)/p);
+	cout << packs;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, L;
+	cin >> n >> L;
+	vector<int> c(n);
+
+	for (int i = 0; i < n; ++i)
+		cin >> c[i];
+
+	for (int i = 0; i < n - 1; ++i)
+		c[i + 1] = min(c[i + 1], 2 * c[i]);
+
+	long long ans = (long long)4e18, sum = 0;
+
+	for (int i = n - 1; i >= 0; --i) {
+		long long need = L / (1 << i);
+		sum += need * c[i];
+		L -= need << i;
+		
+		ans = min(ans, sum + (L > 0)*c[i]);
+	}
+
+	cout << ans;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+
+	cin >> n;
+	vector<int> p(n), deg(n);
+	
+	for (int i = 1; i < n ; ++i) {
+		cin >> p[i];
+		p[i]--;
+		deg[p[i]]++;
+	}
+	vector<int> sons_leaves(n);
+	for (int i = 0; i < n; ++i) {
+		if (deg[i] == 0)
+			sons_leaves[p[i]]++;
+	}
+	for (int i = 0; i < n; ++i) {
+		if (deg[i] > 0 && sons_leaves[i] < 3) {
+			cout << "No";
+			return 0;
+		}
+	}
+	
+	cout << "Yes";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	if (n >= 31)
+		cout << m;
+	else
+		cout << (m % (1 << n));
+
+	return 0;
+}
+*/
+
+/*
 bool found;
 
 void dfs(unsigned long long t, int n, int k)
@@ -50,7 +308,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 
 /*

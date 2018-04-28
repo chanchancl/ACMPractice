@@ -19,6 +19,81 @@
 #include <numeric>
 using namespace std;
 
+
+int main()
+{
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n, a, b;
+	cin >> n >> a >> b;
+
+	char v[2 * 100005];
+	cin >> v;
+
+	int ans = 0, all = a+b;
+
+	int  last = -1;
+	for (int i = 0; i < n; ++i) {
+		if (ans >= all) break;
+
+		if (v[i] == '.') {
+			if (last == -1) {
+				ans++;
+				if (a > b)
+					a--, last = 1;
+				else
+					b--, last = 2;
+			}
+			else if (last == 1 && b > 0) {
+				b--, ans++, last = 2;
+			}
+			else if (last == 2 && a > 0) {
+				a--, ans++, last = 1;
+			}
+			else
+				last = -1;
+
+		}
+		else if (v[i] == '*') {
+			last = -1;
+		}
+		
+	}
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, sum;
+	cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i < n; ++i)
+		cin >> v[i];
+	int half = (int)ceil(1.0*accumulate(v.begin(), v.end(), 0) / 2);
+	sum = 0;
+	for (int i = 0; i < n; ++i) {
+		sum += v[i];
+		if (sum >= half) {
+			cout << i + 1;
+			break;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
 struct tnode {
 	tnode *go[26];
 	bool term;
@@ -80,6 +155,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

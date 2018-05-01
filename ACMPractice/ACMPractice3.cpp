@@ -19,13 +19,95 @@
 #include <numeric>
 using namespace std;
 
-
 int main()
 {
+	long long k;
+	int n, m;
+	int x, y;
+
+	cin >> n >> m >> k;
+
+	x = y = 1;
+	if (k == 0) {
+		cout << x << ' ' << y;
+		return 0;
+	}
+	
+	bool flag = true;
+	if (1 + k <= n) {
+		flag = false;
+		x += k;
+	}
+	else {
+		x = n;
+		y = 2;
+		k -= n;
+	}
+
+	while (flag) { 
+		if (m == 2) {
+			x -= k;
+			flag = false;
+		}
+		else {
+			// x = ?, y = 2
+			if (y + k <= m) {
+				y += k;
+				flag = false;
+				break;
+			}
+			else {
+				y = m;
+				x--;
+				k -= m - 1;
+			}
+
+			if (y - k >= 2) {
+				y -= k;
+				flag = false;
+				break;
+			}
+			else {
+				y = 2;
+				x--;
+				k -= m - 1;
+			}
+		}
+		
+	}
+
+	cout << x << ' ' << y;
 
 	return 0;
 }
 
+
+/*
+int main()
+{
+	string str;
+	int n;
+	cin >> n >> str;
+
+	bool flag = true;
+	while (flag) {
+		flag = false;
+
+		size_t pos;
+		while ((pos = str.find("01")) != string::npos) {
+			swap(str[pos], str[pos + 1]);
+			flag = true;
+		}
+		while ((pos = str.find("11")) != string::npos) {
+			str.erase(pos, 1);
+			flag = true;
+		}
+	}
+	cout << str;
+
+	return 0;
+}
+*/
 
 /*
 int main()

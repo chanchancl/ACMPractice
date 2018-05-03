@@ -19,6 +19,115 @@
 #include <numeric>
 using namespace std;
 
+
+long long pre[200005];
+int main()
+{
+	int n, q;
+	cin >> n >> q;
+
+	vector<long long> a(n);
+	cin >> a[0];
+	pre[0] = a[0];
+	for (int i = 1; i < n; ++i) {
+		cin >> a[i];
+		pre[i] = pre[i - 1] + a[i];
+	}
+
+	long long sum = 0;
+	for (int i = 0; i < q; ++i) {
+		long long k;
+		cin >> k;
+
+		sum += k;
+		if (sum >= pre[n - 1]) {
+			cout << n << endl;
+			sum = 0;
+		}
+		else {
+			int pos = lower_bound(pre, pre + n, sum) - pre;
+			if (pre[pos] == sum)
+				cout << n - pos - 1 << endl;
+			else
+				cout << n - pos << endl;
+
+		}
+	}
+
+	return 0;
+}
+
+
+
+/*
+long long v[14];
+long long mov(int x)
+{
+	long long ans = 0;
+	int vv[14];
+	copy(v, v + 14, vv);
+
+	if (x + vv[x] <= 13) {
+		int t = vv[x];
+		vv[x] = 0;
+		for (int i = 0; i <= 13; i++) {
+			if (i > x && t) vv[i]++, t--;
+			if (vv[i] % 2 == 0) ans += vv[i];
+		}
+	}
+	else {
+		long long t = vv[x];
+		vv[x] = 0;
+		int n = t / 14;
+		int p = t % 14;
+
+		for (int i = 0; i < 14; ++i) vv[i] += n;
+		for (int i = x + 1; p; ++i) vv[i % 14]++, p--;
+		for (int i = 0; i < 14; ++i) if (vv[i] % 2 == 0) ans += vv[i];
+	}
+	return ans;
+}
+
+int main()
+{
+	for (int i = 0; i < 14; i++)
+		cin >> v[i];
+
+	long long ans = -1;
+	for (int i = 0; i < 14; i++) {
+		ans = max(ans, mov(i));
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, i, j, ans;
+	cin >> n;
+
+	vector<set<int>> v;
+	ans = 0;
+	for (i = 0; i < n; ++i) {
+		string str;
+		cin >> str;
+		
+		set<int> s;
+		for (auto i : str) s.insert(i);
+		
+		if (find(v.begin(), v.end(), s) == v.end()) ans++;
+		v.push_back(s);
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	long long k;
@@ -80,6 +189,7 @@ int main()
 
 	return 0;
 }
+*/
 
 
 /*
@@ -9937,3 +10047,4 @@ int main()
 	return 0;
 }
 */
+

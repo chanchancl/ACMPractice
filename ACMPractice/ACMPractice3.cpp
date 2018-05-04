@@ -19,7 +19,307 @@
 #include <numeric>
 using namespace std;
 
+int main()
+{
+	vector<pair<int, int>> v;
+	v.push_back(make_pair(1, 2));
+	v.push_back(make_pair(2, 1));
 
+	sort(v.begin(), v.end());
+
+	cout << v[0].first << ":" << v[0].second;
+	cout << v[1].first << ":" << v[1].second;
+	return 0;
+}
+
+
+/*
+int dp[55][5005];
+int a[55];
+int main()
+{
+	int sum = 0, n;
+	cin >> n;
+
+	int mi = 1000000;
+	for (int i = 1; i <= n; ++i) {
+		cin >> a[i];
+		sum += a[i];
+		mi = min(mi, a[i]);
+	}
+	if (sum % 2) {
+		cout << 0 << endl;
+		return 0;
+	}
+	else {
+		for (int i = 0; i <= n; ++i)
+			dp[i][0] = 1;
+		for (int i=1; i <= n; ++i) // 遍历所有物品
+			for (int j = mi; j <= sum / 2; ++j) {
+				if (a[i] > j)
+					dp[i][j] = dp[i - 1][j];
+				else
+					dp[i][j] = dp[i - 1][j] + dp[i - 1][j - a[i]];
+			}
+		cout << dp[n][sum / 2] / 2 << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+const int N = 55;
+double dis[N][N];
+double d[N];
+bool visit[N];
+struct point {
+	double x, y, z;
+}p[N];
+
+double distance(point &a, point &b) {
+	return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2) + pow(a.z - b.z, 2));
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n;
+		cin >> n;
+		for (int i = 0; i < n; ++i)
+			cin >> p[i].x >> p[i].y >> p[i].z;
+
+		for(int i=0; i < n; ++i)
+			for (int j = i + 1; j < n; ++j)
+				dis[i][j] = dis[j][i] = distance(p[i], p[j]);
+
+		memset(visit, 0, sizeof visit);
+		fill(d, d + N, 1e10);
+
+		d[0] = 0;
+		double ans = 0;
+		for(int t=0; t < n; ++t) {
+
+			int id = -1;
+			double Min = 1e10;
+			for (int i = 0; i < n; ++i) {
+				if (!visit[i] && d[i] < Min) {
+					Min = d[i];
+					id = i;
+				}
+			}
+			if (id == -1)
+				break;
+			
+			for (int i = 0; i < n; ++i)
+				if (!visit[i] && dis[id][i] < d[i])
+					d[i] = dis[id][i];
+
+			ans += Min;
+			visit[id] = true;
+		}
+		printf("%.2lf\n", ans);
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+vector<int> prim;
+
+int is_prime(int x) {
+	if (x < 2) return false;
+	if (x % 2 == 0 && x != 2) return false;
+	for (int i = 2; i*i <= x; ++i) 
+		if (x % i == 0) return false;
+	return true;
+}
+
+void gen() {
+	for (int i = 2; prim.size() < 200; ++i) {
+		if (is_prime(i)) prim.push_back(i);
+	}
+}
+
+
+int main()
+{
+	gen();
+	int ans ,c;
+	string str;
+	while (cin >> str) {
+		ans = c = 0;
+		for (int i = str.size() - 1; i >= 0; --i) {
+			if (str[i] == '1')
+				ans += prim[c];
+			c++;
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, sum, v[55];
+	cin >> n;
+	sum = 0;
+
+	for (int i = 0; i < n; ++i) {
+		cin >> v[i];
+		sum += v[i];
+	}
+	if (sum % 2) 
+		printf("0");
+	else {
+
+
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int a[100005], ans[100005];
+int v[100005];
+
+int main()
+{
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		int n, m;
+		scanf("%d %d", &n, &m);
+
+		for (int i = 0; i < n; ++i)
+			scanf("%d", &a[i]);
+
+		memset(v, 0, sizeof v);
+
+		ans[n - 1] = 1;
+		v[a[n - 1]] = 1;
+		for (int i = n - 2; i >= 0; i--) {
+			if (v[a[i]] == 0) {
+				ans[i] = ans[i + 1] + 1;
+				v[a[i]] = 1;
+			}
+			else
+				ans[i] = ans[i + 1];
+		}
+		for (int i = 0; i < m; ++i) {
+			int t;
+			scanf("%d", &t);
+			printf("%d\n", ans[t-1]);
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n, ans;
+		ans = 0;
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			int t;
+			cin >> t;
+			if (t >= 50 && t <= 59)ans++;
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T, n;
+	cin >> T;
+
+	while (T--) {
+		int x[6];
+		for (int i = 0; i < 6; ++i)
+			cin >> x[i];
+		int ans = x[5];
+		cin >> n;
+
+		for (int i = 0; i < n; ++i) {
+			int op;
+			cin >> op;
+			
+			int old[6];
+			copy(x, x + 6, old);
+			if (op == 0) {
+				
+				x[0] = old[4];
+				x[4] = old[1];
+				x[1] = old[5];
+				x[5] = old[0];
+			}
+			else if (op == 1) {
+				x[0] = old[5];
+				x[4] = old[0];
+				x[1] = old[4];
+				x[5] = old[1];
+			}
+			else if (op == 2) {
+				x[3] = old[5];
+				x[5] = old[2];
+				x[2] = old[4];
+				x[4] = old[3];
+			}
+			else if (op == 3) {
+				x[2] = old[5];
+				x[5] = old[3];
+				x[3] = old[4];
+				x[4] = old[2];
+			}
+			ans += x[5];
+		}
+		cout << ans <<endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int t, n, a,b;
+	cin >> t;
+	while (t--) {
+		int n;
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			cin >> a >> b;
+			cout << a + b << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
 long long pre[200005];
 int main()
 {
@@ -56,7 +356,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 
 /*

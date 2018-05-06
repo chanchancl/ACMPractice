@@ -19,16 +19,184 @@
 #include <numeric>
 using namespace std;
 
+#include <iostream>
+using namespace std;
+
+class IList;
+class TList;
+class node
+{
+	node *next;
+	int value;
+public:
+	friend TList;
+	node(int v, node* n=NULL) : value(v), next(n) {}
+};
+
+class IList
+{
+public:
+	IList() {}
+	IList(int values[]) {};
+
+public:
+	virtual void show() {};
+	virtual void insert(IList *l) {};
+	virtual void showreverse() {};
+	virtual size_t size() { return 0; };
+	virtual void clear() {};
+
+	node *begin;
+};
+
+class TList : public IList
+{
+public:
+	TList() { begin = NULL; }
+	TList(int values[], int len)
+	{
+		begin = new node(values[0]);
+		node *cur = begin;
+		for (int i = 1; i < len; ++i) {
+			cur->next = new node(values[i]);
+			cur = cur->next;
+		}
+	}
+
+	virtual void show()
+	{
+		cout << "{";
+		node * cur = begin;
+		if (cur)
+		{
+			while (true)
+			{
+				cout << cur->value;
+				if (cur->next) {
+					cout << ",";
+					cur = cur->next;
+				}
+				else
+					break;
+			}
+		}
+		cout << "}" << endl;
+	}
+
+	virtual void insert(IList *l) 
+	{
+		node *end, *lnode;
+
+		lnode = l->begin;
+		if (!begin)
+		{
+			begin = new node(l->begin->value);
+			lnode = l->begin->next;
+		}
+		end = begin;
+
+		int lsize = l->size();
+		while (end->next) end = end->next;
+		while (lnode)
+		{
+			end->next = new node(lnode->value);
+			end = end->next;
+			lnode = lnode->next;
+		}
+	}
+
+	virtual void append(int value)
+	{
+		node *end = begin;
+		if (!begin)
+			begin = new node(value);
+		else 
+		{
+			while (end->next) end = end->next;
+			end->next = new node(value);
+		}
+	}
+
+	void showback(node *cur, bool first = false) 
+	{
+		if (!cur)
+			return;
+		if (cur->next)
+			showback(cur->next);
+		cout << cur->value;
+		if (!first)
+			cout << ",";
+	}
+
+	virtual void showreverse()
+	{
+		cout << "{";
+		showback(begin, true);
+		cout << "}" << endl;
+	}
+
+	virtual size_t size()
+	{
+		size_t ret = 0;
+		node *cur = begin;
+		while (cur) cur = cur->next, ret++;
+		return ret;
+	}
+
+	virtual void clear()
+	{
+		node *last, *cur;
+		last = cur = begin;
+		cur = cur->next;
+		while (cur) {
+			delete last;
+			last = cur;
+			cur = cur->next;
+		}
+		if (last)
+			delete last;
+	}
+};
+
+
+
 int main()
 {
-	vector<pair<int, int>> v;
-	v.push_back(make_pair(1, 2));
-	v.push_back(make_pair(2, 1));
+	int elements[] = { 4, 1993, 33, 253, 545 };
 
-	sort(v.begin(), v.end());
+	TList A, B(elements, 5), C;
 
-	cout << v[0].first << ":" << v[0].second;
-	cout << v[1].first << ":" << v[1].second;
+	C.append(1);
+	C.append(2);
+	C.append(3);
+
+	cout << "表A的长度:" << A.size() << ", 内容 : ";
+	A.show();
+
+	cout << "表B的长度:" << B.size() << ", 内容 : ";;
+	B.show();
+
+	cout << "表C的长度:" << C.size() << ", 内容 : ";;
+	C.show();
+
+	cout << "B的内容添加到表A中 : ";
+	A.insert(&B);
+	A.show();
+	cout << "倒序查看A : ";
+	A.showreverse();
+	cout << "表A的长度为 : " << A.size() << endl;
+
+	cout << "将C中的元素添加到表A 中 : ";
+	A.insert(&C);
+	A.show();
+	cout << "倒序查看A : ";
+	A.showreverse();
+	cout << "表A的长度为 : " << A.size() << endl;
+
+	A.clear();
+	B.clear();
+	C.clear();
+
 	return 0;
 }
 

@@ -19,6 +19,523 @@
 #include <numeric>
 using namespace std;
 
+using ll = long long;
+#define all(x) x.begin(),x.end()
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<ll> s(n);
+	for (int i = 0; i < n; ++i) {
+		cin >> s[i];
+	}
+	ll start;
+	sort(s.begin(), s.end(), greater<int>());
+	start = s[0];
+
+	bool flag = true;
+	for(int i=0; i < n && flag; ++i) {
+		flag = false;
+		if (find(all(s),start*3) != s.end() ) {
+			start *= 3;
+			flag = true;
+		}
+		else if (find(all(s), start / 2) != s.end() && start % 2 == 0) {
+			start /= 2;
+			flag = true;
+		}
+	}
+	cout << start;
+	n -= 1;
+	while (n--) {
+		if (start % 3 == 0 && find(all(s), start /3) != s.end()) 
+			start /= 3;
+		else 
+			start *= 2;
+		cout << ' ' << start;
+	}
+
+	return 0;
+}
+
+
+/*
+int a[2 * 100005];
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	for (int i = 0; i < n; ++i)
+		cin >> a[i];
+	sort(a, a + n);
+	if (k == 0)
+	{
+		if (a[0] == 1)
+			cout << -1;
+		else
+			cout << a[0] - 1;
+	}
+	else
+	{
+		if (a[k - 1] == a[k])
+			cout << -1;
+		else
+			cout << a[k - 1];
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int mp[26][26];
+	memset(mp, 0, sizeof mp);
+	int n;
+	char str[105];
+	cin >> n >> str;
+
+	for (int i = 0; i < n - 1; ++i) mp[str[i] - 'A'][str[i + 1] - 'A']++;
+
+	int max;
+	char ans1, ans2;
+	max = -1;
+	for (int i = 0; i < 26; ++i)
+		for(int j=0; j < 26; ++j)
+			if (mp[i][j] > max) {
+				max = mp[i][j];
+				ans1 = i + 'A';
+				ans2 = j + 'A';
+			}
+	cout << ans1 << ans2;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	while (k--) {
+		if (n % 10) n -= 1;
+		else n /= 10;
+	}
+	cout << n << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <fstream>
+using namespace std;
+
+typedef struct student {
+	unsigned m_id;
+	string m_name;
+	unsigned m_age;
+	string m_sex;
+	struct student *m_next;
+
+	student() : m_next(NULL) {}
+
+	void write(ofstream &ss)
+	{
+		ss << m_id << ' ' << m_name << ' ' << m_age << ' ' << m_sex << endl;
+	}
+	void read(ifstream &ss)
+	{
+		ss >> m_id >> m_name >> m_age >> m_sex;
+		char s;
+		ss.get(s);
+		if (s != '\n')
+			ss.putback(s);
+	}
+}student;
+
+class CStudent {
+private:
+	student * head;
+public:
+	CStudent() {
+		head = new student;
+		head->m_id = 0;
+		head->m_name = "noname";
+		head->m_next = NULL;
+	}
+	~CStudent() {
+		student *p = head, *q;
+		while (p) {
+			q = p;
+			p = q->m_next;
+			delete q;
+		}
+	}
+	student readdata(int model); // model = 1:不读取学号，2:不读取姓名，其他，读取所有信息
+	void entering();
+	bool insert(const student &astu);
+	student *findid(unsigned id) const;
+	student *findname(const string &name) const;
+	student *findsex(const string &sex) const;
+	unsigned boys() const;
+	unsigned girls() const;
+	unsigned headcount() const;
+	bool eraseid();
+	bool erasename();
+	bool modifyid();
+	bool modifyname();
+	void Show() const;
+	void query() const;
+	void friend statistics(const CStudent &aclss);
+	void friend erase(CStudent &aclss);
+	void friend modify(CStudent &aclss);
+
+	void WriteToFile()
+	{
+		ofstream fs("students.txt");
+		student *cur = head->m_next;
+		while (cur)
+		{
+			cur->write(fs);
+			cur = cur->m_next;
+		}
+	}
+
+	void ReadFromFile()
+	{
+		ifstream fs("students.txt");
+		if (!fs)
+			return;
+
+		fs.seekg(0, ios_base::end);
+		size_t size = fs.tellg();
+		if (size <= 1)
+			return;
+
+		fs.seekg(0);
+		student tmp;
+		while (fs.tellg() < size) {
+			tmp.read(fs);
+			insert(tmp);
+		}
+
+	}
+};
+
+string readstring() {
+	string str;
+	while (cin.get() != '\n');
+	cin >> str;
+	return str;
+}
+
+student CStudent::readdata(int model) {
+	student tmp;
+	if (model != 1) { cout << "学    号: "; cin >> tmp.m_id; }
+	if (model != 2) { cout << "姓    名: "; tmp.m_name = readstring(); }
+	cout << "年    龄: ";
+	cin >> tmp.m_age;
+	cout << "性    别: ";
+	tmp.m_sex = readstring();
+	return tmp;
+}
+
+void CStudent::entering() {
+	student tmp;
+	cout << "学号(0 to return): ";
+	cin >> tmp.m_id;
+	while (tmp.m_id) {
+		if (findid(tmp.m_id) == NULL) {
+			cout << "姓    名: ";
+			tmp.m_name = readstring();
+			cout << "年    龄: ";
+			cin >> tmp.m_age;
+			cout << "性    别: ";
+			tmp.m_sex = readstring();
+			insert(tmp);
+		}
+		else cout << "重复的学号:" << tmp.m_id << endl;
+		cout << "学号(0 to return): ";
+		cin >> tmp.m_id;
+	}
+}
+
+student *CStudent::findid(unsigned id) const {
+	student *p;
+	for (p = head; p->m_next; p = p->m_next)
+		if (p->m_next->m_id == id) return p;
+	return NULL;
+}
+
+student *CStudent::findname(const string &name) const {
+	student *p;
+	for (p = head; p->m_next; p = p->m_next)
+		if (p->m_next->m_name == name) return p;
+	return NULL;
+}
+
+
+student *CStudent::findsex(const string &sex) const {
+	student *p;
+	for (p = head; p->m_next; p = p->m_next)
+		if (p->m_next->m_sex == sex) return p;
+	return NULL;
+}
+
+bool CStudent::insert(const student &astu) {
+	student *newnode, *p = head;
+	if (p->m_next == NULL) {
+		p->m_next = new student(astu);
+		p->m_next->m_next = NULL;
+		return true;
+	}
+	while (p->m_next) {
+		if (p->m_next->m_id == astu.m_id) {
+			cout << "重复的学号，插入失败!\n";
+			return false;
+		}
+		if (p->m_next->m_id > astu.m_id) {
+			newnode = new student(astu);
+			newnode->m_next = p->m_next;
+			p->m_next = newnode;
+			return true;
+		}
+		p = p->m_next;
+	}
+	p->m_next = new student(astu);
+	p->m_next->m_next = NULL;
+	return true;
+}
+
+unsigned  CStudent::boys() const {
+	unsigned cnt = 0;
+	student *p;
+	for (p = head->m_next; p; p = p->m_next)
+		if (p->m_sex == "男") ++cnt;
+	return cnt;
+}
+
+unsigned CStudent::girls() const {
+	unsigned cnt = 0;
+	student *p;
+	for (p = head->m_next; p; p = p->m_next)
+		if (p->m_sex == "女") ++cnt;
+	return cnt;
+}
+
+unsigned CStudent::headcount() const {
+	unsigned cnt = 0;
+	student *p;
+	for (p = head->m_next; p; p = p->m_next, ++cnt);
+	return cnt;
+}
+
+bool CStudent::eraseid() {
+	student *q, *p;
+	unsigned id;
+	cout << "输入要删除的学号:";
+	cin >> id;
+	p = findid(id);
+	if (p == NULL) {
+		cout << "没有找到学号是\"" << id << "\"的学生，删除失败!\n";
+		return false;
+	}
+	q = p->m_next;
+	p->m_next = q->m_next;
+	delete q;
+	return true;
+}
+bool CStudent::erasename() {
+	student *q, *p;
+	string name;
+	cout << "输入要删除人的姓名:";
+	name = readstring();
+	p = findname(name);
+	if (p == NULL) {
+		cout << "没有找到姓名是\"" << name << "\"的学生，删除失败!\n";
+		return false;
+	}
+	q = p->m_next;
+	p->m_next = q->m_next;
+	delete q;
+	return true;
+}
+
+bool CStudent::modifyid() {
+	student tmp, *p;
+	unsigned id;
+	cout << "输入要修改的学号:";
+	cin >> id;
+	p = findid(id);
+	if (p == NULL) {
+		cout << "没有找到学号是\"" << id << "\"的学生，修改失败!\n";
+		return false;
+	}
+	tmp = readdata(1);
+	tmp.m_id = id;
+	*(p->m_next) = tmp;
+	return true;
+}
+
+bool CStudent::modifyname() {
+	student *p, tmp;
+	string name;
+	cout << "输入要修改人的姓名:";
+	name = readstring();
+	p = findname(name);
+	if (p == NULL) {
+		cout << "没有找到姓名是\"" << name << "\"的学生，修改失败!\n";
+		return false;
+	}
+	tmp = readdata(2);
+	tmp.m_name = name;
+	*(p->m_next) = tmp;
+	return true;
+}
+
+int menu() {
+	int choice;
+	do {
+		system("cls");
+		cout << "\t****************************\n";
+		cout << "\t*   学生基本信息管理系统   *\n";
+		cout << "\t*==========================*\n";
+		cout << "\t*    1、录入学生信息       *\n";
+		cout << "\t*    2、显示学生信息       *\n";
+		cout << "\t*    3、查询学生信息       *\n";
+		cout << "\t*    4、添加学生信息       *\n";
+		cout << "\t*    5、统计学生信息       *\n";
+		cout << "\t*    6、删除学生信息       *\n";
+		cout << "\t*    7、修改学生信息       *\n";
+		cout << "\t*    0、退出管理系统       *\n";
+		cout << "\t****************************\n";
+		cout << "\n\t请选择:";
+		cin >> choice;
+	} while (choice < 0 || choice > 7);
+	return choice;
+}
+
+void show(student *p) {
+	cout << p->m_id << " " << p->m_name << " " << p->m_age << " ";
+	cout << p->m_sex << " " << endl;
+}
+
+void CStudent::Show() const {
+	student *p;
+	cout << "----------------------------------------------------------\n";
+	for (p = head->m_next; p; p = p->m_next) show(p);
+	cout << "----------------------------------------------------------\n";
+	system("pause");
+}
+
+void CStudent::query() const {
+	int select;
+	unsigned id;
+	string name;
+	student *p;
+	cout << "1、按学号查询\n2、按姓名查询\n0、返回\n";
+	cin >> select;
+	switch (select) {
+	case 1: cout << "请输入学号:"; cin >> id;
+		if (p = findid(id)) show(p->m_next);
+		break;
+	case 2: cout << "请输入姓名:"; name = readstring();
+		if (p = findname(name)) show(p->m_next);
+		break;
+	case 0: return;
+	default: cout << "选择错误。\n";
+	}
+	system("pause");
+}
+
+void statistics(const CStudent &a) {
+	unsigned total = a.headcount();
+	unsigned boys = a.boys();
+	unsigned girls = a.girls();
+	cout << "学生总数:" << total << "人。\n";
+	cout << "其中，男生:" << boys << "名。";
+	cout << "女生:" << girls << "名。\n";
+	system("pause");
+}
+
+void erase(CStudent &a) {
+	int select;
+	unsigned id;
+	string name;
+	student *p, *q;
+	cout << "1、按学号删除\n2、按姓名删除\n0、返回\n";
+	cin >> select;
+	switch (select) {
+	case 1: cout << "请输入学号:"; cin >> id;
+		if (p = a.findid(id)) {
+			q = p->m_next;
+			p->m_next = q->m_next;
+			delete q;
+			cout << "成功删除 " << id << " 的信息。\n";
+		}
+		break;
+	case 2: cout << "请输入姓名:"; name = readstring();
+		if (p = a.findname(name)) {
+			q = p->m_next;
+			p->m_next = q->m_next;
+			delete q;
+			cout << "成功删除 " << name << " 的信息。\n";
+		}
+		break;
+	case 0: return;
+	default: cout << "选择错误。\n";
+	}
+	system("pause");
+}
+
+void modify(CStudent &a) {
+	int select;
+	cout << "1、按学号修改\n2、按姓名修改\n0、返回\n";
+	cin >> select;
+	switch (select) {
+	case 1: if (a.modifyid()) cout << "修改成功。\n"; break;
+	case 2: if (a.modifyname()) cout << "修改成功。\n"; break;
+	case 0: return;
+	default: cout << "选择错误。\n";
+	}
+	system("pause");
+}
+
+int main() {
+	CStudent a;
+	a.ReadFromFile();
+
+	int an;
+	do {
+		an = menu();
+		switch (an) {
+		case 1: a.entering(); break;
+		case 2: a.Show(); break;
+		case 3: a.query(); break;
+		case 4: a.entering(); break;
+		case 5: statistics(a); break;
+		case 6: erase(a); break;
+		case 7: modify(a); break;
+		case 0: break;
+		default: cout << "选择错误。\n"; break;
+		}
+		a.WriteToFile();
+	} while (an);
+	a.WriteToFile();
+	return 0;
+}
+*/
+
+
+
+/*
 #include <iostream>
 using namespace std;
 
@@ -199,7 +716,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int dp[55][5005];

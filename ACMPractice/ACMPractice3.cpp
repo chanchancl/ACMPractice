@@ -19,6 +19,91 @@
 #include <numeric>
 using namespace std;
 
+
+#define forin(i,s,n) for(int i=s; i < n; ++i)
+#define forn(i,n) forin(i,0,n)
+
+int n;
+int a[2 * 100005];
+
+int main()
+{
+	cin >> n;
+	forn(i, n) cin >> a[i];
+
+	map<int, int> mp;
+	int end = -1, maxlen = -1;
+	forn(i, n) {
+		int now = a[i];
+		mp[now] = mp[now - 1] + 1;
+		if (mp[now] > maxlen) {
+			end = i;
+			maxlen = mp[now];
+		}
+	}
+	cout << maxlen << endl;
+	vector<int> v;
+	int t = maxlen;
+	v.push_back(end + 1);
+	for (int i = end-1; i >= 0 && t; i--) {
+		if (a[i] == a[v.back()-1] - 1){
+			v.push_back(i+1);
+			t--;
+		}
+	}
+	auto ed = v.rbegin();
+	cout << *(ed++);
+	while (ed != v.rend()) cout << ' ' << *(ed++);
+
+	return 0;
+}
+
+
+
+/*
+int fa[2 * 100005];
+int n, m;
+
+void init() {
+	forn(i, n) fa[i] = i;
+}
+
+int find(int x) {
+	if (x != fa[x]) return fa[x] = find(fa[x]);
+	return x;
+}
+
+void _union(int a, int b) {
+	a = find(a), b = find(b);
+	if (a == b) return;
+	if (a > b) fa[b] = a;
+	else fa[a] = b;
+}
+
+int main()
+{
+	cin >> n >> m;
+	vector<pair<int, int>> mp(m);
+	vector<int> out(n+1);
+	init();
+	int ans = 0;
+	forn(i, m) {
+		cin >> mp[i].first >> mp[i].second;
+		out[mp[i].first]++, out[mp[i].second]++;
+	}
+	forn(i, m) {
+		if (out[mp[i].first] == 2 && out[mp[i].second] == 2) {
+			if (find(mp[i].first) == find(mp[i].second)) ans++;
+			else _union(mp[i].first, mp[i].second);
+		}
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
 using ll = long long;
 #define all(x) x.begin(),x.end()
 
@@ -58,7 +143,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int a[2 * 100005];

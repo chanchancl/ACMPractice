@@ -19,10 +19,122 @@
 #include <numeric>
 using namespace std;
 
+#define rep(i,a,b) for(int i=a; i < b; ++i)
+#define all(x) x.begin(),x.end()
 
-#define forin(i,s,n) for(int i=s; i < n; ++i)
-#define forn(i,n) forin(i,0,n)
 
+int main()
+{
+
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+
+	int a[300];
+	forn(i, 300) a[i] = -1;
+
+	forn(i, n) {
+		int t;
+		cin >> t;
+		if (a[t] == -1) {
+			int st = max(0, t - k + 1);
+			forin(i, st, t + 1) {
+				if (a[i] == -1 || a[i] == i)
+					forin(j, i, t + 1) a[j] = i;
+			}
+		}
+		cout << a[t] << ' ';
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	
+	int t;
+	cin >> t;
+
+	auto get = [&](int x) {
+		if (k == 1) return x;
+		for (int i = 0; (i + 1)*k - 1 <= 255; ++i)
+			if (x >= i * k && x <= (i + 1)*k - 1)
+				return i * k;
+	};
+	cout << get(t);
+
+	forn(i, n-1) {
+		cin >> t;
+		cout << ' ' << get(t);
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	char str[210][210];
+	forn(i, 4) forn(j,n) str[i][j] = '.';
+
+	if (k % 2 == 0) {
+		for (int i = 1; k; ++i, k -= 2) {
+			str[1][i] = str[2][i] = '#';
+		}
+	}
+	else {
+		str[1][n / 2] = '#', k--;
+		for (int dx = 1; k && n / 2 + dx < n - 1; ++dx, k-=2) {
+			str[1][n / 2 - dx] = str[1][n / 2 + dx] = '#';
+		}
+		for (int dx = 1; k && n / 2 + dx < n - 1; ++dx, k -= 2) {
+			str[2][n / 2 - dx] = str[2][n / 2 + dx] = '#';
+		}
+	}
+	cout << "YES" << endl;
+	forn(i, 4) {
+		forn(j, n)
+			cout << str[i][j];
+		cout << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string str;
+	cin >> str;
+	int a, b;
+	a = count(all(str), 'o');
+	b = count(all(str), '-');
+	if (a <= 1 || b == 0 || b % a == 0)
+		cout << "YES";
+	else
+		cout << "NO";
+
+	return 0;
+}
+*/
+
+
+/*
 int n;
 int a[2 * 100005];
 
@@ -57,7 +169,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 
 /*

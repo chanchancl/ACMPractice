@@ -1,34 +1,272 @@
 
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <string.h>
-#include <cmath>
-#include <string>
-#include <map>
-#include <set>
-#include <list>
-#include <stack>
-#include <cctype>
-#include <functional>
-#include <algorithm>
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <fstream>
-#include <numeric>
-using namespace std;
-
-#define rep(i,a,b) for(int i=a; i < b; ++i)
-#define all(x) x.begin(),x.end()
 
 
+
+
+/*
 int main()
 {
+	int n, m;
+	cin >> n >> m;
+	vector<ll> v(n);
 
+	rep(i, 0, n) {
+		cin >> v[i];
+		if (i != 0) 
+			v[i] += v[i - 1];
+	}
+
+	rep(i, 0, m) {
+		ll t;
+		cin >> t;
+		int pos = lower_bound(all(v), t) - v.begin();
+
+		int room = pos + 1;
+		ll domi = t;
+		if (pos != 0)
+			domi -= v[pos - 1];
+
+		cout << room << ' ' <<domi << endl;
+	}
 
 	return 0;
 }
+*/
+
+/*
+int main()
+{
+	int n;
+	string str;
+	cin >> n >>str;
+
+	size_t pos, ans = 0;
+	do
+	{
+		pos = str.find("xxx");
+		if (pos != string::npos) {
+			str.erase(pos, 1);
+			ans++;
+		}
+	} while (pos != string::npos && str.size() >= 3);
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n), ans;
+	rep(i, 0, n) cin >> v[i];
+	set<int> s;
+	pre(i, n - 1, 0) {
+		if (s.find(v[i]) == s.end()) {
+			s.insert(v[i]);
+			ans.push_back(v[i]);
+		}
+	}
+	cout << ans.size() << endl;
+	pre(i, ans.size()-1, 0) cout << ans[i] << ' ';
+
+	return 0;
+}
+*/
+
+/*
+int build[5100];
+int up[5100];
+vector<int> childs[5100];
+
+int Send(int x) {
+	if (x == 0)
+		return build[0] ? 0 : build[0] = 1;
+
+	if (build[x])
+		return Send(up[x]);
+	else {
+		build[x]++;
+		return Send(up[x]) + 1;
+	}
+}
+
+int Danger(int x) {
+	int ans = 1;
+	if (!build[x])
+		return 0;
+	build[x] = 0;
+	rep(i, 0, childs[x].size())
+		if (build[childs[x][i]])
+			ans += Danger(childs[x][i]);
+	return ans;
+}
+
+int main()
+{
+	int  n, m;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 1, n) {
+		int t;
+		cin >> t;
+		up[i] = t;
+		childs[t].push_back(i);
+	}
+	cin >> m;
+	rep(i, 0, m) {
+		string str;
+		int t;
+		cin >> str >> t;
+		if (str[0] == 'S')
+			cout << Send(t) << endl;
+		else if (str[0] == 'D')
+			cout << Danger(t) << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n, m;
+		cin >> n >> m;
+		vector<int> v(n);
+		rep(i, 0, n) cin >> v[i];
+		rep(i, 0, m) {
+			int t, l, r;
+			cin >> t >> l >> r;
+			if (t == 0)
+				sort(v.begin() + l - 1, v.begin() + r);
+			else
+				sort(v.begin() + l - 1, v.begin() + r, greater<int>());
+		}
+		int c;
+		cin >> c;
+		cout << v[c - 1] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int mk[20005];
+
+int main()
+{
+	int T;
+	cin >> T;
+	bool first = true;
+	while (T--) {
+		int n, ans;
+		cin >> n;
+		vector<int> v(n);
+		rep(i, 0, n) cin >> v[i];
+		rep(i, n, 0xfffffff) {
+			memset(mk, 0, sizeof mk);
+			int cnt = 0;
+			rep(j, 0, n) {
+				if (!mk[v[j] % i]) {
+					mk[v[j] % i]++;
+					cnt++;
+				}
+			}
+			if (cnt == n) {
+				ans = i;
+				break;
+			}
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+const int MAXN = 105;
+int A[MAXN];
+int dp[MAXN][MAXN];
+
+int main()
+{
+	int n, k, c;
+	while (cin >> n >> k >> c) {
+		memset(dp, 10000, sizeof(dp));
+		rep(i, 0, n)
+			scanf("%d", &A[i]);
+		sort(A, A + n);
+		
+		pre(i, n-k, 0) {
+			rep(j, i+k-1, n) {
+				dp[i][j] = c + (A[j] - A[i])*(A[j] - A[i]);
+				rep(q, i, j) {
+					dp[i][j] = min(dp[i][j], dp[i][q] + dp[q + 1][j]);
+				}
+			}
+		}
+		printf("%d\n", dp[0][n - 1]);
+	}
+	return 0;
+}
+*/
+
+/*
+struct al {
+	string first;
+	int second;
+};
+
+bool cmp(const al &a, const al &b) {
+	if (a.second != b.second)
+		return a.second > b.second;
+	else return a.first < b.first;
+}
+
+int main()
+{
+	map<string, int> mp;
+
+	bool start = false;
+	char c;
+	string str;
+	while ((c = getchar()) != EOF) {
+		if (isalpha(c)) {
+			if (!start)
+				start = true;
+			str += c;
+		}
+		else if (start) {
+			mp[str]++;
+			str = "";
+			start = false;
+		}
+	}
+	vector<al> v;
+	map<string, int>::iterator it = mp.begin();
+	for (; it != mp.end(); ++it) {
+		al t;
+		t.first = it->first;
+		t.second = it->second;
+		v.push_back(t);
+	}
+
+	sort(all(v), cmp);
+	cout << v[0].first << ' ' << v[0].second;
+	rep(i, 1, 10) 
+		cout << endl << v[i].first << ' ' << v[i].second;
+
+	return 0;
+}
+*/
 
 
 /*

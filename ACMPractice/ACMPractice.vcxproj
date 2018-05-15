@@ -156,6 +156,7 @@
     <ClCompile Include="ACMPractice.cpp" />
     <ClCompile Include="ACMPractice2.cpp" />
     <ClCompile Include="ACMPractice3.cpp" />
+    <ClCompile Include="ACMPractice4.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="test.c" />
   </ItemGroup>

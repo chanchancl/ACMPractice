@@ -24,6 +24,58 @@ using namespace std;
 #define all(x) x.begin(),x.end()
 using ll = long long;
 
+
+int main()
+{
+	int n;
+	cin >> n;
+	list<int> v;
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		v.push_back(t);
+	}
+	v.sort();
+
+	while (v.size() > 1) {
+		if (v.size() > 1)
+			v.pop_back();
+		if (v.size() > 1)
+			v.pop_front();
+	}
+	cout << v.back();
+
+	return 0;
+}
+
+
+
+/*
+int main()
+{
+	int n, w;
+	cin >> n >> w;
+	vector<int> v(n);
+	rep(i, 0, n) {
+		cin >> v[i];
+		if (i != 0)
+			v[i] += v[i - 1];
+	}
+
+	int a = *max_element(all(v));
+	int p = *min_element(all(v));
+	int ans = w - (a > 0 ? a : 0) + 1 - (p < 0 ? -p : 0);
+	if (abs(a) > w || abs(p) > w || ans <= 0)
+		cout << 0;
+	else
+		cout << ans;
+
+	return 0;
+}
+*/
+
+
+/*
 int n, r = -1;
 vector<int> v;
 
@@ -64,3 +116,4 @@ int main()
 
 	return 0;
 }
+*/

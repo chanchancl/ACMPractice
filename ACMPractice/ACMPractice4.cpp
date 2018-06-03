@@ -17,13 +17,705 @@
 #include <sstream>
 #include <fstream>
 #include <numeric>
+#include <bitset>
 using namespace std;
 
+const int inf = 0x3fffffff;
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
 #define all(x) x.begin(),x.end()
 using ll = long long;
 
+const int INF = 0x3fffffff;
+
+int main()
+{
+	ll n;
+	cin >> n;
+
+	string s = to_string(n);
+
+	int ans = INF;
+	rep(i, 0, s.size()) {
+		rep(j, 0, s.size()) {
+			if (i == j) continue;
+			string t = s;
+			int cnt = 0;
+
+			rep(k, i, s.size() - 1) {
+				swap(t[k], t[k + 1]);
+				cnt++;
+			}
+
+			int k = j;
+			if (j > i)
+				k--;
+			for (; k < s.size() - 2; ++k) {
+				swap(t[k], t[k + 1]);
+				cnt++;
+			}
+
+			int pos = -1;
+			pos = find_if(all(t), [](char c) {return c != '0'; }) - t.begin();
+
+			for (k = pos; k > 0; k--) {
+				swap(t[k], t[k - 1]);
+				cnt++;
+			}
+			ll now = atoll(t.c_str());
+
+			if (now % 25 == 0)
+				ans = min(ans, cnt);
+		}
+	}
+	if (ans == INF)
+		cout << "-1";
+	else
+		cout << ans;
+
+	return 0;
+}
+
+
+/*
+int const N = 2 * 1e5 + 5;
+
+int x[N];
+map<int, bool> enable;
+
+int main() 
+{
+	ios::sync_with_stdio(false);
+
+	int n;
+	cin >> n;
+	rep(i, 0, n) {
+		cin >> x[i];
+		enable[x[i]] = true;
+	}
+
+	sort(x, x + n);
+	vector<int> res = { x[0] };
+
+	rep(i, 0, n) {
+		rep(j, 0, 31) {
+			int lx = x[i] - (1 << j);
+			int rx = x[i] + (1 << j);
+			bool isl = binary_search(x, x + n, lx);
+			bool isr = binary_search(x, x + n, rx);
+			if (isl && isr && res.size() < 3) 
+				res = { lx, x[i], rx };
+			if (isl && res.size() < 2)
+				res = { lx, x[i] };
+			if (isr && res.size() < 2)
+				res = { x[i], rx };
+		}
+	}
+	cout << res.size() << endl;
+	rep(i, 0, res.size())
+		cout << res[i] << ' ';
+
+	return 0;
+}
+*/
+
+
+/*
+struct node{
+	int i, j;
+	int sum;
+};
+
+bool operator<(node & a, node & b) {
+	return a.sum < b.sum;
+}
+
+int main()
+{
+	int k;
+	cin >> k;
+
+	vector<vector<int>> v(k);
+	vector<int> n(k);
+	vector<node> vnode;
+
+	rep(i, 0, k) {
+		cin >> n[i];
+		int sum = 0;
+		
+		v[i].resize(n[i]);
+		rep(j, 0, n[i]) cin >> v[i][j], sum += v[i][j];
+		rep(j, 0, n[i]) {
+			node t;
+			t.i = i + 1;
+			t.j = j + 1;
+			t.sum = sum - v[i][j];
+			vnode.push_back(t);
+		}
+	}
+
+	sort(all(vnode));
+	
+	bool flag = false;
+	rep(i, 0, vnode.size() - 1) {
+		if (vnode[i].sum == vnode[i + 1].sum && vnode[i].i != vnode[i+1].i) {
+			flag = true;
+			cout << "YES" << endl;
+			cout << vnode[i].i << ' ' << vnode[i].j << endl;
+			cout << vnode[i+1].i << ' ' << vnode[i+1].j << endl;
+			break;
+		}
+	}
+	if (!flag)
+		cout << "NO";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<string> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	sort(all(v), [](string& a, string& b) {
+		return a.size() < b.size();
+	});
+
+	bool flag = true;
+	rep(i, 0, n - 1) {
+		if (v[i + 1].find(v[i]) == string::npos)
+		{
+			flag = false;
+			break;
+		}
+	}
+	if (!flag)
+		cout << "NO";
+	else
+	{
+		cout << "YES" << endl;
+		rep(i, 0, n)
+			cout << v[i] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int id[105];
+
+int main() 
+{
+	int n, k;
+	cin >> n >> k;
+
+	set<int> s;
+
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		s.insert(t);
+		id[t] = i + 1;
+	}
+
+	if (s.size() < k)
+		cout << "NO";
+	else
+	{
+		cout << "YES" << endl;
+		int cnt = 0;
+		for (auto i : s) {
+			cout << id[i] << ' ';
+			cnt++;
+			if (cnt >= k)
+				break;
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+const int N = (1 << 22) - 1;
+
+int a[N];
+bool exist[N], visit[N];
+int n, m, mask;
+
+void search(int x) 
+{
+	if (visit[x]) return;
+	visit[x] = true;
+
+	// ~x 存在，将其本身标记为已搜索
+	if (exist[x]) search(mask ^ x);
+
+	rep(i, 0, n) {
+		// 搜索所有子集
+		if ((x&(1 << i)) != 0) {
+			// 若第i位为1，则将其置0，然后搜索
+			search(x ^ (1 << i));
+		}
+	}
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin >> n >> m;
+
+	mask = (1 << n) - 1;
+
+	rep(i, 0, m) cin >> a[i], exist[a[i]] = true;
+
+	int ans = 0;
+
+	rep(i, 0, m) {
+		if (!visit[a[i]]) {
+			search(mask ^ a[i]);
+			ans++;
+		}
+	}
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+
+/*
+const int N = 1000005;
+int a[N];
+int id[N];
+
+int main()
+{
+	ios::sync_with_stdio(false);
+
+	int n;
+	cin >> n;
+	rep(i, 1, n + 1) cin >> a[i], id[a[i]] = i;
+
+	int cnt = 0;
+
+	rep(i, 1, n + 1) {
+		if (a[i] != i) {
+			a[id[i]] = a[i];
+			id[a[i]] = id[i];
+			a[i] = i;
+			cnt++;
+		}
+	}
+
+	if (((cnt + 3 * n) & 1) == 0)
+		cout << "Petr";
+	else
+		cout << "Um_nik";
+	
+	return 0;
+}
+*/
+
+
+/*
+const int N = 100005;
+int n, m, k, s;
+int type[N], tvi[105], dis[N][105];
+bool visit[N];
+list<int> v[N];
+
+void bfs(int tid)
+{
+	memset(visit, false, sizeof visit);
+
+	queue<int> q;
+	
+	rep(i, 1, n + 1) if (type[i] == tid) {
+		q.push(i);
+		dis[i][tid] = 0;
+		visit[i] = true;
+	}
+
+	while (!q.empty()) {
+		int now = q.front();
+		q.pop();
+
+		for (auto i : v[now]) {
+			if (!visit[i]) {
+				dis[i][tid] = dis[now][tid] + 1;
+				visit[i] = true;
+				q.push(i);
+			}
+		}
+	}
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);
+
+	cin >> n >> m >> k >> s;
+
+	rep(i, 1, n + 1) cin >> type[i];
+
+	rep(i, 0, m) {
+		int a, b;
+		cin >> a >> b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+
+	rep(i, 1, k + 1)
+		bfs(i);
+
+	rep(i, 1, n + 1) {
+		int ans = 0;
+		sort(dis[i] + 1, dis[i] + k + 1);
+		rep(j, 1, s + 1)
+			ans += dis[i][j];
+		cout << ans << ' ';
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int a, b;
+	cin >> a >> b;
+
+	if (log(a)*b > (log(b)*a))
+		puts(">");
+	else if (log(a)*b < (log(b)*a))
+		puts("<");
+	else
+		puts("=");
+	return 0;
+}
+*/
+
+/*
+int main() {
+	int n;
+	cin >> n;
+
+	vector<pair<int, int>> v(n);
+
+	rep(i, 0, n) {
+		cin >> v[i].first;
+	}
+	rep(i, 0, n) {
+		cin >> v[i].second;
+	}
+
+	vector<int> ans(n + 1);
+
+	bool flag = false;
+	rep(i, 1, n - 1) {
+		int ml, mr;
+		ml = mr = inf;
+		rep(j, 0, i) if (v[j].first < v[i].first) 
+			ml = min(ml, v[j].second);
+		
+		rep(j, i + 1, n) if (v[j].first > v[i].first)
+			mr = min(mr, v[j].second);
+
+		if (ml != inf && mr != inf) {
+			flag = true;
+			ans[i] = ml + mr + v[i].second;
+		}
+	}
+
+	if (!flag)
+		cout << -1;
+	else
+	{
+		int res = inf;
+		rep(i, 1, ans.size()) {
+			if (ans[i] > 0 && ans[i] < res)
+				res = ans[i];
+		}
+		cout << res << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	map<string, string> mp;
+	mp["purple"] = "Power";
+	mp["green"] = "Time";
+	mp["blue"] = "Space";
+	mp["orange"] = "Soul";
+	mp["red"] = "Reality";
+	mp["yellow"] = "Mind";
+
+	vector<string> v;
+	v.push_back("Power");
+	v.push_back("Time");
+	v.push_back("Space");
+	v.push_back("Soul");
+	v.push_back("Reality");
+	v.push_back("Mind");
+
+	int n;
+	cin >> n;
+	rep(i, 0, n) {
+		string s;
+		cin >> s;
+		v.erase(find(all(v),mp[s]));;
+	}
+
+	cout << v.size() << endl;
+	rep(i, 0, v.size()) {
+		cout << v[i] << endl;
+	}
+
+
+	return 0;
+}
+*/
+
+
+/*
+const int N = 100005;
+int out[N], ans[N];
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	rep(i, 0, n - 1) {
+		int a, b;
+		scanf("%d%d", &a, &b);
+		out[a]++;
+		out[b]++;
+	}
+
+	int id, maxout=-1, cnt = 0;
+	bool flag = false;
+	rep(i, 1, n + 1) {
+		if (out[i] > 2) {
+			flag = true;
+			id = i;
+			maxout = out[i];
+		}
+		if (out[i] == 1)
+			ans[cnt++] = i;
+	}
+	if (!flag) {
+		printf("Yes\n1\n%d %d\n", ans[0], ans[1]);
+	}
+	else if (cnt == maxout) {
+		printf("Yes\n%d\n", cnt);
+		rep(i, 0, cnt)
+			printf("%d %d\n", id, ans[i]);
+	}
+	else
+		printf("No\n");
+
+	return 0;
+}
+*/
+
+
+/*
+const int N = 100005;
+int out[N], visit[N], n;
+int va[N], vb[N];
+vector<int> v[N];
+vector<int> res;
+bool rt = true;
+
+
+void bfs(int id) {
+
+	queue<int> q;
+	q.push(id);
+	visit[id] = 1;
+
+	while (!q.empty()) {
+		int u = q.front(), vv;
+		q.pop();
+
+		// 不和id紧邻的地方，有多条岔路，直接gg
+		if (u != id && v[u].size() > 2) {
+			rt = false;
+			return;
+		}
+
+		// 向外延伸
+		bool flag = false;
+		vv = -1;
+		rep(i, 0, v[u].size()) {
+			vv = v[u][i];
+
+			if (visit[vv]) continue;
+			flag = true;
+
+			visit[vv] = 1;
+			q.push(vv);
+		}
+
+		// 该节点是树的边缘（出度为1)
+		if (!flag) res.push_back(u);
+	}
+}
+
+int main()
+{
+	scanf("%d", &n);
+
+	int Max = 0, id;
+	rep(i, 0, n - 1) {
+		int a, b;
+		scanf("%d %d", &a, &b);
+		va[i] = a;
+		vb[i] = b;
+		v[a].push_back(b);
+		v[b].push_back(a);
+
+		out[a]++;
+		if (out[a] > Max) {
+			Max = out[a];
+			id = a;
+		}
+		out[b]++;
+		if (out[b] > Max) {
+			Max = out[b];
+			id = b;
+		}
+	}
+
+	rep(i, 0, n - 1) {
+		int a = va[i], b = vb[i];
+		if (out[a] > 2 && out[b] > 2) {
+			printf("No\n");
+			return 0;
+		}
+	}
+
+	bfs(id);
+
+	if (!rt) {
+		printf("No\n");
+		return 0;
+	}
+
+	printf("Yes\n");
+	if (res.size() == 1) {
+		printf("1\n%d %d\n", id, res[0]);
+	}
+	else if (res.size() == 2) {
+		printf("1\n%d %d\n", res[0], res[1]);
+	}
+	else {
+		printf("%d\n", res.size());
+		rep(i, 0, res.size()) {
+			printf("%d %d\n", id, res[i]);
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	string str;
+	cin >> str;
+
+	set<char> s;
+	for (auto i : str) s.insert(i);
+
+	if (s.size() == 1)
+	{
+		cout << 0;
+		return 0;
+	}
+
+	bool flag = true;
+	rep(i, 0, str.size() / 2) {
+		if (str[i] != str[str.size() - i - 1]) {
+			flag = false;
+			break;
+		}
+	}
+	if (!flag) {
+		cout << str.size();
+		return 0;
+	}
+
+	pre(j, str.size() - 2, 0) {
+		int i, t;
+
+		bool flag = true;
+		for (i = 0, t = j; t >= 0; i++, --t) {
+			if (str[i] != str[t]) {
+				flag = false;
+				break;
+			}
+		}
+		if (!flag) {
+			cout << j + 1;
+			return 0;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n;
+
+	map<int, int> mp;
+
+	rep(i, 0, n) {
+		int a, b;
+		cin >> a >> b;
+		mp[a] = b;
+	}
+	cin >> m;
+	rep(i, 0, m) {
+		int a, b;
+		cin >> a >> b;
+		mp[a] = max(mp[a], b);
+	}
+
+	ll res = 0;
+	for (auto i : mp)
+		res += i.second;
+
+	cout << res;
+
+	return 0;
+}
+*/
+
+
+
+/*
 const int N = 2005;
 int n, u[N], v[N], f[N][11][11][11][11];
 
@@ -67,7 +759,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 char mp[105][105];

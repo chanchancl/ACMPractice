@@ -20,12 +20,115 @@
 #include <bitset>
 using namespace std;
 
-const int inf = 0x3fffffff;
+const int INF = 0x3f3f3f3f;
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
 #define all(x) x.begin(),x.end()
 using ll = long long;
 
+int main()
+{
+
+
+	return 0;
+}
+
+
+
+/*
+int main()
+{
+	int a, n, m;
+	cin >> a >> n >> m;
+
+	vector<int> rain(a + 1, 0);
+	vector<int> umb(a + 1, INF);
+
+	rep(i, 0, n) {
+		int l, r;
+		cin >> l >> r;
+		rep(j, l, r)
+			rain[j] = 1;
+	}
+
+	rep(i, 0, m) {
+		int x, p;
+		cin >> x >> p;
+		umb[x] = min(umb[x], p);
+	}
+	vector<int> dp(a + 1, INF);	
+	dp[0] = 0;
+
+	rep(i, 1, a + 1) {
+		if (!rain[i - 1]) {
+			dp[i] = dp[i - 1];
+		}
+		else {
+			pre(j, i - 1, 0) {
+				if (umb[j] != INF)
+					dp[i] = min(dp[i], dp[j] + (i - j)*umb[j]);
+			}
+		}
+	}
+	if (dp[a] == INF)
+		cout << -1;
+	else
+		cout << dp[a];
+
+
+	return 0;
+}
+*/
+
+
+/*
+const int N = 1e5+5;
+list<int> g[N];
+bool visit[N];
+int ans = 0;
+
+int dfs(int x) {
+	int res = 0;
+	
+	for (auto i : g[x]) {
+		if (!visit[i]) {
+			visit[i] = true;
+			int tmp = dfs(i);
+			if (tmp % 2 == 0)
+				ans++;
+			res += tmp;
+		}
+	}
+	return res + 1;
+}
+
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	rep(i, 0, n - 1) {
+		int a, b;
+		cin >> a >> b;
+		g[a].push_back(b);
+		g[b].push_back(a);
+	}
+
+	if (n & 1)
+		cout << -1;
+	else {
+		visit[1] = true;
+		dfs(1);
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
 const int INF = 0x3fffffff;
 
 int main()
@@ -75,7 +178,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int const N = 2 * 1e5 + 5;

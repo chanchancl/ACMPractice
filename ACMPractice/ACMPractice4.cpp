@@ -26,13 +26,245 @@ const int INF = 0x3f3f3f3f;
 #define all(x) x.begin(),x.end()
 using ll = long long;
 
+
 int main()
 {
+	vector<string> v;
+
+	rep(i, 0, 50) {
+		if (i < 25)
+			v.push_back(string(25, 'A') + string(25, 'B'));
+		else
+			v.push_back(string(25, 'D') + string(25, 'C'));
+	}
+
+	int a, b, c, d;
+	cin >> a >> b >> c >> d;
+	a--, b--, c--, d--;
+
+	int x, y;
+	x = y = 1;
+	while (a--) {
+
+		v[y][25 + x] = 'A';
+		x += 2;
+		if (x >= 25) {
+			x = 1;
+			y += 2;
+		}
+	}
+
+	x = y = 1;
+	while (b--) {
+
+		v[25 + y][25 + x] = 'B';
+		x += 2;
+		if (x >= 25) {
+			x = 1;
+			y += 2;
+		}
+	}
+
+	x = y = 1;
+	while (c--) {
+
+		v[25 + y][x] = 'C';
+		x += 2;
+		if (x >= 25) {
+			x = 1;
+			y += 2;
+		}
+	}
+
+	x = y = 1;
+	while (d--) {
+
+		v[y][x] = 'D';
+		x += 2;
+		if (x >= 25) {
+			x = 1;
+			y += 2;
+		}
+	}
+
+	cout << 50 << ' ' << 50 << endl;
+	rep(i, 0, v.size())
+		cout << v[i] << endl;
 
 
 	return 0;
 }
 
+
+/*
+int main()
+{
+	int n, p;
+	char str[2005];
+	cin >> n >> p;
+	cin >> &str[1];
+
+	bool flag = false;
+	rep(i, 1, n - p + 1) {
+		int nxt = i + p;
+		if (str[i] == '.' || str[nxt] == '.' || str[i] != str[nxt]) {
+			flag = true;
+			if (str[i] == '.' && str[nxt] == '.') {
+				str[i] = '1';
+				str[nxt] = '0';
+			}
+			else if (str[i] == '.' && str[nxt] != '.') {
+				str[i] = '1' - str[nxt] + '0';
+			}
+			else if (str[i] != '.' && str[nxt] == '.') {
+				str[nxt] = '1' - str[i] + '0';
+			}
+		}
+	}
+
+	if (flag) {
+		rep(i, 1, n + 1) {
+			if (str[i] == '.')
+				cout << '1';
+			else
+				cout << str[i];
+		}
+	}
+	else
+		cout << "No";
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	string str;
+	cin >> str;
+	
+	
+	bool flag = false;
+	rep(i, 1, str.size() - 1) {
+		bool isA, isB, isC;
+		isA = isB = isC = false;
+		rep(j, i - 1, i + 2) {
+			if (str[j] == 'A')
+				isA = true;
+			else if (str[j] == 'B')
+				isB = true;
+			else if (str[j] == 'C')
+				isC = true;
+		}
+		if (isA && isB && isC) {
+			flag = true;
+			break;
+		}
+	}
+	if (flag)
+		cout << "Yes";
+	else
+		cout << "No";
+
+	return 0;
+}
+*/
+
+/*
+const int N = 3 * 100000 + 5;
+int l[N], r[N];
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+
+	int n;
+	cin >> n;
+
+	int mi = 0;
+	rep(i, 0, n)
+	{
+		string str;
+		cin >> str;
+
+		bool flag = true;
+		int cnt = 0;
+		rep(j, 0, str.size()) {
+			if (str[j] == '(') cnt++;
+			else  cnt--;
+			if (cnt < 0)
+				flag = false;
+		}
+		if (flag) l[cnt]++;
+
+		cnt = 0; flag = true;
+		pre(j, str.size() - 1, 0) {
+			if (str[j] == ')') cnt++;
+			else cnt--;
+			if (cnt < 0)
+				flag = false;
+		}
+		if (flag) r[cnt]++;
+
+	}
+
+	ll ans = 0;
+
+	rep(i, 0, N)
+		ans += ll(l[i]) * r[i];
+
+	cout << ans;
+	return 0;
+}
+
+*/
+
+/*
+int main()
+{
+	ll n, m, a, b;
+	cin >> n >> m >> a >> b;
+
+	ll ma, mb;
+	ma = mb = 0;
+
+	n = n % m;
+	mb = n * b;
+	ma = (m - n)*a;
+	
+	cout << min(ma, mb);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+
+	vector<ll> v(n);
+
+	rep(i, 0, n)
+		cin >> v[i];
+
+	sort(all(v));
+
+	int cnt = 0;
+	rep(i, 0, n) {
+		auto it = lower_bound(v.begin()+i, v.end(), v[i] + 1);
+		if (it != v.end() && v[i] < *it && v[i] + k >= *it)
+			cnt++;
+	}
+
+	cout << n - cnt;
+
+	return 0;
+}
+*/
 
 
 /*

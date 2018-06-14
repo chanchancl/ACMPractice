@@ -21,12 +21,295 @@
 using namespace std;
 
 const int INF = 0x3f3f3f3f;
+#define FASTIO ios::sync_with_stdio(false),cin.tie(0);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
-#define all(x) x.begin(),x.end()
+#define all(x) (x).begin(),(x).end()
 using ll = long long;
 
+const int N = 3 * 1e5 + 5;
+vector<int> mp[N];
+bool vi[N], subx[N];
+int subsize[N];
+int n, m, x, y;
 
+int dfs(int u) {
+
+	vi[u] = true;
+	subsize[u] = 1;
+	if (u == x)
+		subx[u] = true;
+	else
+		subx[u] = true;
+
+	rep(i, 0, mp[u].size()) {
+		if (!vi[mp[u][i]]) {
+
+			subsize[u] += dfs(mp[u][i]);
+			subx[u] |= subx[mp[u][i]];
+		}
+	}
+
+	return subsize[u];
+}
+
+int main()
+{
+	cin >> n >> x >> y;
+	m = n - 1;
+	rep(i, 0, m) {
+		int a, b;
+		cin >> a >> b;
+		mp[a].push_back(b);
+		mp[b].push_back(a);
+	}
+	dfs(y);
+
+	ll t;
+	rep(i, 0, mp[y].size()) {
+		if (subx[mp[y][i]]) {
+			t = subsize[y] - subsize[mp[y][i]];
+			break;
+		}
+	}
+	cout << 1ll *n*(n - 1) - t*subsize[x] << endl;
+
+	return 0;
+}
+
+
+/*
+int bt[3];
+
+int main()
+{
+	int n;
+	string str[3];
+	map<char,int> s[3];
+
+	cin >> n;
+	rep(i, 0, 3) {
+		cin >> str[i];
+		for (auto j : str[i])
+			s[i][j]++;
+		for (auto j : s[i])
+			bt[i] = max(bt[i], j.second);
+	}
+
+	rep(i, 0, 3)
+		bt[i] = min(bt[i] + n, int(str[i].size() - ((n == 1 && bt[i] == str[i].size()) ? 1 : 0)));
+	
+	vector<pair<int, string>> v;
+	v.push_back(make_pair(bt[0], "Kuro"));
+	v.push_back(make_pair(bt[1], "Shiro"));
+	v.push_back(make_pair(bt[2], "Katie"));
+
+	sort(all(v));
+
+	if (v[1].first == v[2].first) {
+		cout << "Draw" << endl;
+		return 0;
+	}
+	cout << v[2].second << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int  n, k, l;
+	cin >> n >> k >> l;
+
+	vector<ll> v(n*k);
+
+	rep(i, 0, n*k) 
+		cin >> v[i];
+
+	sort(all(v));
+
+	int pos = upper_bound(all(v), v[0] + l) - v.begin();
+
+	if (pos >= n ) {
+		ll ans = 0;
+		
+		int tot = 0;
+		rep(i, 0, n) {
+			ans += v[tot];
+
+			rep(j, 0, k) {
+				if (pos - tot > n - i - 1)
+					tot++;
+				else
+					break;
+			}
+
+		}
+
+		cout << ans << endl;
+		return 0;
+	}
+
+	cout << 0 << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int>> v(n, vector<int>(m, 0));
+	vector<int> sum(m, 0);
+
+	rep(i, 0, n) rep(j, 0, m) {
+		char c;
+		cin >> c;
+		v[i][j] = c - '0';
+		sum[j] += v[i][j];
+	}
+
+	rep(i, 0, n) {
+		bool flag = true;
+		rep(j, 0, m) {
+			if (sum[j] == 1 && v[i][j] == 1) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			cout << "Yes";
+			return 0;
+		}
+	}
+	cout << "No";
+
+	return 0;
+}
+*/
+
+/*
+// 477C Stairs and Elevators
+int main()
+{
+	int n, m, cl, ce, v;
+	cin >> n >> m >> cl >> ce >> v;
+
+	vector<int> s(cl), e(ce);
+	rep(i, 0, cl)
+		cin >> s[i];
+
+	rep(i, 0, ce)
+		cin >> e[i];
+
+	int q;
+	cin >> q;
+
+	rep(i, 0, q) {
+		int x1, y1, x2, y2, ans;
+		ans = INF;
+		cin >> x1 >> y1 >> x2 >> y2;
+		if (x1 == x2) ans = abs(y1 - y2);
+		else {
+			auto p = lower_bound(all(s), y1);
+			if (p != s.end())
+				ans = min(ans, abs(*p - y1) + abs(x1 - x2) + abs(*p - y2));
+			if (p != s.begin())
+			{
+				p--;
+				ans = min(ans, abs(*p - y1) + abs(x1 - x2) + abs(*p - y2));
+			}
+
+			p = lower_bound(all(e), y1);
+			if (p != e.end())
+				ans = min(ans, (int)(abs(*p - y1) + ceil(1.0*abs(x1 - x2) / v) + abs(*p - y2)));
+			if (p != e.begin())
+			{
+				p--;
+				ans = min(ans, (int)(abs(*p - y1) + ceil(1.0*abs(x1 - x2) / v) + abs(*p - y2)));
+			}
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	FASTIO;
+
+	int n, A, B;
+	cin >> n >> A >> B;
+	
+	vector<int> v(n);
+	int sum = 0;
+	rep(i, 0, n) {
+		cin >> v[i];
+		sum += v[i];
+	}
+
+	sort(v.begin() + 1, v.end(), greater<int>());
+
+	if (v[0] * A / sum >= B) {
+		cout << 0;
+		return 0;
+	}
+
+	rep(i, 1, n) {
+		sum -= v[i];
+		if (v[0] * A / sum >= B) {
+			cout << i;
+			return 0;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main() 
+{
+	int n, s;
+	cin >> n >> s;
+
+	vector<int> v(n);
+
+	rep(i, 0, n) {
+		int h, m;
+		cin >> h >> m;
+		v[i] = h * 60 + m;
+	}
+
+	if (v[0] > s) {
+		cout << 0 << ' ' << 0;
+		return 0;
+	}
+
+
+	rep(i, 1, n) {
+		int space = v[i] - v[i - 1] - 1;
+		if (space > 2 * s) {
+			int t = v[i - 1] + s + 1;
+			cout << (t / 60) << ' ' << (t % 60) << endl;
+			return 0;
+		}
+	}
+
+	int t = v[n - 1] + s + 1;
+	cout << (t / 60) << ' ' << (t % 60) << endl;
+	
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	vector<string> v;
@@ -94,6 +377,7 @@ int main()
 
 	return 0;
 }
+*/
 
 
 /*

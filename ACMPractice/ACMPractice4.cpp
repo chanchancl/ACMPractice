@@ -29,6 +29,196 @@ using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	vector<int> v(n);
+	rep(i, 0, m) {
+		int t;
+		cin >> t;
+		v[--t]++;
+	}
+	cout << *min_element(all(v));
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int n, a, b, c, t;
+	cin >> n >> a >> b >> c >> t;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	if (b >= c)
+		cout << n * a;
+	else
+	{
+		int ans = 0;
+		rep(i, 0, n) {
+			ans += (t - v[i])*(c - b) + a;
+		}
+		cout << ans;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	FASTIO;
+	int n;
+	cin >> n;
+	vector<pii> a(n);
+
+	rep(i, 0, n) {
+		cin >> a[i].first;
+		a[i].second = i + 1;
+	}
+
+	rep(i, 0, n) {
+		int t = 0;
+		while (i + t * n < a[i].first) t++;
+
+		a[i].first = i + t * n;
+	}
+	sort(all(a));
+
+	cout << a[0].second;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> a(2 * n);
+	rep(i, 0, 2 * n) {
+		cin >> a[i];
+	}
+
+	int ans = 0;
+	rep(i, 0, 2 * (n - 1)) {
+		int pos = find(a.begin() + i +1, a.end() , a[i]) - a.begin();
+		while (abs(pos - i) != 1) {
+			swap(a[pos], a[pos - 1]);
+			pos--;
+			ans++;
+		}
+
+		i++;
+	}
+	cout << ans;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, ans;
+	cin >> n;
+	
+	int a, b, c, d, e;
+	a = n / 100;
+	n -= a * 100;
+
+	b = n / 20;
+	n -= b * 20;
+
+	c = n / 10;
+	n -= c * 10;
+
+	d = n / 5;
+	n -= d * 5;
+
+	e = n;
+
+	cout << a + b + c + d + e;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	unsigned char v[] = { 0,1,2,3,4,16 };
+
+	rep(i, 0, 6)
+		printf("%2X ", v[i]);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b, c, n;
+	cin >> a >> b >> c >> n;
+
+	bool flag = true;
+	int oa, ob, oc, od;
+	oa = a - c, ob = b - c, oc = c, od = n - oa - ob - oc;
+
+	if (oa < 0 || ob < 0 || oc < 0 || od <= 0)
+		flag = false;
+
+	if (!flag) {
+		cout << -1;
+		return 0;
+	}
+
+
+	cout << od;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	int sum = 0;
+	rep(i, 0, n) {
+		cin >> v[i];
+		sum += v[i];
+	} 
+
+	int mi = (int)ceil(4.5* n);
+
+	if (sum >= mi)
+		cout << 0;
+	else {
+		sort(all(v));
+		int ans = 0;
+		rep(i, 0, n) {
+			sum += 5 - v[i];
+			ans++;
+			if (sum >= mi) {
+				cout << ans;
+				return 0;
+			}
+		}
+	}
+
+
+	return 0;
+}
+*/
+
+/*
 vector<int> g[5005];
 int used[5005];
 int con[5005];
@@ -75,6 +265,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

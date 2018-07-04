@@ -31,6 +31,255 @@ using pll = pair<ll, ll>;
 
 int main()
 {
+	int n, q;
+	cin >> n >> q;
+	vector<int> v(n);
+	rep(i, 0, n)
+		cin >> v[i];
+
+	sort(all(v));
+
+	rep(i, 0, q) {
+		int qi;
+		cin >> qi;
+		int ans = 0;
+		int les = qi;
+
+		int pos = n;
+		while(pos > 0 && les != 0) {
+			pos = lower_bound(v.begin(), v.begin() + pos, les) - v.begin();
+			if (pos >= n)
+				pos--;
+			if (v[pos] <= les) {
+				les -= v[pos];
+				ans += 1;
+			}
+			else
+			{
+				if (pos > 0) {
+					int cnt = 0;
+					do {
+						pos = lower_bound(v.begin(), v.begin() + pos, les - cnt++) - v.begin();
+					} while (v[pos] > les);
+					les -= v[pos];
+					ans += 1;
+				}
+			}
+		}
+		if (les == 0)
+			cout << ans << endl;
+		else
+			cout << -1 << endl;
+	}
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+	double ans = 0, sum , t;
+
+	rep(i, 0, n - k + 1) {
+		//cout << "i = " << i << endl;
+		sum = 0;
+		rep(j, i, n) {
+			//cout << "j = " << j << endl;
+			sum += v[j];
+			if (j - i + 1 >= k) {
+				t = sum / (j - i + 1);
+				//cout << i << ' ' << j << ' ' << t << endl;
+				ans = max(ans, t);
+			}
+		}
+	}
+
+	printf("%.8lf", ans);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b, x;
+	cin >> a >> b >> x;
+	string ans;
+
+	if (a < b)
+		ans = "1";
+	else
+		ans = "0";
+
+	int ca, cb, cx = 0;
+	
+	while (cx < x) {
+		if (cx <= x - 2) {
+			if (ans.back() == '0')
+				ans += "10";
+			else
+				ans += "01";
+			cx += 2;
+		}
+		else
+		{
+			ca = count(all(ans), '0');
+			cb = ans.size() - ca;
+
+			if (ans.back() == '0') {
+				if (b - cb > 0)
+					ans += "1";
+				else
+					ans = "0" + ans;
+			}
+			else {
+				if (a - ca > 0)
+					ans += "0";
+				else
+					ans += "1" + ans;
+			}
+			cx += 1;
+		}
+	}
+
+	
+	ca = count(all(ans), '0');
+	cb = ans.size() - ca;
+
+	if (ans.front() == '0') {
+		if (x - cx > 0)
+			ans = string(a - ca, '0') + ans;
+		else
+		{
+			auto pos = find(all(ans), '0');
+			rep(i, 0, a - ca) {
+				pos = find(all(ans), '0');
+				ans.insert(pos, '0');
+			}
+		}
+		if (ans.back() == '0') {
+			auto pos = find(all(ans), '1');
+			rep(i, 0, b - cb) {
+				pos = find(all(ans), '1');
+				ans.insert(pos, '1');
+			}
+		}
+		else
+			ans = ans + string(b - cb, '1');
+	}
+	else {
+		if (x - cx > 0)
+			ans = ans + string(a - ca, '0');
+		else
+		{
+			auto pos = find(all(ans), '0');
+			rep(i, 0, a - ca) {
+				pos = find(all(ans), '0');
+				ans.insert(pos, '0');
+			}
+		}
+		if (ans.front() == '0') {
+			auto pos = find(all(ans), '1');
+			rep(i, 0, b - cb) {
+				pos = find(all(ans), '1');
+				ans.insert(pos, '1');
+			}
+		}
+		else
+			ans = string(b - cb, '1') + ans;
+	}
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	map<int, int> mp;
+	rep(i, 0, n) {
+		int a;
+		cin >> a;
+		mp[a]++;
+	}
+
+	int ans = 0;
+	for (auto i : mp)
+		ans = max(ans, i.second);
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	if (n != 1) {
+		int a = v[0];
+		rep(i, 1, n) {
+			int b = accumulate(v.begin() + i, v.end(), 0);
+			if (a != b) {
+				cout << i << endl;
+				rep(j, 0, i)
+					cout << j + 1 << ' ';
+				return 0;
+			}
+			a += v[i];
+		}
+	}
+
+	cout << -1;
+	return 0;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<string> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	int ans = 0;
+	rep(i, 0, n) {
+		string str;
+		cin >> str;
+		vector<string>::iterator pos;
+		if (v.end() != (pos = find(all(v), str))) 
+			v.erase(pos);
+		else 
+			ans++;
+		
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, m;
 	cin >> n >> m;
 	vector<int> v(n);
@@ -43,6 +292,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

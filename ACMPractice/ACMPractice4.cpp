@@ -31,49 +31,104 @@ using pll = pair<ll, ll>;
 
 int main()
 {
-	int n, q;
-	cin >> n >> q;
-	vector<int> v(n);
-	rep(i, 0, n)
-		cin >> v[i];
+	int n, x, y;
+	cin >> n >> x >> y;
+	string str;
+	cin >> str;
 
-	sort(all(v));
-
-	rep(i, 0, q) {
-		int qi;
-		cin >> qi;
-		int ans = 0;
-		int les = qi;
-
-		int pos = n;
-		while(pos > 0 && les != 0) {
-			pos = lower_bound(v.begin(), v.begin() + pos, les) - v.begin();
-			if (pos >= n)
-				pos--;
-			if (v[pos] <= les) {
-				les -= v[pos];
-				ans += 1;
-			}
-			else
-			{
-				if (pos > 0) {
-					int cnt = 0;
-					do {
-						pos = lower_bound(v.begin(), v.begin() + pos, les - cnt++) - v.begin();
-					} while (v[pos] > les);
-					les -= v[pos];
-					ans += 1;
-				}
+	int cnt = 0;
+	bool f = false;
+	rep(i, 0, n) {
+		if (str[i] == '0') {
+			if (!f) {
+				cnt++;
+				f = true;
 			}
 		}
-		if (les == 0)
-			cout << ans << endl;
 		else
+			f = false;
+	}
+	if (cnt == 0)
+		cout << cnt;
+	else
+		cout << (cnt-1ll) * min(x, y) + y;
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n, B;
+	cin >> n >> B;
+	vector<int> v(n), a(n), b(n);
+	rep(i, 0, n) cin >> v[i];
+
+	int aa, bb;
+	aa = bb = 0;
+	rep(i, 0, n) {
+		if (v[i] & 1) ++aa;
+		else ++bb;
+		a[i] = aa;
+		b[i] = bb;
+	}
+
+	vector<int> cost;
+	rep(i, 1, n-1) {
+		if (a[i] == b[i])
+			cost.push_back(abs(v[i + 1] - v[i]));
+	}
+	sort(all(cost));
+
+	int sum = 0, ans = 0;
+
+	rep(i, 0, cost.size()) {
+		sum += cost[i];
+		if (sum <= B)
+			ans++;
+		else
+			break;
+	}
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, q;
+	cin >> n >> q;
+	
+	map<ll, int> mp;
+	rep(i, 0, n) {
+		ll a;
+		cin >> a;
+		++mp[a];
+	}
+
+
+	rep(i, 0, q) {
+		ll qi;
+		int ans = 0;
+		cin >> qi;
+
+		for (auto now = mp.rbegin(); now != mp.rend(); now++) {
+			int cnt = min(qi / now->first, now->second + 0ll);
+			ans += cnt;
+			qi -= now->first * cnt;
+		}
+		if (qi > 0)
 			cout << -1 << endl;
+		else
+			cout << ans << endl;
 	}
 
 	return 0;
 }
+*/
 
 /*
 int main()

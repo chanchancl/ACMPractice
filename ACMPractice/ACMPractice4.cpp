@@ -31,6 +31,461 @@ using pll = pair<ll, ll>;
 
 int main()
 {
+	int n;
+	cin >> n;
+	string a, b;
+	cin >> a >> b;
+	int ans = 0;
+
+	rep(i, 0, (n + 1) / 2) {
+		if (i == n / 2 && n % 2 != 0) {
+			if (a[i] != b[i]) {
+				a[i] = b[i];
+				ans++;
+			}
+			continue;
+		}
+		if (a[i] == b[i] && a[n - 1 - i] == b[n - 1 - i]) continue;
+		if (a[i] == a[n - 1 - i] && b[i] == b[n - 1 - i]) continue;
+		if (a[i] == b[n - 1 - i] && b[i] == a[n - 1 - i]) continue;
+		if (a[i] == b[n - 1 - i]) {
+			ans++;
+			continue;
+		}
+		if (b[i] == a[n - 1 - i]) {
+			ans++;
+			continue;
+		}
+		if (a[i] != b[i] && a[n - 1 - i] == b[n - 1 - i]) {
+			ans++;
+			continue;
+		}
+		if (a[i] == b[i] && a[n - 1 - i] != b[n - 1 - i]) {
+			ans++;
+			continue;
+		}
+		//cout <<" : " <<  i << endl;
+		ans += 2;
+
+	}
+	cout << ans;
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<ll> v(n), s1(n), s2(n);
+	rep(i, 0, n) cin >> v[i];
+
+	s1[0] = v[0];
+	rep(i, 1, n) {
+		s1[i] = s1[i - 1] + v[i];
+	}
+
+	s2[0] = v[n - 1];
+	rep(i, 1, n) {
+		s2[i] = s2[i - 1] + v[n - 1 - i];
+	}
+
+	pre(i, n - 2, 0) {
+		bool flag = binary_search(all(s2), s1[i]);
+		if (flag) {
+			int pos = lower_bound(all(s2), s1[i]) - s2.begin();
+			if (i + 1 < n - pos) {
+				cout << s1[i];
+				return 0;
+			}
+		}
+	}
+
+	cout << 0;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	vector<pii> v(n);
+	rep(i, 0, n) {
+		cin >> v[i].first;
+		v[i].second = i + 1;
+	}
+
+	sort(all(v), [](pii&a, pii& b) {
+		if (a.first == b.first)
+			return a.second < b.second;
+		return a.first > b.first;
+	});
+
+	vector<pii> out;
+
+	int ans = 0;
+	rep(i, 0, k) {
+		ans += v[i].first;
+		out.emplace_back(pii(v[i].second, v[i].first));
+	}
+
+	sort(all(out));
+
+	int last = 1;
+
+	cout << ans << endl;
+
+	if (out.size() >= 2) {
+		rep(i, 1, out.size()) {
+			cout << out[i].first - last << ' ';
+			last = out[i].first;
+		}
+
+		cout << n + 1 - out.back().first << ' ';
+	}
+	else {
+		cout << n;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	rep(i, 0, n) {
+		ll in;
+		cin >> in;
+		if (in % 2 == 0)
+			cout << in - 1 << ' ';
+		else
+			cout << in << ' ';
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string in, out;
+	cin >> in;
+
+	int one = count(all(in), '1');
+	rep(i, 0, in.size()) {
+		if (in[i] != '1')
+			out.push_back(in[i]);
+	}
+
+	auto pos = out.find_first_of('2');
+
+	if (pos == string::npos) {
+		out = out + string(one, '1');
+	}
+	else {
+		rep(i, 0, one)
+			out.insert(pos, "1");
+	}
+
+	cout << out;
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	vector<int> c(n), v(m);
+	rep(i, 0, n) cin >> c[i];
+	rep(i, 0, m) cin >> v[i];
+
+	int j = 0;
+	int ans = 0;
+	rep(i, 0, n) {
+		if (c[i] <= v[j]) {
+			j++;
+			ans++;
+		}
+		if (j == m) break;
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	map<int, int> c, t;
+	rep(i, 0, n) cin >> v[i], ++c[v[i]];
+
+	int ans = 0;
+
+	auto last = c.begin(), now = last;
+	now++;
+	while (now != c.end()) {
+		int used = min(t[last->first] == 0 ? last->second : t[last->first], now->second);
+		used = min(used, t[now->first] == 0 ? now->second : t[now->first]);
+		ans += used;
+		t[now->first] = last->second - used;
+
+		if (t[now->first] == 0) {
+			last = now;
+			now++;
+		}
+		else 
+			now++;
+	}
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	FASTIO;
+
+	int n;
+	cin >> n;
+	vector<pii> v(n);
+	rep(i, 0, n) cin >> v[i].first >> v[i].second;
+
+	int lastmi;
+	bool flag = true;
+	pre(i, n - 1, 1) {
+		int mi = min(v[i].first, v[i].second);
+		if (i == n - 1)
+			lastmi = mi;
+		int a, b;
+		a = min(v[i-1].first, v[i-1].second);
+		b = max(v[i-1].first, v[i-1].second);
+		if (a >= lastmi)
+			lastmi = a;
+		else if (b >= lastmi)
+			lastmi = b;
+		else {
+			flag = false;
+			break;
+		}
+	}
+
+	if (flag)
+		cout << "YES";
+	else
+		cout << "NO";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string str;
+	cin >> str;
+
+	set<char> s;
+	s.insert('a');
+	s.insert('e');
+	s.insert('i');
+	s.insert('o');
+	s.insert('u');
+
+	bool flag = true;
+	rep(i, 1, str.size()) {
+		if (s.find(str[i-1]) == s.end() && s.find(str[i]) == s.end() && str[i-1] != 'n') {
+			flag = false;
+			break;
+		}
+	}
+
+	if (s.find(str.back()) == s.end() && str.back() != 'n')
+		flag = false;
+
+	if (flag)
+		cout << "YES";
+	else
+		cout << "NO";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string s;
+	cin >> s;
+	int n = s.length();
+
+	int r = 0;
+	vector<int> fin(3, -1);
+	fin[0] = 0;
+
+	vector<int> z(n + 1);
+	for (int i = 1; i <= n; i++) {
+		r = (r + s[i - 1] - '0');
+		z[i] = z[i - 1];
+		//cout << i << " : " << r << endl;
+		if (fin[r % 3] != -1)
+			z[i] = max(z[i], z[fin[r % 3]] + 1);
+		fin[r % 3] = i;
+	}
+	//rep(i, 0, n + 1)
+	//	cout << " " << i << " : " << z[i] << endl;
+	cout << z[n] << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	map<int, int> mp;
+	rep(i, 0, n) 
+		cin >> v[i], mp[v[i]]--;
+	sort(all(v));
+
+
+	rep(i, 0, n) {
+		rep(j, 0, 32) {
+			if (binary_search(all(v), (1<<j) - v[i])) {
+				//int a = v[i];
+				//int b = 1 << j;
+				if (!(2 * v[i] == (1 << j) && mp[v[i]] == -1))
+				{
+					mp[v[i]] = 0;
+					//cout << "find " << v[i] << ' ' << (1 << j) - v[i] << endl;
+					break;
+				}
+			}
+		}
+	}
+	
+	int ans = 0;
+	for (const auto& i : mp) {
+		if (i.second < 0)
+			ans += -i.second;
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string a, b;
+	cin >> a >> b;
+
+	int ia, ib;
+	ia = a.size() - 1, ib = b.size() - 1;
+	while (ia >= 0 && ib >= 0 && a[ia] == b[ib]) {
+		ia--, ib--;
+	}
+
+	cout << ia + ib + 2;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n), ans;
+	rep(i, 0, n) {
+		cin >> v[i];
+	}
+	
+	rep(i, 1, n) {
+		if (i == 1 && n > 2 && v[1] <= v[0])
+			ans.push_back(v[0]);
+		else {
+			if (v[i] <= v[i - 1])
+				ans.push_back(v[i - 1]);
+		}
+	}
+	ans.push_back(v[n - 1]);
+
+	cout << ans.size() << endl;
+	rep(i, 0, ans.size())
+		cout << ans[i] << ' ';
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, d;
+	cin >> n >> d;
+	vector<int> v(n);
+
+	rep(i, 0, n) {
+		cin >> v[i];
+	}
+
+	int ans = 0;
+	map<int, int> mp;
+	rep(i, 0, n) {
+		int a, b;
+		a = v[i] - d;
+		b = v[i] + d;
+
+		int disa = INF, disb = INF;
+		rep(j, 0, n) {
+			disa = min(disa, abs(a - v[j]));
+			disb = min(disb, abs(b - v[j]));
+		}
+		//cout << i << " : " << a << " " << b << " " << disa << " " << disb << endl;
+		if (disa >= d && !mp[a])
+			ans++;
+		if (disb >= d && !mp[b])
+			ans++;
+		mp[a] = 1;
+		mp[b] = 1;
+	}
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, x, y;
 	cin >> n >> x >> y;
 	string str;
@@ -55,7 +510,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

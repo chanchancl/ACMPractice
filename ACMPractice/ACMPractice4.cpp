@@ -30,6 +30,7 @@ using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 
 int main()
+{
 	int n, m;
 	cin >> n >> m;
 	vector<int> p(n), less(n), greater(n);

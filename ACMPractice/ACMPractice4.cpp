@@ -30,6 +30,157 @@ using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 
 int main()
+	int n, m;
+	cin >> n >> m;
+	vector<int> p(n), less(n), greater(n);
+
+	rep(i, 0, n)
+		cin >> p[i];
+
+	ll ans = 0;
+	map<int, int> c;
+	c[0] = 1;
+
+	bool has = false;
+	int sum = 0;
+	rep(i, 0, n) {
+		if (p[i] > m) sum++;
+		if (p[i] < m) sum--;
+		if (p[i] == m) has = true;
+
+		if (has)
+			ans += c[sum] + c[sum - 1];
+		else
+			++c[sum];
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	string in;
+	cin >> in;
+
+
+	vector<int> last(3, -1);
+	last[0] = 0;
+
+	int r = 0;
+
+	vector<int> ans(in.size() + 1);
+	rep(i, 0, in.size()) {
+		r = (r + in[i] - '0') % 3;
+
+		ans[i + 1] = ans[i];
+		if (last[r] != -1) 
+			ans[i + 1] = max(ans[i + 1], ans[last[r] + 1] + 1);
+
+		last[r] = i;
+	}
+
+	cout << ans[in.size()] << endl;
+
+	return 0;
+}
+*/
+
+/*
+int n, m, half;
+vector<vector<ll>> a;
+ll k, ans;
+
+map<ll, int> mp[25][25];
+
+void first(int x, int y, ll value, int cnt) {
+	value ^= a[x][y];
+	if (cnt == half) {
+		++mp[x][y][value];
+		return;
+	}
+	if (x + 1 < n)
+		first(x + 1, y, value, cnt + 1);
+	if (y + 1 < m)
+		first(x, y + 1, value, cnt + 1);
+}
+
+void second(int x, int y, ll value, int cnt) {
+	if (cnt == n + m - 2 - half) {
+		if (mp[x][y].count(k ^ value))
+			ans += mp[x][y][k^value];
+		return;
+	}
+	if (x > 0)
+		second(x - 1, y, value ^ a[x][y], cnt + 1);
+	if (y > 0)
+		second(x, y - 1, value ^ a[x][y], cnt + 1);
+}
+
+int main()
+{
+	cin >> n >> m >> k;
+	a.assign(n, vector<ll>(m));
+
+	rep(i, 0, n) rep(j, 0, m) cin >> a[i][j];
+
+	half = (n + m - 2) / 2ll;
+
+	first(0, 0, 0, 0);
+	second(n - 1, m - 1, 0, 0);
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+vector<int> v[200005];
+
+int index2id[200005], enter[200005], leave[200005];
+int cur = 0;
+void dfs(int x) {
+	index2id[cur] = x;
+	enter[x] = cur++;
+	for (auto i : v[x])
+		dfs(i);
+	leave[x] = cur;
+}
+
+int main()
+{
+	FASTIO;
+
+	int n, q;
+	cin >> n >> q;
+	
+	rep(i, 2, n + 1) {
+		int x;
+		cin >> x;
+		v[x].push_back(i);
+	}
+
+	dfs(1);
+
+	rep(i, 0, q) {
+		int u, k;
+		cin >> u >> k;
+		int target = enter[u] + k - 1;
+		if (target >= leave[u]) cout << "-1" << endl;
+		else cout << index2id[target] << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
 {
 	int n;
 	cin >> n;
@@ -37,42 +188,30 @@ int main()
 	cin >> a >> b;
 	int ans = 0;
 
-	rep(i, 0, (n + 1) / 2) {
-		if (i == n / 2 && n % 2 != 0) {
-			if (a[i] != b[i]) {
-				a[i] = b[i];
+	for (int i = 0, j = n - 1; i < j; i++, j--) {
+		//cout << a[i] << " , " << a[j] << endl;
+		if (a[i] == b[i] && a[j] == b[j]) continue;
+		else if (a[i] == b[i] && a[j] != b[j]) ans++;
+		else if (a[i] != b[i] && a[j] == b[j]) ans++;
+		else {
+			set<char> s{ a[i],b[i],a[j],b[j] };
+			if (s.size() == 4) ans += 2;
+			else if (s.size() == 3) {
 				ans++;
+				if (a[i] == a[j]) ans++;
 			}
-			continue;
 		}
-		if (a[i] == b[i] && a[n - 1 - i] == b[n - 1 - i]) continue;
-		if (a[i] == a[n - 1 - i] && b[i] == b[n - 1 - i]) continue;
-		if (a[i] == b[n - 1 - i] && b[i] == a[n - 1 - i]) continue;
-		if (a[i] == b[n - 1 - i]) {
-			ans++;
-			continue;
-		}
-		if (b[i] == a[n - 1 - i]) {
-			ans++;
-			continue;
-		}
-		if (a[i] != b[i] && a[n - 1 - i] == b[n - 1 - i]) {
-			ans++;
-			continue;
-		}
-		if (a[i] == b[i] && a[n - 1 - i] != b[n - 1 - i]) {
-			ans++;
-			continue;
-		}
-		//cout <<" : " <<  i << endl;
-		ans += 2;
-
 	}
+	// 0 1 2
+	// 0 1 2 3
+	if (n % 2 != 0 && a[n / 2] != b[n / 2])
+		ans++;
+
 	cout << ans;
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

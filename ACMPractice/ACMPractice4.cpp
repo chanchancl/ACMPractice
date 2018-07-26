@@ -29,6 +29,182 @@ using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 
+
+int main()
+{
+	
+
+	return 0;
+}
+
+
+/*
+ll cnt = 0;
+vector<int> v;
+vector<int> a(100005);
+vector<int> b(100005);
+
+void merge(int lo, int mid, int hi) {
+	copy(v.begin() + lo, v.begin() + mid + 1, a.begin());
+	copy(v.begin() + mid + 1, v.begin() + hi + 1, b.begin());
+	int l1 = mid - lo + 1;
+	int l2 = hi - mid;
+	a[l1] = b[l2] = INF;
+	int i, j, k;
+	i = j = k = 0;
+	for (k = lo; k <= hi; k++) {
+		if (a[i] <= b[j]) {
+			v[k] = a[i];
+			i++;
+		}
+		else {
+			v[k] = b[j];
+			j++;
+			cnt += l1 - i;
+		}
+	}
+}
+
+
+void merge_sort(int lo, int hi) {
+	if (lo < hi) {
+		int mid = (lo + hi) / 2;
+		merge_sort(lo, mid);
+		merge_sort(mid + 1, hi);
+		merge(lo, mid, hi);
+	}
+}
+
+int main()
+{
+	FASTIO;
+	int n, x, y;
+
+	while (cin >> n >> x >> y) {
+		v.assign(n, 0);
+		rep(i, 0, n) cin >> v[i];
+
+		cnt = 0;
+		merge_sort(0, n - 1);
+		
+		cout << cnt * min(x,y) << endl;
+
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int gcd(int a, int b)
+{
+	if (b != 0) return gcd(b, a % b);
+	return a;
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	if (n - 1 > m)
+		cout << "Impossible" << endl;
+	else {
+		vector<pii> v;
+
+		rep(i, 0, n) for (int j = i + 1; j < n; ++j) {
+			if (int(v.size()) == m) break;
+
+			if (gcd(i + 1, j + 1) == 1)
+				v.push_back(pii(i + 1, j + 1));
+		}
+		if (int(v.size()) < m)
+			cout << "Impossible" << endl;
+		else {
+			cout << "Possible" << endl;
+			for (auto &p : v)
+				cout << p.first << ' ' << p.second << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll n, m;
+	cin >> n >> m;
+
+	ll ans = 0;
+	rep(i, 0, m) {
+		ll x, d;
+		cin >> x >> d;
+
+		ans += x * n;
+
+		if (d > 0)
+			ans += d * (n*(n - 1)) / 2;
+		else {
+			if (n % 2 == 0) {
+				// 1 2 3 4 5 6 7 8 9 10
+				// 4 3 2 1 0 1 2 3 4 5
+				// 1 + 2 + ... + mid - 1 == mid*(mid-1)/2
+				// 1 + 2 + ... + mid     == mid*(mid+1)/2
+				// sum == mid^2
+				ll mid = n / 2;
+				ans += d*mid*mid;
+			}
+			else {
+				// 1 2 3 4 5
+				// 2 1 0 1 2
+				// 1 + 2 + .. + n == n*(n+1)/2
+				ll mid = n / 2;
+				ans += d * mid*(mid + 1);
+			}
+		}
+	}
+
+	printf("%.15lf\n", 1.0*ans / n);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	string str;
+	cin >> str;
+
+	rep(i, 0, n - 1) {
+		if (str[i] != '?' && str[i] == str[i + 1]) {
+			cout << "NO" << endl;
+			return 0;
+		}
+	}
+	rep(i, 0, n) {
+		if (str[i] == '?') {
+			if ((i == 0 || i == n - 1) ||
+				str[i + 1] == '?' ||
+				str[i - 1] == str[i + 1]) {
+				cout << "YES" << endl;
+				return 0;
+			}
+		}
+	}
+
+	cout << "NO" << endl;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n, m;
@@ -59,7 +235,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()
@@ -78,7 +254,7 @@ int main()
 		r = (r + in[i] - '0') % 3;
 
 		ans[i + 1] = ans[i];
-		if (last[r] != -1) 
+		if (last[r] != -1)
 			ans[i + 1] = max(ans[i + 1], ans[last[r] + 1] + 1);
 
 		last[r] = i;
@@ -159,7 +335,7 @@ int main()
 
 	int n, q;
 	cin >> n >> q;
-	
+
 	rep(i, 2, n + 1) {
 		int x;
 		cin >> x;
@@ -392,7 +568,7 @@ int main()
 			last = now;
 			now++;
 		}
-		else 
+		else
 			now++;
 	}
 
@@ -508,7 +684,7 @@ int main()
 	cin >> n;
 	vector<int> v(n);
 	map<int, int> mp;
-	rep(i, 0, n) 
+	rep(i, 0, n)
 		cin >> v[i], mp[v[i]]--;
 	sort(all(v));
 
@@ -527,7 +703,7 @@ int main()
 			}
 		}
 	}
-	
+
 	int ans = 0;
 	for (const auto& i : mp) {
 		if (i.second < 0)
@@ -566,7 +742,7 @@ int main()
 	rep(i, 0, n) {
 		cin >> v[i];
 	}
-	
+
 	rep(i, 1, n) {
 		if (i == 1 && n > 2 && v[1] <= v[0])
 			ans.push_back(v[0]);
@@ -696,7 +872,7 @@ int main()
 {
 	int n, q;
 	cin >> n >> q;
-	
+
 	map<ll, int> mp;
 	rep(i, 0, n) {
 		ll a;
@@ -767,7 +943,7 @@ int main()
 		ans = "0";
 
 	int ca, cb, cx = 0;
-	
+
 	while (cx < x) {
 		if (cx <= x - 2) {
 			if (ans.back() == '0')
@@ -797,7 +973,7 @@ int main()
 		}
 	}
 
-	
+
 	ca = count(all(ans), '0');
 	cb = ans.size() - ca;
 
@@ -915,11 +1091,11 @@ int main()
 		string str;
 		cin >> str;
 		vector<string>::iterator pos;
-		if (v.end() != (pos = find(all(v), str))) 
+		if (v.end() != (pos = find(all(v), str)))
 			v.erase(pos);
-		else 
+		else
 			ans++;
-		
+
 	}
 	cout << ans;
 
@@ -1025,7 +1201,7 @@ int main()
 {
 	int n, ans;
 	cin >> n;
-	
+
 	int a, b, c, d, e;
 	a = n / 100;
 	n -= a * 100;
@@ -1094,7 +1270,7 @@ int main()
 	rep(i, 0, n) {
 		cin >> v[i];
 		sum += v[i];
-	} 
+	}
 
 	int mi = (int)ceil(4.5* n);
 
@@ -1147,7 +1323,7 @@ int main()
 	dfs(s);
 
 	memset(used, 0, sizeof used);
-	
+
 	rep(i, 1, n + 1) {
 		if (!con[i]) {
 			link[i] = 1;
@@ -1250,7 +1426,7 @@ int main()
 	sort(all(v));
 	make(i);
 
-	
+
 	rep(i, 0, m) {
 		if (c[i] > pos) {
 			cnt += c[i] - pos;
@@ -1273,7 +1449,7 @@ int main()
 	cin >> in;
 
 	map<char, int> mp;
-	for (const auto i : in) 
+	for (const auto i : in)
 		mp[i]++;
 
 	int cnt = 0, cur, last = 0;

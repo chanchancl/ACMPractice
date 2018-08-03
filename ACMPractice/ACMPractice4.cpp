@@ -31,10 +31,318 @@ using pll = pair<ll, ll>;
 
 int main()
 {
+	int n, m;
+	cin >> n >> m;
+
+	vector<int> a(n), b(m);
+
+	rep(i, 0, n) cin >> a[i];
+	rep(i, 0, m) cin >> b[i];
+
+	int l = b[0];
+	rep(i, 1, n)
+		l ^= a[i];
+	int t = a[0];
+
+	a[0] = l;
+	rep(i, 1, m)
+		l ^= b[i];
+	if (t == l) {
+		cout << "YES" << endl;
+		b[0] = a[0];
+		rep(i, 0, m)
+			cout << b[i] << " ";
+		cout << endl;
+		rep(i, 1, n) {
+			cout << a[i];
+			rep(j, 0, m - 1)
+				cout << " " << 0;
+			cout << endl;
+		}
+	}
+	else
+		cout << "NO" << endl;
 
 	return 0;
 }
 
+
+/*
+int main()
+{
+	int n, m, q;
+	cin >> n >> m >> q;
+
+	string s, t;
+	cin >> s >> t;
+
+	vector<int> ans(n+1);
+	for (int i = 0; i + m <= n; i++)
+		if (s.substr(i, m) == t)
+			ans[i+1]++;
+
+	rep(i, 1, n + 1)
+		ans[i] += ans[i - 1];
+
+	rep(i, 0, q) {
+		int l, r;
+		cin >> l >> r;
+
+		if (r - l + 1 < m) cout << 0 << endl;
+		else cout << ans[r - m + 1] - ans[l-1] << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+
+// KMP count
+int *nt = NULL;
+
+int* buildNext(const char *P)
+{
+	int j = 0, m = strlen(P);
+	int t;
+
+	if (nt)
+		return nt;
+	nt = new int[m + 1];
+
+	t = nt[0] = -1;
+	while (j < m)
+	{
+		if (0 > t || P[j] == P[t])
+		{
+			++j, ++t;
+			nt[j] = t;
+		}
+		else
+			t = nt[t];
+	}
+	return nt;
+}
+
+int kmpCount(const char *P, const char *T, int l, int r)
+{
+	int i, n = strlen(T);
+	int j, m = strlen(P);
+	int *next = buildNext(P);
+	int _count = 0;
+
+	i = l;
+	j = 0;
+	while (i <= r && j <= m)
+	{
+		if (0 > j || T[i] == P[j])
+			i++, j++;
+		else
+			j = next[j];
+		if (j == m)
+		{
+			_count++;
+			j = next[j];
+		}
+	}
+
+	return _count;
+}
+
+int main()
+{
+	int n, m, q;
+	cin >> n >> m >> q;
+	string s, t;
+	cin >> s >> t;
+
+	rep(i, 0, q) {
+		int l, r;
+		cin >> l >> r;
+		--l, --r;
+
+		int cnt = kmpCount(t.c_str(), s.c_str(), l, r);
+		cout << cnt << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	vector<int> v(n);
+
+	rep(i, 0, n) cin >> v[i];
+
+	ll sum = 0;
+	rep(i, 0, n) {
+		sum += v[i];
+		if (sum >= m) {
+			cout << sum / m << " ";
+			sum %= m;
+		}
+		else
+			cout << "0 ";
+	}
+
+	return 0;
+}
+*/
+
+/*
+int v[1000005];
+
+int main()
+{
+	int n, m;
+
+	while (~scanf("%d %d", &n, &m)) {
+
+		rep(i, 0, n) scanf("%d", &v[i]);
+		sort(v, v + n, greater<int>());
+
+		rep(i, 0, m) {
+			if (i != 0)
+				printf(" ");
+			printf("%d", v[i]);
+		}
+		puts("");
+	}
+
+	return 0;
+}
+*/
+
+/*
+vector<string> s;
+
+using t = int[1005][1005];
+
+t u, d, l, r, h, v;
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	s = vector<string>(n);
+
+	rep(i, 0, n)
+		cin >> s[i];
+
+	rep(i, 0, n) rep(j, 0, m) {
+		if (j == 0)
+			l[i][j] = s[i][j] == '*';
+		else
+			if (s[i][j] == '*')
+				l[i][j] = l[i][j - 1] + 1;
+		if (i == 0)
+			u[i][j] = s[i][j] == '*';
+		else
+			if (s[i][j] == '*')
+				u[i][j] = u[i - 1][j] + 1;
+	}
+
+	pre(i, n - 1, 0) pre(j, m - 1, 0) {
+		if (j == m - 1)
+			r[i][j] = s[i][j] == '*';
+		else
+			if (s[i][j] == '*')
+				r[i][j] = r[i][j + 1] + 1;
+		if (i == n - 1)
+			d[i][j] = s[i][j] == '*';
+		else
+			if (s[i][j] == '*')
+				d[i][j] = d[i + 1][j] + 1;
+	}
+
+	vector<pair<pii, int>> ans;
+
+	rep(i, 0, n) rep(j, 0, m) {
+		if (s[i][j] != '*') continue;
+		int len = min(min(l[i][j], r[i][j]), min(u[i][j], d[i][j])) - 1;
+		if (len > 0)
+			ans.push_back(make_pair(make_pair(i, j), len));
+	}
+
+	vector<string> f(n, string(m, '.'));
+
+
+	rep(i, 0, ans.size()) {
+		int x = ans[i].first.first;
+		int y = ans[i].first.second;
+		int len = ans[i].second;
+
+		++v[x - len][y];
+		if (x + len + 1 < n)
+			--v[x + len + 1][y];
+		++h[x][y - len];
+		if (y + len + 1 < m)
+			--h[x][y + len + 1];
+	}
+
+	rep(i, 0, n) rep(j, 0, m) {
+		if (i > 0) v[i][j] += v[i - 1][j];
+		if (j > 0) h[i][j] += h[i][j - 1];
+		if (v[i][j] > 0 || h[i][j] > 0)
+			f[i][j] = '*';
+	}
+
+	//rep(i, 0, n)
+	//	cout << f[i] << endl;
+
+	if (f != s) {
+		cout << "-1" << endl;
+	}
+	else
+	{
+		cout << ans.size() << endl;
+		rep(i, 0, ans.size())
+			//printf("%d %d %d\n", ans[i].first.first + 1,ans[i].first.second + 1, ans[i].second);
+			cout << ans[i].first.first + 1 << " " << ans[i].first.second + 1 << " " << ans[i].second << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	vector<int> cnt(m + 2);
+	rep(i, 0, n) {
+		int l, r;
+		cin >> l >> r;
+		cnt[l]++;
+		cnt[r + 1]--;
+	}
+
+	int s = 0;
+	vector<int> ans;
+
+	rep(i, 1, m + 1) {
+		s += cnt[i];
+		if (!s)
+			ans.push_back(i);
+	}
+
+	cout << ans.size() << endl;
+	rep(i, 0, ans.size())
+		cout << ans[i] << ' ';
+
+	return 0;
+}
+*/
 
 /*
 int n, m;

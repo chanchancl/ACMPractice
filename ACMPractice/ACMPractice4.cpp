@@ -29,6 +29,111 @@ using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 
+using namespace std;
+
+#define x first
+#define y second
+
+int n, q;
+double x, y, sy, a, b;
+double sum[200050];
+
+
+int main()
+{
+	scanf("%lf %lf %lf", &sy, &a, &b);
+	scanf("%d", &n);
+	vector<pair<double, double>> s(n+2);
+
+	sum[0] = 0;
+	rep(i, 1, n + 1) {
+		scanf("%lf %lf", &s[i].x, &s[i].y);
+		sum[i] = sum[i - 1] + s[i].y - s[i].x;
+	}
+
+	s[0].x = s[0].y = -1.0*INF;
+	s[n + 1].x = s[n + 1].y = INF;
+
+	scanf("%d", &q);
+
+	while (q--) {
+		scanf("%lf %lf", &x, &y);
+		double xl = x + (a - x) * y / (y - sy);
+		double xr = x + (b - x) * y / (y - sy);
+
+		int L = 0, R = n + 1, ansl = 0, ansr = n + 1;
+
+		while (L <= R) {
+			int mid = (L + R) >> 1;
+			if (s[mid].x < xl)
+				L = mid + 1, ansl = mid;
+			else
+				R = mid - 1;
+		}
+		L = 0, R = n + 1;
+		while (L <= R) {
+			int mid = (L + R) >> 1;
+			if (s[mid].y > xr)
+				R = mid - 1, ansr = mid;
+			else
+				L = mid + 1;
+		}
+
+		double ans = max(0.0, s[ansl].y - xl) + max(0.0, xr - s[ansr].x);
+		ans = (sum[ansr - 1] - sum[ansl] + ans) * (y - sy) / y;
+
+		printf("%.13lf\n", ans);
+	}
+
+	return 0;
+}
+
+
+/*
+using t = ll[300005];
+
+t v[2], sum, suma, sumb, sumc;
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	rep(i, 1, n + 1) cin >> v[0][i];
+	rep(i, 1, n + 1) cin >> v[1][i];
+
+	pre(i, n, 1)
+		sum[i] += sum[i + 1] + v[0][i] + v[1][i];
+
+	for (int i = n, j = n; i >= 1; i--, j++)
+		suma[i] = suma[i + 1] + (i - 1)*v[0][i] + j * v[1][i];
+	for (int i = n, j = n + 1; i >= 2; i--, j++)
+		sumb[i] = sumb[i + 1] + i * v[1][i] + j * v[0][i];
+
+	sumb[1] = sumb[2] + v[1][1];
+	ll tot = 0, ret = 0;
+	rep(i, 1, n + 1) {
+		ret += tot * v[(i % 2)^1 ][i]; tot++;
+		ret += tot * v[i % 2][i]; tot++;
+		sumc[i] = ret;
+	}
+
+	ll ans = 0;
+
+	rep(i, 0, n + 1) {
+		if (i % 2 == 0)
+			ans = max(ans, sumc[i] + suma[i + 1] + i * sum[i + 1]);
+		else
+			ans = max(ans, sumc[i] + sumb[i + 1] + (i - 1)*sum[i + 1]);
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n, m;
@@ -65,7 +170,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()
@@ -391,9 +496,9 @@ int main()
 	cin >> n >> m;
 	str.resize(n);
 
-	rep(i, 0, n) 
+	rep(i, 0, n)
 		cin >> str[i];
-	
+
 	rep(i, 1, n - 1) {
 		rep(j, 1, m - 1) {
 			check(i, j);
@@ -408,7 +513,7 @@ int main()
 	}
 
 	cout << ans.size() << endl;
-	rep(i, 0, ans.size()) 
+	rep(i, 0, ans.size())
 		cout << ans[i].first.first << ' ' << ans[i].first.second << ' ' << ans[i].second << endl;
 
 	return 0;
@@ -448,7 +553,7 @@ int main()
 		ans.push_back(now);
 		k--;
 	}
-	
+
 	cout << "YES" << endl;
 	for (auto i : ans)
 		cout << i << ' ';
@@ -610,7 +715,7 @@ int main()
 		cout << 2 << endl;
 		return 0;
 	}
-	
+
 	cout << -1 << endl;
 
 	return 0;
@@ -754,7 +859,7 @@ int main()
 
 
 /*
-struct 
+struct
 {
 	int type; // 0 in, 1 and, 2 or, 3 xor, 4 not
 	int value;
@@ -948,7 +1053,7 @@ int main()
 		ele++;
 		if (ele > n) ele = 1;
 	}
-	
+
 	return 0;
 }
 */

@@ -31,6 +31,509 @@ using pll = pair<ll, ll>;
 
 using namespace std;
 
+int main()
+{
+	map<string, int> mp;
+	char t[10][10] = {
+		"zero","one","two","three","four",
+		"five","six","seven","eight","nine",
+	};
+
+	rep(i, 0, 10)
+		mp[t[i]] = i;
+
+	int a, b;
+	string str;
+	while (cin >> str) {
+		string last;
+		last = str;
+		cin >> str;
+		if (str != "+") {
+			a = mp[last] * 10 + mp[str];
+			cin >> str;
+		}
+		else 
+			a = mp[last];
+		
+		cin >> str;
+		last = str;
+		cin >> str;
+		if (str != "=") {
+			b = mp[last] * 10 + mp[str];
+			cin >> str;
+		}
+		else
+			b = mp[last];
+		if (a + b == 0) 
+			return 0;
+
+		cout << a + b << endl;
+	}
+
+	return 0;
+}
+
+
+/*
+int w[20], cnt[5000], state[5000], num[5005][105];
+
+char str[50];
+
+int main()
+{
+	int n, m, q;
+
+	scanf("%d %d %d", &n, &m, &q);
+	rep(i, 1, n + 1) scanf("%d", &w[i]);
+
+	int statecnt = 1;
+	rep(i, 0, m) {
+		char c;
+		int x = 0;
+		scanf("%s", str);
+		rep(j, 0, n) {
+			c = str[j];
+			x = (x << 1) + c - '0';
+		}
+		if (!cnt[x])
+			state[statecnt++] = x;
+		cnt[x]++;
+	}
+
+	int end = 1 << n;
+
+	rep(i, 0, end) {
+		//cout <<"    " << i << endl;
+		rep(j, 1, statecnt) {
+			int u = i, v = state[j], sum = 0;
+			//cout << "        " << "state " << j << endl;
+			pre(k, n, 1) {
+				//cout << "        " << (u & 1) << "    " << (v & 1) << "    " << w[k] << endl;
+				if ((u & 1) == (v & 1)) sum += w[k];
+				if (sum > 100) break;
+				u >>= 1, v >>= 1;
+			}
+			//cout << "            " << "sum " << sum << endl;
+			if (sum <= 100)
+				num[i][sum] += cnt[state[j]];
+		}
+	}
+
+	rep(i, 0, q) {
+		char c;
+		int x = 0;
+		scanf("%s", str);
+		rep(j, 0, n) {
+			c = str[j];
+			x = (x << 1) + c - '0';
+		}
+
+		int top;
+		scanf("%d", &top);
+
+		int ans = 0;
+		rep(i, 0, top + 1)
+			ans += num[x][i];
+		printf("%d\n", ans);
+	}
+
+	return 0;
+}
+*/
+
+/*
+vector<int> ans;
+
+int main()
+{
+	int n;
+	cin >> n;
+	
+	int x = 1;
+	while (x*x < n) x++;
+
+	vector<int> v(n);
+
+	int tot = 1;
+	int i;
+	for (i = n - x; i >= 0; i -= x) {
+		for (int j = 0; j < x; ++j) {
+			v[i + j] = tot++;
+		}
+	}
+
+	if (i < 0) i += x;
+	rep(j, 0, i)
+		v[j] = tot++;
+
+	rep(i, 0, n)
+		printf("%d ", v[i]);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string a, b;
+	int n;
+	cin >> n;
+	cin >> a >> b;
+
+	ll ans = 0;
+
+	int one = count(all(a), '1');
+	int zero = a.size() - one;
+
+	rep(i, 0, a.size()) {
+		if (a[i] == '0' && a[i] == b[i])
+			zero--;
+	}
+
+	rep(i, 0, b.size()) {
+		if (b[i] == '0') {
+			if (a[i] == '0')
+				ans += one;
+			else
+				ans += zero;
+		}
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<pii> v(n);
+
+	rep(i, 0, n) {
+		int a, b, c, d;
+		cin >> a >> b >> c >> d;
+		v[i].first = a + b + c + d;
+		v[i].second = i + 1;
+	}
+
+	sort(all(v), [](pii& a, pii& b) {
+		if (a.first == b.first)
+			return a.second < b.second;
+		return a.first > b.first;
+	});
+
+	rep(i, 0, n) {
+		if (v[i].second == 1) {
+			cout << i + 1 << endl;
+			return 0;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string str;
+	cin >> str;
+	char now = 'a';
+
+	rep(i, 0, str.size()) {
+		if (str[i] <= now) {
+			str[i] = now;
+			now++;
+		}
+		if (now > 'z')
+			break;
+	}
+
+	if (now > 'z')
+		cout << str << endl;
+	else
+		cout << -1 << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll a, b;
+	cin >> a >> b;
+
+	while (a && b) {
+		if (a >= 2 * b) a %= 2 * b;
+		else if (b >= 2 * a) b %= 2 * a;
+		else break;
+	}
+
+	cout << a << " " << b << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, t, ans = 0;
+	cin >> n;
+	rep(i, 1, n + 1) 
+		cin >> t, ans += abs(t);
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int x[2000050];
+
+int main()
+{
+	int n, m, t, s, ans = 0;
+	cin >> n >> m;
+	t = 0;
+	rep(i, 0, n) {
+		cin >> s;
+		t += s;
+		x[t] = 1;
+	}
+
+	t = 0;
+	rep(i, 0, m) {
+		cin >> s;
+		t += s;
+		if (x[t])
+			ans++;
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	vector<int> a(n+1), b(m+1);
+
+	rep(i, 1, n + 1) {
+		cin >> a[i];
+		if (i > 1)
+			a[i] += a[i - 1];
+	}
+	rep(i, 1, m + 1) {
+		cin >> b[i];
+		if (i > 1)
+			b[i] += b[i - 1];
+	}
+
+	rep(i, 1, n + 1)
+		cout << a[i] << " ";
+	cout << endl;
+	rep(i, 1, m + 1)
+		cout << b[i] << " ";
+	cout << endl;
+
+	int i = 1, post = 1;
+	int lasta = 0, lastb=0;
+	int ansa = 0, ansb = 0;
+	int sum = 0;
+	while (i <= n) {
+		int pos = lower_bound(b.begin()+post, b.end(), a[i] - a[lasta] + sum) - b.begin();
+		//cout << "i " << i << " find " << a[i] - a[lasta] + sum << "  post " << post << "  lasta " << lasta << endl;
+		if (pos <= m && a[i] - a[lasta] == b[pos] - sum) {
+			//cout << "a ,sum " << a[i] - a[lasta] << endl;
+			sum = a[i];
+			ansa++;
+			post = pos + 1;
+			lasta = i;
+		}
+		i++;
+	}
+
+	i = post = 1;
+	sum = 0;
+
+	while (i <= m) {
+		int pos = lower_bound(a.begin() + post, a.end(), b[i] - b[lastb] + sum) - a.begin();
+		//cout << "i " << i << " find " << b[i] - b[lastb] << "  post " << post << endl;
+		if (pos <= n && b[i] - b[lastb] == a[pos] - sum) {
+			//cout << "a ,sum " << b[i] - b[lastb] << endl;
+			sum = b[i];
+			ansb++;
+			post = pos + 1;
+			lastb = i;
+		}
+		i++;
+	}
+	cout << max(ansa, ansb) << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n;
+		cin >> n;
+		vector<int> v(n + 1, 1);
+		int t = n;
+		int mul = 2;
+		while (t > 3) {
+			int cnt = 0;
+
+			if (t >= 2) {
+				rep(i, 1, n + 1) {
+					if (v[i])
+						cnt++;
+					if (cnt == 2) {
+						cnt = 0;
+						t--;
+						v[i] = 0;
+					}
+				}
+			}
+			cnt = 0;
+			if (t > 3) {
+				rep(i, 1, n + 1) {
+					if (v[i])
+						cnt++;
+					if (cnt == 3) {
+						cnt = 0;
+						t--;
+						v[i] = 0;
+					}
+				}
+			}
+		}
+		int cnt = 0;
+		rep(i, 1, n + 1) {
+			if (v[i]) {
+				cout << i;
+				cnt++;
+				if (cnt != t)
+					cout << " ";
+			}
+		}
+		cout << endl;
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int l, r, a;
+	cin >> l >> r >> a;
+
+	int ans = min(l, r);
+	l -= ans, r -= ans;
+
+	int t = min(max(l, r), a);
+	a -= t;
+	ans += t + a / 2;
+
+	cout << 2 * ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int pri[1000005];
+
+int main()
+{
+	int n;
+	cin >> n;
+	for (int i = 2; i <= n; ++i) {
+		if (!pri[i]) {
+			for (int j = i * 2; j <= n; j += i)
+				pri[j] = i;
+		}
+		pri[i] = i - pri[i] + 1;
+	}
+
+
+	int ans = n;
+	for (int i = pri[ans]; i <= n; ++i)
+		ans = min(ans, pri[i]);
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int r, c;
+	cin >> r >> c;
+
+	vector<string> v(r);
+
+	rep(i, 0, r)
+		cin >> v[i];
+
+	bool flag = true;
+	rep(i, 0, r){
+		rep(j, 0, c) {
+			if (v[i][j] == 'S') {
+				if ((i - 1 >= 0 && v[i - 1][j] == 'W' ) ||
+					(i + 1 < r && v[i + 1][j] == 'W') ||
+					(j - 1 >= 0 && v[i][j - 1] == 'W') ||
+					(j + 1 < c && v[i][j + 1] == 'W')) {
+					flag = false;
+					break;
+				}
+				else {
+					if (i - 1 >= 0 && v[i - 1][j] != 'S')  v[i - 1][j] = 'D';
+					if (i + 1 < r && v[i + 1][j] != 'S')  v[i + 1][j] = 'D';
+					if (j - 1 >= 0 && v[i][j-1] != 'S') v[i][j - 1] = 'D';
+					if (j + 1 < c && v[i][j+1] != 'S')  v[i][j + 1] = 'D';
+				}
+			}
+		}
+		if (!flag)
+			break;
+	}
+
+	if (flag) {
+		cout << "YES" << endl;
+		rep(i, 0, r)
+			cout << v[i] << endl;
+	}
+	else
+		cout << "NO" << endl;
+
+	return 0;
+}
+*/
+
+/*
 #define x first
 #define y second
 
@@ -87,7 +590,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 using t = ll[300005];

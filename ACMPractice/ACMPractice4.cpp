@@ -20,7 +20,6 @@
 #include <bitset>
 using namespace std;
 
-const int INF = 0x3f3f3f3f;
 #define FASTIO ios::sync_with_stdio(false),cin.tie(0);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
@@ -28,9 +27,389 @@ const int INF = 0x3f3f3f3f;
 using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	int n, q;
+	cin >> n >> q;
+
+	vector<int> v(n + 1);
+	rep(i, 1, n + 1) cin >> v[i];
+
+	vector<int> ex(q + 1);
+	vector<pii> seg(q + 1);
+
+	rep(i, 1, q + 1)
+		seg[i].first = n + 1, seg[i].second = -1;
+
+	rep(i, 1, n + 1) {
+		ex[v[i]] = 1;
+		seg[v[i]].first = min(seg[v[i]].first, i);
+		seg[v[i]].second = max(seg[v[i]].second, i);
+	}
+
+
+
+	return 0;
+}
+
+
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+
+	string in, out;
+	cin >> in;
+
+	if (n == k)
+		out = in;
+	else {
+		int half = k / 2;
+		
+		int cnt = 0;
+		int cur = 0;
+		while (cnt < half) {
+			if (in[cur] == '(') {
+				out.push_back('(');
+				cnt++;
+			}
+			else {
+				out.push_back(')');
+			}
+			cur++;
+		}
+
+		while (out.size() < k)
+			out.push_back(')');
+	}
+
+	cout << out;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll n, k;
+	cin >> n >> k;
+
+	ll ans = 0;
+	if (k <= n) {
+		ans = (k - 1) / 2;
+	}
+	else {
+		ll half = k / 2;
+		if (half < n) {
+			ans = n / 2 - (k - n) / 2;
+		}
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	string s, t;
+	cin >> s >> t;
+
+	bool flag = false;
+
+	if (n == 1 && s == "*")
+		flag = true;
+	else if (count(all(s), '*') == 0 && s != t)
+		flag = false;
+	else {
+
+		string tmp = s;
+		tmp.erase(s.find('*'), 1);
+		if (t.find(tmp) == 0)
+			flag = true;
+		else {
+			int starpos = s.find('*');
+			size_t pos1, pos2;
+
+			string a = s.substr(0, starpos);
+			string b = s.substr(starpos + 1);
+
+			pos1 = t.find(a);
+			pos2 = t.find(b, pos1+1);
+
+			//cout <<a << endl;
+			//cout << b << endl;
+
+			if (pos1 != string::npos && pos2 != string::npos && pos1 + a.size() <= pos2)
+				flag = true;
+		}
+	}
+
+	if (flag)
+		cout << "YES";
+	else
+		cout << "NO";
+
+	return 0;
+}
+*/
+
+/*
+vector<int> twoSum(vector<int>& numbers, int target) {
+	vector<int> ans;
+
+	vector<pair<int, int>> cpy;
+
+	for (int i = 0; i < numbers.size(); i++) {
+		cpy.push_back(make_pair(numbers[i], i));
+	}
+
+	sort(cpy.begin(), cpy.end());
+
+	int i = 0, j = cpy.size() - 1;
+
+	while (i < j) {
+		int sum = cpy[i].first + cpy[j].first;
+		if (sum == target) {
+			ans = { cpy[i].second, cpy[j].second };
+			return ans;
+		}
+		else if (sum < target) i++;
+		else j--;
+	}
+
+	return ans;
+}
+
+int main()
+{
+	vector<int> in{ 3,2,4 };
+
+	auto ans = twoSum(in, 9);
+
+	rep(i, 0, ans.size())
+		cout << ans[i] << ' ';
+
+	return 0;
+}
+*/
+
+/*
+struct peo{
+	int vote, cost;
+};
+
+int vot[5000], used[5005];
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	
+	vector<peo> v(n + 1);
+	
+	rep(i, 1, n + 1) 
+		cin >> v[i].vote >> v[i].cost;
+
+	sort(v.begin() + 1, v.end(), [](peo& a, peo& b) {
+		return a.cost < b.cost;
+	});
+
+	ll ans = INF_LL;
+
+	rep(i, 1, n + 1) {
+		memset(vot, 0, sizeof vot);
+		memset(used, 0, sizeof used);
+		ll sum = 0;
+
+		pre(j, n, 1) {
+			if (v[j].vote != 1) {
+				if (vot[v[j].vote] + 1 >= i) {
+					vot[1]++;
+					used[j] = 1;
+					sum += v[j].cost;
+				}
+				else {
+					vot[v[j].vote]++;
+				}	
+			}
+			else {
+				vot[1]++;
+				used[j] = 1;
+			}
+		}
+
+		rep(j, 1, n + 1) {
+			if (used[j] != 1 && vot[1] < i) {
+				vot[1]++;
+				sum += v[j].cost;
+			}
+		}
+
+		//cout << "sum    " << sum << endl; 
+		
+		if (vot[1] >= i)
+			ans = min(ans, sum);
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+
+	vector<int> vote(m + 1);
+	vector<pii> v;
+
+	int max = -1, id = 0;
+
+	rep(i, 0, n) {
+		int pi, ci;
+		cin >> pi >> ci;
+		vote[pi]++;
+
+		if (vote[pi] > max) {
+			max = vote[pi];
+			id = pi;
+		}
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<int> v(n + 1);
+	rep(i, 1, n + 1) cin >> v[i];
+
+	rep(i, 1, n + 1) {
+		vector<int> t(n + 1);
+
+		t[i] = 1;
+		int cur = v[i];
+
+		while (1) {
+			if (t[cur]) {
+				cout << cur << " ";
+				break;
+			}
+			t[cur] = 1;
+			cur = v[cur];
+		}
+
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, h, a, b, k;
+	cin >> n >> h >> a >> b >> k;
+
+	rep(i, 0, k) {
+		int ta, fa, tb, fb;
+		cin >> ta >> fa >> tb >> fb;
+
+		if (ta == tb) {
+			cout << abs(fa - fb) << endl;
+			continue;
+		}
+
+		int ans = abs(ta-tb);
+
+		int top = 0;
+		if (!(fa >= a && fa <= b)) {
+			int low = abs(fa - a);
+			int top = abs(fa - b);
+			if (top > low) {
+				ans += low;
+				ans += abs(fb - a);
+			}
+			else {
+				ans += top;
+				ans += abs(fb - b);
+			}
+		}
+		else {
+			ans += abs(fa - fb);
+		}
+
+		cout << ans << endl;
+
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, a, b;
+	cin >> n >> a >> b;
+
+	int cnt = 1;
+	while (!((a % 2 == 1 && a + 1 == b) || (b % 2 == 1 && b + 1 == a))) {
+		a = (a + 1) / 2;
+		b = (b + 1) / 2;
+		cnt++;
+	}
+
+	if ( (1<<cnt) == n)
+		cout << "Final!" << endl;
+	else
+		cout << cnt << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int a, b;
+	cin >> a >> b;
+	int len = abs(b - a);
+
+	int cnt = len / 2;
+
+	int ans = cnt * (cnt + 1) + (len % 2 == 0 ? 0 : cnt + 1);
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	map<string, int> mp;
@@ -72,7 +451,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int w[20], cnt[5000], state[5000], num[5005][105];

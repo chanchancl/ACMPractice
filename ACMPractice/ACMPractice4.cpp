@@ -22,6 +22,7 @@ using namespace std;
 
 #define FASTIO ios::sync_with_stdio(false),cin.tie(0);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
+#define repn(i,n) for(int i=1; i <= n; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
 #define all(x) (x).begin(),(x).end()
 using ll = long long;
@@ -32,6 +33,334 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+
+int n;
+pll v[200005];
+
+ll gcd(ll a, ll b) {
+	if (a < b) swap(a, b);
+	if (b == 0) return a;
+	return gcd(b, a%b);
+}
+
+int main()
+{
+	cin >> n;
+	ll ans = 0;
+	rep(i, 0, n) {
+		cin >> v[i].first >> v[i].second;
+		ans = gcd(ans, v[i].first * v[i].second);
+	}
+	if (ans == 1) {
+		cout << "-1" << endl;
+		return 0;
+	}
+	
+	rep(i, 0, n) {
+		ll cand = gcd(ans, v[i].first);
+		if (cand > 1)
+			ans = cand;
+		cand = gcd(ans, v[i].second);
+		if (cand > 1)
+			ans = cand;
+	}
+
+	cout << ans << endl;
+	return 0;
+}
+
+
+
+/*
+int main()
+{
+	string str;
+	cin >> str;
+
+	int n = str.size();
+
+	str = str + str + str;
+
+	int ans = 1;
+
+	int cnt = 1;
+	rep(i, 1, str.size()) {
+		if (str[i] != str[i - 1]) {
+			cnt++;
+			ans = max(ans, cnt);
+		}
+		else
+			cnt = 1;
+	}
+	
+	cout << min(ans, n)) << endl;
+
+	return 0;
+}
+*/
+
+
+
+/*
+int main()
+{
+	int n;
+	string str;
+	cin >> n >> str;
+
+	bool flag = false;
+	map<char, int> mp;
+	for (auto i : str) {
+		mp[i]++;
+		if (mp[i] >= 2) {
+			flag = true;
+			break;
+		}
+	}
+
+	if (n == 1) flag = true;
+
+	puts(flag ? "YES" : "NO");
+
+	return 0;
+}
+*/
+
+/*
+const int N = 2e5 + 5;
+int vis[N], ring[N], c[N], a[N];
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	repn(i, n) scanf("%d", c + i);
+	repn(i, n) scanf("%d", a + i);
+
+	repn(i, n) {
+		if (vis[i] == 0) {
+			int now = i; vis[now] = i;
+			while (true) {
+				//printf("! %d\n", now);
+				now = a[now];
+				if (vis[now]) {
+					if (vis[now] == i) {
+						ring[now] = 1;
+						//printf("!!! %d\n", now);
+					} 
+					break;
+				}
+				vis[now] = i;
+			}
+		}
+	}
+
+	ll ans = 0;
+
+	repn(i, n) {
+		if (ring[i]) {
+			int min = INF;
+			int now = i;
+			while (true) {
+				if (c[now] < min) min = c[now];
+				now = a[now];
+				if (now == i) break;
+			}
+			ans += min;
+		}
+	}
+
+	printf("%lld", ans);
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		int n;
+		scanf("%d", &n);
+		vector<int> a(n);
+		map<int, int> mp;
+		rep(i, 0, n) scanf("%d",&a[i]), mp[a[i]]++;
+
+		set<int> v;
+		bool flag = false;
+		for (auto & i : mp) {
+			if (i.second >= 2)
+				v.insert(i.first);
+			if (i.second >= 4) {
+				flag = true;
+				printf("%d %d %d %d\n", i.first, i.first, i.first, i.first);
+				break;
+			}
+		}
+		if (flag)
+			continue;
+
+		double min = INF;
+		auto fi = v.begin();
+		auto li = fi;
+		li++;
+
+		int ansa = -1, ansb = -1;
+		while (li != v.end()) {
+			if ((double(*li) / *fi + *fi / * li ) < min) {
+				min = double(*li) / *fi + *fi / *li;
+				ansa = *li;
+				ansb = *fi;
+			}
+			fi++;
+			li++;
+		}
+		
+		printf("%d %d %d %d\n", ansa, ansa, ansb, ansb);
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	FASTIO;
+
+	ll n, q;
+	cin >> n >> q;
+
+	while (q--) {
+		ll x, y;
+		cin >> x >> y;
+		swap(x, y);
+
+		ll ans = 0;
+
+		if (n % 2 == 0) {
+			ans = (y - 1)*n / 2 + (x+1) / 2;
+		}
+		else {
+			if (y % 2 == 1)
+				ans = (y - 1) / 2 * n + (x+1) / 2;
+			else {
+				if (x % 2 == 1)
+					ans = (y - 2) / 2 * n + (n) / 2 + (x+1) / 2;
+				else
+					ans = (y - 2) / 2 * n + (n + 1) / 2 + (x + 1) / 2;
+			}
+		}
+		if ((x + y) % 2)
+			ans += ll((n%10)*(n%10)) % 2 == 1 ? ll(n*n + 1) / 2 : ll(n*n) / 2 ;
+
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+
+	while (T--) {
+		int n;
+		string in;
+		cin >> n >> in;
+
+		int head, end;
+		head = 0, end = n - 1;
+
+		bool flag = true;
+		while (head < end) {
+			int x = abs(in[head] - in[end]);
+			if (x > 2 || x == 1) {
+				flag = false;
+				break;
+			}
+			head++;
+			end--;
+		}
+
+		puts(flag ? "YES" : "NO");
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll n, k;
+	cin >> n >> k;
+
+	ll ans = 0;
+	if (k <= n) {
+		ans = (k - 1) / 2;
+	}
+	else {
+		ll half = k / 2;
+		if (half < n) {
+			ans = (n - ((k - n) - 1)) / 2;
+		}
+	}
+	cout << ans;
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n, m;
+	string s, t;
+	cin >> n >> m;
+	cin >> s >> t;
+
+	int idx = -1;
+
+	rep(i, 0, n) if (s[i] == '*')
+		idx = i;
+
+	if (idx == -1) {
+		if (s == t)
+			cout << "YES";
+		else
+			cout << "NO";
+		return 0;
+	}
+
+	int rem = m - (n - 1);
+
+	if (rem < 0) {
+		cout << "NO";
+		return 0;
+	}
+
+	s = s.substr(0, idx) + t.substr(idx, rem) + s.substr(idx + 1, n - idx + 1);
+
+	//cout << s << endl;
+
+	if (s == t)
+		cout << "YES";
+	else
+		cout << "NO";
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n, q;
@@ -56,7 +385,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 
 /*
@@ -72,7 +401,7 @@ int main()
 		out = in;
 	else {
 		int half = k / 2;
-		
+
 		int cnt = 0;
 		int cur = 0;
 		while (cnt < half) {
@@ -96,75 +425,6 @@ int main()
 }
 */
 
-/*
-int main()
-{
-	ll n, k;
-	cin >> n >> k;
-
-	ll ans = 0;
-	if (k <= n) {
-		ans = (k - 1) / 2;
-	}
-	else {
-		ll half = k / 2;
-		if (half < n) {
-			ans = n / 2 - (k - n) / 2;
-		}
-	}
-	cout << ans;
-
-	return 0;
-}
-*/
-
-/*
-int main()
-{
-	int n, m;
-	cin >> n >> m;
-
-	string s, t;
-	cin >> s >> t;
-
-	bool flag = false;
-
-	if (n == 1 && s == "*")
-		flag = true;
-	else if (count(all(s), '*') == 0 && s != t)
-		flag = false;
-	else {
-
-		string tmp = s;
-		tmp.erase(s.find('*'), 1);
-		if (t.find(tmp) == 0)
-			flag = true;
-		else {
-			int starpos = s.find('*');
-			size_t pos1, pos2;
-
-			string a = s.substr(0, starpos);
-			string b = s.substr(starpos + 1);
-
-			pos1 = t.find(a);
-			pos2 = t.find(b, pos1+1);
-
-			//cout <<a << endl;
-			//cout << b << endl;
-
-			if (pos1 != string::npos && pos2 != string::npos && pos1 + a.size() <= pos2)
-				flag = true;
-		}
-	}
-
-	if (flag)
-		cout << "YES";
-	else
-		cout << "NO";
-
-	return 0;
-}
-*/
 
 /*
 vector<int> twoSum(vector<int>& numbers, int target) {
@@ -217,10 +477,10 @@ int main()
 {
 	int n, m;
 	cin >> n >> m;
-	
+
 	vector<peo> v(n + 1);
-	
-	rep(i, 1, n + 1) 
+
+	rep(i, 1, n + 1)
 		cin >> v[i].vote >> v[i].cost;
 
 	sort(v.begin() + 1, v.end(), [](peo& a, peo& b) {
@@ -243,7 +503,7 @@ int main()
 				}
 				else {
 					vot[v[j].vote]++;
-				}	
+				}
 			}
 			else {
 				vot[1]++;
@@ -258,8 +518,8 @@ int main()
 			}
 		}
 
-		//cout << "sum    " << sum << endl; 
-		
+		//cout << "sum    " << sum << endl;
+
 		if (vot[1] >= i)
 			ans = min(ans, sum);
 	}
@@ -431,9 +691,9 @@ int main()
 			a = mp[last] * 10 + mp[str];
 			cin >> str;
 		}
-		else 
+		else
 			a = mp[last];
-		
+
 		cin >> str;
 		last = str;
 		cin >> str;
@@ -443,7 +703,7 @@ int main()
 		}
 		else
 			b = mp[last];
-		if (a + b == 0) 
+		if (a + b == 0)
 			return 0;
 
 		cout << a + b << endl;
@@ -527,7 +787,7 @@ int main()
 {
 	int n;
 	cin >> n;
-	
+
 	int x = 1;
 	while (x*x < n) x++;
 
@@ -665,7 +925,7 @@ int main()
 {
 	int n, t, ans = 0;
 	cin >> n;
-	rep(i, 1, n + 1) 
+	rep(i, 1, n + 1)
 		cin >> t, ans += abs(t);
 
 	cout << ans << endl;

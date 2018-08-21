@@ -33,7 +33,452 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
 
+
+	return 0;
+}
+
+
+/*
+int f[100005];
+int cnt[100005];
+vector<int> t[100005];
+
+int find(int x) {
+	if (f[x] != x) return f[x] = find(f[x]);
+	return x;
+}
+
+void join(int a, int b) {
+	a = find(a);
+	b = find(b);
+	if (a == b) return;
+	f[a] = b;
+	cnt[b] += cnt[a];
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		rep(i, 0, 100005) { 
+			f[i] = i;
+			cnt[i] = 1;
+			t[i].clear();
+		}
+		int n, m;
+		cin >> n >> m;
+		vector<int> v(n + 1);
+		repn(i, n) cin >> v[i];
+
+		rep(i, 0, m) {
+			int a, b;
+			cin >> a >> b;
+			join(a, b);
+		}
+		repn(i, n) 
+			t[find(i)].push_back(v[i]);
+		
+		int ans = 0;
+		map<int, int> cnt;
+		repn(i, n) {
+			if (find(i) == i && t[i].size() > 1) {
+				cnt.clear();
+				rep(j, 0, t[i].size()) 
+					cnt[t[i][j]]++;
+				int tmp = 0;
+				for (auto i : cnt) {
+					tmp = max(tmp, i.second);
+				}
+				ans += t[i].size() - tmp;
+			}
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+vector<int> mp[]
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int m, n;
+		cin >> m >> n;
+
+
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<pii> v(n);
+		int x = 0;
+		rep(i, 0, n) 
+			cin >> v[i].first >> v[i].second;
+		
+		sort(all(v));
+		
+		int a, b;
+		a = b = 0;
+		vector<int> pos;
+		bool flag = true;
+		int id = 0;
+		rep(i, 0, v.size()) {
+			if (v[i].second == 0) {
+				flag = false;
+				id = pos.size();
+				pos.push_back(v[i].first);
+				continue;
+			}
+			if (flag) {
+				if (v[i].second > 0) {
+					pos.push_back(v[i].first);
+					a++;
+				}
+			}
+			else {
+				if (v[i].second < 0) {
+					pos.push_back(v[i].first);
+					b++;
+				}
+			}
+		}
+		
+		if (a == b)
+			cout << "Cannot fall!" << endl;
+		else if (a > b) 
+			cout << 100 - pos[id-b-1] << endl;
+		else 
+			cout << pos[id + a + 1] << endl;
+
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n, m;
+		cin >> n >> m;
+		map<int, int> mp;
+		rep(i, 0, n) {
+			int t;
+			cin >> t;
+			mp[t]++;
+		}
+
+		int ans = 0;
+		rep(i, 0, m) {
+			int a, b;
+			cin >> a >> b;
+			if (a != b) {
+				if (mp[a] > mp[b]) {
+					mp[a]--;
+					ans++;
+				}
+				else if (mp[a] < mp[b]) {
+					mp[b]--;
+					ans++;
+				}
+				else {
+					if (mp[a] > 0) {
+						mp[a]--;
+						ans++;
+					}
+					else {
+						// Á½Õß¶¼»»
+
+					}
+				}
+			}
+		}
+
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T, n;
+	cin >> T;
+
+	while (T--) {
+		int x[6];
+		for (int i = 0; i < 6; ++i)
+			cin >> x[i];
+		int ans = x[5];
+		cin >> n;
+
+		for (int i = 0; i < n; ++i) {
+			int op;
+			cin >> op;
+
+			int old[6];
+			copy(x, x + 6, old);
+			if (op == 0) {
+
+				x[0] = old[4];
+				x[4] = old[1];
+				x[1] = old[5];
+				x[5] = old[0];
+			}
+			else if (op == 1) {
+				x[0] = old[5];
+				x[4] = old[0];
+				x[1] = old[4];
+				x[5] = old[1];
+			}
+			else if (op == 2) {
+				x[3] = old[5];
+				x[5] = old[2];
+				x[2] = old[4];
+				x[4] = old[3];
+			}
+			else if (op == 3) {
+				x[2] = old[5];
+				x[5] = old[3];
+				x[3] = old[4];
+				x[4] = old[2];
+			}
+			ans += x[5];
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int a, b, c, t;
+bool flag = false;
+
+int mp[55][55][55];
+int dx[6] = { 1,0,0,-1, 0, 0 };
+int dy[6] = { 0,1,0, 0,-1, 0 };
+int dz[6] = { 0,0,1, 0, 0,-1 };
+bool visit[55][55][55];
+int len[55][55][55];
+
+int bfs(int x, int y, int z) {
+	
+	queue<int> q, w, e;
+	q.push(x);
+	w.push(y);
+	e.push(z);
+
+	while (!q.empty()) {
+		int j = q.front();
+		int k = w.front();
+		int l = e.front();
+		q.pop(), w.pop(), e.pop();
+		if ((j != x && k != y && z != l) && (mp[j][k][l] != 0 || visit[j][k][l])) continue;
+
+		//cout << j << " " << k << " " << l << endl;
+		visit[j][k][l] = 1;
+		rep(i, 0, 6) {
+			int aa = j + dx[i];
+			int bb = k + dy[i];
+			int cc = l + dz[i];
+			//printf("! %d %d %d\n", aa, bb, cc);
+
+			if (aa >= 0 && aa < a &&
+				bb >= 0 && bb < b &&
+				cc >= 0 && cc < c) {
+				if (mp[aa][bb][cc] == 0 && !visit[aa][bb][cc]) {
+					//printf("!!! %d %d %d\n", aa, bb, cc);
+					len[aa][bb][cc] = len[j][k][l] + 1;
+					
+					if (aa == a - 1 && bb == b - 1 && cc == c - 1) {
+						//printf("!!! %d %d %d\n", aa, bb, cc);
+						flag = true;
+						return len[aa][bb][cc];
+					}
+					q.push(aa);
+					w.push(bb);
+					e.push(cc);
+				}
+			}
+		}
+	}
+
+	return -1;
+}
+
+int main()
+{
+	FASTIO;
+	int T;
+	cin >> T;
+	while (T--) {
+		flag = false;
+		cin >> a >> b >> c >> t;
+		rep(i, 0, a) rep(j, 0, b) rep(k, 0, c) 
+			cin >> mp[i][j][k];
+
+		memset(visit, 0, sizeof(visit));
+		memset(len, 0, sizeof(len));
+
+		int ans = bfs(0, 0, 0);
+		if (flag && ans <= t)
+			cout << ans << endl;
+		else
+			cout << -1 << endl;
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	vector<int> v;
+	int t;
+	while (cin >> t && t != -1)
+		v.push_back(t);
+
+	vector<int> dp(v.size());
+	dp[0] = 1;
+	rep(i, 1, v.size()) {
+		pre(j, i - 1, 0) {
+			if (v[j] >= v[i])
+				dp[i] = max(dp[i], max(dp[j] + 1, 1));
+		}
+
+	}
+
+	int ans = *max_element(all(dp));
+
+	cout << ans << endl;
+
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n && n) {
+		set<string> name;
+		map<string, int> v;
+		rep(i, 0, n) {
+			string a, b;
+			cin >> a >> b;
+
+			name.insert(a);
+			name.insert(b);
+
+			v[b]++;
+		}
+		int cnt = 0;
+		for (auto& i : name)
+			if (v[i] == 0)
+				cnt++;
+
+		puts(cnt == 1 ? "Yes" : "No");
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n, V, W;
+		cin >> n >> V >> W;
+		vector<int> p(n);
+		rep(i, 0, n) cin >> p[i];
+
+		sort(all(p));
+
+		int sumV = 0;
+		double sumP = 0, curp = 0;
+		int i = 0;
+
+		do {
+			int tmpV = sumV + V;
+			double tmpP = sumP + 1.0 * V * p[i] / 100.0;
+			double tmpcurp = tmpP / double(tmpV);
+			if (tmpcurp <= double(W) / 100.0) {
+				sumV = tmpV;
+				sumP = tmpP;
+				curp = tmpcurp;
+			}
+			else
+				break;
+			i++;
+		} while (curp <= double(W) / 100.0 && i < n);
+
+		if (i == 0 ) {
+			sumV = 0;
+			curp = 0;
+		}
+
+		cout << sumV << " " << fixed << setprecision(2) << curp << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int f(int m, int n) {
+	if (m == 0 || n == 1) return 1;
+	if (n > m) return f(m, m);
+	return f(m, n - 1) + f(m - n, n);
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int m, n;
+		cin >> m >> n;
+
+		cout << f(m, n) << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
 int n;
 pll v[200005];
 
@@ -55,7 +500,7 @@ int main()
 		cout << "-1" << endl;
 		return 0;
 	}
-	
+
 	rep(i, 0, n) {
 		ll cand = gcd(ans, v[i].first);
 		if (cand > 1)
@@ -68,7 +513,7 @@ int main()
 	cout << ans << endl;
 	return 0;
 }
-
+*/
 
 
 /*
@@ -92,7 +537,7 @@ int main()
 		else
 			cnt = 1;
 	}
-	
+
 	cout << min(ans, n)) << endl;
 
 	return 0;
@@ -147,7 +592,7 @@ int main()
 					if (vis[now] == i) {
 						ring[now] = 1;
 						//printf("!!! %d\n", now);
-					} 
+					}
 					break;
 				}
 				vis[now] = i;
@@ -218,7 +663,7 @@ int main()
 			fi++;
 			li++;
 		}
-		
+
 		printf("%d %d %d %d\n", ansa, ansa, ansb, ansb);
 	}
 

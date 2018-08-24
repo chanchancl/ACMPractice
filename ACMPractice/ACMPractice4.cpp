@@ -22,8 +22,9 @@ using namespace std;
 
 #define FASTIO ios::sync_with_stdio(false),cin.tie(0);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
-#define repn(i,n) for(int i=1; i <= n; ++i)
+#define repn(i, n) for(int i=1; i <=n; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
+#define pren(i, a) for(int i=a; i > 0; --i)
 #define all(x) (x).begin(),(x).end()
 using ll = long long;
 using pii = pair<int, int>;
@@ -35,11 +36,101 @@ using namespace std;
 
 int main()
 {
+	int n, k;
+	string t, s;
+	cin >> n >> k >> t;
+	s = t;
 
+	int p = 0;
+	rep(i, 1, n) {
+		if (s.substr(0, i) == s.substr(n-i, i))
+			p = i;
+	}
+
+	t = t.substr(p);
+	rep(i, 0, k - 1)
+		s += t;
+
+	cout << s << endl;
 
 	return 0;
 }
 
+
+/*
+const int N = 300005;
+struct seg {
+	int l, r;
+	bool operator<(seg & oth) {
+		if (l == oth.l) return r > oth.r;
+		return l < oth.l;
+	}
+	seg operator|(seg & oth) {
+		return seg{ max(l,oth.l), min(r, oth.r) };
+	}
+} s[N], pre[N], suf[N];
+
+
+int main()
+{
+	FASTIO;
+
+	int n;
+	cin >> n;
+	repn(i, n)
+		cin >> s[i].l >> s[i].r;
+	sort(s + 1, s + n + 1);
+
+	pre[0] = suf[n + 1] = { -(int)1e9, (int)1e9 };
+	repn(i, n)
+		pre[i] = pre[i - 1] | s[i];
+
+	pren(i, n)
+		suf[i] = suf[i + 1] | s[i];
+
+	int ans = 0;
+	repn(i, n) {
+		seg now = pre[i - 1] | suf[i + 1];
+		ans = max(ans, now.r - now.l);
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	vector<int> dp(n);
+	dp[0] = 1;
+
+	rep(i, 1, n) {
+		if (v[i] > v[i - 1] && 2 * v[i - 1] >= v[i])
+			dp[i] = dp[i - 1] + 1;
+		else
+			dp[i] = 1;
+	}
+
+	cout << *max_element(all(dp)) << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+
+	return 0;
+}
+*/
 
 /*
 int f[100005];
@@ -64,7 +155,7 @@ int main()
 	int T;
 	cin >> T;
 	while (T--) {
-		rep(i, 0, 100005) { 
+		rep(i, 0, 100005) {
 			f[i] = i;
 			cnt[i] = 1;
 			t[i].clear();
@@ -79,15 +170,15 @@ int main()
 			cin >> a >> b;
 			join(a, b);
 		}
-		repn(i, n) 
+		repn(i, n)
 			t[find(i)].push_back(v[i]);
-		
+
 		int ans = 0;
 		map<int, int> cnt;
 		repn(i, n) {
 			if (find(i) == i && t[i].size() > 1) {
 				cnt.clear();
-				rep(j, 0, t[i].size()) 
+				rep(j, 0, t[i].size())
 					cnt[t[i][j]]++;
 				int tmp = 0;
 				for (auto i : cnt) {
@@ -129,11 +220,11 @@ int main()
 	while (cin >> n) {
 		vector<pii> v(n);
 		int x = 0;
-		rep(i, 0, n) 
+		rep(i, 0, n)
 			cin >> v[i].first >> v[i].second;
-		
+
 		sort(all(v));
-		
+
 		int a, b;
 		a = b = 0;
 		vector<int> pos;
@@ -159,12 +250,12 @@ int main()
 				}
 			}
 		}
-		
+
 		if (a == b)
 			cout << "Cannot fall!" << endl;
-		else if (a > b) 
+		else if (a > b)
 			cout << 100 - pos[id-b-1] << endl;
-		else 
+		else
 			cout << pos[id + a + 1] << endl;
 
 	}
@@ -287,7 +378,7 @@ bool visit[55][55][55];
 int len[55][55][55];
 
 int bfs(int x, int y, int z) {
-	
+
 	queue<int> q, w, e;
 	q.push(x);
 	w.push(y);
@@ -314,7 +405,7 @@ int bfs(int x, int y, int z) {
 				if (mp[aa][bb][cc] == 0 && !visit[aa][bb][cc]) {
 					//printf("!!! %d %d %d\n", aa, bb, cc);
 					len[aa][bb][cc] = len[j][k][l] + 1;
-					
+
 					if (aa == a - 1 && bb == b - 1 && cc == c - 1) {
 						//printf("!!! %d %d %d\n", aa, bb, cc);
 						flag = true;
@@ -339,7 +430,7 @@ int main()
 	while (T--) {
 		flag = false;
 		cin >> a >> b >> c >> t;
-		rep(i, 0, a) rep(j, 0, b) rep(k, 0, c) 
+		rep(i, 0, a) rep(j, 0, b) rep(k, 0, c)
 			cin >> mp[i][j][k];
 
 		memset(visit, 0, sizeof(visit));

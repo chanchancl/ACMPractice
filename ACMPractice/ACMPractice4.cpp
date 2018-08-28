@@ -20,7 +20,7 @@
 #include <bitset>
 using namespace std;
 
-#define FASTIO ios::sync_with_stdio(false),cin.tie(0);
+#define FASTIO ios::sync_with_stdio(false), cin.tie(nullptr);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define repn(i, n) for(int i=1; i <=n; ++i)
 #define pre(i,a,b) for(int i=a; i >=b; --i)
@@ -34,6 +34,266 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+struct rect
+{
+	int x1, y1, x2, y2;
+	rect operator|(rect& oth) {
+		rect ans;
+		ans.x1 = max(x1, oth.x1);
+		ans.x2 = min(x2, oth.x2);
+		ans.y1 = max(y1, oth.y1);
+		ans.y2 = min(y2, oth.y2);
+		return ans;
+	}
+	operator bool() {
+		return x1 <= x2 && y1 <= y2;
+	}
+}rec[150000], pre[150000], suf[150000];
+
+int main()
+{
+	FASTIO;
+	int n;
+	cin >> n;
+	repn(i, n) 
+		cin >> rec[i].x1 >> rec[i].y1 >> rec[i].x2 >> rec[i].y2;
+	
+	pre[0] = suf[n + 1] = { -(int)1e9, -(int)1e9, (int)1e9 ,(int)1e9 };
+
+	repn(i, n)
+		pre[i] = pre[i - 1] | rec[i];
+	pren(i, n)
+		suf[i] = suf[i + 1] | rec[i];
+
+	repn(i, n) {
+		rect now = pre[i - 1] | suf[i + 1];
+		if (now) {
+			cout << now.x1 << " " <<  now.y1 << endl;
+			break;
+		}
+	}
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	FASTIO;
+	
+	int k = 130; // 1129 / 9 = 125
+
+	rep(i, 0, k)
+		cout << "9";
+
+	rep(i, 0, k - 1)
+		cout << "0";
+
+	cout << "1\n";
+
+	rep(i, 0, k)
+		cout << "9";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	vector<string> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	int left, top, right, down;
+	left = top = 200;
+	right = down = -1;
+	rep(i, 0, n) rep(j, 0, m) {
+		if (v[i][j] == 'B') {
+			left = min(left, j);
+			top = min(top, i);
+			right = max(right, j);
+			down = max(down, i);
+		}
+	}
+
+	int x = (left + right) / 2;
+	int y = (top + down) / 2;
+
+	cout << y + 1 << " " << x + 1 << endl;
+
+	return 0;
+}
+*/
+
+/*
+const int N = 200005;
+
+vector<int> g[N];
+int d[N];
+int p[N];
+
+void dfs(int v, int pr = -1, int dst = 0) {
+	d[v] = dst;
+	p[v] = pr;
+	for (auto to : g[v]) {
+		if (to != pr) {
+			dfs(to, v, dst + 1);
+		}
+	}
+}
+
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+	rep(i, 0, n - 1) {
+		int u, v;
+		scanf("%d%d", &u, &v);
+		--u, --v;
+		g[u].push_back(v);
+		g[v].push_back(u);
+	}
+
+	dfs(0);
+
+	set<pii> st;
+
+	rep(i, 0, n) {
+		if (d[i] > 2)
+			st.insert(make_pair(-d[i], i)); // 距离越远越优先
+	}
+
+	int ans = 0;
+	while (!st.empty()) {
+		int v = st.begin()->second;
+		int par = p[v];
+
+		++ans;
+		auto it = st.find(make_pair(-d[par], par));
+
+		if (it != st.end()) {
+			// add edge to pr
+			st.erase(it);
+		}
+		for (auto to : g[par]) {
+			auto it = st.find(make_pair(-d[to], to));
+			if (it != st.end()) {
+				st.erase(it);
+			}
+		}
+
+	}
+
+	printf("%d\n", ans);
+
+	return 0;
+}
+*/
+
+
+/*
+char mp[2005][2005];
+int n, m, k;
+
+int main()
+{
+	cin >> n >> m >> k;
+
+	rep(i, 0, n)
+		cin >> mp[i];
+
+	int ans = 0;
+	
+	if (k == 1) {
+		rep(i, 0, n) rep(j, 0, m) if (mp[i][j] == '.') 
+			ans++;
+	}
+	else {
+		rep(i, 0, n) {
+			int cnt = 0;
+			rep(j, 0, m) {
+				if (mp[i][j] == '.') cnt++;
+				else {
+					ans += max(0, cnt - k + 1);
+					cnt = 0;
+				}
+			}
+			ans += max(0, cnt - k + 1);
+		}
+		rep(i, 0, m) {
+			int cnt = 0;
+			rep(j, 0, n) {
+				if (mp[j][i] == '.')cnt++;
+				else {
+					ans += max(0, cnt - k + 1);
+					cnt = 0;
+				}
+			}
+			ans += max(0, cnt - k + 1);
+		}
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+char s[100];
+
+int main()
+{
+	int k;
+	cin >> k;
+	int cnt = 0;
+	int i = 1;
+	int last = 0;
+	while (cnt < k) {
+		int t = i;
+		int sum = 0;
+		while (t) {
+			sum += t % 10;
+			t /= 10;
+		}
+
+		if (sum == 10) {
+			cnt++;
+			last = i;
+		}
+		i++;
+	}
+	cout << last << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	vector<double> v;
+	rep(i, 0, n) {
+		double a, b;
+		cin >> a >> b;
+		v.push_back(a / b);
+	}
+	sort(all(v));
+
+	printf("%.8lf\n", v[0] * m);
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n, k;
@@ -55,7 +315,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 const int N = 300005;

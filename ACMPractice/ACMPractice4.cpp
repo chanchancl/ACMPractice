@@ -10,6 +10,7 @@
 #include <list>
 #include <stack>
 #include <cctype>
+#include <climits>
 #include <functional>
 #include <algorithm>
 #include <iostream>
@@ -26,6 +27,7 @@ using namespace std;
 #define pre(i,a,b) for(int i=a; i >=b; --i)
 #define pren(i, a) for(int i=a; i > 0; --i)
 #define all(x) (x).begin(),(x).end()
+#define endl "\n"
 using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
@@ -34,6 +36,173 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	ll n, k, a, b;
+	cin >> n >> k >> a >> b;
+	ll ans = 0;
+	if (k == 1) {
+		ans = (n - 1)*a;
+		cout << ans << endl;
+		return 0;
+	}
+	while (n != 1) {
+		if (n % k == 0) {
+			ans += min((n - n / k)*a, b);
+			n /= k;
+		}
+		else if (n > k) {
+			ans += (n % k) * a;
+			n -= n % k;
+		}
+		else {
+			ans += (n - 1)*a;
+			n = 1;
+		}
+	}
+
+	cout << ans << endl;
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n, d;
+	cin >> n >> d;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	sort(all(v));
+
+	int ans = n;
+
+	rep(i, 0, n) {
+		int j = i;
+		while (j < n && v[j] - v[i] <= d) j++;
+		ans = min(ans, n - (j - i));
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll k, d, t;
+	cin >> k >> d >> t;
+	ll T = ((k - 1) / d + 1)*d;
+	double ans = 0;
+	double oneT = (T - k)*0.5 + k; // 1个周期可以烤成 oneT
+	ans += ll(t / oneT)*T;
+	ll ht = t / oneT;
+	double st = t - ht * oneT; // 剩余还需 st
+	if (st < k)
+		ans += st;
+	else {
+		ans = ans + k + (st - k) * 2;
+	}
+	printf("%.1lf\n", ans);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int p, y;
+	cin >> p >> y;
+
+	pre(i, y, p + 1) {
+		bool flag = true;
+		for (int j = 2; j <= p && j*j <= i; j++) {
+			if (i % j == 0) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			if (i > p) {
+				cout << i << endl;
+				return 0;
+			}
+		}
+	}
+	cout << -1 << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	set<int> ans;
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		if (t) ans.insert(t);
+	}
+	
+	cout << ans.size() << endl;
+
+	return 0;
+}
+*/
+
+/*
+const ll MOD = 1e9 + 7;
+
+int main()
+{
+	FASTIO;
+	int n;
+	cin >> n;
+
+	int bestsell = INT_MAX;
+	int bestbuy = 0;
+	set<int> book = { bestbuy, bestsell };
+
+	ll ans = 1;
+	while (n--) {
+		string cmd;
+		int price;
+		cin >> cmd >> price;
+
+		if (cmd[1] == 'D') 
+			book.insert(price);
+		else {
+			if (price < bestbuy || price > bestsell) {
+				ans = 0;
+				break;
+			}
+			if (price > bestbuy && price < bestsell) 
+				ans = ans * 2 % MOD;
+			auto t = book.find(price);
+			bestsell = *next(t);
+			bestbuy  = *prev(t);
+			book.erase(t);
+		}
+	}
+	auto pbuy = book.find(bestbuy);
+	auto psell = book.find(bestsell);
+	int oth = distance(pbuy, psell);
+	ans = ans * oth % MOD;
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
 struct rect
 {
 	int x1, y1, x2, y2;
@@ -75,7 +244,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

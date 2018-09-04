@@ -1,4 +1,5 @@
 
+/*
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -38,6 +39,286 @@ using namespace std;
 
 int main()
 {
+	
+	return 0;
+}
+*/
+
+/*
+const int N = 2e5 + 5;
+vector<int> mp[N];
+int visit[N];
+int dis[N];
+int cnt[N];
+int fa[N];
+
+void bfs(int s) 
+{
+	queue<pii> q;
+	q.push(make_pair(s, 0));
+	dis[s] = 0;
+	cnt[0] = 1;
+	visit[s] = 1;
+	while (!q.empty()) {
+		auto par =  q.front();
+		q.pop();
+		//printf("!!!!%d\n", par.first);
+		for (auto child : mp[par.first]) {
+			if (!visit[child]) {
+				//printf("    !!!!%d, dis %d \n", child, par.second + 1);
+				q.push(make_pair(child, par.second + 1));
+				visit[child] = 1;
+				dis[child] = par.second + 1;
+				cnt[par.second + 1]++;
+				fa[child] = par.first;
+			}
+		}
+	}
+}
+
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	rep(i, 0, n - 1) {
+		int a, b;
+		cin >> a >> b;
+		mp[a].push_back(b);
+		mp[b].push_back(a);
+	}
+
+	if (n == 1) {
+		int t;
+		cin >> t;
+		if (t == 1)
+			cout << "Yes" << endl;
+		else
+			cout << "No" << endl;
+		return 0;
+	}
+
+	int start;
+	cin >> start;
+	if (start != 1) {
+		cout << "No" << endl;
+		return 0;
+	}
+
+	bfs(start);
+
+	vector<int> v(N), vv(N);
+	v[0] = 1;
+	bool flag = true;
+	int last = start;
+
+	rep(i, 0, n - 1) {
+		int nod;
+		cin >> nod;
+
+		if (!flag) continue;
+
+		if (last != start && fa[last] != fa[nod]) {
+			if (vv[fa[last]] != mp[fa[last]].size() - (fa[last] == start ? 0 : 1)) {
+				flag = false;
+				continue;
+				printf("    %d, %d , %d\n", last, vv[fa[last]], mp[fa[last]].size());
+			}
+		}
+
+		if (v[dis[nod] - 1] == cnt[dis[nod] - 1]) {
+			vv[fa[nod]]++;
+			v[dis[nod]]++;
+		}
+		else {
+			flag = false;
+			//printf("    ! %d, dis %d, pre v %d  cnt v %d\n", nod, dis[nod], v[dis[nod]-1], cnt[dis[nod]-1]);
+		}
+		last = nod;
+	}
+	
+	if (flag)
+		cout << "Yes" << endl;
+	else
+		cout << "No" << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	FASTIO;
+	int n;
+	cin >> n;
+	string a, b;
+	cin >> a >> b;
+
+	ll ans = 0;
+	
+	rep(i, 0, n) {
+		if (a[i] != b[i]) {
+			if (i + 1 < n && a[i] == b[i + 1] && a[i + 1] == b[i]) {
+				swap(a[i], a[i+1]);
+				ans++;
+			}
+			else {
+				a[i] = b[i];
+				ans++;
+			}
+		}
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, s;
+	cin >> n >> s;
+	vector<int> a(n);
+	rep(i, 0, n)
+		cin >> a[i];
+	sort(all(a));
+
+	int mid = n / 2;
+
+	ll ans = 0;
+	if (a[mid] > s) {
+		pre(j, mid, 0) {
+			if (a[j] > s)
+				ans += (a[j] - s);
+			else
+				break;
+		}
+	}
+	else {
+		rep(j, mid, n) {
+			if (a[j] < s)
+				ans += (s - a[j]);
+			else
+				break;
+		}
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	
+	if (n <= 3) {
+		cout << min(2,n) << endl;
+		return 0;
+	}
+
+	rep(i, 1, INF) {
+		//printf("    %d\n", 1 << i);
+		if ((1 << i)-1 >= n) {
+			cout << i << endl;
+			return 0;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	int ans = 1;
+	rep(i, 2, n) {
+		if ((n - i) % i == 0)
+			ans++;
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n)
+		cin >> v[i];
+	string str;
+	cin >> str;
+
+	int l = -(int)1e9, r = (int)1e9;
+	for (int i = 1; i < n; i++) {
+		if (str[i] == '1' && str[i - 1] == '0')
+			l = max(l, *max_element(v.begin() + i - 4, v.begin() + i + 1) + 1);
+		if (str[i] == '0' && str[i - 1] == '1')
+			r = min(r, *min_element(v.begin() + i - 4, v.begin() + i + 1) - 1);
+	}
+
+	cout << l << " " << r << endl;
+	
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	string str;
+	cin >> n >> k >> str;
+
+	set<char> s;
+	rep(i, 0, n)
+		s.insert(str[i]);
+	string out;
+	if (n < k) {
+		out = str + string(k - n, *s.begin());
+	}
+	else {
+		int greater = false;
+		out.resize(k);
+		int t = k - 1;
+		pre(i, k-1, 0) {
+			auto pos = s.find(str[i]);
+			if (next(pos) != s.end() && !greater) {
+				pos = next(pos);
+				greater = true;
+				rep(j, i + 1, k)
+					out[j] = *s.begin();
+			}
+
+			out[i] = *pos;
+		}
+	}
+
+	cout << out << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	ll n, k, a, b;
 	cin >> n >> k >> a >> b;
 	ll ans = 0;
@@ -64,7 +345,7 @@ int main()
 	cout << ans << endl;
 	return 0;
 }
-
+*/
 
 /*
 int main()

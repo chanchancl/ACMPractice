@@ -38,6 +38,360 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+const int N = 5e5 + 10;
+int l[N][2], r[N][2];
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n)
+		cin >> v[i];
+
+	if (n == 1) {
+		cout << v[0] << endl;
+		return 0;
+	}
+
+	bool pos,neg;
+	pos = neg = false;
+
+	int minval = INF;
+	ll ans = 0;
+	rep(i, 0, n) {
+		minval = min(minval, abs(v[i]));
+
+		pos |= (v[i] >= 0);
+		neg |= (v[i] <= 0);
+		ans += abs(v[i]);
+	}
+
+	if (pos && neg) {
+		cout << ans << endl;
+	}
+	else {
+		cout << ans - 2 * minval << endl;
+	}
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n, t;
+	cin >> n;
+	priority_queue<int> a, b;
+	rep(i, 0, n) {
+		cin >> t;
+		a.push(t);
+	}
+	rep(i, 0, n) {
+		cin >> t;
+		b.push(t);
+	}
+
+	ll as, bs;
+	as = bs = 0;
+
+	int turn = 1;
+	while (!a.empty() || !b.empty()) {
+		if (!a.empty() && !b.empty()) {
+			if (turn == 1) {
+				if (a.top() >= b.top()) {
+					as += a.top();
+					a.pop();
+				}
+				else {
+					b.pop();
+				}
+			}
+			else {
+				if (b.top() >= a.top()) {
+					bs += b.top();
+					b.pop();
+				}
+				else {
+					a.pop();
+				}
+			}
+		}
+		else if (a.empty()) {
+			if (turn == 0) {
+				while (!b.empty()) {
+					bs += b.top();
+					b.pop();
+					if (!b.empty())
+						b.pop();
+				}
+			}
+			else {
+				while (!b.empty()) {
+					b.pop();
+					if (!b.empty()) {
+						bs += b.top();
+						b.pop();
+					}
+				}
+			}
+		}
+		else if (b.empty()) {
+			if (turn == 1) {
+				while (!a.empty()) {
+					as += a.top();
+					a.pop();
+					if (!a.empty())
+						a.pop();
+				}
+			}
+			else {
+				while (!a.empty()) {
+					a.pop();
+					if (!a.empty()) {
+						as += a.top();
+						a.pop();
+					}
+				}
+			}
+		}
+		turn = !turn;
+	}
+
+	cout << as - bs << endl;
+
+	return 0;
+}
+*/
+
+/*
+int gcd(int a, int b) {
+	if (a < b) swap(a, b);
+	if (b == 0) return a;
+	return gcd(b, a % b);
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	if (n <= 2) {
+		cout << "No" << endl;
+		return 0;
+	}
+	rep(i, 2, n) {
+		int s1 = n * (n + 1) / 2 - i;
+		int s2 = i;
+		if (gcd(s1, s2) > 1) {
+			cout << "Yes" << endl;
+			cout << "1 " << i << endl;
+			cout << n - 1 << " ";
+			rep(j, 1, n + 1) {
+				if (j != i) {
+					cout << j << " ";
+				}
+			}
+			return 0;
+		}
+	}
+
+	cout << "No" << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	string str;
+	cin >> str;
+
+	map<char,int> s;
+
+	rep(i, 0, n) 
+		s[str[i]]++;
+
+	int ans = INF;
+	for (auto i : s) 
+		ans = min(ans, i.second);
+	
+	if (s.size() < k)
+		ans = 0;
+	else
+		ans *= k;
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll n, k;
+	cin >> n >> k;
+	ll l = 1, r = n;
+
+	bool flag = false;
+
+	while (!flag && l < r) {
+		ll mid = (l + r + 1) >> 1;
+		
+		cout << l << " " << mid << endl;
+		cout.flush();
+		string ans;
+		cin >> ans;
+
+		if (ans[0] == 'Y') 
+			r = max(l, min(mid + k,n));
+		else
+			l = min(r, max(mid - k,1ll));
+		if (ans[0] == 'B')
+			return 0;
+
+		if (ans[0] == 'Y' && l == r)
+			return 0;
+		else {
+			if ((mid - l + 1) <= 2 * k + 1) {
+				int size = (r - l + 1);
+				ll lo = l, rr = r;
+				if (ans[0] == 'Y')
+					rr = mid;
+				else
+					lo = mid;
+				if (ans[0] == 'B')
+					return 0;
+				rep(i, lo, rr+1) {
+					cout << i << " " << i << endl;
+					cout.flush();
+					cin >> ans;
+					if (ans[0] == 'Y') {
+						return 0;
+					}
+				}
+				l -= size * k;
+				r += size * k;
+				l = max(l, 1ll);
+				r = min(n, r);
+			}
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+
+	if (k == 0) {
+		cout << n << endl;
+		rep(i, 0, n)
+			cout << i + 1 << endl;
+	}
+	else {
+		int size = 2 * k + 1;
+		int cnt = n / size;
+		int back = 0;
+		if (n % size > 0 && n % size < k + 1) {
+			back = k + 1 - (n%size);
+			back = -back;
+		}
+		vector<int> ans;
+		rep(i, 1, cnt + 1) {
+			int pos = back + (i - 1)*size + (size+1) / 2;
+			ans.push_back(pos);
+		}
+		if (n % size != 0) {
+			ans.push_back(back + cnt * size + (size+1) / 2);
+		}
+		cout << ans.size() << endl;
+		rep(i, 0, ans.size())
+			cout << ans[i] << " ";
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, a, b;
+	cin >> n >> a >> b;
+
+	vector<int> v(n);
+	rep(i, 0, n)
+		cin >> v[i];
+
+	int i = 0, j = n - 1;
+	int ans = 0;
+	while (i < j) {
+		if (v[i] == v[j]) {
+			if (v[i] == 2)
+				ans += 2 * min(a, b);
+
+		}
+		else if (v[i] == 2) {
+			if (v[j] == 0) ans += a;
+			else ans += b;
+		}
+		else if (v[j] == 2) {
+			if (v[i] == 0) ans += a;
+			else ans += b;
+		}
+		else {
+			cout << -1 << endl;
+			return 0;
+		}
+
+		i++, j--;
+	}
+
+	if (n % 2 == 1) {
+		if (v[n / 2] == 2)
+			ans += min(a, b);
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> f(n + 1);
+	rep(i, 1, n + 1)
+		cin >> f[i];
+
+	rep(i, 1, n + 1) {
+		int l1 = f[i];
+		int l2 = f[l1];
+		int l3 = f[l2];
+		if (l3 == i) {
+			cout << "YES" << endl;
+			return 0;
+		}
+	}
+
+	cout << "NO" << endl;
+
+	return 0;
+}
+*/
+
+/*
 const int N = 2e5 + 5;
 int n, m, k, ans[N];
 pii edge[N];
@@ -76,6 +430,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 

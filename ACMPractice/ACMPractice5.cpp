@@ -19,9 +19,9 @@
 #include <fstream>
 #include <numeric>
 #include <bitset>
+#include <tuple>
 using namespace std;
 
-#include <tuple>
 
 #define FASTIO ios::sync_with_stdio(false), cin.tie(nullptr);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
@@ -38,6 +38,87 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+
+
+int main()
+{
+	int n, m;
+	cin >> n;
+	vector<int> a(n);
+	ll sum = 0;
+	rep(i, 0, n)
+		cin >> a[i], sum += a[i];
+	cin >> m;
+	vector<int> b(m);
+	rep(i, 0, m)
+		cin >> b[i], sum -= b[i];
+
+	if (sum != 0) {
+		cout << -1 << endl;
+		return 0;
+	}
+
+	int posa = 0, posb = 0;
+	int res = 0;
+	while (posa < n) {
+		res++;
+		ll suma = a[posa++], sumb = b[posb++];
+		while (suma != sumb) {
+			if (suma < sumb) suma += a[posa++];
+			else sumb += b[posb++];
+		}
+	}
+
+	cout << res << endl;
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int q;
+	cin >> q;
+
+	while (q--) {
+		ll n, m, k;
+		cin >> n >> m >> k;
+
+		if (n < m) swap(n, m);
+		if (k < n) {
+			cout << -1 << endl;
+			continue;
+		}
+		else {
+			if ((n + m) % 2) {
+				cout << k - 1 << endl;
+			}
+			else {
+				if ((k - n) % 2)
+					cout << k - 2 << endl;
+				else
+					cout << k << endl;
+			}
+		}
+
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll n, k;
+	cin >> n >> k;
+	cout << k / n + (k % n != 0 ? 1 : 0) << endl;
+
+	return 0;
+}
+*/
+
+/*
 const int N = 5e5 + 10;
 int l[N][2], r[N][2];
 
@@ -75,7 +156,7 @@ int main()
 	}
 	return 0;
 }
-
+*/
 
 /*
 int main()

@@ -38,23 +38,56 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+vector<ll> res;
+
+void brute(int pos, int cnt, ll cur) {
+	if (pos == 18) {
+		res.push_back(cur);
+		return;
+	}
+
+	brute(pos + 1, cnt, cur * 10);
+
+	if (cnt < 3)
+		rep(i, 1, 10)
+			brute(pos + 1, cnt + 1, cur * 10 + i);	
+}
 
 
 int main()
 {
+	brute(0, 0, 0);
+	res.push_back((ll)1e18);
+
+	int T;
+	scanf("%d", &T);
+	while (T--) {
+		ll l, r;
+		scanf("%I64d %I64d", &l, &r);
+		printf("%d\n", int(upper_bound(all(res), r) - lower_bound(all(res), l)));
+	}
+
+	return 0;
+}
+
+
+/*
+const int N = 3e5 + 5;
+int a[N], b[N];
+
+int main()
+{
 	int n, m;
-	cin >> n;
-	vector<int> a(n);
+	scanf("%d", &n);
 	ll sum = 0;
 	rep(i, 0, n)
-		cin >> a[i], sum += a[i];
-	cin >> m;
-	vector<int> b(m);
+		scanf("%d", a+i), sum += a[i];
+	scanf("%d", &m);
 	rep(i, 0, m)
-		cin >> b[i], sum -= b[i];
+		scanf("%d", b+i), sum -= b[i];
 
 	if (sum != 0) {
-		cout << -1 << endl;
+		puts("-1");
 		return 0;
 	}
 
@@ -69,10 +102,11 @@ int main()
 		}
 	}
 
-	cout << res << endl;
+	printf("%d\n", res);
 
 	return 0;
 }
+*/
 
 /*
 int main()

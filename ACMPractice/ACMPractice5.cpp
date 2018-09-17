@@ -22,7 +22,6 @@
 #include <tuple>
 using namespace std;
 
-
 #define FASTIO ios::sync_with_stdio(false), cin.tie(nullptr);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define repn(i, n) for(int i=1; i <=n; ++i)
@@ -38,6 +37,207 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	int n;
+	cin >> n;
+	
+	vector<int> dp(8, INF);
+
+	dp[0] = 0;
+
+	rep(i, 0, n) {
+		int cost;
+		string s;
+		cin >> cost >> s;
+
+		int sta = 0;
+		for (auto c : s)
+			sta |= 1<<(c - 'A');
+
+		dp[sta] = min(dp[sta], cost);
+	}
+
+	rep(i, 1, 8) rep(j, 1, 8)
+		dp[i | j] = min(dp[i | j], dp[i] + dp[j]);
+
+	if (dp[7] == INF)
+		cout << -1;
+	else
+		cout << dp[7];
+
+	return 0;
+}
+
+
+/*
+int up(int a, int b) {
+	if (a % b != 0)
+		return a / b + 1;
+	return a / b;
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	
+	vector<int> a(n);
+	int total = 0;
+	rep(i, 0, n)
+		cin >> a[i], total += a[i];
+
+	int mink = max(*max_element(all(a)), up(total + m, n));
+	int maxk = *max_element(all(a)) + m;
+
+	cout << mink << " " << maxk << endl;
+	return 0;
+}
+*/
+
+/*
+const int N = 2e5 + 5;
+int sum[N];
+pii v[N];
+int n, h;
+
+int getH(int l, int r) {
+	int lo = lower_bound(v, v + n, pii(l, -1)) - v;
+	int up = lower_bound(v, v + n, pii(r, -1)) - v;
+
+	int s = sum[up] - sum[lo];
+	if (lo > 0)
+		s += max(0, v[lo - 1].second - l);
+
+	return r - l - s;
+}
+
+int main()
+{
+	scanf("%d%d", &n, &h);
+
+	rep(i, 0, n)
+		scanf("%d%d", &v[i].first, &v[i].second);
+
+	sum[0] = 0;
+	rep(i, 0, n)
+		sum[i + 1] = sum[i] + (v[i].second - v[i].first);
+
+	int ans = 0;
+	rep(i, 0, n) {
+		int end = v[i].second + 1;
+
+		int l = -(h + 1), r = end;
+
+		while (r - l > 1) {
+			int mid = (l + r) >> 1;
+			if (getH(mid, end) > h)
+				l = mid;
+			else
+				r = mid;
+		}
+
+		ans = max(ans, end - r);
+	}
+
+	printf("%d\n", ans);
+
+	return 0;
+}
+*/
+
+/*
+const int N = 2e5 + 5;
+
+int a[N], ans[N];
+
+int main()
+{
+	int n, m, d;
+	scanf("%d%d%d", &n, &m, &d);
+
+	set<int> s;
+	map<int, int> id;
+	rep(i, 0, n)
+		scanf("%d", a + i), s.insert(a[i]), id[a[i]] = i + 1;
+	
+	int curday = 1, last = -1;
+	while (!s.empty()) {
+		auto now = s.begin();
+		last = *now;
+		ans[id[last]] = curday;
+		s.erase(now);
+
+		while (1)
+		{
+			now = s.lower_bound(last + d + 1);
+			if (now == s.end())
+				break;
+			last = *now;
+			ans[id[last]] = curday;
+			s.erase(now);
+		}
+
+		curday++;
+	}
+
+	int res = *max_element(ans + 1, ans + n + 1);
+	printf("%d\n", res);
+	rep(i, 1, n + 1)
+		printf("%d ", ans[i]);
+
+	return 0;
+}
+*/
+
+/*
+ll gcd(ll a, ll b) {
+	if (a < b) swap(a, b);
+	if (b == 0) return a;
+	return gcd(b, a % b);
+}
+
+int main()
+{
+	ll a, b, x, y;
+	cin >> a >> b >> x >> y;
+
+	ll t = gcd(x, y);
+	x /= t;
+	y /= t;
+
+	ll ans = 0;
+	ans = (ll)min(double(a) / x, double(b) / y);
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+int a[1005];
+
+int main()
+{
+	int n;
+	cin >> n;
+	rep(i, 0, n)
+		cin >> a[i];
+	sort(a, a+n);
+	int ans = 0;
+	rep(i, 1, n) 
+		ans += a[i] - a[i - 1] - 1;
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+
+/*
 vector<ll> res;
 
 void brute(int pos, int cnt, ll cur) {
@@ -50,7 +250,7 @@ void brute(int pos, int cnt, ll cur) {
 
 	if (cnt < 3)
 		rep(i, 1, 10)
-			brute(pos + 1, cnt + 1, cur * 10 + i);	
+			brute(pos + 1, cnt + 1, cur * 10 + i);
 }
 
 
@@ -69,7 +269,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 const int N = 3e5 + 5;
@@ -326,13 +526,13 @@ int main()
 
 	map<char,int> s;
 
-	rep(i, 0, n) 
+	rep(i, 0, n)
 		s[str[i]]++;
 
 	int ans = INF;
-	for (auto i : s) 
+	for (auto i : s)
 		ans = min(ans, i.second);
-	
+
 	if (s.size() < k)
 		ans = 0;
 	else
@@ -355,13 +555,13 @@ int main()
 
 	while (!flag && l < r) {
 		ll mid = (l + r + 1) >> 1;
-		
+
 		cout << l << " " << mid << endl;
 		cout.flush();
 		string ans;
 		cin >> ans;
 
-		if (ans[0] == 'Y') 
+		if (ans[0] == 'Y')
 			r = max(l, min(mid + k,n));
 		else
 			l = min(r, max(mid - k,1ll));

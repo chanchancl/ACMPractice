@@ -37,6 +37,77 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct student {
+	int score;
+	struct student *next;
+}linklist;
+linklist *create(int n) {
+	linklist *head, *node, *end;//定义头结点，普通节点，尾部节点；
+	head = (linklist*)malloc(sizeof(linklist));
+	end = head;
+	for (int i = 0; i<n; i++) {
+		node = (linklist*)malloc(sizeof(linklist));
+		scanf("%d", &node->score);
+		end->next = node;
+		end = node;
+	}
+	end->next = NULL;
+	return head;
+}
+void change(linklist *list, int n) {
+	linklist *t = list;
+	int i = 0;
+	while (i < n && t != NULL) {
+		t = t->next;
+		i++;
+	}
+	if (t != NULL) {
+		printf("输入要修改的值 : ");
+		scanf("%d", &t->score);
+	}
+	else {
+		printf("节点不存在\n");
+	}
+}
+void printlist(linklist *phead) {
+	
+	if (NULL == phead) {
+		printf("链表为空\n");
+	}
+	else
+	{
+		// 跳过头结点
+		phead = phead->next;
+		while (NULL != phead) {
+			printf("%d ", phead->score);
+			phead = phead->next;
+		}
+		printf("\n");
+	}
+}
+int main() {
+	int n, m;
+	printf("请输入链表的长度 : ");
+	scanf("%d", &n);
+	printf("请输入%d个整数(空格分隔) : ", n);
+	linklist *list = create(n);
+	while (1) {
+		printf("请输入要修改第几个元素(从1开始, 输入-1退出程序) : ");
+		scanf("%d", &m);
+		if (m == -1)
+			return 0;
+		change(list, m);
+		printf("修改过后的链表为 : ");
+		printlist(list);
+	}
+	
+	return 0;
+}
+
+
+/*
 int main()
 {
 	int n;
@@ -68,7 +139,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int up(int a, int b) {

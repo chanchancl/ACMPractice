@@ -37,74 +37,164 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
-#include<stdio.h>
-#include<stdlib.h>
-typedef struct student {
-	int score;
-	struct student *next;
-}linklist;
-linklist *create(int n) {
-	linklist *head, *node, *end;//定义头结点，普通节点，尾部节点；
-	head = (linklist*)malloc(sizeof(linklist));
-	end = head;
-	for (int i = 0; i<n; i++) {
-		node = (linklist*)malloc(sizeof(linklist));
-		scanf("%d", &node->score);
-		end->next = node;
-		end = node;
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	map<int, int> cnt;
+	rep(i, 0, n) {
+		cin >> v[i];
+		cnt[v[i]]++;
 	}
-	end->next = NULL;
-	return head;
-}
-void change(linklist *list, int n) {
-	linklist *t = list;
-	int i = 0;
-	while (i < n && t != NULL) {
-		t = t->next;
-		i++;
+
+	// cnt odd
+	int bf = 0;
+	for (auto t : cnt) if (t.second % 2 == 1)
+		bf++;
+
+	if (bf != 0 && bf % 2 == 1) {
+		cout << "NO" << endl;
+		return 0;
 	}
-	if (t != NULL) {
-		printf("输入要修改的值 : ");
-		scanf("%d", &t->score);
-	}
-	else {
-		printf("节点不存在\n");
-	}
-}
-void printlist(linklist *phead) {
-	
-	if (NULL == phead) {
-		printf("链表为空\n");
-	}
-	else
-	{
-		// 跳过头结点
-		phead = phead->next;
-		while (NULL != phead) {
-			printf("%d ", phead->score);
-			phead = phead->next;
+
+	cout << "YES" << endl;
+	string out;
+
+	map<int, int> cnt2;
+	int abf = 0;
+
+	rep(i, 0, n) {
+		if (cnt[v[i]] % 2 == 0) {
+			out.push_back('A');
 		}
-		printf("\n");
+		else {
+			if (2 * abf < bf) {
+				if (cnt2[v[i]] == 0) {
+					out.push_back('A');
+					cnt2[v[i]] = 1;
+					abf++;
+				}
+				else
+					out.push_back('B');
+			}
+			else {
+				if (cnt2[v[i]] == 0) {
+					out.push_back('B');
+					cnt2[v[i]] = 2;
+				}
+				else if (cnt2[v[i]] == 1)
+					out.push_back('B');
+				else if (cnt2[v[i]] == 2)
+					out.push_back('A');
+				
+			}
+		}
 	}
-}
-int main() {
-	int n, m;
-	printf("请输入链表的长度 : ");
-	scanf("%d", &n);
-	printf("请输入%d个整数(空格分隔) : ", n);
-	linklist *list = create(n);
-	while (1) {
-		printf("请输入要修改第几个元素(从1开始, 输入-1退出程序) : ");
-		scanf("%d", &m);
-		if (m == -1)
-			return 0;
-		change(list, m);
-		printf("修改过后的链表为 : ");
-		printlist(list);
-	}
-	
+
+	cout << out << endl;
 	return 0;
 }
+
+
+/*
+int main()
+{
+	string in;
+	int T;
+	cin >> T;
+	while (T--) {
+		cin >> in;
+		vector<pii> v;
+		bool ok = false;
+		int up, low, dig;
+		for (int i = 0; i + 2 < in.size(); i++) {
+			up = low = dig = 0;
+			for (int j = 0; j < 3; j++) {
+				if (islower(in[i + j])) low = 1;
+				else if (isupper(in[i + j])) up = 1;
+				else if (isdigit(in[i + j])) dig = 1;
+			}
+			if (low + up + dig == 3) {
+				cout << in << endl;
+				ok = true;
+				break;
+			}
+			v.push_back({ low + up + dig, i });
+		}
+		if (ok) continue;
+		sort(all(v));
+		auto t = v.back();
+		up = low = dig = 0;
+		for (int j = t.second; j < t.second + 3; j++) {
+			if (islower(in[j])) low++;
+			else if (isupper(in[j])) up++;
+			else if (isdigit(in[j])) dig++;
+		}
+		if (t.first == 2) {
+			if (up == 2) {
+				for (int j = t.second; j < t.second + 3; j++) {
+					if (isupper(in[j])) {
+						if (low == 0) in[j] = 'a';
+						else in[j] = '0';
+						break;
+					}
+				}
+			}
+			else if (low == 2) {
+				for (int j = t.second; j < t.second + 3; j++) {
+					if (islower(in[j])) {
+						if (up == 0) in[j] = 'A';
+						else in[j] = '0';
+						break;
+					}
+				}
+			}
+			else {
+				for (int j = t.second; j < t.second + 3; j++) {
+					if (isdigit(in[j])) {
+						if (up == 0) in[j] = 'A';
+						else in[j] = 'a';
+						break;
+					}
+				}
+			}
+		}
+		else {
+			if (up == 3) {
+				in[t.second] = 'a';
+				in[t.second + 1] = '0';
+			}
+			else if (low == 3) {
+				in[t.second] = 'A';
+				in[t.second + 1] = '0';
+			}
+			else {
+				in[t.second] = 'A';
+				in[t.second + 1] = 'a';
+			}
+		}
+		cout << in << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll l, r;
+	cin >> l >> r;
+
+	cout << "YES" << endl;
+	for (ll i = l; i < r; i+= 2) {
+		cout << i << " " << i + 1 << endl;
+	}
+
+	return 0;
+}
+*/
 
 
 /*

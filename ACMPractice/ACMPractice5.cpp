@@ -39,6 +39,145 @@ using namespace std;
 
 int main()
 {
+
+	return 0;
+}
+
+/*
+const int N = 3e5 + 10;
+int v[N], g[N];
+
+int gcd(int a, int b) {
+	if (a < b) swap(a, b);
+	if (b == 0) return a;
+	return gcd(b, a % b);
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	int ans = 0, tot = 0;
+	set<int> s;
+	rep(i, 0, n) {
+		int t;
+		scanf("%d", v + i);
+		s.insert(v[i]);
+	}
+	if (s.size() == 1) {
+		printf("-1\n");
+		return 0;
+	}
+	sort(v, v + tot);
+
+	g[n-1] = v[n-1];
+	pre(i, n-2, 0) {
+		g[i] = gcd(g[i + 1], v[i]);
+	}
+
+	rep(i, 1, n-1) {
+		ans++;
+		if (g[i] > g[0]) {
+			printf("%d\n", ans);
+			return 0;
+		}
+	}
+	printf("-1\n");
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<ll> v;
+	rep(i, 0, n) {
+		ll a, b;
+		cin >> a >> b;
+		v.push_back(a + b);
+	}
+	sort(all(v));
+	ll t = v.back();
+
+	cout << t << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	for (int i = 1;; i++) {
+
+		for (int j = 1;; j++) {
+			if ((n - i - j) % 3 != 0) {
+				printf("%d %d %d\n", i, j, n - i - j);
+				return 0;
+			}
+
+			if ((j + 1) % 3 == 0)
+				j++;
+		}
+		if ((i + 1) % 3 == 0)
+			i++;
+	}
+
+	return 0;
+}
+*/
+
+/*
+const int MOD = 998244353;
+ll dp[1005][2010][4];
+
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	dp[1][1][0] = dp[1][2][2] = dp[1][2][1] = dp[1][1][3] = 1;
+	rep(i, 2, n + 1) rep(j, 1, 2 * n + 1) {
+		dp[i][j][0] = dp[i - 1][j][0] 
+			+ dp[i - 1][j][1] 
+			+ dp[i - 1][j][2]
+			+ dp[i - 1][j - 1][3];
+		dp[i][j][1] = dp[i - 1][j - 1][0]
+			+ dp[i - 1][j][1]
+			+ (j >= 2 ? dp[i - 1][j - 2][2] : 0)
+			+ dp[i - 1][j - 1][3];
+		dp[i][j][2] = dp[i - 1][j - 1][0]
+			+  (j >= 2 ? dp[i - 1][j - 2][1] : 0)
+			+ dp[i - 1][j][2]
+			+ dp[i - 1][j - 1][3];
+		dp[i][j][3] = dp[i - 1][j - 1][0]
+			+ dp[i - 1][j][1]
+			+ dp[i - 1][j][2]
+			+ dp[i - 1][j][3];
+		rep(t, 0, 4)
+			dp[i][j][t] %= MOD;
+	}
+
+	ll ans = 0;
+	rep(i, 0, 4)
+		ans += dp[n][k][i];
+
+	ans %= MOD;
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	vector<int> v(n);
@@ -48,54 +187,40 @@ int main()
 		cnt[v[i]]++;
 	}
 
-	// cnt odd
-	int bf = 0;
-	for (auto t : cnt) if (t.second % 2 == 1)
-		bf++;
-
-	if (bf != 0 && bf % 2 == 1) {
-		cout << "NO" << endl;
-		return 0;
-	}
-
-	cout << "YES" << endl;
-	string out;
-
-	map<int, int> cnt2;
-	int abf = 0;
-
+	int size1, size2;
+	size1 = size2 = 0;
 	rep(i, 0, n) {
-		if (cnt[v[i]] % 2 == 0) {
-			out.push_back('A');
-		}
-		else {
-			if (2 * abf < bf) {
-				if (cnt2[v[i]] == 0) {
-					out.push_back('A');
-					cnt2[v[i]] = 1;
-					abf++;
-				}
-				else
-					out.push_back('B');
+		if (cnt[v[i]] == 1) size1++;
+		else if (cnt[v[i]] > 2) size2++;
+	}
+	
+	bool ok = false, bu = false;
+	if (size1 % 2 == 0) ok = true;
+	else if (size2 > 0) ok = true, bu = true;
+
+	string ans;
+	puts(ok ? "YES" : "NO");
+	if (ok) {
+		int single = 0;
+		
+		rep(i, 0, n) {
+			if (cnt[v[i]] == 1) {
+				ans.push_back(single & 1 ? 'A' : 'B');
+				single++;
 			}
-			else {
-				if (cnt2[v[i]] == 0) {
-					out.push_back('B');
-					cnt2[v[i]] = 2;
-				}
-				else if (cnt2[v[i]] == 1)
-					out.push_back('B');
-				else if (cnt2[v[i]] == 2)
-					out.push_back('A');
-				
+			else if (cnt[v[i]] > 2 && bu) {
+				bu = false;
+				ans.push_back('A');
 			}
+			else
+				ans.push_back('B');
 		}
+		cout << ans << endl;
 	}
 
-	cout << out << endl;
 	return 0;
 }
-
+*/
 
 /*
 int main()
@@ -108,6 +233,16 @@ int main()
 		vector<pii> v;
 		bool ok = false;
 		int up, low, dig;
+		up = low = dig = 0;
+		for (int j = 0; j < 3; j++) {
+			if (islower(in[i + j])) low = 1;
+			else if (isupper(in[i + j])) up = 1;
+			else if (isdigit(in[i + j])) dig = 1;
+		}
+		if (up*low*dig != 0){
+			cout << in;
+			continue;
+		}
 		for (int i = 0; i + 2 < in.size(); i++) {
 			up = low = dig = 0;
 			for (int j = 0; j < 3; j++) {

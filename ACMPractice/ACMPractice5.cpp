@@ -44,6 +44,43 @@ int main()
 }
 
 /*
+int f(int a, int b) {
+	return a*10 + b;
+}
+
+int main()
+{
+	auto t = bind(f, 1, std::placeholders::_1);
+	// auto t = bind(f, std::placeholers::_1, 1);
+	rep(i, 0, 10)
+		cout << t(i) << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	// 11 = 2 + 9
+	// 88 + 0*9
+	int n;
+	string str;
+	cin >> n >> str;
+
+	int n8 = count(all(str), '8');
+	int res = n / 11;
+	int ans = min(n8, res);
+
+	if (n < 11)
+		ans = 0;
+
+	cout << ans << endl;
+	return 0;
+}
+*/
+
+/*
 const int N = 3e5 + 10;
 int v[N], g[N];
 

@@ -39,9 +39,47 @@ using namespace std;
 
 int main()
 {
+	int n, r;
+	cin >> n >> r;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	int last = -1;
+	int ans = 0;
+	while (last < n - 1) {
+		int nt = -1;
+		for (int i = n - 1; i > max(-1, last - r + 1); --i) {
+			if (v[i] == 1 && i - r <= last) {
+				nt = i;
+				break;
+			}
+		}
+		if (nt == -1) {
+			cout << -1 << endl;
+			return 0;
+		}
+		last = nt + r - 1;
+		ans++;
+	}
+	cout << ans << endl;
 
 	return 0;
 }
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int L, v, l, r;
+		cin >> L >> v >> l >> r;
+		cout << L / v - (r/v - (l-1)/v) << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 int f(int a, int b) {

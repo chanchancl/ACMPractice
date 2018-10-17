@@ -39,6 +39,52 @@ using namespace std;
 
 int main()
 {
+	int n;
+	cin >> n;
+	vector<int> v(n), st(n);
+	rep(i, 0, n) {
+		cin >> v[i];
+		st[i] = v[i];
+	}
+	sort(all(st));
+	int start = 0, end = n - 1;
+	while (start < n && v[start] == st[start])start++;
+	while (end >= 0 && v[end] == st[end]) end--;
+	bool ok = true;
+	while (start < end) {
+		if (st[start] != v[end]) {
+			ok = false;
+			break;
+		}
+		start++, end--;
+	}
+	if (ok)
+		cout << "yes" << endl;
+	else
+		cout << "no" << endl;
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n) {
+		int i = 0;
+		while (i*(i + 3) / 2 < n) {
+			i++;
+		}
+		cout << n - 2*(i-1) << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, r;
 	cin >> n >> r;
 	vector<int> v(n);
@@ -65,7 +111,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

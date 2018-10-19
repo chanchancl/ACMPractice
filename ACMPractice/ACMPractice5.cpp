@@ -39,6 +39,166 @@ using namespace std;
 
 int main()
 {
+	cout << atoll(" 123");
+
+	return 0;
+}
+
+
+/*
+ll S = 0;
+int tmp[3];
+int sumCheck(vector<ll>& A, int start, int end, int arr[], int cnt) {
+	if (cnt == 2) {
+		int sum = arr[0] + arr[1] + arr[2];
+		if (sum == S)
+			return 1;
+	}
+	if (start > end || cnt > 2)
+		return 0;
+
+	int i = start;
+	arr[++cnt] = A[i];
+	if (sumCheck(A, start + 1, end, arr, cnt)) return 1;
+	arr[cnt] = 0;
+	cnt--;
+	if (sumCheck(A, start + 1, end, arr, cnt)) return 1;
+}
+
+int main()
+{
+	string str;
+	vector<ll> v;
+	
+	while (cin >> str) {
+		//cout << "\t" << str << endl;
+		if (str.find(',') != string::npos) {
+			size_t pos = str.find(',');
+			string n1 = str.substr(0, pos);
+			string n2 = str.substr(pos + 1);
+
+			ll sum = atoll(n2.c_str());
+			v.push_back(atoll(n1.c_str()));
+			S = sum;
+			//cout << n1 << endl << n2 << endl;
+			//cout << sum << endl;
+			sort(all(v));
+
+			if (v.size() < 3) {
+				cout << "False";
+				return 0;
+			}
+
+			memset(tmp, 0, sizeof(tmp));
+			if (sumCheck(v, 0, v.size()-1, tmp, -1)) {
+				cout << "True" << endl;
+				return 0;
+			}
+		}
+		else {
+			v.push_back(atoll(str.c_str()));
+		}
+	}
+
+	cout << "False";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		ll s, a, b, c;
+		cin >> s >> a >> b >> c;
+		ll bar = 0;
+		bar = s / (a*c);
+		s %= a * c;
+		bar = bar * (a + b);
+		bar += s / c;
+		cout << bar << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t;
+	cin >> t;
+	while (t--) {
+		ll x, t;
+		cin >> x;
+		t = 0;
+		while (x != 0) {
+			if (x % 2 == 1)
+				t++;
+			x /= 2;
+		}
+		cout << (1 << t) << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<int> v(3);
+	rep(i, 0, 3) cin >> v[i];
+	sort(all(v));
+
+	int ans = 0;
+	while (v[0] + v[1] <= v[2]) {
+		v[0]++;
+		ans++;
+		sort(all(v));
+	}
+	cout << ans << endl;
+	return 0;
+}
+*/
+
+/*
+class MyClass
+{
+public:
+	MyClass(int i = 0)
+	{
+		cout << i;
+	}
+	MyClass(const MyClass &x)
+	{
+		cout << 2;
+	}
+	MyClass &operator=(const MyClass &x)
+	{
+		cout << 3;
+		return *this;
+	}
+	~MyClass()
+	{
+		cout << 4;
+	}
+};
+int main()
+{
+	MyClass obj1(1), obj2(2);
+	MyClass obj3(obj1);
+	obj3 = obj1;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	vector<int> v(n), st(n);
@@ -65,6 +225,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

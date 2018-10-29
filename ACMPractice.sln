@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataStructPractice", "DataS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KMPmatch", "KMPmatch\KMPmatch.vcxproj", "{8187B6E0-1BDD-419E-9290-128B338FACFB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuckSort", "QuckSort\QuckSort.vcxproj", "{426B834A-6ED5-4E42-9532-F2ADE6133735}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{8187B6E0-1BDD-419E-9290-128B338FACFB}.Release|x64.Build.0 = Release|x64
 		{8187B6E0-1BDD-419E-9290-128B338FACFB}.Release|x86.ActiveCfg = Release|Win32
 		{8187B6E0-1BDD-419E-9290-128B338FACFB}.Release|x86.Build.0 = Release|Win32
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Debug|x64.ActiveCfg = Debug|x64
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Debug|x64.Build.0 = Debug|x64
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Debug|x86.ActiveCfg = Debug|Win32
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Debug|x86.Build.0 = Debug|Win32
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Release|x64.ActiveCfg = Release|x64
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Release|x64.Build.0 = Release|x64
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Release|x86.ActiveCfg = Release|Win32
+		{426B834A-6ED5-4E42-9532-F2ADE6133735}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

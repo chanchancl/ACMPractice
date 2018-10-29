@@ -39,8 +39,8 @@ using namespace std;
 
 int main()
 {
-	cout << atoll(" 123");
-
+	rep(i, 0, 10)
+		cout << i << endl;
 	return 0;
 }
 

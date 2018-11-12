@@ -39,10 +39,53 @@ using namespace std;
 
 int main()
 {
-	rep(i, 0, 10)
-		cout << i << endl;
+
 	return 0;
 }
+
+
+/*
+int main()
+{
+	char n2s[][15] = {
+		"ling","yi","er","san","si",
+		"wu","liu","qi","ba","jiu"
+	};
+
+	string in;
+	while (cin >> in) {
+		for (int i = 0; i < (int)in.size(); i++) {
+			if (in[i] == '-')
+				cout << "fu";
+			else
+				cout << n2s[in[i] - '0'];
+			if (i != (int)in.size() - 1)
+				cout << " ";
+		}
+	}
+
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		ll s, a, b, c;
+		cin >> s >> a >> b >> c;
+		ll bar = 0;
+		bar = s / (a*c);
+		s %= a * c;
+		bar = bar * (a + b);
+		bar += s / c;
+		cout << bar << endl;
+	}
+
+	return 0;
+}
+*/
 
 
 /*
@@ -106,25 +149,6 @@ int main()
 }
 */
 
-/*
-int main()
-{
-	int T;
-	cin >> T;
-	while (T--) {
-		ll s, a, b, c;
-		cin >> s >> a >> b >> c;
-		ll bar = 0;
-		bar = s / (a*c);
-		s %= a * c;
-		bar = bar * (a + b);
-		bar += s / c;
-		cout << bar << endl;
-	}
-
-	return 0;
-}
-*/
 
 /*
 int main()

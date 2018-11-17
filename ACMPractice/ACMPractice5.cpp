@@ -39,10 +39,62 @@ using namespace std;
 
 int main()
 {
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		double h, w, wbiao;
+		cin >> h >> w;
+		// w 由市斤换为 公斤
+		w = w * 0.5;
+		wbiao = (h - 100)*0.9;
+		if (abs(w - wbiao) < wbiao*0.1)
+			cout << "You are wan mei!";
+		else if (w < wbiao)
+			cout << "You are tai shou le!";
+		else
+			cout << "You are tai pang le!";
+		if (i != n - 1)
+			cout << endl;
+	}
 
 	return 0;
 }
 
+
+/*
+int main()
+{
+	int in, out, t;
+	out = 0;
+	cin >> in;
+	t = in;
+	while (t != 0) {
+		out = out * 10 + t % 10;
+		t /= 10;
+	}
+	if (in == out)
+		cout << "yes";
+	else
+		cout << "no";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string in, rev;
+	cin >> in;
+	rev = string(in.rbegin(), in.rend());
+	if (in == rev)
+		cout << "yes";
+	else
+		cout << "no";
+
+	return 0;
+}
+*/
 
 /*
 int main()

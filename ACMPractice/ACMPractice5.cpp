@@ -39,6 +39,27 @@ using namespace std;
 
 int main()
 {
+	double in;
+
+	while (cin >> in) {
+		cout << setprecision(7) << fixed;
+		if (in <= 2.0)
+			cout << 7;
+		else if (in <= 15)
+			cout << 7 + ceil(in - 2) * 1.5;
+		else {
+			cout << 7 + (15 - 2)*1.5 + ceil(in - 15)*2.1;
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	for (int i = 0; i < n; i++) {
@@ -59,7 +80,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

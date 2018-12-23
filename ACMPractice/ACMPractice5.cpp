@@ -39,6 +39,42 @@ using namespace std;
 
 int main()
 {
+	unsigned int x = ~0;
+	unsigned int y = (unsigned int)-1;
+
+	printf("%x\n%x\n", x, y);
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+
+	while (T--) {
+		int n, m;
+		cin >> n >> m;
+
+		rep(i, 0, n) {
+			rep(i, 0, m) 
+				cout << "/\\";
+			cout << endl;
+			rep(i, 0, m) 
+				cout << "\\/";
+			cout << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	double in;
 
 	while (cin >> in) {
@@ -55,7 +91,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

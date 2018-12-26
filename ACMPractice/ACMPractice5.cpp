@@ -37,6 +37,60 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int gcd(int a, int b) { return b?gcd(b,a%b):a;}
+
+#define MN 300000
+#define MX 15000000
+
+int vis[MX+5], a[MX+5], flag[MX+5];
+
+int main()
+{
+	int n, gc = 0;
+	scanf("%d", &n);
+	repn(i, n) {
+		scanf("%d", &a[i]);
+		vis[a[i]]++;
+		if(!gc)
+			gc = a[i];
+		else
+			gc = gcd(gc, a[i]);
+	}
+
+	int ans = 0;
+	for(int i = gc + 1; i <= MX; i++) {
+		if (!flag[i]) {
+			int cnt = 0;
+			for(int j = i; j <= MX; j += i) {
+				cnt += vis[j];
+				flag[j] = 1;
+			}
+			ans = max(ans, cnt);
+		}
+	}
+
+	printf("%d", ans ? n-ans : -1);
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int in;
+	cin >> in;
+
+	if ((in-2) % 3 != 0)
+		cout << "1 1 " << in-2 ;
+	else
+		cout << "1 2 " << in-3;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	unsigned int x = ~0;
@@ -46,7 +100,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()
@@ -101,7 +155,7 @@ int main()
 	for (int i = 0; i < n; i++) {
 		double h, w, wbiao;
 		cin >> h >> w;
-		// w ÓÉÊÐ½ï»»Îª ¹«½ï
+		// w ï¿½ï¿½ï¿½Ð½ï»»Îª ï¿½ï¿½ï¿½ï¿½
 		w = w * 0.5;
 		wbiao = (h - 100)*0.9;
 		if (abs(w - wbiao) < wbiao*0.1)

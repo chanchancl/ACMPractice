@@ -39,6 +39,29 @@ using namespace std;
 
 int main()
 {
+	map<int, pair<string, int>> mp;
+
+	int n;
+	cin >> n;
+	rep(i, 0, n) {
+		string num;
+		int a, b;
+		cin >> num >> a >> b;
+		mp[a] = make_pair(num, b);
+	}
+	cin >> n;
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		cout << mp[t].first << " " << mp[t].second << endl;
+	}
+
+	return 0;
+}
+
+/*
+int main()
+{
 	unsigned int x = ~0;
 	unsigned int y = (unsigned int)-1;
 
@@ -46,7 +69,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

@@ -37,6 +37,33 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	int n;
+	cin >> n;
+	ll tx, ty;
+	tx = ty = 0;
+	rep(i, 0, 2 * n) {
+		int a, b;
+		cin >> a >> b;
+		tx += a, ty += b;
+	}
+	tx /= n, ty /= n;
+	cout << tx << " " << ty;
+	return 0;
+}
+
+/*
+int main() {
+	int a, b, c;
+	cin >> a >> b >> c;
+	int t = min(min(a, b - 1), c - 2);
+	cout << 3 * t + 3;
+	return 0;
+}
+*/
+
+/*
 int gcd(int a, int b) { return b?gcd(b,a%b):a;}
 
 #define MN 300000
@@ -73,7 +100,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

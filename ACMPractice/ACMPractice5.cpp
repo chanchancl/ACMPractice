@@ -39,6 +39,48 @@ using namespace std;
 
 int main()
 {
+	int n, k;
+	cin >> n >> k;
+	map<int, int> ans;
+	queue<int> q;
+	rep(i, 0, 31) {
+		if (n & (1 << i)) {
+			if (i > 0) q.push(1 << i);
+			ans[1 << i]++;
+		}
+	}
+	if (ans.size() > k) {
+		cout << "NO";
+		return 0;
+	}
+
+	int cnt = ans.size();
+	while (cnt < k && !q.empty()) {
+		int z = q.front();
+		q.pop();
+		ans[z]--;
+		ans[z / 2] += 2;
+		if (z / 2 > 1) {
+			q.push(z / 2);
+			q.push(z / 2);
+		}
+		cnt++;
+	}
+	if (cnt < k) {
+		cout << "NO";
+		return 0;
+	}
+	cout << "YES" << endl;
+	for (auto s : ans)
+		for (int i = 0; i < s.second; i++)
+			cout << s.first << " ";
+	cout << endl;
+	return 0;
+}
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	ll tx, ty;
@@ -52,6 +94,7 @@ int main()
 	cout << tx << " " << ty;
 	return 0;
 }
+*/
 
 /*
 int main() {

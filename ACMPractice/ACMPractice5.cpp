@@ -39,6 +39,19 @@ using namespace std;
 
 int main()
 {
+	int T,l,r;
+	cin >> T;
+	rep(i, 0, T) {
+		cin >> l >> r;
+		cout << l << " " << 2 * l << endl;
+	}
+
+	return 0;
+}
+
+/*
+int main()
+{
 	int n, k;
 	cin >> n >> k;
 	map<int, int> ans;
@@ -77,6 +90,7 @@ int main()
 	cout << endl;
 	return 0;
 }
+*/
 
 /*
 int main()

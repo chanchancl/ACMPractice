@@ -39,6 +39,72 @@ using namespace std;
 
 int main()
 {
+	int *grtfish, *lastfish;
+	grtfish = (int*)malloc(1);
+	lastfish = grtfish;
+	rep(i, 2, 10) {
+		grtfish = (int*)realloc(grtfish, i);
+		if (lastfish != grtfish || 1) {
+			printf("size: %6d, lastfish: %10u, grtfish: %10u\n", i, lastfish, grtfish);
+
+			lastfish = grtfish;
+		}
+		else {
+			if (i % 100 == 0) {
+				printf("Yeah!\n");
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+/*
+int main() 
+{
+	vector<int> intfish;
+	int lastcap = -1;
+	void* lastbegin = nullptr;
+	rep(i, 0, 10000) {
+		intfish.push_back(i);
+		if (lastbegin != &(*intfish.begin())) {
+			printf("%7d %7d %10u %10u\n", intfish.size(), intfish.capacity(), lastbegin, &(*intfish.begin()));
+
+			lastbegin = &(*intfish.begin());
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main() 
+{
+	vector<int> morefish;
+
+	int lasti   = -1;
+	int lastcap =  0;
+	rep(i, 0, 10000) {
+		morefish.push_back(i);
+		//printf("len: %d, cap: %d\n", morefish.size(), morefish.capacity());
+		if (lastcap != morefish.capacity()) {
+			int diffi = i - lasti;
+			int diffcap = morefish.capacity() - lastcap;
+			printf("    %3d %3d %2.2f\n", diffi, diffcap, 1.0*diffcap / lastcap);
+
+			lasti = i, lastcap = morefish.capacity();
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int T,l,r;
 	cin >> T;
 	rep(i, 0, T) {
@@ -48,6 +114,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

@@ -37,6 +37,179 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main() 
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+
+	bool yes = false;
+	rep(i, 0, (1 << n)-1) {
+		int sum = 0;
+		int t = i;
+		rep(j, 0, n) {
+			if (t&1) sum += v[j];
+			else sum -= v[j];
+			t >>= 1;
+		}
+		if (abs(sum) % 360 == 0) {
+			yes = true;
+			break;
+		}
+	}
+
+	puts(yes ? "YES" : "NO");
+
+	return 0;
+}
+
+/*
+int main() 
+{
+	char rink, suit;
+	cin >> rink >> suit;
+
+	bool yes = false;
+	rep(i, 0, 5) {
+		char nr, ns;
+		cin >> nr >> ns;
+		if (nr == rink || ns == suit) {
+			yes = true;
+			break;
+		}
+	}
+	puts(yes ? "YES" : "NO");
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int q;
+	cin >> q;
+	while(q--){
+		ll n,a,b;
+		cin >> n >> a >> b;
+		if (2*a <= b)
+			cout << n * a;
+		else {
+			if (n % 2 == 0)
+				cout << n / 2 * b;
+			else
+				cout << n / 2 * b + a;
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+
+/*
+void rem(string &s, const string &c) {
+	auto pos = s.find(c);
+	if (pos == string::npos) {
+		cout << -1 << endl;
+		exit(0);
+	}
+	s.erase(0, pos + 1);
+}
+
+int main()
+{
+	string in;
+	cin >> in;
+
+	int ans = -1;
+
+	rem(in, "[");
+	rem(in, ":");
+	reverse(all(in));
+	rem(in, "]");
+	rem(in, ":");
+
+	cout << count(all(in), '|') + 4 << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	rep(i, 0, n) {
+		int l, r, d;
+		cin >> l >> r >> d;
+		int ans = d;
+		if (d > r)
+			ans = d;
+		else if (d >= l)
+			ans = (r/d+1)*d;
+		else
+			ans = d;
+		cout << ans << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main() 
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+
+	bool yes = false;
+	rep(i, 0, (1 << n)-1) {
+		int sum = 0;
+		int t = i;
+		rep(j, 0, n) {
+			if (t&1) sum += v[j];
+			else sum -= v[j];
+			t >>= 1;
+		}
+		if (abs(sum) % 360 == 0) {
+			yes = true;
+			break;
+		}
+	}
+
+	puts(yes ? "YES" : "NO");
+
+	return 0;
+}
+*/
+
+/*
+int main() 
+{
+	char rink, suit;
+	cin >> rink >> suit;
+
+	bool yes = false;
+	rep(i, 0, 5) {
+		char nr, ns;
+		cin >> nr >> ns;
+		if (nr == rink || ns == suit) {
+			yes = true;
+			break;
+		}
+	}
+	puts(yes ? "YES" : "NO");
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int *grtfish, *lastfish;
@@ -58,7 +231,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main() 

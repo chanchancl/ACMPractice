@@ -41,6 +41,28 @@ int main()
 {
 	int n;
 	cin >> n;
+
+	vector<int> v(n), p(n);
+	rep(i, 0, n) cin >> v[i];
+
+	p[0] = v[0];
+	rep(i, 1, n)
+		p[i] = max(v[i], p[i-1]);
+	
+	int res = 0;
+	rep(i, 0, n) if (i + 1 == p[i])
+		res++;
+	
+	cout << res << endl;
+
+	return 0;
+}
+
+/*
+int main() 
+{
+	int n;
+	cin >> n;
 	vector<int> v(n);
 	rep(i, 0, n) cin >> v[i];
 
@@ -64,6 +86,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main() 

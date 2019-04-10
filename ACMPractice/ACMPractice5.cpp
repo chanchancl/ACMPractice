@@ -37,6 +37,146 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<int> v(2 * 100005);
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		v[t]++;
+		if (v[t] > 2) {
+			cout << "NO" << endl;
+			return 0;
+		}
+	}
+
+	cout << "YES" << endl;
+	cout << count(v.begin(), v.end(), 2) << endl;
+	for(int i = 0; i < 2 * 100005; ++i) {
+		if (v[i] == 2) {
+			--v[i];
+			cout << i << " ";
+		}
+	}
+	cout << endl << count(v.begin(), v.end(), 1) << endl;
+	for(int i = 2 * 100005; i >= 0 ; --i) {
+		if (v[i] == 1) {
+			--v[i];
+			cout << i << " ";
+		}
+	}
+	cout << endl;
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<int> odd,even;
+	int sum = 0;
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		sum += t;
+		if (t % 2 == 0) even.push_back(t);
+		else odd.push_back(t);
+	}
+
+	sort(odd.rbegin(), odd.rend());
+	sort(even.rbegin(), even.rend());
+
+	int st = min(even.size(), odd.size());
+	rep(i, 0, st) 
+		sum -= even[i] + odd[i];
+	
+	if ( even.size() > st)
+		sum -= even[st];
+	else
+		sum -= odd[st];
+
+	cout << sum << endl;
+
+	return 0;
+}
+*/
+
+/*
+int v[105];
+
+int main()
+{
+	int n;
+	cin >> n;
+	while(n--) {
+		string in;
+		cin >> in;
+		
+		memset(v, 0, sizeof(v));
+
+		int l = 1000, r = -1;
+		rep(i, 0, in.size()) {
+			int cur = in[i] - 'a';
+			v[cur]++;
+			l = min(l, cur);
+			r = max(r, cur);
+		}
+
+		bool ans = true;
+		for(int i=0; i < 100; i ++) if (v[i] >= 2) {
+			ans = false;
+			break;
+		}
+
+		if ( ans ) {
+			for(int i=l; i <= r; i++) if (v[i] == 0) {
+				ans = false;
+				break;
+			}
+		}
+
+		cout << (ans ? "Yes" : "No") << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+// 0 1 2 3 4
+vector<int> v;
+int get(int l, int r)
+{
+	if (is_sorted(v.begin() + l, v.begin() + r))
+		return r - l;
+	int ans = 1;
+	ans = max(ans, get(l, (l+r)>>1));
+	ans = max(ans, get((l+r)>>1, r));
+	return ans;
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	
+	v.resize(n);
+	rep(i, 0, n) cin >> v[i];
+	
+	cout << get(0, n) << endl;
+
+	return 0;
+}
+*/
+
+/*
 int main() 
 {
 	int n;
@@ -57,6 +197,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main() 

@@ -39,6 +39,39 @@ using namespace std;
 
 int main()
 {
+	int n, t;
+	cin >> n;
+	vector<int> a(n), cnt(200*1005);
+
+	rep(i, 0, n) {
+		cin >> a[i];
+		++cnt[a[i]];
+	}
+
+	int val = max_element(all(cnt)) - cnt.begin();
+	int pos = find(all(a), val) - a.begin();
+
+	cout << n - cnt[val] << endl;
+
+	for (int i = pos - 1; i >= 0; --i) {
+		cout << 1 + (a[i] > a[i + 1]) << " " << i + 1 << " " << i + 2 << " " << endl;
+		a[i] = a[i + 1];
+	}
+
+	for (int i = 0; i < n - 1; ++i) {
+		if (a[i + 1] != val) {
+			cout << 1 + (a[i + 1] > a[i]) << " " << i + 2 << " " << i + 1 << " " << endl;
+			a[i + 1] = a[i];
+		}
+	}
+
+	return 0;
+}
+
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 
@@ -72,7 +105,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

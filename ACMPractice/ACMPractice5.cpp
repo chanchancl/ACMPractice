@@ -39,10 +39,111 @@ using namespace std;
 
 int main()
 {
+	int n, m, h;
+	cin >> n >> m >> h;
+
+	vector<int> front(m), left(n);
+	rep(i, 0, m) {
+		cin >> front[i];
+	}
+	rep(i, 0, n) {
+		cin >> left[i];
+	}
+	vector<vector<int>> high(n, vector<int>(m));
+	rep(i, 0, n) rep(j, 0, m) 
+		cin >> high[i][j];
+	
+	rep(i, 0, n) rep(j, 0, m) {
+		if (high[i][j] > 0) {
+			high[i][j] = min(front[j], left[i]);
+		}
+	}
+
+	rep(i, 0, n) {
+		rep(j, 0, m) {
+			cout << high[i][j] << ' ';
+		}
+		cout << endl;
+	}
 
 	return 0;
 }
 
+
+/*
+int main()
+{
+	int n, t;
+	cin >> n >> t;
+
+	vector<pii> v(n);
+	rep(i, 0, n) cin >> v[i].first >> v[i].second;
+
+	int id = -1;
+	int ans = INF;
+	rep(i, 0, n) {
+		if (t <= v[i].first) {
+			if (ans > v[i].first) {
+				ans = v[i].first;
+				id = i + 1;
+				//cout << "\t" << ans << endl;
+			}
+		}
+		else {
+			int rem = abs(v[i].first - t) / v[i].second;
+			if ((v[i].first - t) % v[i].second != 0) 
+				rem += 1;
+			int q = min(ans, v[i].first + rem * v[i].second);
+			if (ans > q) {
+				ans = q;
+				id = i + 1;
+				//cout << "\t" << ans << endl;
+			}
+		}
+	}
+	cout << id << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	FASTIO;
+	int n;
+	string s, t;
+	cin >> n >> s >> t;
+
+	vector<int> a(n+1), b(n+1);
+	rep(i, 0, n) {
+		a[i + 1] += s[i] - 'a';
+		b[i + 1] += t[i] - 'a';
+	}
+	pre(i, n, 0) {
+		a[i] += b[i];
+		if (i) {
+			a[i - 1] += a[i] / 26;
+			a[i] %= 26;
+		}
+	}
+
+	rep(i, 0, n + 1) {
+		int rem = a[i] % 2;
+		a[i] /= 2;
+		if (i + 1 <= n) {
+			a[i + 1] += rem * 26;
+		}
+	}
+
+	for (int i = 1; i <= n; ++i) {
+		cout << char('a' + a[i]);
+	}
+	cout << endl;
+
+	return 0;
+}
+*/
 
 /*
 int main()

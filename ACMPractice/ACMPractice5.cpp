@@ -39,6 +39,42 @@ using namespace std;
 
 int main()
 {
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<int> a(n), sum(n);
+	rep(i, 0, n) {
+		cin >> a[i] >> sum[i];
+		sum[i] += a[i];
+	}
+
+	sort(all(sum));
+	bool ans = false;
+
+	rep(i, 0, n) {
+		if (binary_search(sum.begin(), sum.end(), a[i])) {
+			ans = true;
+			break;
+		}
+	}
+
+	cout << (ans ? "YE5" : "N0") << endl;
+	
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, t;
 	cin >> n;
 	vector<int> a(n), cnt(200*1005);
@@ -67,7 +103,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

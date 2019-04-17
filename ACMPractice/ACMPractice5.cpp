@@ -39,6 +39,68 @@ using namespace std;
 
 int main()
 {
+	int v[4];
+	rep(i, 0, 4) cin >> v[i];
+	sort(v, v + 4);
+	cout << v[3] - v[0] << ' ' << v[3] - v[1] << ' ' << v[3] - v[2] << endl;
+
+	return 0;
+}
+
+
+/*
+void fk() {
+	cout << ":(";
+	exit(0);
+}
+
+int main()
+{
+	int n;
+	string in;
+	cin >> n >> in;
+	if (n % 2) {
+		fk();
+	}
+	int n1, n2;
+	n1 = n2 = 0;
+	for (char c : in) {
+		if (c == '(') n1++;
+		else if (c == ')') n2++;
+	}
+	if (n1 > n / 2 || n2 > n / 2) {
+		fk();
+	}
+	n1 = n / 2 - n1;
+	for (char &c : in) {
+		if (c == '?') {
+			if (n1) {
+				--n1;
+				c = '(';
+			}
+			else {
+				c = ')';
+			}
+		}
+	}
+	
+	int b = 0;
+	for (int i = 0; i + 1 < n; ++i) {
+		if (in[i] == '(')
+			++b;
+		else
+			--b;
+		if (b <= 0)
+			fk();
+	}
+	cout << in;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, m, h;
 	cin >> n >> m >> h;
 
@@ -68,7 +130,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

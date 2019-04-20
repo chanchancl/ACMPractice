@@ -39,6 +39,74 @@ using namespace std;
 
 int main()
 {
+	int a, b, c, ans;
+	cin >> a >> b >> c;
+
+	int idx[7] = { 0,1,2,0,2,1,0 };
+	int na = a / 3, nb = b / 2, nc = c / 2;
+	int full = min(na, min(nb, nc));
+	na = a - full * 3, nb = b - full * 2, nc = c - full * 2;
+
+	ans = 0;
+	for (int start = 0; start < 7; ++start) {
+		int day = start;
+		vector<int> b = { na,nb,nc };
+		int cur = 0;
+		while (b[idx[day]] > 0) {
+			--b[idx[day]];
+			day = (day + 1) % 7;
+			++cur;
+		}
+		ans = max(ans, full * 7 + cur);
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+
+
+/*
+void fk() {
+	cout << -1;
+	exit(0);
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	set<int> s;
+	rep(i, 0, n) {
+		cin >> v[i];
+		s.insert(v[i]);
+	}
+	if (s.size() > 3) 
+		fk();
+	int mi = *s.begin(), ma = *s.rbegin();
+	if (s.size() == 3) {
+		if (2**(++s.begin()) != (ma + mi))
+			fk();
+		cout << ma - (ma + mi) / 2;
+	}
+	else if (s.size() == 2) {
+		if ((ma - mi) % 2 == 0)
+			cout << ma - (ma + mi) / 2;
+		else
+			cout << ma - mi;
+	}
+	else {
+		cout << 0;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int v[4];
 	rep(i, 0, 4) cin >> v[i];
 	sort(v, v + 4);
@@ -46,7 +114,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 void fk() {

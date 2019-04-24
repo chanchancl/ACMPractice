@@ -39,6 +39,43 @@ using namespace std;
 
 int main()
 {
+	int n,a,b;
+	cin >> n >> a >> b;
+	int ea,eb;
+	ea = a, eb = b;
+	int ans = 0;
+	while(n > 0 && (ea > 0 || eb > 0)) {
+		n--;
+		int light;
+		cin >> light;
+		if (light) {
+			if (ea == 0 || eb == b) {
+				eb--;
+			}
+			else {
+				ea--;
+				eb = min(eb+1, b);
+			}
+		}
+		else {
+			if (eb > 0) {
+				eb--;
+			}
+			else {
+				ea--;
+			}
+		}
+		ans++;
+	}
+	
+	cout << ans << endl;
+	
+	return 0;
+}
+
+/*
+int main()
+{
     
 	int a, b, c, ans;
 	cin >> a >> b >> c;
@@ -65,7 +102,7 @@ int main()
 
 	return 0;
 }
-
+*/ 
 
 /*
 void fk() {

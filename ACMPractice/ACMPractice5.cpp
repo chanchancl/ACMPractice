@@ -32,13 +32,14 @@ using namespace std;
 using ll = long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
-const int INF = 0x3f3f3f3f;
+const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
 int main()
 {
+    
 	int a, b, c, ans;
 	cin >> a >> b >> c;
 
@@ -335,6 +336,7 @@ int main()
 	return 0;
 }
 */
+
 
 /*
 int main()

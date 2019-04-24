@@ -54,3 +54,4 @@ Debug/
 ACMPractice.VC.VC.opendb
 *.TMP
 Release/
+*.exe

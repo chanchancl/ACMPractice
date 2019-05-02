@@ -37,6 +37,84 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int fk(string &str, int x) {
+	char s[5] = "ACTG";
+	int res = 0;
+	rep(i, 0, 4) {
+		res += min(abs(str[i + x] - s[i]), 26 - abs(str[i + x] - s[i]));
+	}
+	return res;
+}
+
+int main()
+{
+	int n;
+	string str;
+	cin >> n >> str;
+
+	int ans = INF;
+	rep(i, 0, n - 4 + 1) 
+		ans = min(ans, fk(str,i));
+	
+	cout << ans << endl;
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+	vector<pii> a(n);
+	rep(i, 0, n) {
+		cin >> a[i].first;
+		a[i].second = i;
+	}
+
+	sort(all(a), greater<pii>());
+	queue<int> q;
+	rep(i, 0, n)
+		q.push(a[i].second);
+
+	set<int> idx;
+	rep(i, 0, n)
+		idx.insert(i);
+	string ans(n, '0');
+	int who = 0;
+	while (!idx.empty()) {
+		while (!idx.count(q.front()))
+			q.pop();
+		int pos = q.front();
+		q.pop();
+
+		vector<int> add;
+		auto it = idx.find(pos);
+		rep(i, 0, k + 1) {
+			add.push_back(*it);
+			if (it == idx.begin()) break;
+			--it;
+		}
+		it = next(idx.find(pos));
+		rep(i, 0, k) {
+			if (it == idx.end()) break;
+			add.push_back(*it);
+			++it;
+		}
+		for (auto it : add) {
+			idx.erase(it);
+			ans[it] = '1' + who;
+		}
+		who ^= 1;
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n,a,b;
@@ -72,6 +150,7 @@ int main()
 	
 	return 0;
 }
+*/
 
 /*
 int main()

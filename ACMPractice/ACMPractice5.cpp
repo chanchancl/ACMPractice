@@ -30,6 +30,7 @@ using namespace std;
 #define all(x) (x).begin(),(x).end()
 #define endl "\n"
 using ll = long long;
+using ull = unsigned long long;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
 const int INF = 0x7f3f3f3f;
@@ -37,6 +38,89 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+#define MOD 1000000007 
+
+ll f(ll x) {
+	ll i, odd, even;
+	odd = even = 0;
+	for (i = 0; i < 64; ++i) {
+		if (i % 2 == 0) 
+			odd += 1ll << i;
+		else
+			even += 1ll << i;
+		x -= 1ll << i;
+		if (x <= 0) break;
+	}
+	if (x < 0) {
+		if (i % 2 == 0)
+			odd += x;
+		else
+			even += x;
+	}
+	even %= MOD;
+	odd %= MOD;
+
+	return (((even * (even + 1)) % MOD) + ((odd*odd) % MOD)) % MOD;
+}
+
+int main() 
+{
+	ll l, r;
+	cin >> l >> r;
+	cout << (f(r) - f(l - 1) + MOD) % MOD << endl;
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	FASTIO;
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int>> a(n, vector<int>(m));
+
+	rep(i, 0, n) rep(j, 0, m)
+		cin >> a[i][j];
+
+	int cur = 0;
+	rep(i, 0, n) {
+		cur ^= a[i][0];
+	}
+
+	if (cur > 0) {
+		cout << "TAK" << endl;
+		rep(i, 0, n) cout << 1 << " ";
+		return 0;
+	}
+
+	int px = -1, py = -1;
+
+	for (int i = 0; i < n && py == -1; ++i) {
+		rep(j, 0, m) {
+			int res = cur ^ a[i][0] ^ a[i][j];
+			if (res > 0) {
+				px = i, py = j;
+				cur = res;
+				break;
+			}
+		}
+	}
+	if (cur > 0) {
+		cout << "TAK" << endl;
+		rep(i, 0, n) {
+			cout << (i == px ? py + 1 : 1) << " ";
+		}
+	}
+	else
+		cout << "NIE" << endl;
+
+	return 0;
+}
+*/
+
+/*
 int fk(string &str, int x) {
 	char s[5] = "ACTG";
 	int res = 0;
@@ -60,6 +144,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

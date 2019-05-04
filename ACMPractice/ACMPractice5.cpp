@@ -38,6 +38,30 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	int n;
+	cin >> n;
+	vector<pii> v(n);
+	rep(i, 0, n)
+		cin >> v[i].first >> v[i].second;
+
+	sort(all(v), [](auto a, auto b) {
+		return a.first - a.second > b.first - b.second;
+	});
+
+	ll sum = 0;
+	rep(i, 0, n) {
+		sum += (i + 1ll - 1) * v[i].first + v[i].second * (n - (i + 1ll));
+	}
+
+	cout << sum << endl;
+
+	return 0;
+}
+
+
+/*
 #define MOD 1000000007 
 
 ll f(ll x) {
@@ -71,7 +95,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

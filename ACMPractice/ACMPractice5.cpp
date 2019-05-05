@@ -40,6 +40,72 @@ using namespace std;
 
 int main()
 {
+	int T;
+	cin >> T;
+	while(T--) {
+		int n;
+		cin >> n;
+		int x, r = 0;
+		for(int d=1; d<=n; d <<= 1) {
+			vector<int> a,b;
+			for(int i=1; i <=n;i++)
+				(i&d?a:b).push_back(i);
+			cout << a.size() << " " << b.size() << " ";
+			for(auto e:a) cout << e << " ";
+			for(auto e:b) cout << e << " ";
+			cout << endl;
+			cout.flush();
+			cin >> x;
+			// cout << "xxx" << x << "xxx" << endl; 
+			if (x == -1) 
+				exit(0);
+			r = max(r, x);
+		}
+		cout << "-1 " << r <<endl;
+		cout.flush();
+	}
+	
+	return 0;
+}
+
+/*
+void fk() {
+	cout << ":(" << endl;
+	exit(0);
+}
+
+int main()
+{
+	string t;
+	cin >> t;
+	
+	int cnt = 0, pos = -1;
+	rep(i, 0, t.size()) {
+		if (t[i] == 'a') ++cnt;
+		if (2*(i+1) - cnt == t.size()) {
+			pos = i;
+			break;
+		}
+	}
+	if (pos == -1) 
+		fk();
+	int cur = 0;
+	rep(i, pos + 1, t.size()) {
+		if (t[i] == 'a')
+			fk();
+		while(t[cur] == 'a') ++cur;
+		if (t[cur] != t[i])
+			fk();
+		++cur;
+	}
+	cout << t.substr(0, pos + 1) << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	vector<pii> v(n);
@@ -59,7 +125,7 @@ int main()
 
 	return 0;
 }
-
+*/ 
 
 /*
 #define MOD 1000000007 

@@ -40,6 +40,19 @@ using namespace std;
 
 int main()
 {
+	string in;
+	cin >> in;
+	int a = count(all(in), 'a');
+	int b = (int)in.size() - a;
+	if (!a) cout << 0 << endl;
+	while (a <= b && b > 0) b--;
+	if (a > b && b >= 0) cout << a + b << endl;
+	return 0;
+}
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	vector<pii> v(n);
@@ -59,7 +72,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 #define MOD 1000000007 

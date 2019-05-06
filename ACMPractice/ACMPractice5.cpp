@@ -40,6 +40,47 @@ using namespace std;
 
 int main()
 {
+	int n;
+	cin >> n;
+	string in;
+	cin >> in;
+	int t = count(in.begin(), in.begin() + n - 11, '8');
+	if (t > (n-11)/2 || (t == (n-11)/2 && in[n-11] == '8') )
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
+	
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	string in;
+	cin >> n >> in;
+	map<char, int, greater<char>> mp;
+	rep(i, 0, n) {
+		if (i != 0) {
+			// cout << "\t" << mp.begin()->first << endl;
+			if (mp.begin()->first > in[i]) {
+				cout << "YES" << endl;
+				cout << mp.begin()->second + 1 << " " << i + 1 << endl;
+				exit(0); 
+			}
+		}
+		mp[in[i]] = i;
+	}
+	
+	cout << "NO" << endl;
+	
+	return 0;
+}
+*/
+/* 
+int main()
+{
 	int T;
 	cin >> T;
 	while(T--) {
@@ -67,6 +108,7 @@ int main()
 	
 	return 0;
 }
+*/
 
 /*
 void fk() {

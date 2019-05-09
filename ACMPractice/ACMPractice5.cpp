@@ -40,6 +40,54 @@ using namespace std;
 
 int main()
 {
+	int n,k;
+	
+	
+	return 0;
+}
+
+/*
+int main()
+{
+	int n,m;
+	cin >> n >> m;
+	vector<ll> x(n), p(m);
+	rep(i, 0, n)
+		cin >> x[i];
+	rep(i, 0, m)
+		cin >> p[i];
+		
+	vector<ll> d(n-1);
+	rep(i, 0, n-1)
+		d[i] = x[i+1] - x[i];
+	ll g = d[0];
+	rep(i, 0, n-1)
+		g = __gcd(g, d[i]);
+	int ans = 0;
+	rep(i, 0, m) {
+		if (g % p[i] == 0) {
+			ans = i + 1;
+			break;
+		}
+	}
+	
+	if (ans) {
+		cout << "YES" << endl;
+		cout << x[0] << " " << 
+		ans << endl;
+	}
+	else {
+		cout << "NO" << endl;
+	}
+	
+	
+	return 0;	
+} 
+*/
+
+/*
+int main()
+{
 	int n;
 	cin >> n;
 	string in;
@@ -52,7 +100,7 @@ int main()
 	
 	return 0;
 }
-
+*/
 
 /*
 int main()

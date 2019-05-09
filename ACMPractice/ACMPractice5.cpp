@@ -38,6 +38,8 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+
+/*
 int main()
 {
 	int n,k;
@@ -203,6 +205,7 @@ int main()
 	if (!a) cout << 0 << endl;
 	while (a <= b && b > 0) b--;
 	if (a > b && b >= 0) cout << a + b << endl;
+	return 0;
 }
 */
 

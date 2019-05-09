@@ -38,6 +38,43 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	int n, m, c = 0;
+	while (cin >> n >> m && n && m) {
+		c++;
+		vector<string> in(n);
+		rep(i, 0, n)
+			cin >> in[i];
+		vector<vector<int>> out(n + 2, vector<int>(m + 2));
+		rep(i, 1, n + 1) rep(j, 1, m + 1) {
+			if (in[i - 1][j - 1] == '*') {
+				out[i - 1][j - 1]++;
+				out[i - 1][j    ]++;
+				out[i - 1][j + 1]++;
+				out[i    ][j - 1]++;
+				out[i    ][j + 1]++;
+				out[i + 1][j - 1]++;
+				out[i + 1][j    ]++;
+				out[i + 1][j + 1]++;
+			}
+		}
+
+		cout << "Field #" << c << ":" << endl;
+		rep(i, 0, n) {
+			rep(j, 0, m) {
+				if (in[i][j] == '.')
+					cout << out[i + 1][j + 1];
+				else
+					cout << "*";
+			}
+			cout << endl;
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
 
 /*
 int main()

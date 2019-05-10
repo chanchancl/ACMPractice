@@ -80,7 +80,31 @@ int main()
 int main()
 {
 	int n,k;
+	cin >> n >> k;
+	vector<ll> a(n);
+	rep(i, 0, n) cin >> a[i];
 	
+	vector<ll> d1(n), d2(n), d3(n);
+	ll ans = 0;
+	rep(i, 0, n) {
+		d1[i] = a[i] + ((i > 0 && d1[i-1] > 0) ? d1[i-1] : 0); 
+		ans = max(ans, d1[i]);
+	}	
+		
+	rep(i, 0, n) {
+		d2[i] = k * a[i] + (i > 0 ? max(max(d2[i-1], d1[i-1]), 0ll) : 0ll);
+		ans = max(ans, d2[i]);
+	}
+	
+	if (n > 1)
+		ans = max(ans, d3[1] = a[0] * k + a[1]);
+		
+	rep(i, 2, n) {
+		d3[i] = a[i] + max(d3[i-1], d2[i-1]);
+		ans = max(ans, d3[i]);
+	}
+	
+	cout << ans << endl;
 	
 	return 0;
 }

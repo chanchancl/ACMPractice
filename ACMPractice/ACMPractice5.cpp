@@ -41,7 +41,6 @@ using namespace std;
 int main()
 {
 	
-	
 	return 0; 
 } 
 
@@ -315,6 +314,27 @@ int main()
 	
 	cout << ans << endl;
 	
+	int n, m, t;
+	int ca, cb, ka, kb;
+	ca = cb = ka = kb = 0;
+	cin >> n >> m;
+	rep(i, 0, n) {
+		cin >> t;
+		if (t % 2 == 0)
+			ca++;
+		else
+			cb++;
+	}
+	rep(i, 0, m) {
+		cin >> t;
+		if (t % 2 == 0)
+			ka++;
+		else
+			kb++;
+	}
+
+	cout << min(ca, kb) + min(cb, ka) << endl;
+
 	return 0;
 }
 */
@@ -358,6 +378,15 @@ int main()
 	return 0;
 }
 */
+
+/*
+int main()
+{
+	int n,k;
+	
+	
+	return 0;
+}
 
 /*
 int main()

@@ -40,6 +40,102 @@ using namespace std;
 
 int main()
 {
+	
+	int n;
+	string a;
+	vector<int> f(10), big(10);
+	cin >> n >> a;
+	rep(i, 1, 10) {
+		cin >> f[i];
+		big[i] = f[i] > i;
+	}
+	
+	rep(i, 0, a.size()) {
+		if (big[a[i] - '0']) {
+			int j = i;
+			while(j < a.size() && big[a[j] - '0']) {
+				a[j] = f[a[j] - '0'] + '0';
+				j++;
+			}
+			break;
+		}
+	}
+	cout << a << endl;
+	
+	return 0;
+}
+
+
+/*
+int f(int x) {
+	x++;
+	while(x % 10 == 0) x/= 10;
+	return x;
+}
+
+int main()
+{
+	int n; set<int> ans;
+	cin >> n;
+	while(1) {
+		ans.insert(n);
+		n = f(n);
+		if (ans.find(n) != ans.end())
+			break;
+	}
+	
+	cout << ans.size() << endl;
+	
+	return 0;
+}
+*/
+
+/*
+int x; 
+
+bool ok(int z) {
+	z++;
+	while(z % 2 == 0) {
+		z /= 2;
+	}
+	return (z == 1); 
+} 
+
+int MSB(int z) {
+	for (int i = 20; i >= 0; i--) {
+		if ((z>>i) & 1) return i;
+	}
+	return -1;
+}
+
+int main()
+{
+	int i = 0; vector<int> xorCmd;
+	cin >> x;
+	while( !ok(x) ) {
+		i = i + 1;
+		if (i % 2 == 0) {
+			x++;
+			continue;
+		}
+		int r = MSB(x);
+		if ((1 << r) != x) {
+			r++;
+		}
+		x = (x ^ ((1<<r) - 1));
+		xorCmd.push_back(r);
+	}
+	cout << i << endl;
+	for(auto z : xorCmd) 
+		cout << z << " ";
+		
+	return 0; 
+} 
+*/
+
+/*
+int main()
+{
 	int n,k;
 	cin >> n >> k;
 	vector<ll> a(n);
@@ -69,6 +165,7 @@ int main()
 	
 	return 0;
 }
+*/
 
 /*
 int main()

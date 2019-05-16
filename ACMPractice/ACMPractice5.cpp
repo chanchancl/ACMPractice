@@ -43,17 +43,19 @@ int main()
 	
 	int n;
 	string a;
-	vector<int> f(10), big(10);
+	vector<int> f(10), diff(10);
 	cin >> n >> a;
 	rep(i, 1, 10) {
 		cin >> f[i];
-		big[i] = f[i] > i;
+		diff[i] = f[i] - i;
 	}
 	
 	rep(i, 0, a.size()) {
-		if (big[a[i] - '0']) {
+		//cout << i << " : " << a[i] << " , " << diff[a[i] - '0'] << endl;
+		if (diff[a[i] - '0'] > 0) {
 			int j = i;
-			while(j < a.size() && big[a[j] - '0']) {
+			while(j < a.size() && diff[a[j] - '0'] >= 0) {
+				//cout << j << " : " << a[j] << " , " << diff[a[j] - '0'] << endl;
 				a[j] = f[a[j] - '0'] + '0';
 				j++;
 			}

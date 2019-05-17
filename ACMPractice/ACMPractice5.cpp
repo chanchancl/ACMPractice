@@ -38,6 +38,146 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+const int MAX = 600000;
+
+int pre[MAX], val[MAX];
+
+int _find(int x) {
+	int a = x;
+	while(x != pre[x]) {
+		x = pre[x];
+		val[a]++;
+	}
+	return x;
+}
+
+int _find1(int x) {
+	int a = x;
+	while(x != pre[x]) {
+		x = pre[x];
+	}
+	return x;
+}
+
+int main()
+{
+	int n,m;
+	rep(i, 0, MAX) {
+		pre[i] = i;
+		val[i] = 1; 
+	}
+	cin >> n >> m;
+	rep(i, 0, m) {
+		int N;
+		cin >> N;
+		if (N == 0)
+			continue;
+		
+		int a,b;
+		cin >> a;
+		rep(j, 0, N - 1) {
+			cin >> b;
+			a = _find(a);
+			b = _find(b);
+			if (a != b) {
+				if (val[a] > val[b]) {
+					pre[b] = a;
+					val[a] += val[b];
+				}
+				else {
+					pre[a] = b;
+					val[b] += val[a];
+				}
+			}
+		}
+	}
+	
+	rep(i, 1, n + 1) {
+		pre[i] = _find1(pre[i]);
+		val[i] = val[_find(pre[i])];
+	}
+	rep(i, 1, n + 1)
+		cout << val[i] << " ";
+	
+	return 0;
+}
+
+/*
+int main()
+{
+	int v[] = {4,8,15,16,23,42};
+	map<int, pii> mp;
+	rep(i, 0, 6) {
+		rep(j, i + 1, 6) {
+			mp[v[i] * v[j]] = {v[i], v[j]};
+			//cout << v[i] * v[j] << " " << v[i] << " " << v[j] << endl;
+		}
+	}
+	
+	vector<pii> vec(6);
+	vector<int> ans(6);
+	rep(i, 0, 4) {
+		cout << "? " <<  1 << " " << 1 + i + 1 << endl;
+		fflush(stdout);
+		
+		int t;
+		cin >> t;
+		vec[i] = mp[t];
+	}
+	
+	if (vec[0].first == vec[1].first || vec[0].first == vec[1].second) 
+		ans[0] = vec[0].first;
+	else
+		ans[0] = vec[0].second;
+	
+	rep(i, 1, 5) {
+		ans[i] = ans[0] == vec[i-1].first ? vec[i-1].second : vec[i-1].first;
+	}
+	rep(i, 0, 6) {
+		rep(j, 0, 5) {
+			if (v[i] == ans[j]) {
+				v[i] = 0;
+				break;
+			}
+		}
+	}
+	rep(i, 0, 6) {
+		if (v[i] != 0) {
+			ans[5] = v[i];
+			break;
+		}
+	}
+	
+	cout << "! ";
+	rep(i, 0, 6) 
+		cout << ans[i] << " ";
+	
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T,n;
+	cin >> T;
+	while(T--) {
+		cin >> n;
+		string str;
+		cin >> str;
+		auto pos = str.find_first_of('8'); 
+		if (pos != string::npos && str.size() - pos >= 11 )
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	} 
+	// 1234
+	// 0123
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	
@@ -66,7 +206,7 @@ int main()
 	
 	return 0;
 }
-
+*/
 
 /*
 int f(int x) {

@@ -38,6 +38,15 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
+	
+	
+	return 0; 
+} 
+
+
+/*
 const int MAX = 600000;
 
 int pre[MAX], val[MAX];
@@ -101,6 +110,7 @@ int main()
 	
 	return 0;
 }
+*/
 
 /*
 int main()

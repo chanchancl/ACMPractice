@@ -40,10 +40,56 @@ using namespace std;
 
 int main()
 {
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+	sort(all(v));
+	
+	int ans = 0, j = 0;
+	rep(i, 0, n){
+		for(; j < n; j++) {
+			if ((i+1) <= v[j]){
+				ans++;
+				j++;
+				break;
+			}
+		}
+		if (j == n) break;
+	}
+	
+	cout << ans << endl;
+	
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n, x, y;
+	cin >> n >> x >> y;
+	string in;
+	cin >> in;
+	in = in.substr(n-x);
+	//cout << in << endl; 
+	
+	int ans = 0;
+	for(int i = in.size() - 1, j = 0; i >= 0; i--,j++) {
+		if (j == y) {
+			if (in[i] == '0')
+				ans++;
+		} else {
+			if (in[i] == '1')
+				ans++;
+		} 
+	}
+	
+	cout << ans << endl;
 	
 	return 0; 
 } 
-
+*/
 
 /*
 const int MAX = 600000;

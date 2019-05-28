@@ -41,6 +41,23 @@ using namespace std;
 int main()
 {
 	int n;
+	string in,out;
+	cin >> n >> in;
+	rep(i, 0, n) {
+		if (out.size() % 2 == 0 || out.back() != in[i])
+			out.push_back(in[i]);
+	}
+	if (out.size() % 2 == 1) out.pop_back();
+	cout << n - out.size() << endl;
+	cout << out << endl;
+	
+	return 0;	
+}
+
+/*
+int main()
+{
+	int n;
 	cin >> n;
 	vector<int> v(n);
 	rep(i, 0, n) cin >> v[i];
@@ -62,7 +79,7 @@ int main()
 	
 	return 0;
 }
-
+*/
 
 /*
 int main()

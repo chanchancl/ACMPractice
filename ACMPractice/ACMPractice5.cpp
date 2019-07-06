@@ -36,14 +36,719 @@ using pll = pair<ll, ll>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
-using namespace std;
+int main()
+{
+	int n, m, k;
+	cin >> n >> m >> k;
+	if (n <= m && n <= k)
+		cout << "Yes" << endl;
+	else
+		cout << "No" << endl;
 
+	return 0;
+}
+
+/*
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <string>
 using namespace std;
 
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<int> v1(n), v2(n);
+		for (int i = 0; i < n; i++)
+			cin >> v1[i];
+		for (int i = 0; i < n; i++)
+			cin >> v2[i];
+		sort(v1.begin(), v1.end());
+		sort(v2.begin(), v2.end(), greater<int>());
+
+		int ans = 0;
+		for (int i = 0; i < n; i++)
+			ans += v1[i] * v2[i];
+
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+
+int main() {
+	int t;
+	while (cin >> t) {
+		int sum = 0;
+		if (t % 2)
+			sum = t;
+		for (int i = 0; i < 9; i++) {
+			cin >> t;
+			if (t % 2)
+				sum += t;
+		}
+		cout << sum << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int days[2][12] =
+{
+	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31},
+	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 ,31},
+};
+
+bool isrun(int year)
+{
+	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+		return true;
+	return false;
+}
+
+int main()
+{
+	int n, ret;
+	
+	while (cin >> n) {
+		int year = 1960;
+		for (int i = 0; i < n; i++) {
+			ret = 5;
+			bool run = isrun(year);
+			if (run)
+				ret += 366;
+			else
+				ret += 365;
+			year++;
+		}
+		bool run = isrun(year);
+		if (run)
+			ret += 31 + 29 + 23;
+		else
+			ret += 31 + 28 + 23;
+		cout << ret % 7 << endl;
+	}
+	
+
+	return 0;
+}
+*/
+
+/*
+// 1051 绝对素数
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
+
+int is_prime(long long x) {
+	if (x < 2) 
+		return false;
+	if (x % 2 == 0 && x != 2) 
+		return false;
+	for (long long i = 2; i*i <= x; ++i)
+		if (x % i == 0) return false;
+	return true;
+}
+
+int main()
+{
+	int n;
+	while (cin >> n) {
+		for (int i = 0; i < n; i++) {
+			string in;
+			cin >> in;
+			string re(in.rbegin(), in.rend());
+			long long a = atoll(in.c_str());
+			long long b = atoll(re.c_str());
+			if (is_prime(a) && is_prime(b))
+				cout << 1 << endl;
+			else
+				cout << 0 << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+// 1037 整数求和
+int main()
+{
+	int n;
+	long long int sum;
+	while (cin >> n)
+	{
+		sum = 0;
+		for (int i = 0; i < n; i++) {
+			int t;
+			cin >> t;
+			sum += t;
+		}
+		cout << sum << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	int ans=1;
+	int i;
+	for(i=1;i<n;i++)
+	{
+		ans += 4*i;
+	}
+	cout << ans;
+	return 0;
+}
+*/
+
+/*
+ll in[3];
+
+int main()
+{
+	ll d;
+	for (int i = 0; i < 3; i++) {
+		cin >> in[i];
+	}
+
+	cin >> d;
+
+	sort(in, in + 3);
+
+	ll q1 = in[1] - d;
+	ll q2 = in[1] + d;
+
+	ll ans = 0;
+	if (abs(in[0]-in[1]) < d)
+		ans += abs(in[0] - q1);
+	if (abs(in[1] - in[2]) < d)
+		ans += abs(in[2] - q2);
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+
+/*
+#include <stdio.h>
+
+int a[2002];
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+	for (int i = 0; i < 2 * n; i++) {
+		scanf("%d", &a[i]);
+	}
+
+	sort(a, a + 2 * n);
+
+	int sum1, sum2;
+	sum1 = sum2 = 0;
+	for (int i = 0; i < n; i++)
+		sum1 += a[i];
+
+	for (int i = n; i < 2 * n; i++)
+		sum2 += a[i];
+
+	if (sum1 == sum2) {
+		printf("-1");
+		return 0;
+	}
+	else {
+		for (int i = 0; i < 2 * n; i++) {
+			printf("%d ", a[i]);
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(2 * n);
+
+	int sum = 0;
+	for (int i = 0; i <  2 * n, i++) {
+		cin >> v[i];
+		sum += v[i];
+	}
+
+	sort(all(v));
+	int sum1 = 0;
+	for (int i = 0; i < n, i++) {
+		sum1 += v[i];
+
+	if (2 * sum1 == sum) {
+		cout << -1 << endl;
+		return 0;
+	}
+
+	for (int i = 0; i < 2 * n, i++) {
+		cout << v[i] << ' ';
+	}
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	bool even, odd;
+	even = odd = false;
+	rep(i, 0, n) {
+		cin >> v[i];
+		if (v[i] % 2 == 0) 
+			even = true;
+		else
+			odd = true;
+	}
+
+	if (odd && even)
+		sort(all(v));
+
+	rep(i, 0, n)
+		cout << v[i] << ' ';
+	
+	return 0;
+}
+*/
+
+/*
+char maze[3000][3000];
+void dfs(int n, int x, int y) 
+{
+	if (n == 1) 
+		maze[x][y] = 'X';
+	else {
+		int size = pow(3.0, n - 2);
+		dfs(n - 1, x, y);
+		dfs(n - 1, x, y + 2 * size);
+		dfs(n - 1, x + size, y + size);
+		dfs(n - 1, x + 2 * size, y);
+		dfs(n - 1, x + 2 * size, y + 2 * size);
+	}
+	return;
+}
+int main(void) 
+{
+	int n;
+	while (~scanf("%d", &n)) 
+	{
+		int size = pow(3.0, n - 1);
+		for (int i = 0; i <= size; i++) 
+			for (int j = 0; j <= size; j++) 
+				maze[i][j] = ' ';
+
+		dfs(n, 1, 1);
+		for (int i = 1; i <= size; i++) {
+			for (int j = 1; j <= size; j++) {
+				printf("%c", maze[i][j]);
+			}
+			printf("\n");
+		}
+		printf("-\n");
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<int> a(n), b(n);
+		for (int i = 0; i < n; i++)
+			cin >> a[i];
+		for (int i = 0; i < n; i++)
+			cin >> b[i];
+		sort(a.begin(), a.end());
+		sort(b.begin(), b.end(), greater<int>());
+
+		int ans = 0;
+		for (int i = 0; i < n; i++)
+			ans += a[i] * b[i];
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int gcd(int a, int b);
+
+int main()
+{
+	int a, b, c;
+	while (cin >> a >> b >> c) {
+		cout << gcd(gcd(a, b), c) << endl;
+	}
+
+	return 0;
+}
+
+int gcd(int a, int b) {
+	if (b == 0)
+		return a;
+	return gcd(b, a % b);
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	getchar();
+	while (n--) 
+	{
+		string a, b;
+		char ta[100], tb[100];
+		memset(ta, 0, 100);
+		memset(tb, 0, 100);
+
+		cin.getline(ta, 100);
+		cin.getline(tb, 100);
+		
+
+		for(int i = 0; i < strlen(ta); i++)
+			if (ta[i] != ' ')
+				a.push_back(tolower(ta[i]));
+		for (int i = 0; i < strlen(tb); i++)
+			if (tb[i] != ' ')
+				b.push_back(tolower(tb[i]));
+
+		if (b == a)
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+
+	}
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int n, k;
+	while (cin >> n >> k)
+	{
+		int t = 0;
+		if (20 * n < 200 + 20 * k || k >= n) {
+			cout << "Impossible" << endl;
+		}
+		else {
+			while (n * t < 200 + k * t)
+				++t;
+			cout << t << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int n;
+int main()
+{
+	while (cin >> n)
+	{
+		priority_queue<ll, vector<ll>, greater<ll>> q;
+		int t;
+		for (int i = 0; i < n; i++) 
+		{
+			cin >> t;
+			q.push(t);
+		}
+		ll a, b;
+		for (int i = 0; i < n - 1; i++) 
+		{
+			a = q.top();
+			q.pop();
+			b = q.top();
+			q.pop();
+			q.push(a*b + 1);
+		}
+		ll ans = q.top();
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int k;
+	string n, ans;
+	while (cin >> n >> k) 
+	{
+		ans.clear();
+		for (int i = 0; i < n.size(); i++) 
+		{
+			if (k > 0)
+			{
+				if (ans.empty()) 
+				{
+					ans.push_back(n[i]);
+					continue;
+				}
+				while (!ans.empty() && ans.back() < n[i] && k > 0 )
+				{
+					k--;
+					ans.pop_back();
+				}
+				ans.push_back(n[i]);
+			}
+			else 
+				ans.push_back(n[i]);
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<int> v(n);
+		for (int i = 0; i < n; i++) 
+			cin >> v[i];
+		
+		float ans = -1;
+		sort(v.begin(), v.end());
+		for (int i = 0; i < n - 2; i++) 
+		{
+			for (int j = i + 1; j < n - 1; j++) 
+			{
+				for (int k = j + 1; k < n; k++) 
+				{
+					if (v[i] * v[i] + v[j] * v[j] == v[k] * v[k]) 
+					{
+						ans = max(ans, float(v[i]) * v[j] / 2);
+					}
+				}
+			}
+		}
+		if (ans != -1)
+			printf("%.3f\n", ans);
+		else
+			cout << "No" << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	vector<ll> v[11] = { 
+		{0},
+		{1, 2, 3, 4, 5, 6, 7, 8, 9,},
+		{153, 370, 371, 407,},
+		{1634, 8208, 9474,},
+		{54748, 92727, 93084,},
+		{548834,},
+		{1741725, 4210818, 9800817, 9926315,},
+		{24678050, 24678051, 88593477,},
+		{146511208, 472335975, 534494836, 912985153,},
+		{4679307774}
+	};
+	int n;
+	while (cin >> n) {
+		if (n == 2) 
+			continue;
+		if (n > 2) 
+			n--;
+		for (ll i : v[n]) {
+			cout << i << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+/*
+int main()
+{
+	ll n, m;
+	cin >> n >> m;
+	int s = min(m, n);
+	ll square = s * m*n- (s - 1)*s*(m+n)/2 + s * (2 * s - 1)*(s-1)/6;
+	ll total = m * n*(n + 1)*(m + 1) / 4;
+	cout << square << ' ' << total - square << endl;
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+#include <algorithm>
+using namespace std;
+#define NUM 50 
+
+struct event
+{
+	int start, end;
+};
+
+void GreedySelector(int n, event e[], bool select[])
+{
+	select[0] = true;
+	int j = 0;
+	for (int i = 1; i < n; i++)
+	{
+		if (e[i].start >= e[j].end)
+		{
+			select[i] = true;
+			j = i;
+		}
+		else
+			select[i] = false;
+	}
+}
+
+bool cmp(event &l, event &r) {
+	return l.start < r.start;
+}
+
+int main()
+{
+	event e[] = {
+		{1,6}, {2,4}, {4,5}, {0,2}, {5,8},{4,11},
+		{7,12},{6,8}, {8,9}, {10,11}, {4,8}, {3,4},
+		{2,7},{12,15}
+	};
+	int n = (sizeof(e) / sizeof(e[0])) - 1;
+
+	for (int i = 0; i < n; i++) {
+		cout << "活动" << i + 1 << "开始时间为：" << e[i].start << " " << "结束时间为：" << e[i].end << endl;
+	}
+
+	bool select[NUM];
+	sort(e, e + n, cmp);
+
+	GreedySelector(n, e, select);
+
+	cout << "最终选择的活动集合为：" << endl;
+	for (int i = 0; i < n; i++)
+	{
+		if (select[i])
+			cout << "活动 " << i + 1 << endl;
+	}
+	return 0;
+}
+*/
+
+
+/*
+#include<stdio.h>
+#include<stdlib.h> 
+#include<time.h>
+#include <algorithm>
+using namespace std;
+
+const int N = 30;
+const float W = 150;
+
+struct item {
+	int w, v, id;
+	float avg;
+	bool select;
+};
+
+bool cmp(item &l, item &r) {
+	return l.avg > r.avg;
+}
+
+bool cmpID(item &l, item &r) {
+	return l.id < r.id;
+}
+
+void greedy(int n, float m, item it[]) {
+	int i;
+
+	float b = m;
+	for (i = 0; i < n; i++) {
+		if (it[i].w > b)
+			continue;
+		it[i].select = true;
+		b -= it[i].w;
+	}
+}
+int main() {
+	srand((int)time(0));
+	item it[30];
+	for (int i = 0; i < 30; i++) {
+		it[i].w = 5 + rand() % 10;
+		it[i].id = i;
+		it[i].select = false;
+	}
+	for (int i = 0; i < 30; i++) {
+		it[i].v = 1 + rand() % 10;
+		it[i].avg = 1.0 * it[i].v / it[i].w;
+	}
+	
+	printf("背包所能容纳的重量为：%f\n", W);
+	printf("物品的个数为: %d\n", N);
+	printf("物品的重量和价值分别为：\n");
+	for (int i = 0; i < 30; i++) {
+		printf("物品%2d  重量%f  价值%f\n", i + 1, 1.0 * it[i].w, 1.0 * it[i].v);
+	}
+	
+	sort(it, it + N, cmp);
+	greedy(N, W, it);
+	printf("装载时选择了：\n");
+	int sumW, sumV;
+	sumW = sumV = 0;
+	for (int i = 0; i < N; i++) {
+		if (it[i].select == true) {
+			printf("%d号物品\n", i + 1);
+			sumW += it[i].w;
+			sumV += it[i].v;
+		}
+	}
+	printf("总重量为 : %d\n", sumW);
+	printf("总价值为 : %d\n", sumV);
+
+	return 0;
+}
+*/
+
+
+/*
 int main() {
 	int n;
 	cin >> n;
@@ -63,6 +768,7 @@ int main() {
 
 	return 0;
 }
+*/
 
 /*
 int main()
@@ -387,156 +1093,6 @@ int main()
 }
 */
 
-/*
-int main()
-{
-	int n, k;
-	while (cin >> n >> k)
-	{
-		int year = 0;
-		if (k >= n || 20 * n < 200 + 20 * k) {
-			cout << "Impossible" << endl;
-		}
-		else {
-			while (n * year < 200 + k * year)
-				++year;
-			cout << year << endl;
-		}
-	}
-
-	return 0;
-}
-*/
-
-/*
-int main()
-{
-	int n;
-	scanf("%d", &n);
-	getchar();
-	while (n--) {
-		string ta, tb, a, b;
-		getline(cin, ta);
-		getline(cin, tb);
-		for (char c : ta)
-			if (c != ' ')
-				a.push_back(tolower(c));
-		for (char c : tb)
-			if (c != ' ')
-				b.push_back(tolower(c));
-
-		if (a == b)
-			cout << "YES" << endl;
-		else
-			cout << "NO" << endl;
-
-	}
-	return 0;
-}
-*/
-/*
-int gcd(int a, int b) {
-	if (b == 0) return a;
-	return gcd(b, a % b);
-}
-
-int main()
-{
-	int a, b, c;
-	while (cin >> a >> b >> c) {
-		cout << gcd(gcd(a, b), c) << endl;
-	}
-
-	return 0;
-}
-*/
-
-
-/*
-int main()
-{
-	int n;
-	while (cin >> n)
-	{
-		int t;
-		priority_queue<long long, vector<long long>, greater<long long>> q;
-		for (int i = 0; i < n; i++) {
-			cin >> t;
-			q.push(t);
-		}
-		long long a, b;
-		for (int i = 0; i < n - 1; i++) {
-			a = q.top(), q.pop();
-			b = q.top(), q.pop();
-			q.push(a*b + 1);
-		}
-		cout << q.top() << endl;
-	}
-
-	return 0;
-}
-*/
-
-/*
-int main()
-{
-	string in, ans;
-	int k;
-	while (cin >> in >> k) {
-		ans.clear();
-		for (int i = 0; i < in.size(); i++) {
-			if (k > 0) {
-				if (ans.empty()) {
-					ans.push_back(in[i]);
-					continue;
-				}
-				while (!ans.empty() && k > 0 && ans.back() < in[i]) {
-					ans.pop_back();
-					k--;
-				}
-				ans.push_back(in[i]);
-			}
-			else {
-				ans.push_back(in[i]);
-			}
-		}
-		cout << ans << endl;
-	}
-
-	return 0;
-}
-*/
-
-/*
-int main()
-{
-	int n;
-	while (cin >> n) {
-		vector<int> v(n);
-		for (int i = 0; i < n; i++) {
-			cin >> v[i];
-		}
-		sort(v.begin(), v.end());
-		float ans = -1;
-		for (int i = 0; i < n-2; i++) {
-			for (int j = i + 1; j < n - 1; j++) {
-				for (int k = j + 1; k < n; k++) {
-					if (v[i]*v[i] + v[j] * v[j] == v[k] * v[k]) {
-						ans = max(ans, 1.0f * v[i] * v[j]/2);
-					}
-				}
-			}
-		}
-		if (ans == -1)
-			cout << "No" << endl;
-		else
-			printf("%.3f\n", ans);
-	}
-
-
-	return 0;
-}
-*/
 
 /*
 void countRect(int m, int n, long long *Square, long long *Rect)
@@ -564,32 +1120,6 @@ int main()
 }
 */
 
-/*
-int main()
-{
-	vector<long long> v[11] = { {0},
-			{1, 2, 3, 4, 5, 6, 7, 8, 9,},
-			{153, 370, 371, 407,},
-			{1634, 8208, 9474,},
-			{54748, 92727, 93084,},
-			{548834,},
-			{1741725, 4210818, 9800817, 9926315,},
-			{24678050, 24678051, 88593477,},
-			{146511208, 472335975, 534494836, 912985153,},
-			{4679307774}
-	};
-	int n;
-	while (cin >> n) {
-		if (n == 2) continue;
-		if (n >= 3) n--;
-		for(long long i : v[n]) {
-			cout << i << endl;
-		}
-	}
-
-	return 0;
-}
-*/
 
 /*
 int main()

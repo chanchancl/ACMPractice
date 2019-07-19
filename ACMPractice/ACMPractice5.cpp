@@ -38,6 +38,52 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	int n;
+	cin >> n;
+	vector<ll> a(n + 2), b(n + 2);
+	vector<pll> c(n + 2);
+	c[0].first = 0; c[0].second = 0;
+	rep(i, 1, n + 1) 
+		cin >> a[i];
+	rep(i, 1, n + 1) 
+		cin >> b[i];
+
+	rep(i, 1, n + 1) {
+		c[i].first = max(c[i - 1].first, c[i - 1].second + a[i]);
+		c[i].second = max(c[i - 1].second, c[i - 1].first + b[i]);
+	}
+	
+	cout << max(c[n].first, c[n].second) << endl;
+
+	return 0;
+}
+
+/*
+ll n, k;
+
+ll f(ll ans) {
+	return (n - ans)*(n - ans + 1)/2 - k - ans;
+}
+
+int main()
+{
+	cin >> n >> k;
+	ll l = -1, r = n + 1;
+	while (l < r - 1) {
+		ll mid = (l + r) >> 1;
+		if (f(mid) > 0)
+			l = mid;
+		else
+			r = mid;
+	}
+	cout << r << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, k;
 	cin >> n >> k;
 	vector<int> like(k + 1, 0);
@@ -60,6 +106,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

@@ -38,6 +38,32 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	int n, k;
+	cin >> n >> k;
+	vector<int> like(k + 1, 0);
+
+	rep(i, 0, n) {
+		int t;
+		cin >> t;
+		like[t]++;
+	}
+	int res = n / 2 + (n % 2 ? 1 : 0);
+	int a, b;
+	a = b = 0;
+	rep(i, 1, k + 1) {
+		res -= like[i] / 2;
+		a += like[i] / 2;
+		like[i] %= 2;
+	}
+	b = res;
+	cout << 2 * a + b << endl;
+
+	return 0;
+}
+
+/*
+int main()
+{
 	int n, m, k;
 	cin >> n >> m >> k;
 	if (n <= m && n <= k)
@@ -47,7 +73,7 @@ int main()
 
 	return 0;
 }
-
+*/
 /*
 #include <iostream>
 #include <algorithm>

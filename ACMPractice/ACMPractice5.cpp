@@ -36,6 +36,92 @@ using pll = pair<ll, ll>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
+int main() 
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	vector<int> A{ 1 };
+	rep(i, 0, n)
+		cin >> v[i];
+	int rest = 0, cur = v[0];
+	rep(i, 1, n) {
+		if (v[0] / 2 >= v[i]) {
+			cur += v[i];
+			A.push_back(i + 1);
+		}
+		else {
+			rest += v[i];
+		}
+	}
+	if (cur > rest) {
+		cout << A.size() << endl;
+		cout << A[0];
+		rep(i, 1, A.size()) {
+			cout << " " << A[i];
+		}
+		cout << endl;
+	}
+	else
+		cout << 0 << endl;
+}
+
+
+/*
+const ll MOD = 998244353;
+
+int add(int a, int b) {
+	a += b;
+	if (a >= MOD) a -= MOD;
+	if (a >= MOD) a += MOD;
+	return a;
+}
+
+int mul(int a, int b) {
+	return a * 1ll * b % MOD;
+}
+
+int len;
+vector<int> pow10;
+
+int f(int a) {
+	int pos = 0;
+	int res = 0;
+	while (a > 0) {
+		int cur = a % 10;
+		a /= 10;
+		res = add(res, mul(cur, pow10[2 * pos]));
+		res = add(res, mul(cur, pow10[2 * pos + 1]));
+		++pos;
+	}
+	return res;
+}
+
+int main()
+{
+	pow10 = vector<int>(30);
+	pow10[0] = 1;
+	rep(i, 1, 30) {
+		pow10[i] = mul(pow10[i - 1],10);
+	}
+
+	int n;
+	cin >> n;
+	int ans = 0;
+	rep(i, 0, n) {
+		int a;
+		cin >> a;
+		len = to_string(a).size();
+		ans = add(ans, mul(n, f(a)));
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n;
@@ -57,6 +143,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 ll n, k;

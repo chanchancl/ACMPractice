@@ -38,6 +38,71 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	int T;
+	cin >> T;
+	while(T--){
+		int n;
+		cin >> n;
+		vector<int> v(n);
+		rep(i, 0, n) cin >> v[i];
+		sort(v.begin(), v.end());
+		int a = v.back(), b = v[v.size()-2];
+		cout << min(b - 1, n-2) << endl;
+	}
+	return 0;
+}
+
+/*
+bool prime(int x) {
+	if (x < 2) return false;
+	for(int i=2; i*i <= x; i++)
+		if (x % i == 0)
+			return false;
+	return true;
+}
+
+int main()
+{
+	FASTIO;
+	int n;
+	cin >> n;
+	int m = n;
+	while(!prime(m)) m++;
+	cout << m << endl;
+	cout << "1 " << n << endl;
+	rep(i, 0, n-1)
+		cout << i + 1 << " " << i + 2 << endl;
+	rep(i, 0, m-n)
+		cout << i + 1 << " " << i + 1 + n/2 << endl;
+
+	return 0;
+}
+ */
+
+/*
+const int MOD = 998244353;
+
+int pw(int a, int x) {
+	if (x == 1) return a;
+	int r = pw(a, x/2) % MOD;
+	if (x % 2)
+		return (((1ll *a * r) % MOD) * r) % MOD;
+	return (1ll * r * r) % MOD;
+}
+
+int main()
+{
+	int w, h;
+	cin >> w >> h;
+	int ans = pw(2, w+h);
+	cout << ans << endl;
+	return 0;
+}
+ */
+
+/*
+int main()
+{
 	string S; cin >> S;
 	ll a=0, b=0, c=0;
 	rep(i, 0, S.size()) {
@@ -51,6 +116,7 @@ int main()
 	cout << c << endl;
 	return 0;
 }
+*/
 
 /*
 int main() 

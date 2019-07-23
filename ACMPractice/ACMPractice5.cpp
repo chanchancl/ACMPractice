@@ -36,6 +36,23 @@ using pll = pair<ll, ll>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
+int main()
+{
+	string S; cin >> S;
+	ll a=0, b=0, c=0;
+	rep(i, 0, S.size()) {
+		if (S[i] == 'o'){
+			b+=a;
+		} else if (i > 0 && S[i-1] == 'v') {
+			a++;
+			c+=b;
+		}
+	}
+	cout << c << endl;
+	return 0;
+}
+
+/*
 int main() 
 {
 	int n;
@@ -65,7 +82,7 @@ int main()
 	else
 		cout << 0 << endl;
 }
-
+*/
 
 /*
 const ll MOD = 998244353;
@@ -300,7 +317,7 @@ int main()
 */
 
 /*
-// 1051 ¾ø¶ÔËØÊý
+// 1051 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -338,7 +355,7 @@ int main()
 */
 
 /*
-// 1037 ÕûÊýÇóºÍ
+// 1037 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int main()
 {
 	int n;
@@ -814,7 +831,7 @@ int main()
 	int n = (sizeof(e) / sizeof(e[0])) - 1;
 
 	for (int i = 0; i < n; i++) {
-		cout << "»î¶¯" << i + 1 << "¿ªÊ¼Ê±¼äÎª£º" << e[i].start << " " << "½áÊøÊ±¼äÎª£º" << e[i].end << endl;
+		cout << "ï¿½î¶¯" << i + 1 << "ï¿½ï¿½Ê¼Ê±ï¿½ï¿½Îªï¿½ï¿½" << e[i].start << " " << "ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Îªï¿½ï¿½" << e[i].end << endl;
 	}
 
 	bool select[NUM];
@@ -822,11 +839,11 @@ int main()
 
 	GreedySelector(n, e, select);
 
-	cout << "×îÖÕÑ¡ÔñµÄ»î¶¯¼¯ºÏÎª£º" << endl;
+	cout << "ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä»î¶¯ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½" << endl;
 	for (int i = 0; i < n; i++)
 	{
 		if (select[i])
-			cout << "»î¶¯ " << i + 1 << endl;
+			cout << "ï¿½î¶¯ " << i + 1 << endl;
 	}
 	return 0;
 }
@@ -881,27 +898,27 @@ int main() {
 		it[i].avg = 1.0 * it[i].v / it[i].w;
 	}
 	
-	printf("±³°üËùÄÜÈÝÄÉµÄÖØÁ¿Îª£º%f\n", W);
-	printf("ÎïÆ·µÄ¸öÊýÎª: %d\n", N);
-	printf("ÎïÆ·µÄÖØÁ¿ºÍ¼ÛÖµ·Ö±ðÎª£º\n");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½%f\n", W);
+	printf("ï¿½ï¿½Æ·ï¿½Ä¸ï¿½ï¿½ï¿½Îª: %d\n", N);
+	printf("ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½Öµï¿½Ö±ï¿½Îªï¿½ï¿½\n");
 	for (int i = 0; i < 30; i++) {
-		printf("ÎïÆ·%2d  ÖØÁ¿%f  ¼ÛÖµ%f\n", i + 1, 1.0 * it[i].w, 1.0 * it[i].v);
+		printf("ï¿½ï¿½Æ·%2d  ï¿½ï¿½ï¿½ï¿½%f  ï¿½ï¿½Öµ%f\n", i + 1, 1.0 * it[i].w, 1.0 * it[i].v);
 	}
 	
 	sort(it, it + N, cmp);
 	greedy(N, W, it);
-	printf("×°ÔØÊ±Ñ¡ÔñÁË£º\n");
+	printf("×°ï¿½ï¿½Ê±Ñ¡ï¿½ï¿½ï¿½Ë£ï¿½\n");
 	int sumW, sumV;
 	sumW = sumV = 0;
 	for (int i = 0; i < N; i++) {
 		if (it[i].select == true) {
-			printf("%dºÅÎïÆ·\n", i + 1);
+			printf("%dï¿½ï¿½ï¿½ï¿½Æ·\n", i + 1);
 			sumW += it[i].w;
 			sumV += it[i].v;
 		}
 	}
-	printf("×ÜÖØÁ¿Îª : %d\n", sumW);
-	printf("×Ü¼ÛÖµÎª : %d\n", sumV);
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª : %d\n", sumW);
+	printf("ï¿½Ü¼ï¿½ÖµÎª : %d\n", sumV);
 
 	return 0;
 }
@@ -969,7 +986,7 @@ int main()
 		int pout = 0;
 		while (pout != n)
 		{
-			if (visit[idx] == 1) // ÒÑout
+			if (visit[idx] == 1) // ï¿½ï¿½out
 			{
 				idx = (idx + 1) % n;
 				continue;
@@ -3292,7 +3309,7 @@ int main()
 	for (int i = 0; i < n; i++) {
 		double h, w, wbiao;
 		cin >> h >> w;
-		// w ???§ß?? ????
+		// w ???ï¿½ï¿½?? ????
 		w = w * 0.5;
 		wbiao = (h - 100)*0.9;
 		if (abs(w - wbiao) < wbiao*0.1)

@@ -40,6 +40,47 @@ int main()
 {
 	int T;
 	cin >> T;
+	while(T--){
+		int n,k;
+		cin >> n >> k;
+		vector<int> v(n);
+		rep(i, 0, n) cin >> v[i];
+		int odd = count_if(all(v), [](int t){return t % 2 == 1;});
+		if (odd < k) {
+			cout << "NO" <<endl;
+			continue;
+		}
+		if (k == 1) {
+			if (odd % 2 == 1) {
+				cout << "YES\n1\n";
+				continue;
+			}
+			else{
+				cout << "NO" <<endl;
+				continue;
+			}
+				
+		}
+		cout << "YES" << endl;
+		int nk = 0;
+		rep(i, 0, n) {
+			if (v[i] % 2 == 1) {
+				cout << i + 1 << ' ';
+				nk++;
+				if (nk == k-1)
+					break;
+			}
+		}
+		cout << n << endl;
+	}
+	return 0;
+}
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
 	while(T--) {
 		ll ans = 0, t;
 		rep(i, 0, 3) cin >> t, ans += t;
@@ -48,6 +89,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 /*
 int main()

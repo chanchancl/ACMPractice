@@ -40,6 +40,20 @@ int main()
 {
 	int T;
 	cin >> T;
+	while(T--) {
+		ll ans = 0, t;
+		rep(i, 0, 3) cin >> t, ans += t;
+		ans /= 2;
+		cout << ans << endl;
+	}
+	return 0;
+}
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
 	while(T--){
 		int n;
 		cin >> n;
@@ -51,6 +65,8 @@ int main()
 	}
 	return 0;
 }
+
+ */
 
 /*
 bool prime(int x) {

@@ -38,6 +38,214 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	double H, L;
+	cin >> H >> L;
+	cout << fixed << setprecision(9)<< (L * L - H * H) / H / 2;
+
+
+	return 0;
+}
+
+
+/*
+using namespace std;
+int arr[1005];
+int brr[1005];
+
+int main(void)
+{
+
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	int N;
+	cin >> N;
+
+	for (int i = 0; i < N; i++)
+		cin >> arr[i];
+
+
+	brr[0] = 100;
+	for (int i = 1; i < N; i++) {
+		if (arr[i - 1] < arr[i])
+			brr[i] = brr[i - 1] + 100;
+		else if (arr[i - 1] == arr[i])
+			brr[i] = brr[i - 1];
+		else
+			brr[i] = 100;
+	}
+	int _temp;
+	for (int i = N - 2; i >= 0; i--) {
+		if (arr[i] > arr[i + 1]) {
+			_temp = brr[i + 1] + 100;
+			brr[i] = max(_temp, brr[i]);
+		}
+		else if (arr[i] == arr[i + 1]) {
+			_temp = brr[i + 1];
+			brr[i] = max(_temp, brr[i]);
+		}
+
+	}
+	long long ans = 0;
+	for (int i = 0; i < N; i++)
+		ans += brr[i];
+	cout << ans << endl;
+	return 0;
+}
+*/
+
+/*
+int n;
+vector<int> v[100005];
+int len[100005];
+int visit[100005];
+int cnt[3] = { 0,0,0 };
+
+
+void bfs(int x) {
+	cnt[len[x] % 3]++;
+
+	for (auto it : v[x]) {
+		if (!visit[it]) {
+			visit[it] = 1;
+			len[it] = len[x] + 1;
+			bfs(it);
+		}
+	}
+}
+
+int main()
+{
+	FASTIO;
+
+	cin >> n;
+	rep(i, 0, n - 1) {
+		int a, b;
+		cin >> a >> b;
+		a--, b--;
+		v[a].push_back(b);
+		v[b].push_back(a);
+	}
+
+	rep(i, 0, n) {
+		memset(len, 0, sizeof(len));
+		memset(visit, 0, sizeof(visit));
+		visit[i] = 1;
+		bfs(i);
+	}
+	cnt[0] -= n;
+	cout << cnt[0] / 2 * 3 << " " << cnt[1] / 2 << " " << cnt[2];
+
+	return 0;
+}
+*/
+
+/*
+int v[100005];
+int n, x, y;
+
+int main()
+{
+	cin >> n >> x >> y;
+	rep(i, 1, n + 1) cin >> v[i];
+
+	rep(i, 1, n + 1) {
+		bool ok = 1;
+		for (int j = max(1, i - x); j <= min(n, i + y); j++)
+			if (v[j] < v[i]) ok = 0;
+		if (ok) {
+			cout << i;
+			break;
+		}
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int t;
+	string S, T;
+	cin >> t >> S;
+	while (t--) {
+		cin >> T;
+		string s;
+		while (s.size() < T.size()) {
+			s += S;
+		}
+		for (auto& c : s) {
+			if (c == '1')
+				c = '0';
+			else
+				c = '1';
+		}
+		string ss;
+		ss.append((s.begin() + s.find_first_of('1')), s.end());
+		if (ss == T)
+			cout << "YES";
+		else
+			cout << "NO";
+		if (t > 0)
+			cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i < n; i++)
+		cin >> v[i];
+	sort(v.begin(), v.end(), [](int a, int b) {
+		if ((a + b) % 2 == 1 && a < b) return true;
+		return false;
+	});
+	cout << v[0];
+	for (int i = 1; i < n; i++) {
+		cout << " " << v[i] ;
+	}
+	return 0;
+}
+*/
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n;
+		cin >> n;
+		vector<long long> v(n);
+		for (int i = 0; i < n; i++)
+			cin >> v[i];
+		sort(v.begin(), v.end());
+		bool ans = true;
+		for (int i = 1; i < n - 1; i++) {
+			if (v[i] > v[i - 1] + v[i + 1]) {
+				ans = false;
+				break;
+			}
+		}
+		if (v[0] > v[1] + v[n - 1])
+			ans = false;
+		if (ans)
+			cout << "YES";
+		else
+			cout << "NO";
+		if (T > 0) cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int T;
 	cin >> T;
 	while(T--){
@@ -46,35 +254,24 @@ int main()
 		vector<int> v(n);
 		rep(i, 0, n) cin >> v[i];
 		int odd = count_if(all(v), [](int t){return t % 2 == 1;});
-		if (odd < k) {
+		if (odd < k || odd % 2 != k % 2) {
 			cout << "NO" <<endl;
 			continue;
 		}
-		if (k == 1) {
-			if (odd % 2 == 1) {
-				cout << "YES\n1\n";
-				continue;
-			}
-			else{
-				cout << "NO" <<endl;
-				continue;
-			}
-				
-		}
+
 		cout << "YES" << endl;
-		int nk = 0;
 		rep(i, 0, n) {
+			if (k == 1) break;
 			if (v[i] % 2 == 1) {
-				cout << i + 1 << ' ';
-				nk++;
-				if (nk == k-1)
-					break;
+				cout << i + 1 << " ";
+				--k;
 			}
 		}
 		cout << n << endl;
 	}
 	return 0;
 }
+*/
 
 /*
 int main()

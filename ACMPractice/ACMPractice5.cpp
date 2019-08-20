@@ -288,7 +288,6 @@ int main()
 			cout << "NO" <<endl;
 			continue;
 		}
-
 		cout << "YES" << endl;
 		rep(i, 0, n) {
 			if (k == 1) break;

@@ -38,14 +38,44 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
-	double H, L;
-	cin >> H >> L;
-	cout << fixed << setprecision(9)<< (L * L - H * H) / H / 2;
+	int n;
+	cin >> n;
+	vector<int> v(n);
 
+	rep(i, 0, n) cin >> v[i];
+
+	ll ans = 0;
+	int zero = 0;
+	int ng = 0;
+	rep(i, 0, n) {
+		if (v[i] > 0) ans += abs(v[i] - 1);
+		if (v[i] == 0) ans++, zero++;
+		if (v[i] < 0) ng++, ans += abs(-1 - v[i]);
+	}
+	
+	if (ng % 2 != 0 && zero == 0) {
+		ans += 2;
+	}
+
+	cout << ans << endl;
 
 	return 0;
 }
 
+
+
+/*
+template<typename T>
+constexpr auto raxPadding(T nodesize) { return ((sizeof(void*) - ((nodesize + 4) % sizeof(void*))) & (sizeof(void*) - 1)); }
+int main()
+{
+	for (int i = 0x10; i < 0x100; i++) {
+		int padding = raxPadding(i);
+		cout << "raxPadding(" << i << ") : " << padding << ", Padding to : " << i + padding << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 using namespace std;

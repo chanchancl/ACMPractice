@@ -20,22 +20,54 @@
 #include <numeric>
 #include <bitset>
 #include <tuple>
-using namespace std;
 
+#ifndef _MSC_VER
+#include <bits/stdc++.h>
+#endif
+
+using namespace std;
 #define FASTIO ios::sync_with_stdio(false), cin.tie(nullptr);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
-#define repn(i, n) for(int i=1; i <=n; ++i)
-#define pre(i,a,b) for(int i=a; i >=b; --i)
-#define pren(i, a) for(int i=a; i > 0; --i)
 #define all(x) (x).begin(),(x).end()
 #define endl "\n"
 using ll = long long;
-using ull = unsigned long long;
 using pii = pair<int, int>;
-using pll = pair<ll, ll>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
+int main()
+{
+
+	return 0;
+}
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n;
+		cin >> n;
+		vector<int> v(n);
+		rep(i, 0, n) cin >> v[i];
+		if (n <= 3) {
+			cout << "YES" << endl;
+			continue;
+		}
+		int cnt = 0;
+		if (abs(v.front() - v.back()) <= 1) cnt++;
+		rep(i, 1, n) if (abs(v[i] - v[i-1]) <= 1) cnt++;
+		if (cnt >= n -1) 
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
+	return 0;
+}
+*/
+
+/*
 #define N 135
 ll n, cnt, mn=1e9, a[N], d[N][N], e[N][N];
 
@@ -80,7 +112,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main()

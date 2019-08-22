@@ -37,9 +37,79 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	string s,t;
+	cin >> s >> t;
+	int ans = 0;
+	for(int i = 0; i < (int)s.size(); ++i) {
+		for (int j = i; j < (int)s.size(); ++j) {
+			int pos = 0;
+			for (int p = 0; p < (int)s.size(); ++p) {
+				if (i <= p && p <= j) continue;
+				if (pos < (int)t.size() && t[pos] == s[p]) ++pos;
+			}
+			if (pos == (int)t.size()) ans = max(ans, j - i + 1);
+		}
+	}
+
+	cout << ans << endl;
+	return 0;
+}
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	ll g = 0;
+	rep(i, 0, n){
+		ll x;
+		cin >> x;
+		g = __gcd(g, x);
+	}
+
+	int ans = 0;
+	for (int i = 1; i * 1ll * i <= g; ++i) {
+		if (g % i == 0) {
+			++ans;
+			if (i != g / i) {
+				++ans;
+			}
+		}
+	}
+
+	cout << ans << endl;
 
 	return 0;
 }
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n, t;
+		cin >> n;
+		vector<int> v(4*n + 1);
+		rep(i, 1, 4*n + 1) cin >> v[i];
+		sort(v.begin() + 1, v.end());
+		int area = v[1] * v.back();
+		bool can = true;
+		rep(i, 1, n + 1) {
+			if (v[2*i-1] == v[2*i] && v[4*n-2*i+1] == v[4*n-2*i+2] &&
+			    v[2*i-1] * v[4*n-2*i+1] == area)
+					continue;
+			else{
+				can = false;
+				break;
+			}
+		}
+		cout << (can?"YES":"NO") <<endl;
+	}
+	return 0;
+}
+*/
 
 /*
 int main()

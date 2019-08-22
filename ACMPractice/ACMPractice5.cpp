@@ -36,6 +36,75 @@ using pll = pair<ll, ll>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
+#define N 135
+ll n, cnt, mn=1e9, a[N], d[N][N], e[N][N];
+
+int main()
+{
+	ll i,j,k,t;
+	cin >> n;
+	for(i = 0; i < n; i++) {
+		scanf("%lld", &t);
+		if (t) {
+			a[cnt++] = t;
+			if (cnt > 128)
+				break;
+		}
+	}
+	if (i < n) {
+		puts("3");
+		return 0;
+	}
+	for (i=0; i < cnt; i++) {
+		for (j=0; j < cnt; j++) {
+			if (i!=j && a[i]&a[j])
+				d[i][j] = e[i][j] = 1; // 联通
+			else
+				d[i][j] = e[i][j] = 1e9;
+		}
+	}
+	for(k=0; k<cnt; k++) {
+		for(i=0;i<k;i++) {
+			for(j=i+1; j < k; j++) {
+				mn = min(mn, e[i][k] + e[k][j] + d[i][j]);
+			}
+		}
+		for(i=0; i<cnt;i++) {
+			for(j=0;j<cnt;j++) {
+				d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+			}
+		}
+	}
+
+	cout << (mn<1e9 ? mn : -1);
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	if (!(n&1)) {
+		cout << "NO";
+		return 0;
+	}
+
+	cout << "YES" << endl;
+	rep(i, 1, 2 * n + 1) {
+		if (i <= n)
+			cout << 2 * i - i % 2 << " ";
+		else
+			cout << 2 * (i - n) - i % 2 << " ";
+	}
+
+	return 0;
+}
+*/
+
+/*
 int main()
 {
 	int n;
@@ -61,8 +130,7 @@ int main()
 
 	return 0;
 }
-
-
+*/
 
 /*
 template<typename T>

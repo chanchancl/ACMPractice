@@ -37,6 +37,76 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	sort(all(v), greater<int>());
+
+	int lst = 1e7;
+	int ans = 0;
+	for(int i = 0; i < n; i++) {
+		if (v[i] + 1 < lst) {
+			ans++;
+			lst = v[i] + 1;
+		}
+		else if (v[i] < lst) {
+			ans++;
+			lst = v[i];
+		}
+		else if (v[i] - 1 > 0 && v[i] - 1 < lst) {
+			ans++;
+			lst = v[i] - 1;
+		}
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string s,t;
+	cin >> s >> t;
+	vector<int> rg(t.size());
+
+	for(int i = t.size()-1; i >= 0; --i) {
+		int pos = s.size() - 1;
+		if (i + 1 < t.size()) pos = rg[i + 1] - 1;
+		while (s[pos] != t[i]) --pos;
+		rg[i] = pos;
+	}
+
+	int ans = 0;
+	int pos = 0;
+	for(int i = 0; i < s.size(); ++i) {
+		int rpos = s.size() - 1;
+		if (pos < t.size()) rpos = rg[pos] - 1;
+		ans = max(ans, rpos - i + 1);
+		if (pos < t.size() && t[pos] == s[i]) ++pos;
+	}
+
+	cout << ans << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	string s,t;
 	cin >> s >> t;
 	int ans = 0;
@@ -54,6 +124,7 @@ int main()
 	cout << ans << endl;
 	return 0;
 }
+*/
 
 /*
 int main()

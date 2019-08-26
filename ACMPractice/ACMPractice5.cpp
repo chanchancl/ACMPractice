@@ -35,6 +35,7 @@ using pii = pair<int, int>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
+
 int main()
 {
 	int a = 100;
@@ -44,6 +45,56 @@ int main()
 	return 0;
 }
 
+/*
+int main()
+{
+	int n, r;
+	cin >> n >> r;
+	vector<pii> pos, neg;
+	rep(i, 0, n) {
+		pii cur;
+		cin >> cur.first >> cur.second;
+		if (cur.second >= 0) pos.push_back(cur);
+		else {
+			cur.first = max(cur.first, abs(cur.second));
+			neg.push_back(cur);
+		}
+	}
+
+	sort(all(pos));
+	sort(all(neg), [](pii& a, pii& b) {
+		return a.first + a.second > b.first + b.second;
+	});
+
+	int taken = 0;
+	rep(i, 0, pos.size()) {
+		if (r >= pos[i].first) {
+			r += pos[i].second;
+			++taken;
+		}
+	}
+
+	vector<vector<int>> dp(neg.size() + 1, vector<int>(r+1, 0) );
+	dp[0][r] = taken;
+	rep(i, 0, neg.size()) {
+		rep(cr, 0, r + 1) {
+			if (cr >= neg[i].first && cr + neg[i].second >= 0) {
+				dp[i + 1][cr + neg[i].second] = max(dp[i+1][cr+neg[i].second], dp[i][cr] + 1);
+			}
+			dp[i + 1][cr] = max(dp[i + 1][cr], dp[i][cr]);
+		}
+	}
+
+	int ans = 0;
+	rep(cr, 0, r + 1) {
+		ans = max(ans, dp[neg.size()][cr]);
+	}
+	//cout << (ans == n ? "YES" : "NO") << endl;
+	cout << ans << endl;
+
+	return 0;
+}
+*/
 
 /*
 int main()

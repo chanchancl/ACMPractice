@@ -9,17 +9,11 @@
 #include <set>
 #include <list>
 #include <stack>
-#include <cctype>
 #include <climits>
-#include <functional>
 #include <algorithm>
-#include <iostream>
 #include <iomanip>
 #include <sstream>
-#include <fstream>
 #include <numeric>
-#include <bitset>
-#include <tuple>
 
 #ifndef _MSC_VER
 #include <bits/stdc++.h>
@@ -35,15 +29,62 @@ using pii = pair<int, int>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
-
 int main()
 {
-	int a = 100;
-
-	cout << /* "*/" */";
 
 	return 0;
 }
+
+/*
+int main()
+{
+	int n, l, r;
+	cin >> n >> l >> r;
+	int mi, ma;
+	mi = ma = 0;
+	int t = 1;
+	rep(i, 0, l) {
+		mi += t;
+		t <<= 1;
+	}
+	mi += (n - l);
+
+	t = 1;
+	rep(i, 0, r) {
+		ma += t;
+		t <<= 1;
+	}
+	t >>= 1;
+	ma += (n - r) * t;
+
+	cout << mi << " " << ma << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string in;
+	cin >> in;
+	int cnt = count(all(in), '1');
+	int ans = (in.size()+1) / 2 + ((cnt == 1 && (in.size()+1)%2==0) ? -1 : 0);
+	if (in == "0") ans = 0;
+	cout << ans << endl;
+	return 0;
+}
+*/
+
+//int main()
+//{
+//	int a = 100;
+//
+//	cout << /* "*/" */";
+//
+//	return 0;
+//}
+
 
 /*
 int main()

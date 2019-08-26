@@ -37,7 +37,10 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
-	
+	int a = 100;
+
+	cout << /* "*/" */";
+
 	return 0;
 }
 

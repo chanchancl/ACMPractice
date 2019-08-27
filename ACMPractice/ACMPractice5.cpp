@@ -38,6 +38,73 @@ int main()
 /*
 int main()
 {
+	int n,m;
+	cin >> n >> m;
+	vector< vector<int>> v(n, vector<int>(m));
+	rep(i, 0, n) rep(j, 0, m) 
+		cin >> v[i][j];
+
+	vector<pii> ans;
+	rep(i, 0, n - 1) rep(j, 0, m - 1) {
+		if (v[i][j] * v[i + 1][j] * v[i][j + 1] * v[i + 1][j + 1] > 0) {
+			v[i][j] = 2;
+			v[i + 1][j] = 2;
+			v[i][j + 1] = 2;
+			v[i + 1][j + 1] = 2;
+			ans.push_back(make_pair(i,j));
+		}
+	}
+	int cnt = 0;
+	rep(i, 0, n) rep(j, 0, m) {
+		if (v[i][j] == 1) cnt++;
+	}
+	if (cnt != 0) {
+		cout << "-1" <<endl;
+	}
+	else {
+		cout << ans.size() << endl;
+		rep(i, 0, ans.size()) {
+			cout << ans[i].first + 1 << " " << ans[i].second + 1 << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int b, p, f;
+		int h, c;
+		cin >> b >> p >> f >> h >> c;
+		int q = min(b/2, p);
+		int r = min(b/2, f);
+		int ans = 0;
+		if (h > c) {
+			ans += q * h;
+			b -= q * 2;
+			r  = min(b/2, f);
+			ans += r * c;
+		} else {
+			ans += r * c;
+			b -= r * 2;
+			q  = min(b/2, p);
+			ans += q * h;
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, l, r;
 	cin >> n >> l >> r;
 	int mi, ma;

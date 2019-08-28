@@ -38,6 +38,34 @@ int main()
 /*
 int main()
 {
+	int T;
+	cin >> T;
+	while(T--) {
+		int n,a,b;
+		string s;
+		cin >> n >> a >> b >> s;
+		vector<vector<ll>> d(n + 1, vector<ll>(2, 1e16));
+		d[0][0] = b;
+		rep(i, 0, n) {
+			if (s[i] == '0') {
+				d[i+1][0] = min(d[i+1][0], d[i][0] + a + b);
+				d[i+1][1] = min(d[i+1][1], d[i][0] + 2 * (a+b));
+
+				d[i+1][1] = min(d[i+1][1], d[i][1] + a + 2 * b);
+				d[i+1][0] = min(d[i+1][0], d[i][1] + 2 * a + b);
+			} else {
+				d[i+1][1] = min(d[i+1][1], d[i][1] + a + 2 * b);
+			}
+		}
+		cout << d[n][0] << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n,m;
 	cin >> n >> m;
 	vector< vector<int>> v(n, vector<int>(m));

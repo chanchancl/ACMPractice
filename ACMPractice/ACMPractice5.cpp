@@ -31,6 +31,49 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+
+	return 0;
+}
+
+
+/*
+int main()
+{
+	int n;
+	string status;
+	cin >> n >> status;
+	vector<int> v(10);
+	rep(i, 0, n) {
+		if (status[i] == 'L') {
+			for(auto &room : v) {
+				if (room != 1) {
+					room = 1;
+					break;
+				}
+			}
+		}
+		else if ( status[i] == 'R') {
+			for(auto it = v.rbegin(); it != v.rend(); ++it) {
+				if (*it != 1){
+					*it = 1;
+					break;	
+				}
+			}
+		}
+		else {
+			v[status[i] - '0'] = 0;
+		}
+	}
+
+	rep(i, 0, 10)
+		cout << v[i];
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int n, t;
 	cin >> n >> t;
 	int best = -1, ans = 1e9;
@@ -47,6 +90,7 @@ int main()
 
 	return 0;
 }
+*/
 
 /*
 int main()

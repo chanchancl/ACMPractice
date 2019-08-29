@@ -31,9 +31,112 @@ const ll  INF_LL = (ll)1e18;
 
 int main()
 {
+	int n, t;
+	cin >> n >> t;
+	int best = -1, ans = 1e9;
+	rep(i, 0, n) {
+		int s, d;
+		cin >> s >> d;
+		while(s < t) s += d;
+		if (s < ans) {
+			ans = s;
+			best = i + 1;
+		}
+	}
+	cout << best << endl;
 
 	return 0;
 }
+
+/*
+int main()
+{
+	for (int i = 0; i < 100; i++) {
+		cout << setw(4) << (i&(-i));
+		if (i % 10 == 0)
+			cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int a[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+
+void out(int n, int k) {
+	rep(i, 0, 4) {
+		rep(j, 0, n) {
+			cout << a[4*i + j % 4] + 16*(k*n/4 + j / 4) << " ";
+		}
+		cout << endl;
+	}
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	rep(i, 0, n/4) out(n, i);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	int ans = n - 1;
+	map<int,int> freq;
+	rep(i, 0, n) {
+		bool validPrefix = true;
+		rep(j, 0, i) {
+			freq[v[j]]++;
+			if (freq[v[j]] == 2) {
+				validPrefix = false;
+				break;
+			}
+		}
+		int min_index_suffiix = n;
+		for(int j = n - 1; j >= i; --j) {
+			freq[v[j]]++;
+			if (freq[v[j]] == 1) {
+				min_index_suffiix = j;
+			} else {
+				break;
+			}
+		}
+		if (validPrefix) {
+			ans = min(ans, min_index_suffiix - i);
+		}
+
+		freq.clear();
+	}
+	cout << ans << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n, a, b;
+		cin >> a >> b >> n;
+		n %= 3;
+		if (n == 0) cout << a << endl; else
+		if (n == 1) cout << b << endl; 
+		else
+			cout << (a ^ b) << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 int main()

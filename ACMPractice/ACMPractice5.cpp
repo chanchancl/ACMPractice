@@ -248,6 +248,248 @@ int main()
 }
 */
 
+
+/*
+int main()
+{
+	int n;
+	string status;
+	cin >> n >> status;
+	vector<int> v(10);
+	rep(i, 0, n) {
+		if (status[i] == 'L') {
+			for(auto &room : v) {
+				if (room != 1) {
+					room = 1;
+					break;
+				}
+			}
+		}
+		else if ( status[i] == 'R') {
+			for(auto it = v.rbegin(); it != v.rend(); ++it) {
+				if (*it != 1){
+					*it = 1;
+					break;	
+				}
+			}
+		}
+		else {
+			v[status[i] - '0'] = 0;
+		}
+	}
+
+	rep(i, 0, 10)
+		cout << v[i];
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, t;
+	cin >> n >> t;
+	int best = -1, ans = 1e9;
+	rep(i, 0, n) {
+		int s, d;
+		cin >> s >> d;
+		while(s < t) s += d;
+		if (s < ans) {
+			ans = s;
+			best = i + 1;
+		}
+	}
+	cout << best << endl;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	for (int i = 0; i < 100; i++) {
+		cout << setw(4) << (i&(-i));
+		if (i % 10 == 0)
+			cout << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int a[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+
+void out(int n, int k) {
+	rep(i, 0, 4) {
+		rep(j, 0, n) {
+			cout << a[4*i + j % 4] + 16*(k*n/4 + j / 4) << " ";
+		}
+		cout << endl;
+	}
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	rep(i, 0, n/4) out(n, i);
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	rep(i, 0, n) cin >> v[i];
+
+	int ans = n - 1;
+	map<int,int> freq;
+	rep(i, 0, n) {
+		bool validPrefix = true;
+		rep(j, 0, i) {
+			freq[v[j]]++;
+			if (freq[v[j]] == 2) {
+				validPrefix = false;
+				break;
+			}
+		}
+		int min_index_suffiix = n;
+		for(int j = n - 1; j >= i; --j) {
+			freq[v[j]]++;
+			if (freq[v[j]] == 1) {
+				min_index_suffiix = j;
+			} else {
+				break;
+			}
+		}
+		if (validPrefix) {
+			ans = min(ans, min_index_suffiix - i);
+		}
+
+		freq.clear();
+	}
+	cout << ans << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n, a, b;
+		cin >> a >> b >> n;
+		n %= 3;
+		if (n == 0) cout << a << endl; else
+		if (n == 1) cout << b << endl; 
+		else
+			cout << (a ^ b) << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n,a,b;
+		string s;
+		cin >> n >> a >> b >> s;
+		vector<vector<ll>> d(n + 1, vector<ll>(2, 1e16));
+		d[0][0] = b;
+		rep(i, 0, n) {
+			if (s[i] == '0') {
+				d[i+1][0] = min(d[i+1][0], d[i][0] + a + b);
+				d[i+1][1] = min(d[i+1][1], d[i][0] + 2 * (a+b));
+
+				d[i+1][1] = min(d[i+1][1], d[i][1] + a + 2 * b);
+				d[i+1][0] = min(d[i+1][0], d[i][1] + 2 * a + b);
+			} else {
+				d[i+1][1] = min(d[i+1][1], d[i][1] + a + 2 * b);
+			}
+		}
+		cout << d[n][0] << endl;
+	}
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,m;
+	cin >> n >> m;
+	vector< vector<int>> v(n, vector<int>(m));
+	rep(i, 0, n) rep(j, 0, m) 
+		cin >> v[i][j];
+
+	vector<pii> ans;
+	rep(i, 0, n - 1) rep(j, 0, m - 1) {
+		if (v[i][j] * v[i + 1][j] * v[i][j + 1] * v[i + 1][j + 1] > 0) {
+			v[i][j] = 2;
+			v[i + 1][j] = 2;
+			v[i][j + 1] = 2;
+			v[i + 1][j + 1] = 2;
+			ans.push_back(make_pair(i,j));
+		}
+	}
+	int cnt = 0;
+	rep(i, 0, n) rep(j, 0, m) {
+		if (v[i][j] == 1) cnt++;
+	}
+	if (cnt != 0) {
+		cout << "-1" <<endl;
+	}
+	else {
+		cout << ans.size() << endl;
+		rep(i, 0, ans.size()) {
+			cout << ans[i].first + 1 << " " << ans[i].second + 1 << endl;
+		}
+	}
+
+	return 0;
+}
+*/
+
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int b, p, f;
+		int h, c;
+		cin >> b >> p >> f >> h >> c;
+		int q = min(b/2, p);
+		int r = min(b/2, f);
+		int ans = 0;
+		if (h > c) {
+			ans += q * h;
+			b -= q * 2;
+			r  = min(b/2, f);
+			ans += r * c;
+		} else {
+			ans += r * c;
+			b -= r * 2;
+			q  = min(b/2, p);
+			ans += q * h;
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+*/
+
 /*
 int main()
 {

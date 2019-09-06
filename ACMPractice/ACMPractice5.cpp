@@ -29,11 +29,224 @@ using pii = pair<int, int>;
 const int INF = 0x7f3f3f3f;
 const ll  INF_LL = (ll)1e18;
 
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <limits>
+#include <algorithm>
+
+using namespace std;
+
 int main()
 {
 
 	return 0;
 }
+
+/*
+const int MAX_COUNT = 10005;
+int state[MAX_COUNT][MAX_COUNT];
+int a[MAX_COUNT];
+
+int schedule(int n, int m)
+{
+	int i = 0, j = 0, k = 0, temp = 0, MaxInt;
+	for (i = 1; i <= n; ++i)
+	{
+		state[i][1] = state[i - 1][1] + a[i];
+	}
+	for (j = 2; j <= m; ++j)
+	{
+		for (i = j; i <= n; ++i)
+		{
+			temp = 10000000;
+			for (k = j; k < i; ++k)
+			{
+				MaxInt = max(state[i][1] - state[k][1], state[k][j - 1]);
+				if (temp > MaxInt)
+				{
+					temp = MaxInt;
+				}
+			}
+			state[i][j] = temp;
+		}
+	}
+	return state[n][m];
+}
+
+
+int main() {
+	int res;
+
+	int m, n;
+	cin >> m;
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
+	}
+
+	res = schedule(n, m);
+	if (n == m) {
+		res = *max_element(a + 1, a + n + 1);
+	}
+	cout << res << endl;
+}
+*/
+
+/*
+string resolve(string expr) {
+	int val = 0;
+	bool valid = true;
+	int maxl = 0;
+	for (int i = 0; i < expr.size(); ++i) {
+		if (expr[i] == '(') val++, maxl++;
+		if (expr[i] == ')') val--;
+		if (val < 0) {
+			valid = false;
+			break;
+		}
+	}
+	if (val != 0 || !valid) {
+		return "";
+	}
+
+	while (count(expr.begin(), expr.end(), '(') != 0) {
+		int l = expr.find_last_of('(');
+		int r = expr.find_first_of(')', l);
+
+		reverse(expr.begin() + l, expr.begin() + r + 1);
+		expr.erase(expr.begin() + l);
+		expr.erase(expr.begin() + r - 1);
+	}
+
+	return expr;
+}
+
+int main() {
+	string res;
+
+	string _expr;
+	getline(cin, _expr);
+	res = resolve(_expr);
+	cout << res << endl;
+
+	return 0;
+}
+*/
+
+/*
+class ListNode {
+public:
+	int val;
+	ListNode* next;
+	ListNode(int val) {
+		this->val = val;
+		this->next = NULL;
+	}
+};
+
+ListNode* partition(ListNode* head, int m) {
+	ListNode* ret = new ListNode(0);
+	ListNode* curret = ret;
+	ListNode* cur = head;
+	bool first = false;
+
+	while (cur != NULL) {
+		if (cur->val <= m ) {
+			if (!first) {
+				ret->val = cur->val;
+				first = true;
+			}
+			else {
+				curret->next = new ListNode(cur->val);
+				curret = curret->next;
+			}
+		}
+		cur = cur->next;
+	}
+	if (!first) {
+		delete ret;
+		return head;
+	}
+	cur = head;
+	while (cur != NULL) {
+		if (cur->val > m) {
+			if (!first) {
+				ret->val = cur->val;
+			}
+			else {
+				curret->next = new ListNode(cur->val);
+				curret = curret->next;
+			}
+		}
+		cur = cur->next;
+	}
+	while (head != NULL) {
+		ListNode* p = head;
+		head = head->next;
+		delete p;
+	}
+
+	return ret;
+}
+
+int main()
+{
+	ListNode* head = NULL;
+	ListNode* node = NULL;
+	int m;
+	cin >> m;
+	int v;
+	while (cin >> v) {
+		if (head == NULL) {
+			node = new ListNode(v);
+			head = node;
+		}
+		else {
+			node->next = new ListNode(v);
+			node = node->next;
+		}
+	}
+	head = partition(head, m);
+	if (head != NULL) {
+		cout << head->val;
+		node = head->next;
+		delete head;
+		head = node;
+		while (head != NULL) {
+			cout << "," << head->val;
+			node = head->next;
+			delete head;
+			head = node;
+		}
+	}
+	cout << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int currVal = 0, val = 0;
+	if (cin >> currVal)
+	{
+		int cnt = 1;
+		while (cin >> val)
+		{
+			if (val == currVal)
+				++cnt;
+			else {
+				cout << currVal << " occurs " << cnt << " times " << endl;
+				currVal = val;
+				cnt = 1;
+			}
+		}
+		cout << currVal << " occurs " << cnt << " times " << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 int main()

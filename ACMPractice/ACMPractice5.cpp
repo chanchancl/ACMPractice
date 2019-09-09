@@ -26,7 +26,7 @@ using namespace std;
 #define endl "\n"
 using ll = long long;
 using pii = pair<int, int>;
-const int INF = 0x7f3f3f3f;
+const int INF = (int)1e8+5;
 const ll  INF_LL = (ll)1e18;
 
 #include <iostream>
@@ -42,6 +42,56 @@ int main()
 
 	return 0;
 }
+
+/*
+int main()
+{
+	int b,g,n;
+	cin >> b >> g >> n;
+	int cnt = 0;
+	for(int i = 0; i <= n; ++i) {
+		int x = n - i;
+		if (i <= b && x <= g) {
+			cnt++;
+		}
+	}
+	cout << cnt << endl;
+	return 0;
+}
+*/
+
+/*
+int w[5], v[5];
+int dp[INF];
+int main() 
+{
+	int n,d,e;
+	cin >> n >> d >> e;
+	w[1] = v[1] = d;
+	w[2] = v[2] = 5*e;
+	for (int i = 1; i <=2; ++i) {
+		for (int j = w[i]; j <= n; ++j) {
+			dp[j] = max(dp[j], dp[j-w[i]] + v[i]);
+		}
+	}
+	cout << n - dp[n] << endl;
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n,d,e;
+	cin >> n >> d >> e;
+	int ans = n;
+	for(int i = 0; i * 5 * e <= n; ++i) {
+		ans = min(ans, (n - i * 5 * e) % d);
+	}
+	cout << ans << endl;
+	return 0;
+}
+*/
 
 /*
 const int MAX_COUNT = 10005;

@@ -248,6 +248,21 @@ int main()
 }
 */
 
+/*
+int main()
+{
+	int sum = 0;
+	int val;
+	for (int val = 0; val <= 10; val++);
+	{
+		sum += val;
+	}
+
+	cout << sum << endl;
+
+	return 0;
+}
+*/
 
 /*
 int main()

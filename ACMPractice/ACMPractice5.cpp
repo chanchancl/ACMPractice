@@ -30,8 +30,8 @@ const int INF = (int)1e8+5;
 const ll  INF_LL = (ll)1e18;
 
 #include <iostream>
-#include <vector>
-#include <numeric>
+#include <cstdlib>
+#include <string>
 #include <limits>
 #include <algorithm>
 
@@ -42,6 +42,29 @@ int main()
 
 	return 0;
 }
+
+/*
+int main()
+{
+	string in;
+	cin >> in;
+	bool f = false;
+	if (in[0] == '-') {
+		f = true;
+		in.erase(in.begin());
+	}
+	reverse(in.begin(), in.end());
+	int t = 0;
+	while(in[t] == '0') t++;
+	in = in.substr(t);
+	if (f) in.insert(0, "-");
+	long long l = atoll(in.c_str());
+	if ( l < -INT_MAX || l > INT_MAX)
+		in = "0";
+	cout << in;
+	return 0;
+}
+*/
 
 /*
 int main()

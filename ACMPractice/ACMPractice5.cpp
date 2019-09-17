@@ -19,7 +19,6 @@
 #include <bits/stdc++.h>
 #endif
 
-using namespace std;
 #define FASTIO ios::sync_with_stdio(false), cin.tie(nullptr);
 #define rep(i,a,b) for(int i=a; i < b; ++i)
 #define all(x) (x).begin(),(x).end()
@@ -29,12 +28,6 @@ using pii = pair<int, int>;
 const int INF = (int)1e8+5;
 const ll  INF_LL = (ll)1e18;
 
-#include <iostream>
-#include <cstdlib>
-#include <string>
-#include <limits>
-#include <algorithm>
-
 using namespace std;
 
 int main()
@@ -42,6 +35,63 @@ int main()
 
 	return 0;
 }
+
+
+/*
+string cell[1000005];
+int n,m;
+
+bool dfs(int i, int j) {
+	if (i == n-1 && j == m -1) return true;
+	if (i >= n || j >= m || cell[i][j] == '#') return false;
+	if (i || j) cell[i][j] = '#';
+	return dfs(i + 1, j) || dfs(i, j + 1);
+}
+
+int main()
+{
+	cin >> n >> m;
+	rep(i, 0, n)
+		cin >> cell[i];
+
+	if(!dfs(0, 0)) {
+		cout << "0";
+		return 0;
+	}
+	cout << (dfs(0,0) ? 2 : 1);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	string in;
+	cin >> n >> in;
+
+	int l = count(all(in), '(');
+	int r = count(all(in), ')');
+	if (l != r) {
+		cout << "No";
+		return 0;
+	}
+	int cnt = 0;
+	rep(i, 0, n) {
+		if (in[i] == '(') cnt++;
+		if (in[i] == ')') cnt--;
+		if (cnt == -2) {
+			cout << "No";
+			return 0;
+		}
+	}
+	
+	cout << "Yes";
+
+	return 0;
+}
+*/
 
 /*
 int main()

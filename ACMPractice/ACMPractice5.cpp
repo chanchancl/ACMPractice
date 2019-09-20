@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <sstream>
-#include <numeric>
+#include <utility>
 
 #ifndef _MSC_VER
 #include <bits/stdc++.h>
@@ -24,11 +24,12 @@
 #define all(x) (x).begin(),(x).end()
 #define endl "\n"
 using ll = long long;
-using pii = pair<int, int>;
+using pii = std::pair<int, int>;
 const int INF = (int)1e8+5;
 const ll  INF_LL = (ll)1e18;
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 int main()
@@ -37,6 +38,87 @@ int main()
 	return 0;
 }
 
+/*
+int main()
+{
+	int t;
+	vector<int> v;
+	while (cin >> t) {
+		v.push_back(t);
+	}
+
+	int res = INT_MIN;
+	int pre = 0;
+	for (int i = 0; i < v.size(); i++) {
+		int cur = max(pre, 0) + v[i];
+		res = max(res, cur);
+		pre = cur;
+	}
+	cout << res;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string a, b;
+	cin >> a;
+	int pos = a.find(';');
+	b = a.substr(pos + 1);
+	a = a.substr(0, pos);
+	if (a.size() != b.size()) {
+		cout << "False";
+		return 0;
+	}
+
+	int cnt = 1;
+	for (int i = 0; i < a.size(); i++) {
+		if (isalpha(a[i])) {
+			char t = a[i];
+			for (auto& c : a) {
+				if (c == t)
+					c = cnt;
+			}
+			cnt++;
+		}
+	}
+	cnt = 1;
+	for (int i = 0; i < b.size(); i++) {
+		if (isalpha(b[i])) {
+			char t = b[i];
+			for (auto& c : b) {
+				if (c == t)
+					c = cnt;
+			}
+			cnt++;
+		}
+	}
+	if (a == b)
+		cout << "True";
+	else
+		cout << "False";
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n, ans = 0;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int t;
+		cin >> t;
+		ans ^= t;
+	}
+	cout << ans;
+		
+	return 0;
+}
+*/
 
 /*
 string cell[1000005];

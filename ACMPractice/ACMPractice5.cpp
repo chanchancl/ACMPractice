@@ -34,9 +34,117 @@ using namespace std;
 
 int main()
 {
+	int n, x;
+	cin >> n >> x;
+	if (n <= 10 * x)
+		cout << 10;
+	int ans = 10;
+
 
 	return 0;
 }
+
+/*
+long long cnt(int m, int n)
+{
+	if (m <= 0 || n <= 0)
+		return 0;
+	vector<long long> data(n, 1);
+	long long cur = 0;
+	for (int i = 1; i < m; ++i)
+	{
+		cur = 1;
+		for (int j = 1; j < n; ++j)
+		{
+			cur = cur + data[j];
+			data[j] = cur;
+		}
+	}
+	return data[n - 1];
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	cout << cnt(n, m);
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> A(n);
+	for (int i = 0; i < n; i++)
+		cin >> A[i];
+	deque<int> q;
+	for (int i = 0; i < n; i++) A.push_back(A[i]);
+	vector<int> s(2 * n + 1);
+
+	for (int i = 1; i < 2 * n; i++) {
+		s[i] = s[i - 1] + A[i - 1];
+	}
+	q.push_back(0);
+	int res = INT_MIN;
+
+	for (int i = 1; i < 2 * n; i++) {
+		if (q.size() && i - n > q.front()) q.pop_front();
+		if (q.size()) res = max(res, s[i] - s[q.front()]);
+		while (q.size() && s[q.back()] > s[i]) q.pop_back();
+		q.push_back(i);
+	}
+	cout << res;
+	
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int T;
+	cin >> T;
+	while (T--) {
+		int n, x;
+		cin >> n >> x;
+		int md, mh;
+		md = mh = 0;
+		rep(i, 0, n) {
+			int a, b;
+			cin >> a >> b;
+			md = max(md, a);
+			mh = max(mh, a - b);	
+		}
+		int res = 1;
+		if (x - md > 0) {
+			if (mh <= 0) res = -1;
+			else res += (x - md + mh - 1) / mh;
+		}
+		cout << res << endl;
+	}
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	rep(i, 0, n) {
+		int a, b, e;
+		cin >> a >> b >> e;
+		int minAddStr = max(0, (e + b - a + 2) / 2);
+		cout << max(e - minAddStr + 1, 0) << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 int main()

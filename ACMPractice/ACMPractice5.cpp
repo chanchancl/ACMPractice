@@ -32,12 +32,6 @@ using namespace std;
 
 int main()
 {
-	int n, x;
-	cin >> n >> x;
-	if (n <= 10 * x)
-		cout << 10;
-	int ans = 10;
-
 
 	return 0;
 }

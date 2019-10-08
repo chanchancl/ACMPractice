@@ -28,8 +28,6 @@ using pii = std::pair<int, int>;
 const int INF = (int)1e8+5;
 const ll  INF_LL = (ll)1e18;
 
-#include <iostream>
-#include <vector>
 using namespace std;
 
 int main()
@@ -126,7 +124,27 @@ int main()
 		}
 		cout << res << endl;
 	}
+}
+*/
 
+/*
+int main()
+{
+	int a1,a2,k1,k2,n;
+	cin >> a1 >> a2 >> k1 >> k2 >> n;
+	if (k1 > k2) {
+		swap(a1, a2);
+		swap(k1, k2);
+	}
+
+	int ans1 = max(0, n - a1 * (k1 - 1) - a2 * (k2 - 1));
+
+	int ans2 = min(a1, n/k1);
+	int rest = n - ans2 * k1;
+	// cout << "ans2 " << ans2 << " rest : " << rest << endl;
+	ans2 += min(a2, rest / k2);
+
+	cout << ans1 << " " << ans2 <<endl;
 	return 0;
 }
 */
@@ -224,6 +242,26 @@ int main()
 	}
 	cout << ans;
 		
+	string c;
+	cin >> n;
+	cin >> c;
+	vector<pii> v(n);
+	rep(i, 0, n) cin >> v[i].first >> v[i].second, c[i] -= '0';
+
+	int ans = 0;
+	rep(i, 0, 2000) {
+		int cnt = 0;
+		rep(j, 0, n) {
+			if (i >= v[j].second && (i - v[j].second) % v[j].first == 0)
+				c[j] ^= 1;
+			cnt += c[j];
+		}
+		// cout << "i " << i << " cnt " << cnt <<endl;
+		ans = max(ans, cnt);
+	}
+	
+	cout << ans << endl;
+
 	return 0;
 }
 */
@@ -353,230 +391,6 @@ int main()
 		ans = min(ans, (n - i * 5 * e) % d);
 	}
 	cout << ans << endl;
-	return 0;
-}
-*/
-
-/*
-int fa[2 * 100005];
-int n, m;
-
-void init() {
-	for(int i = 0; i <= n; i++) fa[i] = i;
-}
-
-int find(int x) {
-	if (x != fa[x]) return fa[x] = find(fa[x]);
-	return x;
-}
-
-void _union(int a, int b) {
-	a = find(a), b = find(b);
-	if (a == b) return;
-	if (a > b) fa[b] = a;
-	else fa[a] = b;
-}
-
-int main()
-{
-	init();
-	int n, m;
-	cin >> n >> m;
-
-	for (int i = 0; i < m; i++) {
-		int a, b;
-		cin >> a >> b;
-		_union(a, b);
-	}
-
-	int ans = 0;
-	for (int i = 1; i <= n; i++) {
-		if (find(i) != i) {
-			ans++;
-		}
-	}
-
-	cout << ans << endl;
-
-	return 0;
-}
-*/
-
-/*
-int main()
-{
-	int n;
-	cin >> n;
-	vector<int> a(n + 1), b(n);
-	for (int i = 0; i < n + 1; i++)
-		cin >> a[i];
-	for (int i = 0; i < n; i++)
-		cin >> b[i];
-
-	long long ans = 0;
-	for (int i = 0; i < n + 1; i++) {
-		if (i > 0 && b[i - 1] > 0) {
-			int c = min(a[i], b[i - 1]);
-			ans += c;
-			a[i] -= c;
-			b[i - 1] -= c;
-		}
-		if (i < n) {
-			if (a[i] < b[i]) {
-			
-				ans += a[i];
-				b[i] -= a[i];
-				a[i] = 0;
-			}
-			else {
-				ans += b[i];
-				a[i] -= b[i];
-				b[i] = 0;
-			}
-		}
-	}
-
-	cout << ans << endl;
-
-	return 0;
-}
-*/
-
-/*
-int main()
-{
-	string in;
-	cin >> in;
-
-	vector<int> ans(in.size());
-
-	for (int i = 0; i < ans.size(); i++) {
-		int cnt = 1000000;
-		int cur = 1;
-		if (in[i] == 'L') cur = -1;
-		int pos = i;
-		while (in[pos + cur] == in[pos]) {
-			pos += cur;
-			cnt--;
-		}
-		if (cnt % 2) ans[pos + cur]++;
-		else ans[pos]++;
-	}
-
-	cout << ans[0];
-	for (int i = 1; i < ans.size(); i++) {
-		cout << " " << ans[i];
-	}
-
-	return 0;
-}
-*/
-
-/*
-bool prime(int x) {
-	if (x < 2) return false;
-	for (int i = 2; i * i <= x; i++)
-		if (x % i == 0)
-			return false;
-	return true;
-}
-
-vector<int> p;
-
-void get() {
-	for (int i = 0; i <= 200; i++) {
-		if (prime(i))
-			p.push_back(i);
-	}
-}
-
-int main()
-{
-	get();
-	set<int> ans;
-	for (int i = 0; i < p.size(); i++) {
-		for (int j = 0; j < p.size(); j++) {
-			if (p[i] * p[j] <= 200)
-				ans.insert(p[i] * p[j]);
-		}
-	}
-
-	bool first = true;
-	for (auto& it : ans) {
-		if (first) first = false;
-		else {
-			cout << ",";
-		}
-		cout << it;
-	}
-
-	return 0;
-}
-*/
-
-/*
-int strcmp(const char* a, const char* b) {
-	while (*a == *b)
-	{
-		if (*a == '\0')
-			return 0;
-		a++;
-		b++;
-	}
-	return *a - *b;
-}
-
-int main() {
-	char a[] = "zbcde";
-	char b[] = "abcd";
-	cout << strcmp(a, b) << endl;
-}
-*/
-
-/*
-int skip(string& v, int l, int r) {
-	int val = 0;
-	for (int i = l + 1; i < r; i++) {
-		if (val == 0 && v[i] == ',')
-			return i;
-		if (v[i] == '(') val++;
-		if (v[i] == ')') {
-			val--;
-			if (val == 1) {
-				while (v[i] != ',') i++;
-				return i;
-			}
-		}
-	}
-
-}
-
-void output(string& v, int s, int l, int r, int right = 0) {
-	if (v[s] == ',') return;
-
-	if (count(v.begin() + l, v.begin() + r, ',') == 1) {
-		if (right == 0) {
-			l++;
-			cout << v[l];
-		}
-		else {
-			r--;
-			cout << v[r];
-		}
-	}
-	int dot = skip(v, l, r);
-	output(v, l + 1, l+2,  dot-1);
-	cout << v[s];
-	output(v, dot + 1, dot + 2, r - 1, 1);
-}
-
-int main()
-{
-	string in;
-	cin >> in;
-
-	output(in, 0, 1, in.size() - 1);
-	
 	return 0;
 }
 */

@@ -37,6 +37,71 @@ int main()
 }
 
 /*
+int main() {
+	int n;
+	string sa,sb;
+	cin >> n >> sa >> sb;
+	vector<int> a,b;
+	rep(i, 0, n) {
+		if (sa[i] != sb[i]) {
+			if (sa[i] == 'a') a.push_back(i + 1);
+			else b.push_back(i + 1);
+		}
+	}
+
+	if ((a.size() + b.size()) % 2) {
+		puts("-1");
+		return 0;
+	}
+
+	int cnt = a.size() / 2 + b.size() / 2;
+	if ((a.size() % 2) && (b.size() % 2)) cnt += 2;
+	cout << cnt << endl;
+
+	for(int i = 0; i+1 < a.size(); i += 2)
+		printf("%d %d\n", a[i], a[i+1]);
+	for(int i = 0; i+1 < b.size(); i += 2)
+		printf("%d %d\n", b[i], b[i+1]);
+	if((a.size() % 2) && (b.size() % 2))
+	{
+		printf("%d %d\n", a.back(), a.back());
+		printf("%d %d\n", a.back(), b.back());
+	}
+
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	ll n;
+    cin >> n;
+    int temp;
+    ll pos = 0, neg = 0;
+    ll ansa = 0, ansb = 0;
+    rep(i, 0, n) {
+        cin >> temp;
+        if(temp > 0) {
+            pos++;
+            ansa += pos;
+            ansb += neg;
+        }
+		else {
+            swap(neg, pos);
+            neg++;
+            ansb += neg;
+            ansa += pos;
+        }
+    }
+    cout << ansb << " " << ansa;
+
+	return 0;
+}
+*/
+
+/*
 long long cnt(int m, int n)
 {
 	if (m <= 0 || n <= 0)

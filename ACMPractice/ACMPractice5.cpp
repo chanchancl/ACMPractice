@@ -30,11 +30,38 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
-int main() 
+int main()
 {
 
 	return 0;
 }
+
+/*
+int main() 
+{
+	map<char, int> mp;
+	string in;
+	int t;
+	cin >> t >> in;
+	for (auto c : in) 
+		mp[c]++;
+	
+	int z = mp['z'], e = mp['e'], r = mp['r'], o = mp['o'];
+	int n = mp['n'];
+
+	int one = min(min(o, n), e);
+	int zero = min(min(min(z, e), r), o);
+	zero = min(o - one, zero);
+	zero = min(e - one, zero);
+
+	rep(i, 0, one)
+		cout << 1 << " ";
+	rep(i, 0, zero)
+		cout << 0 << " ";
+
+	return 0;
+}
+*/
 
 /*
 bool prime(int x) {

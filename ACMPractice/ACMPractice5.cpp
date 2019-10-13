@@ -30,11 +30,21 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
-int main()
+int main() 
 {
 
 	return 0;
 }
+
+/*
+bool prime(int x) {
+	if (x < 2) return false;
+	for (int i = 2; i * i <= x; i++)
+		if (x % i == 0)
+			return false;
+	return true;
+}
+*/
 
 /*
 int main() {
@@ -68,7 +78,6 @@ int main() {
 		printf("%d %d\n", a.back(), b.back());
 	}
 
-
 	return 0;
 }
 */
@@ -76,6 +85,7 @@ int main() {
 /*
 int main()
 {
+<<<<<<< HEAD
 	ll n;
     cin >> n;
     int temp;
@@ -96,6 +106,32 @@ int main()
         }
     }
     cout << ansb << " " << ansa;
+	
+	return 0;
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+
+	rep(i, 0, n) cin >> v[i];
+
+	int cnt = n;
+	int ans = 0;
+	while (cnt) {
+		int x = *min_element(all(v));
+		ans++;
+		rep(i, 0, n) {
+			if (v[i] != INT_MAX && v[i] % x == 0) {
+				cnt--;
+				v[i] = INT_MAX;
+			}
+		}
+	}
+	
+	cout << ans << endl;
 
 	return 0;
 }

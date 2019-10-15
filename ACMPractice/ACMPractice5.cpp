@@ -37,6 +37,25 @@ int main()
 }
 
 /*
+int main()
+{
+	ll n, l;
+	cin >> n;
+	vector<ll> a;
+	rep(i, 0, n) {
+		cin >> l;
+		a.push_back(l);
+	}
+	cin >> l >> l >> l;
+	int a1 = round(sqrt(a[1]*a[2]/l));
+	cout << a1 << " ";
+	rep(i, 1, n)
+		cout << a[i] / a1 << " ";
+	return 0;
+}
+*/
+
+/*
 int main() 
 {
 	map<char, int> mp;
@@ -112,7 +131,6 @@ int main() {
 /*
 int main()
 {
-<<<<<<< HEAD
 	ll n;
     cin >> n;
     int temp;
@@ -1270,7 +1288,7 @@ int main()
 	for (i=0; i < cnt; i++) {
 		for (j=0; j < cnt; j++) {
 			if (i!=j && a[i]&a[j])
-				d[i][j] = e[i][j] = 1; // 联通
+				d[i][j] = e[i][j] = 1; // 联�?
 			else
 				d[i][j] = e[i][j] = 1e9;
 		}
@@ -1985,7 +2003,7 @@ int main()
 */
 
 /*
-// 1037 �������
+// 1037 �������?
 int main()
 {
 	int n;
@@ -2469,7 +2487,7 @@ int main()
 
 	GreedySelector(n, e, select);
 
-	cout << "����ѡ��Ļ����Ϊ��" << endl;
+	cout << "����ѡ��Ļ�?����Ϊ��" << endl;
 	for (int i = 0; i < n; i++)
 	{
 		if (select[i])

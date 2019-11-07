@@ -30,11 +30,445 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
-int main()
-{
+
+int main() {
+	int T;
+	cin >> T;
+	while(T--) {
+		int n;
+		cin >> n;
+		vector<int> v(n);
+		rep(i, 0, n) cin >> v[i];
+
+		int ans = 0;
+		rep(i, 1, n + 1) {
+			int cnt = 0;
+			rep(j, 0, n) {
+				if (v[j] >= i) cnt++;
+			}
+			if (cnt < i) break;
+			ans = i;
+		}
+		cout << ans << endl;
+	}
 
 	return 0;
 }
+
+/*
+class AC {
+public:
+	int b;
+	int a = 10;
+
+	int& fun() {
+		return a;
+	}
+};
+
+int main() {
+	AC ac;
+	cout << ac.a << endl;
+
+	int &b = ac.fun();
+	b = 20;
+	cout << ac.a << endl;
+	cout << &ac << endl;
+	cout << &b <<endl;
+	return 0;
+}
+*/
+
+/*
+int main() {
+	shared_ptr<int> a = make_shared<int>(5);
+	shared_ptr<int> b = a;
+	cout << a.use_count() << endl;
+	a = nullptr;
+	cout << b.use_count() << endl;
+	weak_ptr<int> c(b);
+	cout << c.expired() << endl;
+	cout << c.use_count() <<endl;
+	b = nullptr;
+	cout << c.expired() << endl;
+	cout << c.use_count() <<endl;
+	return 0;
+}
+/*
+
+/*
+struct point {
+	int x,y;
+	
+};
+
+bool operator<(const point &a, const point &b) {
+		if (a.x != b.x) return a.y < b.y;
+		return a.x < b.x;
+	}
+
+point _last_point;
+bool order(point &a, point &b) {
+	return (abs(a.x-_last_point.x) + abs(a.y-_last_point.y)) <
+		(abs(b.x-_last_point.x) + abs(b.y-_last_point.y));
+}
+
+struct shape {
+	int score;
+	vector<int> sp;
+};
+
+int shapes[][5] = {
+	{0,1,1,0,0}, // 50
+	{0,0,1,1,0}, // 50
+
+	{1,1,0,1,0}, // 200
+
+	{0,0,1,1,1}, // 500
+	{1,1,1,0,0},
+
+	{0,1,1,1,0}, // 5000
+	{1,1,1,0,1},
+	{1,1,0,1,1},
+	{1,0,1,1,1},
+	{1,1,1,1,0},
+	{0,1,1,1,1},
+	{1,1,1,1,1}  // 1000000
+};
+
+const int MAX = 1000000;
+const int SHAPE_NUM = 12;
+
+int score[] = {
+	50,50,200,500,500,5000,5000,5000,5000,5000,5000,MAX
+};
+
+
+class board {
+public:
+	board() {
+		fill(bd[0], bd[0] + 25, 0);
+		turn = 1;
+		win = 0;
+		black_ai = false;
+		white_ai = true;
+	}
+
+
+	bool ai(point &pt, int bk) {
+		DEPTH = 3;
+		ab_search(pt, bk, DEPTH, -MAX, MAX);
+	}
+
+	// bk == True 表示执黑子
+	bool ab_search(point &pt, int bk, int depth, int alpha, int beta) {
+		if (game_win(black_st) || game_win(white_st) || depth == 0) {
+			return evaluate(bk);
+		}
+
+		vector<point> blank_pts;
+		point tmp;
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				tmp = {i,j};
+				if (black_st.find(tmp) == black_st.end() && 
+					white_st.find(tmp) == white_st.end()) {
+						blank_pts.emplace_back(tmp);
+					}
+			}
+		}
+
+		_last_point = all.back();
+		sort(blank_pts.begin(), blank_pts.end(), order);
+
+		for (int i = 0; i < blank_pts.size(); i++) {
+			point next_step = blank_pts[i];
+			if (bk) {
+				black.push_back(next_step);
+				black_st.insert(next_step);
+			} else {
+				white.push_back(next_step);
+				white_st.insert(next_step);
+			}
+			all.push_back(next_step);
+
+			int value = -ab_search(pt, !bk, depth - 1, -beta, - alpha);
+
+			if (bk) {
+				black.pop_back();
+				black_st.erase(next_step);
+			} else {
+				white.pop_back();
+				white_st.erase(next_step);
+			}
+			all.pop_back();
+
+			if (value > alpha) {
+				if (depth == DEPTH) {
+					pt = next_step;
+				}
+				if (value >= beta) {
+					return beta;
+				}
+				alpha = value;
+			}
+		}
+
+		return alpha;
+	}
+
+	int evaluate(int bk) {
+		int total_score = 0;
+		set<point> *my,*enemy;
+		if (bk) {
+			my = &black_st;
+			enemy = &white_st;
+		} else {
+			my = &white_st;
+			enemy = &black_st;
+		}
+
+		point tmp;
+		int i,j;
+		
+		// 横向扫描
+		int my_score = 0;
+		for (i = 0; i < 5; i++) {
+			vector<int> pts;
+			for (int j = 0; j < 5; j++) {
+				tmp = {i,j};
+				if (my->find(tmp) != my->end())
+					pts.push_back(1);
+				else if (enemy->find(tmp) != enemy->end())
+					pts.push_back(2);
+				else
+					pts.push_back(0);
+			}
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					my_score += score[j]; 
+				}
+			}
+		}
+		
+		// 纵向扫描
+		for (i = 0; i < 5; i++) {
+			vector<int> pts;
+			for (int j = 0; j < 5; j++) {
+				tmp = {j, i};
+				if (my->find(tmp) != my->end())
+					pts.push_back(1);
+				else if (enemy->find(tmp) != enemy->end())
+					pts.push_back(2);
+				else
+					pts.push_back(0);
+			}
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					my_score += score[j]; 
+				}
+			}
+		}
+		
+		// 扫描对角线
+		for (i = 0; i < 5; i++) {
+			vector<int> pts;
+			for (int j = 0; j < 5; j++) {
+				tmp = {j, i};
+				if (my->find(tmp) != my->end())
+					pts.push_back(1);
+				else if (enemy->find(tmp) != enemy->end())
+					pts.push_back(2);
+				else
+					pts.push_back(0);
+			}
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					my_score += score[j]; 
+				}
+			}
+		}
+		
+		return my_score;
+	}
+
+	bool game_win(set<point> &pts) {
+		point tmp;
+		int i,j;
+		bool win;
+		
+		// 横向扫描
+		for (i = 0; i < 5; i++) {
+			win = true;
+			for (int j = 0; j < 5; j++) {
+				tmp.y = i;
+				tmp.x = j;
+				if (pts.find(tmp) == pts.end()) {
+					win = false;
+					break;
+				}
+			}
+			if (win) return win;
+		}
+		
+		// 纵向扫描
+		for (i = 0; i < 5; i++) {
+			win = true;
+			for (j = 0; j < 5; j++) {
+				tmp.x = i;
+				tmp.y = j;
+				if (pts.find(tmp) == pts.end()) {
+					win = false;
+					break;
+				}
+			}
+			if (win) return win;
+		}
+		
+		// 扫描对角线
+		win = true;
+		for (i = 0; i < 5; i++) {
+			tmp.x = i;
+			tmp.y = i;
+			if (pts.find(tmp) == pts.end()) {
+				win = false;
+				break;
+			}
+		}
+		if (win)
+			return true;
+
+		return false;
+	}
+
+	void next_turn() {
+		// turn % 2 == 1, 执黑子
+
+		point pt;
+		if (turn % 2 == 1) {
+			if (black_ai) {
+				ai(pt, 1);
+			} else {
+				get_input(pt, 1);
+			}
+			black.push_back(pt);
+			black_st.insert(pt);
+			all.push_back(pt);
+			bd[pt.y][pt.x] = 1;
+		}
+		else {
+			if (white_ai) {
+				ai(pt, 0);
+			} else {
+				get_input(pt, 0);
+			}
+			white.push_back(pt);
+			white_st.insert(pt);
+			all.push_back(pt);
+			bd[pt.y][pt.x] = 2;
+		}
+
+		if (game_win(black_st)) win = 1;
+		if (game_win(white_st)) win = 2;
+		if (win != 0) {
+			if ( win == 1) {
+				cout << "黑棋胜利!!!!!!!!!!!!!!!!" << endl;
+			}
+			else {
+				cout << "白棋胜利!!!!!!!!!!!!!!!!" << endl;
+			}
+		}
+
+		turn++;
+	}
+
+	void get_input(point &pt, int bk) {
+		cout << "请输入下一步 ";
+		if (bk) cout << "黑子";
+		else cout << "白子";
+		cout << "的坐标 : ";
+
+		int x,y;
+		while(cin >> x >> y) {
+			if (!(x >= 1 && x <= 5 && y >= 1 && y <= 5)) {
+				cout << endl << "输入范围错误，请重新输入 : ";
+				continue;
+			}
+			if (bd[y][x] != 0) {
+				cout << endl << "这个位置已经有子了，请重新输入 : ";
+				continue;
+			}
+			pt.x = x;
+			pt.y = y;
+			return;
+		}
+		return;
+	}
+
+	void show() {
+		cout << "-------------" << endl;
+		for(int i = 0; i < 5; i++) {
+			cout << "| ";
+			for (int j = 0; j < 5; j++) {
+				cout << bd[i][j] << " ";
+			}
+			cout << "|" << endl;
+		}
+		cout << "-------------" << endl;
+	}
+
+	bool is_win() {
+		return win != 0;
+	}
+
+private:
+	// 
+	int win;
+	bool black_ai;
+	bool white_ai;
+	int turn;
+	int DEPTH;
+
+	vector<point> black;
+	vector<point> white;
+	set<point> black_st;
+	set<point> white_st;
+	vector<point> all;
+
+	int bd[5][5];
+};
+
+int main()
+{
+	board game;
+	while(!game.is_win()) {
+		game.show();
+		game.next_turn();
+	}
+	return 0;
+}
+*/
 
 /*
 int main()
@@ -1288,7 +1722,7 @@ int main()
 	for (i=0; i < cnt; i++) {
 		for (j=0; j < cnt; j++) {
 			if (i!=j && a[i]&a[j])
-				d[i][j] = e[i][j] = 1; // 联�?
+				d[i][j] = e[i][j] = 1; // 联�?
 			else
 				d[i][j] = e[i][j] = 1e9;
 		}
@@ -2003,7 +2437,7 @@ int main()
 */
 
 /*
-// 1037 �������?
+// 1037 �������?
 int main()
 {
 	int n;
@@ -2487,7 +2921,7 @@ int main()
 
 	GreedySelector(n, e, select);
 
-	cout << "����ѡ��Ļ�?����Ϊ��" << endl;
+	cout << "����ѡ��Ļ�?����Ϊ��" << endl;
 	for (int i = 0; i < n; i++)
 	{
 		if (select[i])

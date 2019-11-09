@@ -31,6 +31,531 @@ const ll  INF_LL = (ll)1e18;
 using namespace std;
 
 
+int main()
+{
+
+	return 0;
+}
+
+
+
+/*
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct point {
+	int x, y;
+};
+
+bool operator<(const point& a, const point& b) {
+	if (a.x != b.x) return a.y < b.y;
+	return a.x < b.x;
+}
+
+bool operator==(const point& a, const point& b) {
+	return a.x == b.x && a.y == b.y;
+}
+
+point _last_point;
+bool order(point& a, point& b) {
+	return (abs(a.x - _last_point.x) + abs(a.y - _last_point.y)) <
+		(abs(b.x - _last_point.x) + abs(b.y - _last_point.y));
+}
+
+
+int shapes[][5] = {
+	{1,0,0,0,0}, // 1
+	{0,1,0,0,0}, // 2
+	{0,0,1,0,0}, // 3
+	{0,0,0,1,0}, // 4
+	{0,0,0,0,1}, // 5
+
+	{1,1,0,0,0}, // 50
+	{0,1,1,0,0}, // 50
+	{0,0,1,1,0}, // 50
+	{0,0,0,1,1}, // 50
+
+	{1,1,0,1,0}, // 200
+	{0,1,1,0,1}, // 200
+	{1,0,1,1,0}, //
+
+	{0,0,1,1,1}, // 500
+	{1,1,1,0,0},
+
+	{0,1,1,1,0}, // 5000
+	{1,1,1,0,1},
+	{1,1,0,1,1},
+	{1,0,1,1,1},
+
+	{1,1,1,1,0},
+	{0,1,1,1,1},
+	{1,1,1,1,1}  // 1000000
+};
+
+const int MAX = 1000000;
+const int SHAPE_NUM = 20;
+
+int score[] = {
+	60,60,60,60,60,
+	500,500,500,500,
+	1000,1000,1000,
+	2000,2000,
+	5000,5000,5000,5000,
+	200000,200000,
+	MAX
+};
+
+
+class board {
+public:
+	board() {
+		fill(bd[0], bd[0] + 25, 0);
+		turn = 1;
+		win = 0;
+		black_ai = false;
+		white_ai = true;
+		DEPTH = 3;
+	}
+
+
+	void ai(point& pt, int bk) {
+		DEPTH = min(3, 25 - int(black.size() + white.size()));
+		ab_search(pt, bk, DEPTH, -MAX, MAX);
+	}
+
+	// bk == True 表示执黑子
+	int ab_search(point& pt, int bk, int depth, int alpha, int beta) {
+		if (game_win(1) || game_win(0) || depth == 0) {
+			return evaluate(bk);
+		}
+
+		vector<point> blank_pts;
+		point tmp;
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				tmp = { i,j };
+				if (find(black.begin(), black.end(), tmp) == black.end() &&
+					find(white.begin(), white.end(), tmp) == white.end()) {
+					blank_pts.emplace_back(tmp);
+				}
+			}
+		}
+
+		if (!all.empty())
+			_last_point = all.back();
+		else
+			_last_point = { 3,3 };
+		sort(blank_pts.begin(), blank_pts.end(), order);
+
+		for (int i = 0; i < blank_pts.size(); i++) {
+			point next_step = blank_pts[i];
+
+			// 临时走 next_step
+			if (bk) {
+				black.push_back(next_step);
+				bd[next_step.y][next_step.x] = 1;
+			}
+			else {
+				white.push_back(next_step);
+				bd[next_step.y][next_step.x] = 2;
+			}
+			all.push_back(next_step);
+
+			// 计算下一层分数
+			int value = -ab_search(pt, !bk, depth - 1, -beta, -alpha);
+
+			// 撤销刚才临时走的一步
+			if (bk) {
+				black.pop_back();
+			}
+			else {
+				white.pop_back();
+			}
+			bd[next_step.y][next_step.x] = 0;
+			all.pop_back();
+
+			// 剪枝
+			if (value > alpha) {
+				if (depth == DEPTH) {
+					pt = next_step;
+				}
+
+				// 大于 beta，则不用继续计算其他
+				if (value >= beta) {
+					return beta;
+				}
+
+				// 更新 alpha 值
+				alpha = value;
+			}
+		}
+
+		return alpha;
+	}
+
+	int evaluate(int bk) {
+		int total_score = 0;
+		vector<point>* my, * enemy;
+		if (bk) {
+			my = &black;
+			enemy = &white;
+		}
+		else {
+			my = &white;
+			enemy = &black;
+		}
+
+		point tmp;
+		int i, j;
+
+		// 横向扫描
+		int my_score = 0;
+		int enemy_score = 0;
+		for (i = 0; i < 5; i++) {
+			vector<int> pts;
+			for (int j = 0; j < 5; j++) {
+				tmp = { i,j };
+				if (find(my->begin(), my->end(), tmp) != my->end())
+					pts.push_back(1);
+				else if (find(enemy->begin(), enemy->end(), tmp) != enemy->end())
+					pts.push_back(2);
+				else
+					pts.push_back(0);
+			}
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					my_score += score[j];
+				}
+			}
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] == 0 && pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+					if ((pts[k] == 2 ? 1 : 2) != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					enemy_score += score[j];
+				}
+			}
+		}
+
+		// 纵向扫描
+		for (i = 0; i < 5; i++) {
+			vector<int> pts;
+			for (int j = 0; j < 5; j++) {
+				tmp = { j, i };
+				if (find(my->begin(), my->end(), tmp) != my->end())
+					pts.push_back(1);
+				else if (find(enemy->begin(), enemy->end(), tmp) != enemy->end())
+					pts.push_back(2);
+				else
+					pts.push_back(0);
+			}
+
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					my_score += score[j];
+				}
+			}
+			for (int j = 0; j < SHAPE_NUM; j++) {
+				bool right = true;
+				for (int k = 0; k < 5; k++) {
+					if (pts[k] == 0 && pts[k] != shapes[j][k]) {
+						right = false;
+						break;
+					}
+					if ((pts[k] == 2 ? 1 : 2) != shapes[j][k]) {
+						right = false;
+						break;
+					}
+				}
+				if (right) {
+					enemy_score += score[j];
+				}
+			}
+		}
+
+
+		// 扫描对角线
+		vector<int> pts;
+		for (i = 0; i < 5; i++) {
+			tmp = { i, i };
+			if (find(my->begin(), my->end(), tmp) != my->end())
+				pts.push_back(1);
+			else if (find(enemy->begin(), enemy->end(), tmp) != enemy->end())
+				pts.push_back(2);
+			else
+				pts.push_back(0);
+		}
+
+		for (int j = 0; j < SHAPE_NUM; j++) {
+			bool right = true;
+			for (int k = 0; k < 5; k++) {
+				if (pts[k] != shapes[j][k]) {
+					right = false;
+					break;
+				}
+			}
+			if (right) {
+				my_score += score[j];
+			}
+		}
+		for (int j = 0; j < SHAPE_NUM; j++) {
+			bool right = true;
+			for (int k = 0; k < 5; k++) {
+				if (pts[k] == 0 && pts[k] != shapes[j][k]) {
+					right = false;
+					break;
+				}
+				if ((pts[k] == 2 ? 1 : 2) != shapes[j][k]) {
+					right = false;
+					break;
+				}
+			}
+			if (right) {
+				enemy_score += score[j];
+			}
+		}
+		pts.clear();
+
+		// 扫描对角线
+		for (i = 0; i < 5; i++) {
+			tmp = { 4 - i, i };
+			if (find(my->begin(), my->end(), tmp) != my->end())
+				pts.push_back(1);
+			else if (find(enemy->begin(), enemy->end(), tmp) != enemy->end())
+				pts.push_back(2);
+			else
+				pts.push_back(0);
+		}
+
+		for (int j = 0; j < SHAPE_NUM; j++) {
+			bool right = true;
+			for (int k = 0; k < 5; k++) {
+				if (pts[k] != shapes[j][k]) {
+					right = false;
+					break;
+				}
+			}
+			if (right) {
+				my_score += score[j];
+			}
+		}
+		for (int j = 0; j < SHAPE_NUM; j++) {
+			bool right = true;
+			for (int k = 0; k < 5; k++) {
+				if (pts[k] == 0 && pts[k] != shapes[j][k]) {
+					right = false;
+					break;
+				}
+				if ((pts[k] == 2 ? 1 : 2) != shapes[j][k]) {
+					right = false;
+					break;
+				}
+			}
+			if (right) {
+				enemy_score += score[j];
+			}
+		}
+
+		//cout << endl;
+		//show();
+		//cout << "当前局面分为 " << my_score - enemy_score << endl;
+		return my_score - enemy_score;
+	}
+
+	bool game_win(int bk) {
+		point tmp;
+		int i, j, cnt;
+
+		// 横向扫描
+		for (i = 0; i < 5; i++) {
+			cnt = 0;
+			for (int j = 0; j < 5; j++) {
+				if (bd[i][j] == (bk == 1 ? 1 : 2))
+					cnt++;
+			}
+			if (cnt == 5)
+				return true;
+		}
+
+		// 纵向扫描
+		for (i = 0; i < 5; i++) {
+			cnt = 0;
+			for (j = 0; j < 5; j++) {
+				tmp.x = i;
+				tmp.y = j;
+				if (bd[j][i] == (bk == 1 ? 1 : 2))
+					cnt++;
+			}
+			if (cnt == 5)
+				return true;
+		}
+
+		// 扫描对角线
+		cnt = 0;
+		for (i = 0; i < 5; i++) {
+			if (bd[i][i] == (bk == 1 ? 1 : 2))
+				cnt++;
+		}
+		if (cnt == 5)
+			return true;
+
+		cnt = 0;
+		for (i = 0; i < 5; i++) {
+			if (bd[4 - i][i] == (bk == 1 ? 1 : 2))
+				cnt++;
+		}
+		if (cnt == 5)
+			return true;
+
+		return false;
+	}
+
+	void next_turn() {
+		// turn % 2 == 1, 执黑子
+		point pt;
+
+		int res = 25 - int(black.size() + white.size());
+		if (res <= 0) {
+			cout << "平局!!!!!!!!!!!!!";
+			win = 3;
+			return;
+		}
+
+		if (turn % 2 == 1) {
+			if (black_ai) {
+				cout << "黑棋思考中...";
+				ai(pt, 1);
+				cout << "下子( " << pt.x + 1<< "," << pt.y + 1<< ")" << endl;
+			}
+			else {
+				get_input(pt, 1);
+			}
+			black.push_back(pt);
+			all.push_back(pt);
+			bd[pt.y][pt.x] = 1;
+		}
+		else {
+			if (white_ai) {
+				cout << "白棋思考中...";
+				ai(pt, 0);
+				cout << "下子( " << pt.x + 1 << "," << pt.y + 1 << ")" << endl;
+			}
+			else {
+				get_input(pt, 0);
+			}
+			white.push_back(pt);
+			all.push_back(pt);
+			bd[pt.y][pt.x] = 2;
+		}
+
+		if (game_win(1))
+			win = 1;
+		if (game_win(0))
+			win = 2;
+		if (win != 0) {
+			if (win == 1) {
+				cout << "黑棋胜利!!!!!!!!!!!!!!!!" << endl;
+			}
+			else {
+				cout << "白棋胜利!!!!!!!!!!!!!!!!" << endl;
+			}
+			show();
+		}
+
+		turn++;
+	}
+
+	void get_input(point& pt, int bk) {
+		cout << "请输入下一步 ";
+		if (bk) cout << "黑子";
+		else cout << "白子";
+		cout << "的坐标 : ";
+
+		int x, y;
+		while (cin >> x >> y) {
+			if (!(x >= 1 && x <= 5 && y >= 1 && y <= 5)) {
+				cout << endl << "输入范围错误，请重新输入 : ";
+				continue;
+			}
+			x--, y--;
+			if (bd[y][x] != 0) {
+				cout << endl << "这个位置已经有子了，请重新输入 : ";
+				continue;
+			}
+			pt.x = x;
+			pt.y = y;
+			return;
+		}
+		return;
+	}
+
+	void show() {
+		cout << "-------------" << endl;
+		for (int i = 0; i < 5; i++) {
+			cout << "| ";
+			for (int j = 0; j < 5; j++) {
+				cout << bd[i][j] << " ";
+			}
+			cout << "|" << endl;
+		}
+		cout << "-------------" << endl;
+	}
+
+	bool is_win() {
+		return win != 0;
+	}
+
+private:
+	//
+	int win;
+	bool black_ai;
+	bool white_ai;
+	int turn;
+	int DEPTH;
+
+	vector<point> black;
+	vector<point> white;
+	vector<point> all;
+
+	int bd[5][5];
+};
+
+int main()
+{
+	board game;
+	while (!game.is_win()) {
+		game.show();
+		game.next_turn();
+	}
+	return 0;
+}
+*/
+
+/*
 int main() {
 	int T;
 	cin >> T;
@@ -54,6 +579,7 @@ int main() {
 
 	return 0;
 }
+*/
 
 /*
 class AC {

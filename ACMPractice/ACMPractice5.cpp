@@ -32,11 +32,28 @@ using namespace std;
 
 int main()
 {
-	int a;
-	int b;
+	
 	return 0;
 }
 
+/*
+int main()
+{
+	int q;
+	cin >> q;
+	while(q--) {
+		ll a,b,n,S;
+		cin >> a >> b >> n >> S;
+		int flag = false;
+		ll c = min(a, S/n);
+		if (S - c*n <= b) flag = true;
+
+		if (flag) cout << "YES" <<endl;
+		else cout << "NO" << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 class pool 

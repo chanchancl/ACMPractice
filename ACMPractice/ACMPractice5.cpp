@@ -30,14 +30,37 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
-
 int main()
 {
-
+	int a;
+	int b;
 	return 0;
 }
 
 
+/*
+class pool 
+{
+//这里和类是同一缩进，不要写东西
+	//这里开始写东西
+	
+
+	// 这是一级缩进，main函数的前后括号和这一行的开头要平级
+	void static f()
+	{
+		// 属于main的语句，都比main函数多一个缩进
+
+		if (1 > 2) {
+			// 同样的，属于if的语句都比if的开头多一个缩进
+
+			for (;;) {
+				// for 语句也是
+			}
+
+		}
+	}
+};
+*/
 
 /*
 #include <iostream>

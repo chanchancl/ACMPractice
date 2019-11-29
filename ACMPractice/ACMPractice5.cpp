@@ -32,7 +32,14 @@ using namespace std;
 
 int main()
 {
-	
+	int T;
+	cin >> T;
+	while(T--) {
+		int n, x, a, b;
+		cin >> n >> x >> a >> b;
+		if (a > b) swap(a,b);
+		cout << min(n-1, b-a + x) << endl;
+	}
 	return 0;
 }
 

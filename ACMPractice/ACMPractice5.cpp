@@ -32,6 +32,47 @@ using namespace std;
 
 int main()
 {
+	
+	return 0;
+}
+
+
+/*
+class ca
+{
+public:
+	void operator+=(const ca& other) {
+		this->value += other.value;
+	}
+	int operator+=(int b) {
+		this->value += b;
+	}
+
+	int value;
+};
+
+class cb : public ca{
+	int c;
+
+	//void operator+=(double a) {
+	//
+	//}
+};
+
+int main()
+{
+	cb a, b;
+	a.value = 1;
+	b.value = 2;
+	a += b;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
 	int T;
 	cin >> T;
 	while(T--) {
@@ -42,6 +83,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 /*
 int main()

@@ -30,6 +30,80 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+
+int main() 
+{
+
+	return 0;
+}
+
+// class cls {
+// public:
+// 	cls(int size) {s = size; cout << "cls" <<endl; p = new int[size];}
+// 	~cls() { cout << "~cls" <<endl; delete[] p; }
+
+// 	cls& operator=(const cls& oth) {
+// 		// this->a = oth.a;
+// 		// this->b = oth.b;
+// 		// this->c = oth.c;
+// 		this->s = oth.s;
+// 		this->p = new int[this->s];
+// 		rep(i, 0, this->s ) this->p[i] = oth.p[i];
+// 		cout << this->p <<endl;
+// 		cout << "operator =" <<endl;
+
+// 	}
+
+// 	void f() { cout << "function f" << endl;}
+
+// 	int s;
+// 	int *p;
+// };
+
+// union s{
+// 	s() {
+// 		cl = cls(5);
+// 	}
+// 	~s() {
+// 		cl.~cls();
+// 	}
+
+// 	// vector<int> vec;
+// 	cls cl;
+	
+// 	int d[10];
+// };
+
+// int main() 
+// {
+// 	cout << sizeof(s) <<endl;
+
+// 	// s.vec = vector<int>();
+// 	vector<int> a, b = vector<int>{1,2,3};
+// 	a = b;
+// 	b.~vector();
+
+// 	for(int i =0; i < a.size(); i ++){
+// 		cout << a[i] <<endl;
+// 	}
+
+// 	s ss;
+
+// 	ss.cl.f();
+// 	ss.cl.~cls();
+
+// 	cout << "assign 2" <<endl;
+// 	rep(i, 0, 10)
+// 		ss.d[i] = 10;
+
+// 	cout << ss.cl.p << endl;
+
+// 	cout << "return" <<endl;
+// 	return 0;
+// }
+
+
+/*
 int main()
 {
 	

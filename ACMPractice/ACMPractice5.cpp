@@ -30,12 +30,47 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+string p,h;
 
-int main() 
+void solve() {
+	vector<int> cntp(26);
+	rep(i, 0, p.size()) cntp[p[i] - 'a']++;
+	rep(i, 0, h.size()) {
+		vector<int> cnth(26);
+		for(int j = i; j < h.size(); j++) {
+			cnth[h[j] - 'a']++;
+			if (cntp == cnth) {
+				cout << "YES" << endl;
+				return;
+			}
+		}
+	}
+	cout << "NO" << endl;
+}
+
+int main()
 {
+	int n;
+	cin >> n;
+	while(n--) {
+		cin >> p >> h;
+		solve();
+	}
 
 	return 0;
 }
+
+
+/*
+int main() 
+{
+  int n;
+	cin >> n;
+	cout << 9 * n << " " << 8 * n << endl;
+	return 0;
+}
+*/
+
 
 // class cls {
 // public:

@@ -30,6 +30,26 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+
+int main() 
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n,k1,k2;
+		cin >> n >> k1 >> k2;
+		vector<int> p1(k1),p2(k2);
+		rep(i, 0, k1) cin >> p1[i];
+		rep(i, 0, k2) cin >> p2[i];
+		if (*max_element(all(p1)) > *max_element(all(p2)))
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
+	return 0;
+}
+
+/*
 string p,h;
 
 void solve() {
@@ -59,7 +79,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 /*
 int main() 

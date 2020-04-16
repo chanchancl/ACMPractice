@@ -30,7 +30,75 @@ const ll  INF_LL = (ll)1e18;
 
 using namespace std;
 
+int main()
+{
 
+	return 0;
+}
+
+/*
+int main()
+{
+	int a, b, c;
+	string in;
+	cin >> a >> b;
+	cin >> in;
+
+	string ans;
+	bool ok;
+	c = 0;
+	for (int i = 0; i < in.size(); i++) {
+		ok = false;
+		for (int j = 0; j < 10; j++) {
+			if ((c + j) % a != 0 && in[i] == '0' || (c + j) % a == 0 && in[i] == '1') {
+				if (i == 0 && j == 0) continue;
+				ok = true;
+				c += j; c %= a;
+				ans.push_back('0' + j);
+				break;
+			}
+		}
+		if (!ok) {
+			ans = "-1";
+			break;
+		}
+		c *= 10;
+	}
+
+	cout << ans;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	string in;
+	cin >> in;
+
+	vector<int> ans(5, 0);
+	if (in.substr(0, 3) != "MDA") {
+		ans = { 1,1,1,1,1 };
+	}
+	else {
+		int last = *find_if(in.rbegin(), in.rend(), [](char c) {return isdigit(c); }) - '0';
+		if (last < 5) {
+			last %= 5;
+			if (last == 0) last += 5;
+		}
+		else last = 5 - last % 5;
+		ans[last - 1] = 1;
+	}
+	cout << ans[0];
+	for (int i = 1; i < 5; i++)
+		cout << " " << ans[i];
+
+	return 0;
+}
+*/
+
+/*
 int main() 
 {
 	int T;
@@ -48,6 +116,7 @@ int main()
 	}
 	return 0;
 }
+*/
 
 /*
 string p,h;
@@ -157,14 +226,188 @@ int main()
 // 	return 0;
 // }
 
+/*
+class Construct {
+public:
+	Construct() {
+		Construct(0);
+	}
+
+	Construct(int a) {
+		cout << "Construct!" << endl;
+	}
+};
+
+class Test {
+public:
+	Test(int a) {
+		cout << "Init!" << endl;
+		con = Construct(1);
+	}
+
+	Test(bool a) : con(1) {
+		cout << "Init!" << endl;
+	}
+
+	Construct con;
+};
+
+
+int main() 
+{
+	Test(1);
+	Test(true);
+	list<int> l;
+	sort(l.begin(), l.end());
+
+	return 0;
+}
+*/
 
 /*
 int main()
 {
+	int a, b, c, d;
+	cin >> a >> b >> c >> d;
+	a = c - a;
+	b = d - b;
+	if (b < 0) {
+		b += 60;
+		a--;
+	}
+
+	cout << a << " " << b;
+
+	return 0;
+}
+*/
+
+/*
+int main() {
+	int a, b;
+	cin >> a >> b;
+	a = 10 * a + b;
+	cout << a / 19;
 	
 	return 0;
 }
+*/
 
+/*
+int main()
+{
+	int a, b;
+	cin >> a >> b;
+	cout << a + b;
+
+	return 0;
+}
+*/
+
+/*
+int main()
+{
+	cout << "  ********\
+			* ***********\
+			####....#.\
+			#..###.....##....\
+			###.......######              ###            ###\
+					...........               #...#          #...#\
+			##*#######                 #.#.#          #.#.#\
+			####*******######             #.#.#          #.#.#\
+					...# * **.* * **.*###....          #...#          #...#\
+					....* * ********##.....           ###            ###\
+					....* * *******....\
+			####        ####\
+			######        ######\
+			##############################################################\
+			#...#......#.##...#......#.##...#......#.##------------------#\
+			###########################################------------------#\
+			#..#....#....##..#....#....##..#....#....#####################\
+			##########################################    #----------#\
+			#.....#......##.....#......##.....#......#    #----------#\
+			##########################################    #----------#\
+			#.#..#....#..##.#..#....#..##.#..#....#..#    #----------#\
+			##########################################    ############";
+
+	return 0;
+}
+*/
+
+/*
+#include <iostream>
+#include <string>
+#include<vector>
+
+using namespace std;
+
+vector<char> read(string dispwords = "waiting input") {
+	char tempStr;
+	vector<char> strVec;
+	cout << dispwords << endl;
+	while (cin >> tempStr)
+	{
+		strVec.push_back(tempStr);
+		if (cin.get() == '\n')  break;
+		else cin.unget();
+	}
+	return strVec;
+}
+
+int main() {
+
+	string s1 = "advantage";
+	string s2 = "didactical";
+
+	vector<char> c1, c2;
+	for (int i = 0; i < s1.length(); i++)  c1.push_back(s1[i]);
+	for (int i = 0; i < s2.length(); i++)  c2.push_back(s2[i]);
+
+	// // reading from input stream
+	// vector<char> c1 = read("sequence 1");
+	// vector<char> c2 = read("sequence 2");
+
+
+	vector<vector<int>> canvas(c1.size() + 1, vector<int>(c2.size() + 1, 0));
+	for (int i = 0; i < c1.size() + 1; i++) {
+		for (int j = 0; j < c2.size() + 1; j++) {
+			if (c1[i] == c2[j]) {
+				canvas[i + 1][j + 1] = canvas[i][j];
+				// recording here
+			}
+			else {
+				canvas[i + 1][j + 1] = canvas[i + 1][j] > canvas[i][j + 1] ? canvas[i + 1][j] : canvas[i][j + 1];
+			}
+		}
+	}
+	cout << canvas[c1.size()][c2.size()] << endl;
+
+}
+*/
+
+/*
+struct RGB
+{
+	int x;
+};
+
+int main()
+{
+	vector<RGB> v = {
+		RGB{1},RGB{2},RGB{3}
+	};
+
+	RGB x{ 2 };
+	v.insert(v.begin(), RGB{});
+	
+	auto it = find_if(v.begin(), v.end(), [&](const RGB& value) { return value.x == x.x; });
+	if (it != v.end()) {
+		cout << it - v.begin() << endl;
+	}
+
+	return 0;
+}
+*/
 
 /*
 class ca

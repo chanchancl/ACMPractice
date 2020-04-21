@@ -32,9 +32,37 @@ using namespace std;
 
 int main()
 {
-
+	int t;
+	cin >> t;
+	while(t--) {
+		int x, n, m;
+		cin >> x >> n >> m;
+		while(x > 0 && n && x / 2 + 10 < x) {
+			n--;
+			x = x / 2 + 10;
+		}
+		if (x <= 10 * m) 
+			cout << "YES" << endl;
+		else 
+			cout << "NO" << endl;
+	}
 	return 0;
 }
+
+
+/*
+int main()
+{
+	int n;
+	cin >> n;
+	while(n--) {
+		int a,b,c,d;
+		cin >> a >> b >> c >> d;
+		cout << b << " " << c  << " " << c << endl;
+	}
+	return 0;
+}
+*/
 
 /*
 int main()
